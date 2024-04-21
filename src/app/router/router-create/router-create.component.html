@@ -1,0 +1,66 @@
+<form ngNativeValidate [formGroup]="formRouter" (ngSubmit)="enviarDatos()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> Nuevo Router </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="IP" formControlName="ip" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Usuario" formControlName="usuario" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Password" formControlName="password" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Port" formControlName="port" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="API" formControlName="apiConnection" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <mat-slide-toggle [color]="color" [checked]="checked"
+            >Activo</mat-slide-toggle
+          >
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div class="row-buttons">
+        <button
+          [disabled]="formRouter.invalid"
+          color="primary"
+          mat-raised-button
+          style="margin-right: 5px"
+        >
+          Guardar
+        </button>
+        <button mat-dialog-close="" color="accent" mat-raised-button>
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

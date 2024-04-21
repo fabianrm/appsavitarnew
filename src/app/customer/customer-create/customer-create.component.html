@@ -1,0 +1,78 @@
+<form ngNativeValidate [formGroup]="formCliente" (ngSubmit)="enviarDatos()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> Nuevo Cliente </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <mat-label>Tipo de cliente</mat-label>
+            <mat-select [(value)]="selected" formControlName="type">
+              @for (tipo of tipos; track tipo) {
+              <mat-option [value]="tipo.value">{{ tipo.viewValue }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Nro. Documento"
+              formControlName="documentNumber"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Nombre" formControlName="name" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Dirección" formControlName="address" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Teléfono"
+              formControlName="phoneNumber"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <mat-slide-toggle [color]="color" [checked]="checked"
+            >Activo</mat-slide-toggle
+          >
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div class="row-buttons">
+        <button [disabled]="formCliente.invalid" color="primary" mat-raised-button style="margin-right: 5px">
+          Guardar
+        </button>
+        <button mat-dialog-close="" color="accent" mat-raised-button>
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

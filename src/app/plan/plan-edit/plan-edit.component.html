@@ -1,0 +1,123 @@
+<form ngNativeValidate [formGroup]="formEditPlan" (ngSubmit)="enviarDatos(getData.id)">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> Editar Plan </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Nombre" formControlName="name" />
+          </mat-form-field>
+        </div>
+
+         <div class="col-sm-6">
+          <mat-slide-toggle
+            [color]="color"
+            [checked]="checked"
+            formControlName="status"
+            >Activo</mat-slide-toggle
+          >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Descarga" formControlName="download" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Subida" formControlName="upload" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Precio" formControlName="price" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Velocidad garantizada"
+              formControlName="guaranteed_speed"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Prioridad"
+              formControlName="priority"
+            />
+          </mat-form-field>
+        </div>
+
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title> Avanzado </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field>
+                  <input
+                    matInput
+                    placeholder="Burst limit"
+                    formControlName="burst_limit"
+                  />
+                </mat-form-field>
+
+              </div>
+               <div class="col-sm-4">
+                <mat-form-field>
+                  <input
+                    matInput
+                    placeholder="Burst Threshold"
+                    formControlName="burst_threshold"
+                  />
+                </mat-form-field>
+              </div>
+               <div class="col-sm-4">
+                <mat-form-field>
+                  <input
+                    matInput
+                    placeholder="Burst Time"
+                    formControlName="burst_time"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div class="row-buttons">
+        <button
+          [disabled]="formEditPlan.invalid"
+          color="primary"
+          mat-raised-button
+          style="margin-right: 5px"
+        >
+          Guardar
+        </button>
+        <button mat-dialog-close="" color="accent" mat-raised-button>
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
