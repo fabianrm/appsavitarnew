@@ -4,6 +4,7 @@ export class CBox {
     static boxJSon(obj: ReqBox) {
         return new CBox(
             obj.id,
+            obj.name,
             obj.city,
             obj.address,
             obj.reference,
@@ -15,6 +16,7 @@ export class CBox {
 
     constructor(public id: number,
         public city: string,
+        public name: string,
         public address: string,
         public reference: string,
         public total_ports: number,

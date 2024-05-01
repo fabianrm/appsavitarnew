@@ -6,6 +6,7 @@ export interface ResponseBox {
 
 export interface ReqBox {
     id: number;
+    name: string
     city: string;
     address: string;
     reference: string;

@@ -4,8 +4,8 @@ export interface ContractRequest {
 
 export interface ReqContract {
     id: number,
-    router_id: number,
     customer_id: number,
+    router_id: number,
     plan_id: number,
     box_id: number,
     port_number: string,

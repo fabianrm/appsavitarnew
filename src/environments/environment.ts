@@ -7,7 +7,7 @@ export const environment = {
   servidor: 'http://localhost:8000/api/v1/'
 };
 
-//'http://192.168.1.2/qrsfici/api/'
+//'http://192.168.1.40/api/v1/'
 //http://api.munipiura.gob.pe/fici/api/
 /*
  * For easier debugging in development mode, you can import the following file

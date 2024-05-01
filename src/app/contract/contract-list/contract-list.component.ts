@@ -9,6 +9,7 @@ import { PlanEditComponent } from '../../plan/plan-edit/plan-edit.component';
 import { CContract } from '../Models/CContract';
 import { ResContract } from '../Models/ContractResponse';
 import { ContractService } from '../contract.service';
+import { ContractCreateComponent } from './../contract-create/contract-create.component';
 
 @Component({
   selector: 'app-contract-list',
@@ -68,7 +69,7 @@ export class ContractListComponent {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
-    this.dialog.open(PlanCreateComponent, dialogConfig);
+    this.dialog.open(ContractCreateComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => {
     })

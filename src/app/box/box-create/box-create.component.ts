@@ -32,7 +32,7 @@ export class BoxCreateComponent {
 
   initForm() {
     this.formBox = this.formulario.group({
-
+      name: ['', Validators.required],
       city: ['', Validators.required],
       address: ['', Validators.required],
       reference: [''],
