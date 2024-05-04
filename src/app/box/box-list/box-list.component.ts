@@ -17,7 +17,7 @@ import { CBox } from '../Models/CBox';
 })
 export class BoxListComponent {
 
-  displayedColumns: string[] = ['id', 'city', 'address', 'reference', 'latitude', 'longitude', 'total_ports', 'available_ports', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'name', 'city', 'address', 'reference', 'latitude', 'longitude', 'total_ports', 'available_ports', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<CBox[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

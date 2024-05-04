@@ -1,9 +1,11 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
 import { CustomerService } from './../customer.service';
+import { ContractService } from '../../contract/contract.service';
+
 
 interface Tipo {
   value: string;
@@ -37,7 +39,11 @@ export class CustomerCreateComponent implements OnInit {
     private customerService: CustomerService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
     private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private dialogRef: MatDialogRef<CustomerCreateComponent>) { }
+
+  
+
 
   ngOnInit(): void {
     this.initForm();
@@ -74,8 +80,6 @@ export class CustomerCreateComponent implements OnInit {
       verticalPosition: 'bottom'
     })
   }
-
-
 
 
 

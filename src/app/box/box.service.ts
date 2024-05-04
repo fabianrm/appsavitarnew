@@ -49,5 +49,10 @@ export class BoxService {
   }
 
 
+  getPortsAvailables(id: number): Observable<any> {
+    return this.clienteHttp.get(this.API + 'ports/' + id, { headers: this.headers })
+  }
+
+
 
 }

@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit, numberAttribute } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
+import { MAT_DATE_LOCALE, ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -11,6 +11,8 @@ import { ReqRouter, ResponseRouter } from '../../router/Models/ResponseRouter';
 import { RouterService } from './../../router/router.service';
 import { ReqBox, ResponseBox } from '../../box/Models/ResponseBox';
 import { BoxService } from '../../box/box.service';
+import { ReqCustomer } from '../../customer/Models/ResponseCustomer';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 
 
 interface Dias {
@@ -19,9 +21,16 @@ interface Dias {
 }
 
 
+interface Ports {
+  id: string;
+  port_number: string;
+}
+
+
 @Component({
   selector: 'app-contract-create',
   templateUrl: './contract-create.component.html',
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'fr' }, provideMomentDateAdapter(undefined, { useUtc: true })],
   styleUrl: './contract-create.component.css',
 })
 export class ContractCreateComponent implements OnInit {
@@ -31,12 +40,14 @@ export class ContractCreateComponent implements OnInit {
   checked = true;
   disabled = false;
   planSelected = 1;
+  boxSelected = 1;
   recurrent = true
   planes: ReqPlan[] = [];
   plan: ReqPlan[] = [];
-  
-  routers: ReqRouter[]=[];
+
+  routers: ReqRouter[] = [];
   boxs: ReqBox[] = [];
+  ports: Ports[] = [];
 
 
   ciclos: Dias[] = [
@@ -48,15 +59,16 @@ export class ContractCreateComponent implements OnInit {
     { value: '5', viewValue: '05' },
     { value: '20', viewValue: '20' },
   ]
-  
 
-  
+
+
   constructor(public formulario: FormBuilder,
     private contractService: ContractService,
     private planService: PlanService,
     private routerService: RouterService,
     private boxService: BoxService,
-    @Inject(MAT_DIALOG_DATA) public getData: any,
+    @Inject(MAT_DIALOG_DATA) public getData: ReqCustomer,
+    @Inject(MAT_DATE_LOCALE) private _locale: string,
     private _snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<ContractCreateComponent>) { }
 
@@ -66,11 +78,13 @@ export class ContractCreateComponent implements OnInit {
     this.getPlans()
     this.getRouters()
     this.getBoxs()
+    // console.log(this.getData);
+
   }
 
   initForm() {
     this.formContrato = this.formulario.group({
-      customer_id: [2],
+      customer_id: [this.getData.id],
       plan_id: ['', Validators.required],
       router_id: ['', Validators.required],
       box_id: ['', Validators.required],
@@ -82,7 +96,7 @@ export class ContractCreateComponent implements OnInit {
       latitude: ['', Validators.required],
       longitude: ['', Validators.required],
       billing_date: ['', Validators.required],
-      recurrent: [true,''],
+      recurrent: [true, ''],
       due_date: ['', Validators.required],
       is_active: [true],
       status: [true],
@@ -91,23 +105,23 @@ export class ContractCreateComponent implements OnInit {
 
   getPlans() {
     this.planService.getPlans().subscribe((respuesta: ResponsePlan) => {
-     // console.log(respuesta.data.length);
+      // console.log(respuesta.data.length);
       if (respuesta.data.length > 0) {
         this.planes = respuesta.data;
       }
 
-    console.log(this.planes)
+      console.log(this.planes)
     });
   }
 
 
-  getPlanbyID(id:number) {
-   
+  getPlanbyID(id: number) {
+
     if (this.planes.length > 0) {
       this.plan = this.planes.filter(plan => plan.id == id)
-       console.log('Plan', this.plan[0].name);
+      console.log('Plan', this.plan[0].name);
     }
-    
+
   }
 
 
@@ -133,12 +147,26 @@ export class ContractCreateComponent implements OnInit {
     });
   }
 
+  getPorts(id: number) {
+    this.boxService.getPortsAvailables(id).subscribe((respuesta: Ports[]) => {
+
+      if (respuesta.length > 0) {
+        this.ports = respuesta
+      }
+
+      console.log(this.ports);
+
+    });
+  }
+
+
+
 
   enviarDatos(): any {
     if (this.formContrato.valid) {
       //console.log('agregar....')
       this.contractService.addService(this.formContrato.value).subscribe(respuesta => {
-        
+
         this.msgSusscess('Contrato agregado correctamente');
         this.dialogRef.close();
       });

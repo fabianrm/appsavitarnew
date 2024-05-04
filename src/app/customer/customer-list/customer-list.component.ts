@@ -9,6 +9,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CustomerCreateComponent } from '../customer-create/customer-create.component';
 import { CustomerEditComponent } from '../customer-edit/customer-edit.component';
 import { ReqCustomer } from '../Models/ResponseCustomer';
+import { ContractCreateComponent } from '../../contract/contract-create/contract-create.component';
+import { ContractService } from '../../contract/contract.service';
 
 @Component({
   selector: 'app-customer-list',
@@ -37,7 +39,8 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   public respuesta?: ReqCustomer;
 
 
-  constructor(private customerService: CustomerService, public dialog: MatDialog) { }
+  constructor(private customerService: CustomerService, private contractService: ContractService, public dialog: MatDialog) { }
+
 
   ngOnInit() {
     this.getCustomers();
@@ -103,12 +106,21 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       // console.log(respuesta);
     });
 
-
-
-
-
   }
 
+
+
+  openDialogContract(row: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '60%';
+    dialogConfig.data = row;
+    this.dialog.open(ContractCreateComponent, dialogConfig);
+
+    this.dialog.afterAllClosed.subscribe(() => {
+    })
+  }
 
 
 

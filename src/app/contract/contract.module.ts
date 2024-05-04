@@ -19,6 +19,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MAT_DATE_LOCALE } from '@angular/material/core'
 
 
 
@@ -30,6 +32,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     ContractRoutingModule,
     MatFormFieldModule,
     MatInputModule,
@@ -50,8 +54,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatOptionModule,
     MatSlideToggleModule,
     MatDatepickerModule,
-    ReactiveFormsModule,
-    FormsModule,
+    MatMomentDateModule,
   ]
 })
 export class ContractModule { }

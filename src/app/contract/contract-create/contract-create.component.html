@@ -7,13 +7,30 @@
     <mat-card-content>
       <mat-card>
         <mat-card-header>
+          <mat-card-title> Datos del Cliente </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="row">
+            <div class="col-sm-4">
+              <h3>Cliente: {{ getData.name }}</h3>
+            </div>
+            <div class="col-sm-4"></div>
+
+            <div class="col-sm-4"></div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
           <mat-card-title> Datos del Plan </mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
           <div class="row">
             <div class="col-sm-4">
-              <mat-form-field>
+              <mat-form-field class="control-full-width" appearance="fill">
                 <mat-label>Plan</mat-label>
                 <mat-select
                   [(value)]="planSelected"
@@ -54,7 +71,13 @@
         <mat-card-content>
           <div class="row">
             <div class="col-sm-4">
-              <mat-form-field>
+              <p>Usar direccion de cliente</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-form-field class="control-full-width" appearance="fill">
                 <input matInput placeholder="Ciudad" formControlName="city" />
               </mat-form-field>
             </div>
@@ -147,7 +170,11 @@
             <div class="col-sm-4">
               <mat-form-field>
                 <mat-label>Caja</mat-label>
-                <mat-select formControlName="box_id">
+                <mat-select
+                  [(value)]="boxSelected"
+                  (selectionChange)="getPorts(boxSelected)"
+                  formControlName="box_id"
+                >
                   @for (box of boxs; track box) {
                   <mat-option [value]="box.id">{{ box.name }}</mat-option>
                   }
@@ -156,11 +183,14 @@
             </div>
             <div class="col-sm-4">
               <mat-form-field>
-                <input
-                  matInput
-                  placeholder="Puerto"
-                  formControlName="port_number"
-                />
+                <mat-label>Puerto</mat-label>
+                <mat-select formControlName="port_number">
+                  @for (port of ports; track port) {
+                  <mat-option [value]="port.port_number">{{
+                    port.port_number
+                  }}</mat-option>
+                  }
+                </mat-select>
               </mat-form-field>
             </div>
           </div>
