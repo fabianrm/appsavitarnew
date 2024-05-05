@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
 import { CustomerService } from './../customer.service';
-import { ContractService } from '../../contract/contract.service';
 
 
 interface Tipo {
@@ -57,6 +56,9 @@ export class CustomerCreateComponent implements OnInit {
       documentNumber: ['', Validators.required],
       name: ['', Validators.required],
       address: ['', Validators.required],
+      reference: [''],
+      latitude: [''],
+      longitude: [''],
       phoneNumber: [''],
       email: [''],
       status: [true],

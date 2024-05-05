@@ -4,6 +4,8 @@ import { ThemePalette } from '@angular/material/core';
 import { BoxService } from '../box.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CityService } from '../../city/city.service';
+import { City } from '../../city/Models/CityResponse';
 
 @Component({
   selector: 'app-box-create',
@@ -17,9 +19,12 @@ export class BoxCreateComponent {
   checked = true;
   disabled = false;
 
+  cities: City[] = [];
+
 
   constructor(public formulario: FormBuilder,
     private boxService: BoxService,
+    private cityService: CityService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
     private _snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<BoxCreateComponent>) { }
@@ -27,13 +32,14 @@ export class BoxCreateComponent {
 
   ngOnInit(): void {
     this.initForm();
+    this.getCities();
     // this.documentNumber!.nativeElement.focus();
   }
 
   initForm() {
     this.formBox = this.formulario.group({
       name: ['', Validators.required],
-      city: ['', Validators.required],
+      city_id: ['', Validators.required],
       address: ['', Validators.required],
       reference: [''],
       latitude: [''],
@@ -41,6 +47,20 @@ export class BoxCreateComponent {
       totalPorts: [''],
       availablePorts: [''],
       status: [true],
+    });
+  }
+
+
+
+  getCities() {
+    this.cityService.getCities().subscribe((respuesta) => {
+
+      if (respuesta.data.length > 0) {
+        this.cities = respuesta.data
+      }
+
+      console.log(this.cities);
+
     });
   }
 

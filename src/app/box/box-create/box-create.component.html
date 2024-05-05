@@ -6,24 +6,20 @@
 
     <mat-card-content>
       <div class="row">
-
         <div class="col-sm-6">
           <mat-form-field>
-            <input
-              matInput
-              placeholder="Nombre"
-              formControlName="name"
-            />
+            <input matInput placeholder="Nombre" formControlName="name" />
           </mat-form-field>
         </div>
-          
+
         <div class="col-sm-6">
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Ciudad"
-              formControlName="city"
-            />
+          <mat-form-field class="control-full-width" appearance="fill">
+            <mat-label>Ciudad</mat-label>
+            <mat-select formControlName="city_id">
+              @for (city of cities; track city) {
+              <mat-option [value]="city.id">{{ city.name }}</mat-option>
+              }
+            </mat-select>
           </mat-form-field>
         </div>
       </div>
@@ -36,11 +32,15 @@
         </div>
         <div class="col-sm-6">
           <mat-form-field>
-            <input matInput placeholder="Referencia" formControlName="reference" />
+            <input
+              matInput
+              placeholder="Referencia"
+              formControlName="reference"
+            />
           </mat-form-field>
         </div>
       </div>
-       <div class="row">
+      <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
             <input matInput placeholder="Latitud" formControlName="latitude" />
@@ -48,7 +48,11 @@
         </div>
         <div class="col-sm-6">
           <mat-form-field>
-            <input matInput placeholder="Longitud" formControlName="longitude" />
+            <input
+              matInput
+              placeholder="Longitud"
+              formControlName="longitude"
+            />
           </mat-form-field>
         </div>
       </div>
@@ -64,7 +68,11 @@
         </div>
         <div class="col-sm-6">
           <mat-form-field>
-            <input matInput placeholder="Puertos libres" formControlName="availablePorts" />
+            <input
+              matInput
+              placeholder="Puertos libres"
+              formControlName="availablePorts"
+            />
           </mat-form-field>
         </div>
       </div>
@@ -80,7 +88,12 @@
 
     <mat-card-actions>
       <div class="row-buttons">
-        <button [disabled]="formBox.invalid" color="primary" mat-raised-button style="margin-right: 5px">
+        <button
+          [disabled]="formBox.invalid"
+          color="primary"
+          mat-raised-button
+          style="margin-right: 5px"
+        >
           Guardar
         </button>
         <button mat-dialog-close="" color="accent" mat-raised-button>
@@ -90,4 +103,3 @@
     </mat-card-actions>
   </mat-card>
 </form>
-

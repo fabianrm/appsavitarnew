@@ -13,6 +13,10 @@ import { ReqBox, ResponseBox } from '../../box/Models/ResponseBox';
 import { BoxService } from '../../box/box.service';
 import { ReqCustomer } from '../../customer/Models/ResponseCustomer';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import { City } from '../../city/Models/CityResponse';
+import { CityService } from '../../city/city.service';
+import { EquipmentService } from '../../equipment/equipment.service';
+import { Equipment } from '../../equipment/Models/Equipment';
 
 
 interface Dias {
@@ -41,13 +45,20 @@ export class ContractCreateComponent implements OnInit {
   disabled = false;
   planSelected = 1;
   boxSelected = 1;
+  equipmentSelected = 1;
+  citySelected = 2;
   recurrent = true
-  planes: ReqPlan[] = [];
-  plan: ReqPlan[] = [];
+
+  
 
   routers: ReqRouter[] = [];
   boxs: ReqBox[] = [];
   ports: Ports[] = [];
+  cities: City[] = [];
+  planes: ReqPlan[] = [];
+  plan: ReqPlan[] = [];
+  equipments: Equipment[] = [];
+  equipment: Equipment[] = [];
 
 
   ciclos: Dias[] = [
@@ -67,6 +78,8 @@ export class ContractCreateComponent implements OnInit {
     private planService: PlanService,
     private routerService: RouterService,
     private boxService: BoxService,
+    private cityService: CityService,
+    private equipmentService: EquipmentService,
     @Inject(MAT_DIALOG_DATA) public getData: ReqCustomer,
     @Inject(MAT_DATE_LOCALE) private _locale: string,
     private _snackBar: MatSnackBar,
@@ -78,6 +91,8 @@ export class ContractCreateComponent implements OnInit {
     this.getPlans()
     this.getRouters()
     this.getBoxs()
+    this.getCities()
+    this.getEquipments()
     // console.log(this.getData);
 
   }
@@ -85,16 +100,18 @@ export class ContractCreateComponent implements OnInit {
   initForm() {
     this.formContrato = this.formulario.group({
       customer_id: [this.getData.id],
-      plan_id: ['', Validators.required],
+      plan_id: [this.planSelected, Validators.required],
       router_id: ['', Validators.required],
       box_id: ['', Validators.required],
       port_number: ['', Validators.required],
-      city: ['', Validators.required],
+      city_id: [this.citySelected, Validators.required],
       address_instalation: ['', Validators.required],
       reference: ['', Validators.required],
       registration_date: ['', Validators.required],
       latitude: ['', Validators.required],
       longitude: ['', Validators.required],
+      equipment_id: ['', Validators.required],
+      
       billing_date: ['', Validators.required],
       recurrent: [true, ''],
       due_date: ['', Validators.required],
@@ -160,6 +177,39 @@ export class ContractCreateComponent implements OnInit {
   }
 
 
+  getCities() {
+    this.cityService.getCities().subscribe((respuesta) => {
+
+      if (respuesta.data.length > 0) {
+        this.cities = respuesta.data
+      }
+
+      console.log(this.cities);
+
+    });
+  }
+
+
+  getEquipments() {
+    this.equipmentService.getEquipments().subscribe((respuesta) => {
+
+      if (respuesta.data.length > 0) {
+        this.equipments = respuesta.data
+      }
+
+      console.log(this.equipments);
+
+    });
+  }
+
+  getEquipmentsByID(id: number) {
+
+    if (this.equipments.length > 0) {
+      this.equipment = this.equipments.filter(equipment => equipment.id == id)
+      console.log('Equipment', this.equipment[0].type);
+    }
+
+  }
 
 
   enviarDatos(): any {

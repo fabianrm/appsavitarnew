@@ -28,7 +28,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     }
   }
 
-  displayedColumns: string[] = ['id', 'type', 'document_number', 'name', 'address', 'phone_number', 'email', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'type', 'document_number', 'name', 'address', 'reference', 'latitude', 'longitude',  'phone_number', 'email', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<CCustomer[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

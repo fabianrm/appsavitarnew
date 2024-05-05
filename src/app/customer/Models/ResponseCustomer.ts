@@ -10,6 +10,9 @@ export interface ReqCustomer {
     document_number: string;
     name: string;
     address: string;
+    reference: string;
+    latitude: string;
+    longitude: string;
     phone_number: string;
     email: string;
     status: number;

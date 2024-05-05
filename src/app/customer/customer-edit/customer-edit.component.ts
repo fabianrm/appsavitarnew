@@ -48,7 +48,12 @@ export class CustomerEditComponent implements OnInit {
       type: [this.getData.type, Validators.required],
       documentNumber: [this.getData.document_number, Validators.required],
       name: [this.getData.name, Validators.required],
+
       address: [this.getData.address, Validators.required],
+      reference: [this.getData.reference,''],
+      latitude: [this.getData.latitude, ''],
+      longitude: [this.getData.longitude, ''],
+
       phoneNumber: [this.getData.phone_number],
       email: [this.getData.email],
       status: [this.checked],

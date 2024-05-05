@@ -3,6 +3,7 @@
     <mat-card-header>
       <mat-card-title> Nuevo Cliente </mat-card-title>
     </mat-card-header>
+   
     <mat-card-content>
       <div class="row">
         <div class="col-sm-6">
@@ -16,7 +17,15 @@
           </mat-form-field>
         </div>
         <div class="col-sm-6">
-          <mat-form-field>
+           <mat-slide-toggle [color]="color" [checked]="checked"
+            >Activo</mat-slide-toggle
+          >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+         <mat-form-field>
             <input
               matInput
               placeholder="Nro. Documento"
@@ -24,20 +33,46 @@
             />
           </mat-form-field>
         </div>
-      </div>
-
-      <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
             <input matInput placeholder="Nombre" formControlName="name" />
           </mat-form-field>
         </div>
+      </div>
+
+      <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
             <input matInput placeholder="Dirección" formControlName="address" />
           </mat-form-field>
         </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Referencia"
+              formControlName="reference"
+            />
+          </mat-form-field>
+        </div>
       </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Latitud" formControlName="latitude" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Longitud"
+              formControlName="longitude"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
@@ -54,19 +89,19 @@
           </mat-form-field>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-sm-12">
-          <mat-slide-toggle [color]="color" [checked]="checked"
-            >Activo</mat-slide-toggle
-          >
-        </div>
-      </div>
     </mat-card-content>
+
+
+
 
     <mat-card-actions>
       <div class="row-buttons">
-        <button [disabled]="formCliente.invalid" color="primary" mat-raised-button style="margin-right: 5px">
+        <button
+          [disabled]="formCliente.invalid"
+          color="primary"
+          mat-raised-button
+          style="margin-right: 5px"
+        >
           Guardar
         </button>
         <button mat-dialog-close="" color="accent" mat-raised-button>

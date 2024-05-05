@@ -20,6 +20,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MAT_DATE_LOCALE } from '@angular/material/core'
 
 
@@ -55,6 +56,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core'
     MatSlideToggleModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatTabsModule
   ]
 })
 export class ContractModule { }

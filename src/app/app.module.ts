@@ -16,7 +16,6 @@ import { ContractModule } from './contract/contract.module';
 @NgModule({
   declarations: [
     AppComponent,
-
   ],
   imports: [
     BrowserModule,
