@@ -9,7 +9,7 @@ import { ReqPlan, ResponsePlan } from '../../plan/Models/ResponsePlan';
 import { PlanService } from '../../plan/plan.service';
 import { ReqRouter, ResponseRouter } from '../../router/Models/ResponseRouter';
 import { RouterService } from './../../router/router.service';
-import { ReqBox, ResponseBox } from '../../box/Models/ResponseBox';
+import { Box } from '../../box/Models/ResponseBox';
 import { BoxService } from '../../box/box.service';
 import { ReqCustomer } from '../../customer/Models/ResponseCustomer';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
@@ -17,6 +17,7 @@ import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 import { EquipmentService } from '../../equipment/equipment.service';
 import { Equipment } from '../../equipment/Models/Equipment';
+
 
 
 interface Dias {
@@ -52,7 +53,7 @@ export class ContractCreateComponent implements OnInit {
   
 
   routers: ReqRouter[] = [];
-  boxs: ReqBox[] = [];
+  boxs: Box[]=[];
   ports: Ports[] = [];
   cities: City[] = [];
   planes: ReqPlan[] = [];
@@ -127,7 +128,7 @@ export class ContractCreateComponent implements OnInit {
         this.planes = respuesta.data;
       }
 
-      console.log(this.planes)
+     // console.log(this.planes)
     });
   }
 
@@ -136,7 +137,7 @@ export class ContractCreateComponent implements OnInit {
 
     if (this.planes.length > 0) {
       this.plan = this.planes.filter(plan => plan.id == id)
-      console.log('Plan', this.plan[0].name);
+    //  console.log('Plan', this.plan[0].name);
     }
 
   }
@@ -149,18 +150,19 @@ export class ContractCreateComponent implements OnInit {
         this.routers = respuesta.data;
       }
 
-      console.log(this.routers)
+    //  console.log(this.routers)
     });
   }
 
   getBoxs() {
-    this.boxService.getBoxes().subscribe((respuesta: ResponseBox) => {
+    this.boxService.getBoxes().subscribe((respuesta) => {
 
-      if (respuesta.data.length > 0) {
-        this.boxs = respuesta.data;
+   
+      if (respuesta.data.boxs.length > 0) {
+        this.boxs = respuesta.data.boxs;
       }
 
-      console.log(this.boxs)
+      console.log('Boxs',this.boxs)
     });
   }
 
@@ -171,7 +173,7 @@ export class ContractCreateComponent implements OnInit {
         this.ports = respuesta
       }
 
-      console.log(this.ports);
+    //  console.log(this.ports);
 
     });
   }
@@ -184,7 +186,7 @@ export class ContractCreateComponent implements OnInit {
         this.cities = respuesta.data
       }
 
-      console.log(this.cities);
+     // console.log('Cities', this.cities);
 
     });
   }
@@ -197,7 +199,7 @@ export class ContractCreateComponent implements OnInit {
         this.equipments = respuesta.data
       }
 
-      console.log(this.equipments);
+     // console.log(this.equipments);
 
     });
   }
@@ -206,7 +208,7 @@ export class ContractCreateComponent implements OnInit {
 
     if (this.equipments.length > 0) {
       this.equipment = this.equipments.filter(equipment => equipment.id == id)
-      console.log('Equipment', this.equipment[0].type);
+    //  console.log('Equipment', this.equipment[0].type);
     }
 
   }

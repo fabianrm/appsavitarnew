@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ReqBox } from '../Models/ResponseBox';
+import { Box, DataBox } from '../Models/ResponseBox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BoxService } from '../box.service';
 import { BoxCreateComponent } from '../box-create/box-create.component';
 import { BoxEditComponent } from '../box-edit/box-edit.component';
-import { CBox } from '../Models/CBox';
+import { ReqBox } from '../Models/RequestBox';
+
 
 @Component({
   selector: 'app-box-list',
@@ -18,14 +19,14 @@ import { CBox } from '../Models/CBox';
 export class BoxListComponent {
 
   displayedColumns: string[] = ['id', 'name', 'city', 'address', 'reference', 'latitude', 'longitude', 'total_ports', 'available_ports', 'status', 'acciones'];
-  public dataSource!: MatTableDataSource<CBox[]>;
+  public dataSource!: MatTableDataSource<Box>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   subscription!: Subscription
 
-  public respuesta?: ReqBox;
+  public respuesta: ReqBox[]=[];
 
   constructor(private boxService: BoxService, public dialog: MatDialog) { }
 
@@ -43,8 +44,8 @@ export class BoxListComponent {
   getBoxes() {
     this.boxService.getBoxes().subscribe((respuesta) => {
 
-      if (respuesta.data.length > 0) {
-        this.dataSource = new MatTableDataSource(respuesta.data);
+      if (respuesta.data.boxs.length > 0) {
+        this.dataSource = new MatTableDataSource(respuesta.data.boxs);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
@@ -55,7 +56,7 @@ export class BoxListComponent {
 
   getBoxById(id: number) {
     this.boxService.getBoxByID(id).subscribe(respuesta => {
-      this.respuesta = respuesta;
+      this.respuesta = respuesta.data;
       //  console.log(respuesta);
     });
   }
@@ -77,7 +78,6 @@ export class BoxListComponent {
 
     this.boxService.getBoxByID(id).subscribe(respuesta => {
       this.respuesta = respuesta.data;
-      console.log(respuesta);
       
       if (respuesta.data) {
 

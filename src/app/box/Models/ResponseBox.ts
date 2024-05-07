@@ -1,12 +1,14 @@
 export interface ResponseBox {
-    data: ReqBox[];
-    links: Links;
-    meta: Meta;
+    data: DataBox;
 }
 
-export interface ReqBox {
+export interface DataBox {
+    boxs: Box[];
+}
+
+export interface Box {
     id: number;
-    name: string
+    name: string;
     city: string;
     address: string;
     reference: string;
@@ -15,28 +17,4 @@ export interface ReqBox {
     total_ports: number;
     available_ports: number;
     status: number;
-}
-
-export interface Links {
-    first: string;
-    last: string;
-    prev: null;
-    next: string;
-}
-
-export interface Meta {
-    current_page: number;
-    from: number;
-    last_page: number;
-    links: Link[];
-    path: string;
-    per_page: number;
-    to: number;
-    total: number;
-}
-
-export interface Link {
-    url: null | string;
-    label: string;
-    active: boolean;
 }

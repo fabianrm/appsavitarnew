@@ -59,7 +59,7 @@ export class BoxCreateComponent {
         this.cities = respuesta.data
       }
 
-      console.log(this.cities);
+     // console.log(this.cities);
 
     });
   }

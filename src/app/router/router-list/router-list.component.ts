@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { CRouter } from '../Models/CRouter';
-import { ReqBox } from '../../box/Models/ResponseBox';
+import { Box } from '../../box/Models/ResponseBox';
 import { RouterCreateComponent } from '../router-create/router-create.component';
 import { RouterEditComponent } from '../router-edit/router-edit.component';
 import { RouterService } from '../router.service';
@@ -25,7 +25,7 @@ export class RouterListComponent {
 
   subscription!: Subscription
 
-  public respuesta?: ReqBox;
+  public respuesta?: Box;
 
   constructor(private routerService: RouterService, public dialog: MatDialog) { }
 

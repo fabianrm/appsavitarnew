@@ -44,7 +44,7 @@ export class ContractListComponent {
   getContracts() {
     this.contractService.getservices().subscribe((respuesta) => {
 
-      console.log(respuesta.data.services)
+     // console.log(respuesta.data.services)
 
       if (respuesta.data.services.length > 0) {
         this.dataSource = new MatTableDataSource(respuesta.data.services);
