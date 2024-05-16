@@ -14,9 +14,11 @@ export interface ReqContract {
     recurrent: number,
     due_date: string,
     address_instalation: string,
+    reference: string,
     city: string,
     latitude: string,
     longitude: string,
+    equipment_id: number;
     is_active: string,
     status: number
 

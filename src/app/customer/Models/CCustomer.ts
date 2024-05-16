@@ -6,11 +6,14 @@ export class CCustomer {
             obj.id,
             obj.type,
             obj.document_number,
+            obj.client_code,
             obj.name,
             obj.address,
             obj.phone_number,
             obj.email,
-            obj.status
+            obj.status,
+            obj.updated_at
+
         );
     }
 
@@ -18,11 +21,14 @@ export class CCustomer {
         public id: number,
         public type: Type,
         public document_number: string,
+        public client_code: string,
         public name: string,
         public address: string,
         public phone_number: string,
         public email: string,
         public status: number,
+        public updated_at: Date,
+
     ) {
         
     }

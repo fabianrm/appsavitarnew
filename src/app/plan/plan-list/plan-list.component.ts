@@ -79,7 +79,7 @@ export class PlanListComponent {
 
     this.planService.getPlanByID(id).subscribe(respuesta => {
       this.respuesta = respuesta.data;
-      console.log(respuesta);
+      //console.log(respuesta);
 
       if (respuesta.data) {
         const dialogConfig = new MatDialogConfig();

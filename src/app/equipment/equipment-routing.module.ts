@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { EquipmentListComponent } from './equipment-list/equipment-list.component';
+import { EquipmentCreateComponent } from './equipment-create/equipment-create.component';
+import { EquipmentEditComponent } from './equipment-edit/equipment-edit.component';
 
 
+const routes: Routes = [
+  { path: 'equipment', component: EquipmentListComponent },
+  { path: 'equipmentCreate', component: EquipmentCreateComponent },
+  { path: 'equipmentEdit/:id', component: EquipmentEditComponent },
+];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class EquipmentRoutingModule { }

@@ -4,8 +4,8 @@
   (ngSubmit)="enviarDatos(getData.id)"
 >
   <mat-card>
-    <mat-card-header>
-      <mat-card-title> Editar Cliente {{ id_customer }} </mat-card-title>
+    <mat-card-header class="header">
+      <mat-card-title> Editar Cliente </mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
@@ -30,6 +30,7 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Nro. Documento</mat-label>
             <input
               matInput
               placeholder="Nro. Documento"
@@ -39,6 +40,7 @@
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Nombre</mat-label>
             <input matInput placeholder="Nombre" formControlName="name" />
           </mat-form-field>
         </div>
@@ -47,11 +49,13 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Dirección</mat-label>
             <input matInput placeholder="Dirección" formControlName="address" />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Referencia</mat-label>
             <input
               matInput
               placeholder="Referencia"
@@ -63,11 +67,13 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Latitud</mat-label>
             <input matInput placeholder="Latitud" formControlName="latitude" />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Longitud</mat-label>
             <input
               matInput
               placeholder="Longitud"
@@ -80,6 +86,7 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Teléfono</mat-label>
             <input
               matInput
               placeholder="Teléfono"
@@ -89,6 +96,7 @@
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Email</mat-label>
             <input matInput placeholder="Email" formControlName="email" />
           </mat-form-field>
         </div>

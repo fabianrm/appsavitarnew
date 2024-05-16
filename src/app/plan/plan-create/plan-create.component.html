@@ -1,6 +1,6 @@
 <form ngNativeValidate [formGroup]="formCreate" (ngSubmit)="enviarDatos()">
   <mat-card>
-    <mat-card-header>
+    <mat-card-header class="header">
       <mat-card-title> Nuevo Plan </mat-card-title>
     </mat-card-header>
 
@@ -8,6 +8,7 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+             <mat-label>Nombre</mat-label>
             <input matInput placeholder="Nombre" formControlName="name" />
           </mat-form-field>
         </div>
@@ -25,11 +26,13 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+             <mat-label>Descarga</mat-label>
             <input matInput placeholder="Descarga" formControlName="download" />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+              <mat-label>Subida</mat-label>
             <input matInput placeholder="Subida" formControlName="upload" />
           </mat-form-field>
         </div>
@@ -37,11 +40,13 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+             <mat-label>Precio</mat-label>
             <input matInput placeholder="Precio" formControlName="price" />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+             <mat-label>Velocidad garantizada</mat-label>
             <input
               matInput
               placeholder="Velocidad garantizada"
@@ -53,6 +58,7 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+              <mat-label>Prioridad</mat-label>
             <input
               matInput
               placeholder="Prioridad"
@@ -70,6 +76,7 @@
             <div class="row">
               <div class="col-sm-4">
                 <mat-form-field>
+                    <mat-label>Burst limit</mat-label>
                   <input
                     matInput
                     placeholder="Burst limit"
@@ -80,6 +87,7 @@
               </div>
                <div class="col-sm-4">
                 <mat-form-field>
+                    <mat-label>Burst Threshold</mat-label>
                   <input
                     matInput
                     placeholder="Burst Threshold"
@@ -89,6 +97,7 @@
               </div>
                <div class="col-sm-4">
                 <mat-form-field>
+                   <mat-label>Burst Time</mat-label>
                   <input
                     matInput
                     placeholder="Burst Time"

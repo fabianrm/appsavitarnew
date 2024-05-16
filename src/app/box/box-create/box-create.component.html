@@ -1,6 +1,6 @@
 <form ngNativeValidate [formGroup]="formBox" (ngSubmit)="enviarDatos()">
   <mat-card>
-    <mat-card-header>
+    <mat-card-header class="header">
       <mat-card-title> Nueva Caja </mat-card-title>
     </mat-card-header>
 
@@ -8,6 +8,7 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Nombre</mat-label>
             <input matInput placeholder="Nombre" formControlName="name" />
           </mat-form-field>
         </div>
@@ -27,11 +28,13 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+               <mat-label>Dirección</mat-label>
             <input matInput placeholder="Dirección" formControlName="address" />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+             <mat-label>Referencia</mat-label>
             <input
               matInput
               placeholder="Referencia"
@@ -43,11 +46,13 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+             <mat-label>Latitud</mat-label>
             <input matInput placeholder="Latitud" formControlName="latitude" />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+             <mat-label>Longitud</mat-label>
             <input
               matInput
               placeholder="Longitud"
@@ -59,6 +64,7 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+               <mat-label>Nro. de Puertos</mat-label>
             <input
               matInput
               placeholder="Nro. de Puertos"
@@ -68,6 +74,7 @@
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+             <mat-label>Puertos libres</mat-label>
             <input
               matInput
               placeholder="Puertos libres"

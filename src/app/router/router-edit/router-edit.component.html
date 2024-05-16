@@ -12,19 +12,27 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>IP</mat-label>
             <input matInput placeholder="IP" formControlName="ip" />
           </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-slide-toggle [color]="color" [checked]="checked"
+            >Activo</mat-slide-toggle
+          >
         </div>
       </div>
 
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Usuario</mat-label>
             <input matInput placeholder="Usuario" formControlName="usuario" />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Password</mat-label>
             <input matInput placeholder="Password" formControlName="password" />
           </mat-form-field>
         </div>
@@ -32,21 +40,15 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>Port</mat-label>
             <input matInput placeholder="Port" formControlName="port" />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
+            <mat-label>API</mat-label>
             <input matInput placeholder="API" formControlName="apiConnection" />
           </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-12">
-          <mat-slide-toggle [color]="color" [checked]="checked" formControlName="status"
-            >Activo</mat-slide-toggle
-          >
         </div>
       </div>
     </mat-card-content>

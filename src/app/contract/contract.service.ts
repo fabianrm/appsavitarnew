@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ResContract } from './Models/ContractResponse';
-import { ReqContract } from './Models/ContractRequest';
+import { ContractRequest, ReqContract } from './Models/ContractRequest';
+import { ServiceResponse } from './Models/ServiceResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -43,11 +44,17 @@ export class ContractService {
       }));
   }
 
-  getServiceByID(id: number): Observable<any> {
-    return this.clienteHttp.get(this.API + 'services/' + id, { headers: this.headers })
-      .pipe(tap(() => {
-        this._refresh$.next()
-      }));
+  // getServiceByID(id: number): Observable<any> {
+  //   return this.clienteHttp.get(this.API + 'services/' + id, { headers: this.headers })
+  //     .pipe(tap(() => {
+  //       this._refresh$.next()
+  //     }));
+  // }
+
+
+  getServiceByID(id: number): Observable<ServiceResponse> {
+    return this.clienteHttp.get<ServiceResponse>(this.API + 'services/' + id, { headers: this.headers })
   }
+
 
 }

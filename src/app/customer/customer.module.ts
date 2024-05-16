@@ -20,6 +20,7 @@ import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerRoutingModule } from './customer-routing.module';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({

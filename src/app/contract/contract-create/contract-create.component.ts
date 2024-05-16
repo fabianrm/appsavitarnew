@@ -162,7 +162,7 @@ export class ContractCreateComponent implements OnInit {
         this.boxs = respuesta.data.boxs;
       }
 
-      console.log('Boxs',this.boxs)
+     // console.log('Boxs',this.boxs)
     });
   }
 

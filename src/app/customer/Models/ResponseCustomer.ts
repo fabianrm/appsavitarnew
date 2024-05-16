@@ -8,6 +8,7 @@ export interface ReqCustomer {
     id: number;
     type: Type;
     document_number: string;
+    client_code: string;
     name: string;
     address: string;
     reference: string;
@@ -16,6 +17,7 @@ export interface ReqCustomer {
     phone_number: string;
     email: string;
     status: number;
+    updated_at: Date;
 }
 
 export enum Type {

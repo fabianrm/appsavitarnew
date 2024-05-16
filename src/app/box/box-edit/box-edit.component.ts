@@ -45,6 +45,7 @@ export class BoxEditComponent {
 
     this.formEditBox = this.formulario.group({
       id: [this.getData.id, Validators.required],
+      name: [this.getData.name, Validators.required],
       city_id: [this.getData.city_id, Validators.required],
       address: [this.getData.address, Validators.required],
       reference: [this.getData.reference],

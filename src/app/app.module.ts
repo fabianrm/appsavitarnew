@@ -4,6 +4,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+//import { SpinnerInterceptor } from "./components/shared/spinner/spinner.interceptor";
+
 import { CustomerModule } from './customer/customer.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { AuthModule } from './auth/auth.module';
@@ -11,11 +14,15 @@ import { BoxModule } from './box/box.module';
 import { RouterModule } from './router/router.module';
 import { PlanModule } from './plan/plan.module';
 import { ContractModule } from './contract/contract.module';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { SpinnerInterceptor } from './shared/spinner/spinner.interceptor';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -27,12 +34,13 @@ import { ContractModule } from './contract/contract.module';
     BoxModule,
     RouterModule,
     PlanModule,
-    ContractModule
-
+    ContractModule,
+    
   ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

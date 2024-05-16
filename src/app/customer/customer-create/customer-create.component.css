@@ -1,9 +1,48 @@
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
-.row-buttons{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+.valign-center {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.control-full-width {
+  width: 100%;
+}
+
+.control-full-50 {
+  width: 49%;
+}
+
+.row-buttons {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  background: #79abda;
+  margin-bottom: 10px;
+}
+
+mat-card-title{
+  color: white;
+  font-size: 2.5Rem;
+}
+
+.container {
+  margin-top: 20px;
+  /* margin-bottom: 20px; */
+}
+
+.row-items {
+  display: flex;
+  justify-content: space-between;
 }

@@ -1,1 +1,312 @@
-<p>contract-edit works!</p>
+<div class="container">
+  <form ngNativeValidate [formGroup]="formContrato" (ngSubmit)="enviarDatos()">
+    <mat-tab-group>
+      <mat-tab label="Datos del Contrato">
+        <mat-card>
+          <mat-card-header class="header">
+            <mat-card-title> Datos del Cliente </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-4">
+                <h3>Cliente: </h3>
+              </div>
+              <div class="col-sm-4"></div>
+
+              <div class="col-sm-4">
+                <mat-slide-toggle [color]="color" [checked]="checked"
+                  >Activo</mat-slide-toggle
+                >
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <br />
+        <mat-card>
+          <mat-card-header class="header">
+            <mat-card-title> Datos del Plan </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Plan</mat-label>
+                  <mat-select
+                    [(value)]="planSelected"
+                    formControlName="plan_id"
+                    (selectionChange)="getPlanbyID(planSelected)"
+                  >
+                    @for (plan of planes; track plan) {
+                    <mat-option [value]="plan.id">{{ plan.name }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                @for (itemPlan of plan; track itemPlan) {
+                <p>Plan de Servicio: {{ itemPlan.name }}</p>
+                <mat-icon class="valign-center">upload</mat-icon>
+                <span> {{ itemPlan.download }}</span>
+                <mat-icon class="valign-center">download</mat-icon>
+                <span>{{ itemPlan.upload }}</span>
+                }
+              </div>
+
+              <div class="col-sm-4">
+                @for (itemPlan of plan; track itemPlan) {
+                <p>Precio:</p>
+                {{ itemPlan.price | currency : "PEN" }}
+                }
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <br />
+        <mat-card>
+          <mat-card-header class="header">
+            <mat-card-title> Dirección de instalación </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-4">
+                <p>Usar direccion de cliente</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Ciudad</mat-label>
+                  <mat-select formControlName="city_id">
+                    @for (city of cities; track city) {
+                    <mat-option [value]="city.id">{{ city.name }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <input
+                    matInput
+                    placeholder="Dirección de instalación"
+                    formControlName="address_instalation"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <input
+                    matInput
+                    placeholder="Referencia"
+                    formControlName="reference"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <!-- <mat-form-field>
+                <mat-label>Choose a date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  formControlName="registration_date"
+                />
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field> -->
+
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Fecha de Alta</mat-label>
+                  <input
+                    matInput
+                    type="date"
+                    formControlName="registration_date"
+                  />
+                  <!-- <mat-hint>DD/MM/YYYY</mat-hint> -->
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <input
+                    matInput
+                    placeholder="Latitud"
+                    formControlName="latitude"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <input
+                    matInput
+                    placeholder="Longitud"
+                    formControlName="longitude"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <br />
+      </mat-tab>
+
+      <mat-tab label="Datos de Conexión">
+        <mat-card>
+          <mat-card-header class="header">
+            <mat-card-title> Datos de Instalación </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>IP Router</mat-label>
+                  <mat-select formControlName="router_id">
+                    @for (router of routers; track router) {
+                    <mat-option [value]="router.id">{{ router.ip }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Caja</mat-label>
+                  <mat-select
+                    [(value)]="boxSelected"
+                    (selectionChange)="getPorts(boxSelected)"
+                    formControlName="box_id"
+                  >
+                    @for (box of boxs; track box) {
+                    <mat-option [value]="box.id">{{ box.name }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Puerto</mat-label>
+                  <mat-select formControlName="port_number">
+                    @for (port of ports; track port) {
+                    <mat-option [value]="port.port_number">{{
+                      port.port_number
+                    }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-header class="header">
+            <mat-card-title> Datos del Equipo </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Serie</mat-label>
+                  <mat-select
+                    [(value)]="equipmentSelected"
+                    (selectionChange)="getEquipmentsByID(equipmentSelected)"
+                    formControlName="equipment_id"
+                  >
+                    @for (equipment of equipments; track equipment) {
+                    <mat-option [value]="equipment.id">{{
+                      equipment.serie
+                    }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-8 row-items">
+                @for (itemEq of equipment; track itemEq) {
+                <div>
+                  <p>Tipo:</p>
+                  {{ itemEq.type }}
+                </div>
+                <div>
+                  <p>Marca:</p>
+                  {{ itemEq.brand }}
+                </div>
+                <div>
+                  <p>Modelo:</p>
+                  {{ itemEq.model }}
+                </div>
+
+                }
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+      <mat-tab label="Datos de Facturación">
+        <mat-card>
+          <mat-card-header class="header">
+            <mat-card-title> Datos de Facturación </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Día de Facturación</mat-label>
+                  <mat-select formControlName="billing_date">
+                    @for (ciclo of ciclos; track ciclo) {
+                    <mat-option [value]="ciclo.value">{{
+                      ciclo.viewValue
+                    }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Día de Corte</mat-label>
+                  <mat-select formControlName="due_date">
+                    @for (dia of vencimientos; track dia) {
+                    <mat-option [value]="dia.value">{{
+                      dia.viewValue
+                    }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-slide-toggle [color]="color" [checked]="recurrent"
+                  >Cliente recurrente</mat-slide-toggle
+                >
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div class="row-buttons">
+      <button
+        [disabled]="formContrato.invalid"
+        color="primary"
+        mat-raised-button
+        style="margin-right: 5px"
+      >
+        Guardar
+      </button>
+      <button mat-dialog-close="" color="accent" mat-raised-button>
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
+
