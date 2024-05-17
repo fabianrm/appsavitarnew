@@ -13,8 +13,8 @@ export class SpinnerService {
 
   show(): void {
     //Retrasamos en 1 milisegundo para evitar el error de checkdetection
-    //setTimeout(() => this.isLoading$.next(true), 10)
-    this.isLoading$.next(true);
+    setTimeout(() => this.isLoading$.next(true), 10)
+    //this.isLoading$.next(true);
 
     /* of(false).pipe(delay(5)).subscribe(()=>{
         this.isLoading$.next(true)

@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnInit, numberAttribute } from '@angular/core';
+import { AfterViewInit, Component, Inject, LOCALE_ID, OnInit, numberAttribute } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_LOCALE, ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -44,16 +44,17 @@ export class ContractCreateComponent implements OnInit {
   color: ThemePalette = 'accent';
   checked = true;
   disabled = false;
-  planSelected = 1;
+  planInicial = 1;
+  planSelected: any;
   boxSelected = 1;
   equipmentSelected = 1;
-  citySelected = 2;
+  citySelected = 1;
   recurrent = true
 
-  
+
 
   routers: ReqRouter[] = [];
-  boxs: Box[]=[];
+  boxs: Box[] = [];
   ports: Ports[] = [];
   cities: City[] = [];
   planes: ReqPlan[] = [];
@@ -90,18 +91,17 @@ export class ContractCreateComponent implements OnInit {
   ngOnInit(): void {
     this.initForm()
     this.getPlans()
+    this.getCities()
     this.getRouters()
     this.getBoxs()
-    this.getCities()
     this.getEquipments()
-    // console.log(this.getData);
-
   }
+
 
   initForm() {
     this.formContrato = this.formulario.group({
       customer_id: [this.getData.id],
-      plan_id: [this.planSelected, Validators.required],
+      plan_id: [this.planInicial, Validators.required],
       router_id: ['', Validators.required],
       box_id: ['', Validators.required],
       port_number: ['', Validators.required],
@@ -112,7 +112,7 @@ export class ContractCreateComponent implements OnInit {
       latitude: ['', Validators.required],
       longitude: ['', Validators.required],
       equipment_id: ['', Validators.required],
-      
+
       billing_date: ['', Validators.required],
       recurrent: [true, ''],
       due_date: ['', Validators.required],
@@ -126,9 +126,14 @@ export class ContractCreateComponent implements OnInit {
       // console.log(respuesta.data.length);
       if (respuesta.data.length > 0) {
         this.planes = respuesta.data;
+        //const defaultPlanId = this.planes[0]?.id; // Asegúrate de que hay planes y selecciona el primero
+        // this.formContrato.patchValue({ plan_id: this.planInicial });
+        //Después de cargar los planes llamamos al seleccionado
+        this.getPlanbyID(this.planInicial); 
+
       }
 
-     // console.log(this.planes)
+      // console.log(this.planes)
     });
   }
 
@@ -136,8 +141,8 @@ export class ContractCreateComponent implements OnInit {
   getPlanbyID(id: number) {
 
     if (this.planes.length > 0) {
-      this.plan = this.planes.filter(plan => plan.id == id)
-    //  console.log('Plan', this.plan[0].name);
+      this.planSelected = this.planes.filter(plan => plan.id == id)
+      console.log('Plan', this.planSelected[0].name);
     }
 
   }
@@ -150,19 +155,19 @@ export class ContractCreateComponent implements OnInit {
         this.routers = respuesta.data;
       }
 
-    //  console.log(this.routers)
+      //  console.log(this.routers)
     });
   }
 
   getBoxs() {
     this.boxService.getBoxes().subscribe((respuesta) => {
 
-   
+
       if (respuesta.data.boxs.length > 0) {
         this.boxs = respuesta.data.boxs;
       }
 
-     // console.log('Boxs',this.boxs)
+      // console.log('Boxs',this.boxs)
     });
   }
 
@@ -173,7 +178,7 @@ export class ContractCreateComponent implements OnInit {
         this.ports = respuesta
       }
 
-    //  console.log(this.ports);
+      //  console.log(this.ports);
 
     });
   }
@@ -186,7 +191,7 @@ export class ContractCreateComponent implements OnInit {
         this.cities = respuesta.data
       }
 
-     // console.log('Cities', this.cities);
+      // console.log('Cities', this.cities);
 
     });
   }
@@ -199,7 +204,7 @@ export class ContractCreateComponent implements OnInit {
         this.equipments = respuesta.data
       }
 
-     // console.log(this.equipments);
+      // console.log(this.equipments);
 
     });
   }
@@ -208,7 +213,7 @@ export class ContractCreateComponent implements OnInit {
 
     if (this.equipments.length > 0) {
       this.equipment = this.equipments.filter(equipment => equipment.id == id)
-    //  console.log('Equipment', this.equipment[0].type);
+      //  console.log('Equipment', this.equipment[0].type);
     }
 
   }

@@ -32,7 +32,19 @@
           <mat-card-content>
             <div class="row">
               <div class="col-sm-4">
-                <mat-form-field class="control-full-width" appearance="fill">
+                <mat-form-field>
+                  <mat-label>Seleccione un plan</mat-label>
+                  <mat-select
+                    formControlName="plan_id"
+                    (selectionChange)="getPlanbyID($event.value)"
+                  >
+                    <mat-option *ngFor="let plan of planes" [value]="plan.id">
+                      {{ plan.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Plan</mat-label>
                   <mat-select
                     [(value)]="planSelected"
@@ -43,17 +55,22 @@
                     <mat-option [value]="plan.id">{{ plan.name }}</mat-option>
                     }
                   </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
               </div>
+
               <div class="col-sm-4">
-                @for (itemPlan of plan; track itemPlan) {
-                <p>Plan de Servicio: {{ itemPlan.name }}</p>
-                <mat-icon class="valign-center">upload</mat-icon>
-                <span> {{ itemPlan.download }}</span>
-                <mat-icon class="valign-center">download</mat-icon>
-                <span>{{ itemPlan.upload }}</span>
-                }
+                <div *ngIf="planSelected">
+                  @for (itemPlan of planSelected; track itemPlan) {
+                  <p>Plan de Servicio: {{ itemPlan.name }}</p>
+                  <mat-icon class="valign-center">upload</mat-icon>
+                  <span> {{ itemPlan.download }}</span>
+                  <mat-icon class="valign-center">download</mat-icon>
+                  <span>{{ itemPlan.upload }}</span>
+                  }
+                  <!-- Otros datos del plan -->
+                </div>
               </div>
+
 
               <div class="col-sm-4">
                 @for (itemPlan of plan; track itemPlan) {

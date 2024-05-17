@@ -22,7 +22,7 @@ import { Service } from '../Models/ServiceResponse';
 export class ContractListComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['id', 'customer_name', 'plan_name', 'registration_date', 'address_instalation', 'latitude', 'longitude', 'is_active', 'acciones'];
+  displayedColumns: string[] = ['id', 'service_code', 'customer_name', 'plan_name', 'registration_date', 'address_instalation', 'latitude', 'longitude', 'is_active', 'acciones'];
   public dataSource!: MatTableDataSource<CContract[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

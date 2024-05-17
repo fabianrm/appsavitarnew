@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ReqPlan } from './Models/ResponsePlan';
+import { RequestPlan } from './Models/RequestPlan';
+
 
 
 @Injectable({
@@ -28,7 +30,7 @@ export class PlanService {
     return this.clienteHttp.get(this.API + 'plans', { headers: this.headers })
   }
 
-  addPlan(datos: ReqPlan): Observable<any> {
+  addPlan(datos: RequestPlan): Observable<any> {
     return this.clienteHttp.post(this.API + 'plans', datos, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()

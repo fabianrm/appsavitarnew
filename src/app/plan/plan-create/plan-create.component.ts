@@ -34,11 +34,11 @@ export class PlanCreateComponent {
       download: ['', Validators.required],
       upload: ['', Validators.required],
       price: ['', Validators.required],
-      guaranteed_speed: [''],
+      guaranteedSpeed: [''],
       priority: [''],
-      burst_limit: [''],
-      burst_threshold: [''],
-      burst_time: [''],
+      burstLimit: [''],
+      burstThreshold: [''],
+      burstTime: [''],
       status: [this.checked],
     });
   }
