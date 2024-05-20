@@ -4,14 +4,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { PlanCreateComponent } from '../../plan/plan-create/plan-create.component';
-import { PlanEditComponent } from '../../plan/plan-edit/plan-edit.component';
-import { CContract } from '../Models/CContract';
-import { ResContract } from '../Models/ContractResponse';
 import { ContractService } from '../contract.service';
 import { ContractEditComponent } from '../contract-edit/contract-edit.component';
-import { ReqContract } from '../Models/ContractRequest';
-import { Service } from '../Models/ServiceResponse';
+
+import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-plan.component';
+import { DataService, Service } from '../Models/ResponseServices';
 
 
 @Component({
@@ -22,15 +19,15 @@ import { Service } from '../Models/ServiceResponse';
 export class ContractListComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['id', 'service_code', 'customer_name', 'plan_name', 'registration_date', 'address_instalation', 'latitude', 'longitude', 'is_active', 'acciones'];
-  public dataSource!: MatTableDataSource<CContract[]>;
+  displayedColumns: string[] = ['id', 'serviceCode', 'customerName', 'planName', 'registrationDate', 'addressInstallation', 'latitude', 'longitude', 'status', 'acciones'];
+  public dataSource!: MatTableDataSource<Service>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   subscription!: Subscription
 
-  public respuesta!: Service;
+  public respuesta!: DataService;
 
   constructor(private contractService: ContractService, public dialog: MatDialog) { }
 
@@ -58,14 +55,6 @@ export class ContractListComponent implements OnInit {
       //  console.log(respuesta)
     });
   }
-
-
-  // getPlanById(id: number) {
-  //   this.contractService.getServiceByID(id).subscribe(respuesta => {
-  //     this.respuesta = respuesta;
-  //     //console.log(respuesta);
-  //   });
-  // }
 
 
 
@@ -103,16 +92,34 @@ export class ContractListComponent implements OnInit {
   }
 
 
-  changePlan(_t114: any) {
-    throw new Error('Method not implemented.');
+  changePlan(row: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = row;
+    this.dialog.open(ContractEditPlanComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
   }
+
+
+
   changePuerto(_t114: any) {
     throw new Error('Method not implemented.');
   }
   changeBilling(_t114: any) {
     throw new Error('Method not implemented.');
   }
-  viewMap(_t114: any) {
+
+  inactiveService(_t114: any) {
+    throw new Error('Method not implemented.');
+  }
+
+  viewMap(latitude: string, longitude: string) {
+    window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");
+  }
+
+  viewDetail(_t114: any) {
     throw new Error('Method not implemented.');
   }
 

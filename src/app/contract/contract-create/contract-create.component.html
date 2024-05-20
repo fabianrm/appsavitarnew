@@ -15,9 +15,7 @@
               <div class="col-sm-4"></div>
 
               <div class="col-sm-4">
-                <mat-slide-toggle [color]="color" [checked]="checked"
-                  >Activo</mat-slide-toggle
-                >
+              <p>Activo:</p>
               </div>
             </div>
           </mat-card-content>
@@ -35,7 +33,7 @@
                 <mat-form-field>
                   <mat-label>Seleccione un plan</mat-label>
                   <mat-select
-                    formControlName="plan_id"
+                    formControlName="planId"
                     (selectionChange)="getPlanbyID($event.value)"
                   >
                     <mat-option *ngFor="let plan of planes" [value]="plan.id">
@@ -98,7 +96,7 @@
               <div class="col-sm-4">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Ciudad</mat-label>
-                  <mat-select formControlName="city_id">
+                  <mat-select formControlName="cityId">
                     @for (city of cities; track city) {
                     <mat-option [value]="city.id">{{ city.name }}</mat-option>
                     }
@@ -110,7 +108,7 @@
                   <input
                     matInput
                     placeholder="Dirección de instalación"
-                    formControlName="address_instalation"
+                    formControlName="addressInstallation"
                   />
                 </mat-form-field>
               </div>
@@ -143,11 +141,11 @@
               </mat-form-field> -->
 
                 <mat-form-field class="control-full-width" appearance="fill">
-                  <mat-label>Fecha de Alta</mat-label>
+                  <mat-label>Fecha de Instalación</mat-label>
                   <input
                     matInput
                     type="date"
-                    formControlName="registration_date"
+                    formControlName="installationDate"
                   />
                   <!-- <mat-hint>DD/MM/YYYY</mat-hint> -->
                 </mat-form-field>
@@ -187,7 +185,7 @@
               <div class="col-sm-4">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>IP Router</mat-label>
-                  <mat-select formControlName="router_id">
+                  <mat-select formControlName="routerId">
                     @for (router of routers; track router) {
                     <mat-option [value]="router.id">{{ router.ip }}</mat-option>
                     }
@@ -200,7 +198,7 @@
                   <mat-select
                     [(value)]="boxSelected"
                     (selectionChange)="getPorts(boxSelected)"
-                    formControlName="box_id"
+                    formControlName="boxId"
                   >
                     @for (box of boxs; track box) {
                     <mat-option [value]="box.id">{{ box.name }}</mat-option>
@@ -211,7 +209,7 @@
               <div class="col-sm-4">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Puerto</mat-label>
-                  <mat-select formControlName="port_number">
+                  <mat-select formControlName="portNumber">
                     @for (port of ports; track port) {
                     <mat-option [value]="port.port_number">{{
                       port.port_number
@@ -237,7 +235,7 @@
                   <mat-select
                     [(value)]="equipmentSelected"
                     (selectionChange)="getEquipmentsByID(equipmentSelected)"
-                    formControlName="equipment_id"
+                    formControlName="equipmentId"
                   >
                     @for (equipment of equipments; track equipment) {
                     <mat-option [value]="equipment.id">{{
@@ -279,7 +277,7 @@
               <div class="col-sm-4">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Día de Facturación</mat-label>
-                  <mat-select formControlName="billing_date">
+                  <mat-select formControlName="billingDate">
                     @for (ciclo of ciclos; track ciclo) {
                     <mat-option [value]="ciclo.value">{{
                       ciclo.viewValue
@@ -291,7 +289,7 @@
               <div class="col-sm-4">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Día de Corte</mat-label>
-                  <mat-select formControlName="due_date">
+                  <mat-select formControlName="dueDate">
                     @for (dia of vencimientos; track dia) {
                     <mat-option [value]="dia.value">{{
                       dia.viewValue
@@ -301,9 +299,7 @@
                 </mat-form-field>
               </div>
               <div class="col-sm-4">
-                <mat-slide-toggle [color]="color" [checked]="recurrent"
-                  >Cliente recurrente</mat-slide-toggle
-                >
+               
               </div>
             </div>
           </mat-card-content>

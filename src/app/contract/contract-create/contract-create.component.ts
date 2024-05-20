@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, LOCALE_ID, OnInit, numberAttribute } from '@angular/core';
+import {  Component, Inject, LOCALE_ID, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_LOCALE, ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -17,8 +17,9 @@ import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 import { EquipmentService } from '../../equipment/equipment.service';
 import { Equipment } from '../../equipment/Models/Equipment';
+import { DatePipe } from '@angular/common';
 
-
+//TODO: QUITAR LOS CAMPOS DIA DE FACTURACION Y CORTE Y AGREGARLOS EN EL INVOICE
 
 interface Dias {
   value: string;
@@ -52,7 +53,6 @@ export class ContractCreateComponent implements OnInit {
   recurrent = true
 
 
-
   routers: ReqRouter[] = [];
   boxs: Box[] = [];
   ports: Ports[] = [];
@@ -73,7 +73,7 @@ export class ContractCreateComponent implements OnInit {
     { value: '20', viewValue: '20' },
   ]
 
-
+  date = new Date();
 
   constructor(public formulario: FormBuilder,
     private contractService: ContractService,
@@ -85,6 +85,7 @@ export class ContractCreateComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public getData: ReqCustomer,
     @Inject(MAT_DATE_LOCALE) private _locale: string,
     private _snackBar: MatSnackBar,
+    private datePipe: DatePipe,
     private dialogRef: MatDialogRef<ContractCreateComponent>) { }
 
 
@@ -100,24 +101,23 @@ export class ContractCreateComponent implements OnInit {
 
   initForm() {
     this.formContrato = this.formulario.group({
-      customer_id: [this.getData.id],
-      plan_id: [this.planInicial, Validators.required],
-      router_id: ['', Validators.required],
-      box_id: ['', Validators.required],
-      port_number: ['', Validators.required],
-      city_id: [this.citySelected, Validators.required],
-      address_instalation: ['', Validators.required],
+      customerId: [this.getData.id],
+      planId: [this.planInicial, Validators.required],
+      routerId: ['', Validators.required],
+      boxId: ['', Validators.required],
+      portNumber: ['', Validators.required],
+      equipmentId: ['', Validators.required],
+      cityId: [this.citySelected, Validators.required],
+      addressInstallation: ['', Validators.required],
       reference: ['', Validators.required],
-      registration_date: ['', Validators.required],
+      registrationDate: [this.datePipe.transform(this.date, "yyyy-MM-dd")],
+      installationDate: ['', Validators.required],
       latitude: ['', Validators.required],
       longitude: ['', Validators.required],
-      equipment_id: ['', Validators.required],
-
-      billing_date: ['', Validators.required],
-      recurrent: [true, ''],
-      due_date: ['', Validators.required],
-      is_active: [true],
-      status: [true],
+      billingDate: ['', Validators.required],
+      dueDate: ['', Validators.required],
+      status: ['activo'],
+      endDate: [''],
     });
   }
 
@@ -129,11 +129,9 @@ export class ContractCreateComponent implements OnInit {
         //const defaultPlanId = this.planes[0]?.id; // Asegúrate de que hay planes y selecciona el primero
         // this.formContrato.patchValue({ plan_id: this.planInicial });
         //Después de cargar los planes llamamos al seleccionado
-        this.getPlanbyID(this.planInicial); 
+        this.getPlanbyID(this.planInicial);
 
       }
-
-      // console.log(this.planes)
     });
   }
 
@@ -141,8 +139,7 @@ export class ContractCreateComponent implements OnInit {
   getPlanbyID(id: number) {
 
     if (this.planes.length > 0) {
-      this.planSelected = this.planes.filter(plan => plan.id == id)
-      console.log('Plan', this.planSelected[0].name);
+      this.planSelected = this.planes.filter(plan => plan.id == id);
     }
 
   }

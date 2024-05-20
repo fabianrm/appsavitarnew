@@ -16,6 +16,7 @@ import { PlanModule } from './plan/plan.module';
 import { ContractModule } from './contract/contract.module';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { SpinnerInterceptor } from './shared/spinner/spinner.interceptor';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -40,6 +41,7 @@ import { SpinnerInterceptor } from './shared/spinner/spinner.interceptor';
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
+    DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
