@@ -11,7 +11,7 @@ import { merge, startWith, switchMap, map, catchError, of } from 'rxjs';
   styleUrl: './invoice-list.component.scss'
 })
 export class InvoiceListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'serviceId', 'amount', 'dueDate', 'startDate', 'endDate', 'status'];
+  displayedColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'amount', 'startDate', 'endDate', 'dueDate',  'status'];
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
   isLoadingResults = true;
@@ -26,15 +26,6 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-
-  loadInvoices(page: number = 1, pageSize: number = 15) {
-    this.isLoadingResults = true;
-    this.invoiceService.getInvoices(page, pageSize).subscribe(response => {
-      this.dataSource.data = response.data;
-      this.totalInvoices = response.meta.total;
-      this.isLoadingResults = true;
-    });
-  }
 
   ngAfterViewInit() {
     merge(this.paginator.page, this.sort.sortChange)
@@ -51,7 +42,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
           this.isLoadingResults = false;
           this.totalInvoices = data.meta.total;
 
-          return data.data;
+          return data.data.invoices;
         }),
         catchError(() => {
           this.isLoadingResults = false;

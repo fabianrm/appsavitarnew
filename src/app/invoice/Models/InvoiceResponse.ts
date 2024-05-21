@@ -1,19 +1,20 @@
 export interface Invoice {
-    id: number;
-    serviceId: number;
+    invoiceId: number;
+    contractId: string;
     amount: string;
-    igv: string;
-    discount: string;
-    letterAmount: string;
     dueDate: string;
+    status: string;
+    discount: string;
     startDate: string;
     endDate: string;
-    paidDated: string | null;
-    status: string;
+    customerName: string;
+    planName: string;
 }
 
 export interface InvoiceResponse {
-    data: Invoice[];
+    data: {
+        invoices: Invoice[];
+    };
     meta: {
         current_page: number;
         from: number;
@@ -21,5 +22,11 @@ export interface InvoiceResponse {
         per_page: number;
         to: number;
         total: number;
+    };
+    links: {
+        first: string;
+        last: string;
+        prev: string | null;
+        next: string | null;
     };
 }
