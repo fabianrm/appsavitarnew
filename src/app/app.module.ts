@@ -17,6 +17,7 @@ import { ContractModule } from './contract/contract.module';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { SpinnerInterceptor } from './shared/spinner/spinner.interceptor';
 import { DatePipe } from '@angular/common';
+import { InvoiceModule } from './invoice/invoice.module';
 
 
 
@@ -36,6 +37,7 @@ import { DatePipe } from '@angular/common';
     RouterModule,
     PlanModule,
     ContractModule,
+    InvoiceModule
     
   ],
   providers: [

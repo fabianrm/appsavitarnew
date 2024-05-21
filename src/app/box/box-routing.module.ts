@@ -10,7 +10,6 @@ const routes: Routes = [
   { path: 'boxEdit/:id', component: BoxEditComponent },
 ];
 
-
 @NgModule({
   declarations: [],
   imports: [RouterModule.forChild(routes)],

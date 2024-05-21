@@ -40,7 +40,7 @@
       <mat-list-item>
         <mat-icon matListItemIcon>devices</mat-icon>
         <span matListItemTitle
-          ><a [routerLink]="['/dashboard/equipment/equipment']"
+          ><a [routerLink]="['/dashboard/equipment/equipments']"
             >Equipos</a
           ></span
         >
@@ -56,7 +56,10 @@
       </mat-list-item>
       <mat-list-item>
         <mat-icon matListItemIcon>signal_wifi_off</mat-icon>
-        <span matListItemTitle>Incidencias</span>
+        <span matListItemTitle>
+          <a [routerLink]="['/dashboard/invoices/invoices']">Facturas</a>
+         </span
+        >
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
