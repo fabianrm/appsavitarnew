@@ -37,6 +37,10 @@ const routes: Routes = [
       {
         path: 'invoices',
         loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule)
+      },
+      {
+        path: 'login',
+        loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
       }
 
     ]

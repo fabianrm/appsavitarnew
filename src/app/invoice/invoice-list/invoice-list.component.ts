@@ -11,7 +11,8 @@ import { merge, startWith, switchMap, map, catchError, of } from 'rxjs';
   styleUrl: './invoice-list.component.scss'
 })
 export class InvoiceListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'amount', 'startDate', 'endDate', 'dueDate',  'status'];
+
+  displayedColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'amount', 'startDate', 'endDate', 'dueDate', 'status', 'acciones'];
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
   isLoadingResults = true;
@@ -50,5 +51,16 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(data => (this.dataSource.data = data));
+  }
+
+  //Aciones
+  paid(row: any) {
+    throw new Error('Method not implemented.');
+  }
+  print(row: any) {
+    throw new Error('Method not implemented.');
+  }
+  applyDiscount(row: any) {
+    throw new Error('Method not implemented.');
   }
 }

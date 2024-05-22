@@ -55,7 +55,7 @@
         >
       </mat-list-item>
       <mat-list-item>
-        <mat-icon matListItemIcon>signal_wifi_off</mat-icon>
+        <mat-icon matListItemIcon>request_quote</mat-icon>
         <span matListItemTitle>
           <a [routerLink]="['/dashboard/invoices/invoices']">Facturas</a>
          </span
@@ -75,7 +75,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       }
-      <span>appsavitar</span>
+      <span>{{currentTitle}} </span>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>

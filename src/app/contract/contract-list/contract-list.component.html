@@ -83,7 +83,7 @@
               'status-inactive': element.status === 'inactivo',
               'status-terminated': element.status === 'terminado'
             }"
-            >{{ element.status }}</span
+            >{{ element.status | titlecase }}</span
           >
         </td>
       </ng-container>
@@ -103,21 +103,27 @@
               Cambiar Puerto
             </button>
             <button mat-menu-item (click)="changeBilling(row)">
-              Generar Factura
+              Ver Facturas
             </button>
-             <button mat-menu-item (click)="inactiveService(row)">
-             Suspender
+            <button mat-menu-item (click)="inactiveService(row)">
+              Suspender
             </button>
-            <button mat-menu-item (click)="viewMap(row.latitude, row.longitude)">Ver Mapa</button>
+            <button
+              mat-menu-item
+              (click)="viewMap(row.latitude, row.longitude)"
+            >
+              Ver Mapa
+            </button>
             <button mat-menu-item (click)="viewDetail(row)">Ver Detalle</button>
           </mat-menu>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"
-      
-      [ngClass]="{'row-inactive': row.status === 'terminado'}"
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [ngClass]="{ 'row-inactive': row.status === 'terminado' }"
       ></tr>
     </table>
     <mat-paginator

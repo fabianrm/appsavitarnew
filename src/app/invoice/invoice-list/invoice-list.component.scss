@@ -5,3 +5,10 @@
 table {
   width: 100%;
 }
+
+.row-acciones {
+  display: flex;
+  /*background-color: dodgerblue;*/
+  justify-content: flex-end;
+  padding: 5px;
+}

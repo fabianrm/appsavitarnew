@@ -1,6 +1,13 @@
 .sidenav-container {
     height: 100%;
     background: lightblue;
-  
+}
 
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+button {
+  width: 100%;
 }

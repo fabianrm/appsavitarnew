@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                   <div class="card-body p-4 p-lg-5 text-black">
-                    <form>
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                       <div class="d-flex align-items-center mb-3 pb-1">
                         <i
                           class="fas fa-cubes fa-2x me-3"
@@ -33,35 +33,47 @@
                       </h5>
 
                       <div class="form-outline mb-4">
-                        <input
-                          type="email"
-                          id="txtEmail"
-                          class="form-control form-control-lg"
-                        />
-                        <label
-                          >Dirección de email</label
-                        >
-                      </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Email</mat-label>
+                              <input
+                                matInput
+                                formControlName="email"
+                                type="email"
+                              />
+                              <mat-error
+                                *ngIf="
+                                  loginForm.get('email')?.invalid &&
+                                  loginForm.get('email')?.touched
+                                "
+                              >
+                                Ingresa un email válido.
+                              </mat-error>
+                            </mat-form-field>
 
-                      <div class="form-outline mb-4">
-                        <input
-                          type="password"
-                          id="txtPassword"
-                          class="form-control form-control-lg"
-                        />
-                        <label
-                          >Contraseña</label
-                        >
+                            <mat-form-field appearance="fill">
+                              <mat-label>Password</mat-label>
+                              <input
+                                matInput
+                                formControlName="password"
+                                type="password"
+                              />
+                              <mat-error
+                                *ngIf="
+                                  loginForm.get('password')?.invalid &&
+                                  loginForm.get('password')?.touched
+                                "
+                              >
+                                La contraseña debe tener al menos 6 caracteres.
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
                       </div>
 
                       <div class="pt-1 mb-4">
-                        <button
-                          class="btn btn-dark btn-lg btn-block"
-                          type="button"
-                          (click)="login();"
-                        >
-                          Iniciar sesión
-                        </button>
+                        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
                       </div>
 
                       <a class="small text-muted" href="#!"
