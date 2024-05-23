@@ -1,3 +1,7 @@
+.contenedor{
+    margin: 20px;
+}
+
 table {
     width: 100%;
 }
@@ -18,13 +22,13 @@ table {
 
 mat-form-field {
     font-size: 14px;
-    width: 90%;
+    width: 80%;
 }
 
-.flex-container {
-    display: flex;
-    /*justify-content: space-between;*/
-    flex-wrap: wrap;
+.row-filter {
+   display: flex;
+   justify-content: space-between;
+   align-items:center;
 }
 
 .row-acciones {
@@ -48,13 +52,7 @@ mat-form-field {
     justify-content: center;
 }
 
-.btnAsignar{
-    display: flex;
-   
-    justify-content: right;
-    align-items: center;
-    padding: 5px;
-}
+
 
 .btn-pointer{
     cursor: pointer;

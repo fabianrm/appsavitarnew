@@ -7,6 +7,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { RouterModule } from '@angular/router';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatSlideToggle,
+    MatMenuModule
 
   ]
 })

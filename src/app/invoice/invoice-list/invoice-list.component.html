@@ -15,25 +15,25 @@
     <!-- Amount Column -->
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
-      <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.amount | currency }}</td>
     </ng-container>
 
     <!-- Start Date Column -->
     <ng-container matColumnDef="startDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>F. Inicio</th>
-      <td mat-cell *matCellDef="let element">{{ element.startDate }}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Desde</th>
+      <td mat-cell *matCellDef="let element">{{ element.startDate | date: 'dd-MM-yyyy' }}</td>
     </ng-container>
 
     <!-- End Date Column -->
     <ng-container matColumnDef="endDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>F. Fin</th>
-      <td mat-cell *matCellDef="let element">{{ element.endDate }}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Hasta</th>
+      <td mat-cell *matCellDef="let element">{{ element.endDate | date: 'dd-MM-yyyy' }}</td>
     </ng-container>
 
     <!-- Due Date Column -->
     <ng-container matColumnDef="dueDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Vencimiento</th>
-      <td mat-cell *matCellDef="let element">{{ element.dueDate }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.dueDate | date: 'dd-MM-yyyy' }}</td>
     </ng-container>
 
     <!-- Customer Name Column -->
@@ -65,13 +65,12 @@
           <button mat-menu-item
           [disabled]="row.status==='pagada' "
           (click)="paid(row)">Pagar Factura</button>
-          <button mat-menu-item (click)="print(row)">
-           Imprimir
-          </button>
           <button mat-menu-item (click)="applyDiscount(row)">
             Aplicar Descuento
           </button>
-         
+          <button mat-menu-item (click)="print(row)">
+           Imprimir
+          </button>
         </mat-menu>
       </td>
     </ng-container>

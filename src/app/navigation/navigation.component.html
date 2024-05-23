@@ -5,68 +5,67 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
+    class="dark-theme"
   >
-    <mat-toolbar>Savitar</mat-toolbar>
+    <mat-toolbar>
+      <span>Savitar</span>
+    </mat-toolbar>
     <mat-nav-list>
-      <mat-list-item>
+      <mat-list-item
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/customer/customers']"
+      >
         <mat-icon matListItemIcon>people</mat-icon>
-        <span matListItemTitle
-          ><a [routerLink]="['/dashboard/customer/customers']"
-            >Clientes</a
-          ></span
-        >
+        <span matListItemTitle>Clientes</span>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/plan/plans']"
+      >
         <mat-icon matListItemIcon>cast_connected</mat-icon>
-        <span matListItemTitle
-          ><a [routerLink]="['/dashboard/plan/plans']">Planes</a></span
-        >
+        <span matListItemTitle>Planes</span>
       </mat-list-item>
-
-      <mat-list-item>
+      <mat-list-item
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/router/routers']"
+      >
         <mat-icon matListItemIcon>router</mat-icon>
-        <span matListItemTitle>
-          <a [routerLink]="['/dashboard/router/routers']">Routers</a></span
-        >
+        <span matListItemTitle>Routers</span>
       </mat-list-item>
-
-      <mat-list-item>
+      <mat-list-item
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/box/boxes']"
+      >
         <mat-icon matListItemIcon>inbox</mat-icon>
-        <span matListItemTitle
-          ><a [routerLink]="['/dashboard/box/boxs']">Cajas</a></span
-        >
+        <span matListItemTitle>Cajas</span>
       </mat-list-item>
-
-      <mat-list-item>
+      <mat-list-item
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/equipment/equipments']"
+      >
         <mat-icon matListItemIcon>devices</mat-icon>
-        <span matListItemTitle
-          ><a [routerLink]="['/dashboard/equipment/equipments']"
-            >Equipos</a
-          ></span
-        >
+        <span matListItemTitle>Equipos</span>
       </mat-list-item>
-
-      <mat-list-item>
+      <mat-list-item
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/contract/contracts']"
+      >
         <mat-icon matListItemIcon>next_week</mat-icon>
-        <span matListItemTitle
-          ><a [routerLink]="['/dashboard/contract/contracts']"
-            >Contratos</a
-          ></span
-        >
+        <span matListItemTitle>Contratos</span>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/invoices/invoices']"
+      >
         <mat-icon matListItemIcon>request_quote</mat-icon>
-        <span matListItemTitle>
-          <a [routerLink]="['/dashboard/invoices/invoices']">Facturas</a>
-         </span
-        >
+        <span matListItemTitle>Facturas</span>
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      @if (isHandset$ | async) {
       <button
+        *ngIf="isHandset$ | async"
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
@@ -74,10 +73,22 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      }
-      <span>{{currentTitle}} </span>
+      <span>{{ currentTitle }}</span>
+
+      <div class="divider"></div>
+
+      <mat-slide-toggle color="accent" (change)="setTheme($event.checked)">
+        Dark Mode
+      </mat-slide-toggle>
+
+      <button mat-icon-button [mat-menu-trigger-for]="menu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Cambiar Clave</button>
+        <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
+      </mat-menu>
     </mat-toolbar>
-    <!-- Add Content Here -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

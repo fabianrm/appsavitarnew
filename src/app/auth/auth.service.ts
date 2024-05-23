@@ -37,7 +37,7 @@ export class AuthService {
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     });
 
-    return this.http.post<any>(this.API + 'logout', {}, { headers });
+    return this.http.delete<any>(this.API + 'logout', { headers });
   }
 
 }

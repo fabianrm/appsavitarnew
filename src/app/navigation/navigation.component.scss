@@ -1,0 +1,22 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.active-link {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #4cf433; /* Cambia el color según tu preferencia */
+}
+
+.active-link span {
+  color: #4cf433; /* Cambia el color según tu preferencia */
+}
+
+.divider {
+  flex: 1 1 auto;
+}

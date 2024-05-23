@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
-//import { SpinnerInterceptor } from "./components/shared/spinner/spinner.interceptor";
+
 
 import { CustomerModule } from './customer/customer.module';
 import { NavigationModule } from './navigation/navigation.module';
@@ -46,7 +46,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
     provideClientHydration(),
     provideAnimationsAsync(),
     DatePipe,
-    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
+
   ],
   bootstrap: [AppComponent]
 })
