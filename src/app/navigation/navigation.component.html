@@ -77,7 +77,8 @@
 
       <div class="divider"></div>
 
-      <mat-slide-toggle color="accent" (change)="setTheme($event.checked)">
+      <mat-slide-toggle color="accent" [checked]="isDark"
+       (change)="setTheme($event.checked)">
         Dark Mode
       </mat-slide-toggle>
 

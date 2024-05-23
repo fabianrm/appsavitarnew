@@ -4,7 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { InvoiceService } from '../invoice.service';
 import { Invoice } from '../Models/InvoiceResponse';
-import { merge, startWith, switchMap, map, catchError, of } from 'rxjs';
+import { merge, startWith, switchMap, map, catchError, of, Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-invoice-list',
   templateUrl: './invoice-list.component.html',
@@ -16,19 +17,34 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
   isLoadingResults = true;
+  subscription!: Subscription
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private invoiceService: InvoiceService) { }
+  constructor(
+    private invoiceService: InvoiceService,
+    private _snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.subscription = this.invoiceService.refresh$.subscribe(() => {
+      this.getInvoices();
+    });
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   ngAfterViewInit() {
+    this.getInvoices()
+  }
+
+  getInvoices() {
+    this.loadInvoices();
     merge(this.paginator.page, this.sort.sortChange)
       .pipe(
         startWith({}),
@@ -53,6 +69,29 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
       .subscribe(data => (this.dataSource.data = data));
   }
 
+  generateInvoices() {
+    this.invoiceService.generateInvoices().subscribe((respuesta) => {
+      if (respuesta.totalInvoices > 0) {
+        this.msgSusscess(`Se han generado ${respuesta.totalInvoices} facturas`);
+        this.loadInvoices();
+      } else {
+        this.msgSusscess('No se encontraron facturas para generar');
+      }
+    })
+  }
+
+  loadInvoices() {
+    this.isLoadingResults = true;
+    this.invoiceService.getInvoices(this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(data => {
+      this.isLoadingResults = false;
+      this.totalInvoices = data.meta.total;
+      this.dataSource.data = data.data.invoices;
+    }, () => {
+      this.isLoadingResults = false;
+    });
+  }
+
+
   //Aciones
   paid(row: any) {
     throw new Error('Method not implemented.');
@@ -63,4 +102,14 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   applyDiscount(row: any) {
     throw new Error('Method not implemented.');
   }
+
+
+  msgSusscess(mensaje: string) {
+    this._snackBar.open(mensaje, 'SAVITAR', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    })
+  }
+
 }

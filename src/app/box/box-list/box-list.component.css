@@ -66,18 +66,25 @@ mat-form-field {
 
 
 .activos {
-    text-align: center;
-    border-radius: 20px;
-
-    padding: 8px;
-    background-color: lightgreen;
-    color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 8px;
+  background-color: lightgreen;
+  color: #000000;
 }
 
 .no-activos {
-    text-align: center;
-    border-radius: 20px;
-    padding: 8px;
-    background-color: rgb(189, 89, 89);
-    color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 8px;
+  background-color: rgb(189, 89, 89);
+  color: #FFFFFF;
 }

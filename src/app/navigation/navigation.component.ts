@@ -14,6 +14,7 @@ export class NavigationComponent implements OnInit {
 
   currentTitle: string = 'ISP CRM';
   @HostBinding('class') class: string = '';
+  isDark: boolean = false;
 
   constructor(
     private router: Router,
@@ -28,6 +29,9 @@ export class NavigationComponent implements OnInit {
         const currentRoute = this.router.routerState.snapshot.root;
         this.currentTitle = this.getTitle(currentRoute);
       });
+
+    this.isDark = localStorage.getItem('theme') == 'dark';
+    this.setTheme(this.isDark);
   }
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -49,9 +53,10 @@ export class NavigationComponent implements OnInit {
   setTheme(isdark: boolean) {
     if (isdark) {
       this.renderer.addClass(document.body, 'dark-theme');
-      //this.class = 'dark-theme'
+      localStorage.setItem('theme', 'dark');
     } else {
       this.renderer.removeClass(document.body, 'dark-theme');
+      localStorage.setItem('theme', 'light');
     }
   }
 

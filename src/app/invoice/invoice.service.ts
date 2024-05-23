@@ -29,4 +29,8 @@ export class InvoiceService {
   }
 
 
+  generateInvoices(): Observable<any> {
+    return this.clienteHttp.post<any>(this.API + 'invoices/generate', { headers: this.headers })
+  }
+
 }

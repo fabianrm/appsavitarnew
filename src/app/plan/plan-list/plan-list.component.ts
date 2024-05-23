@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { CPlan } from '../Models/CPlan';
-import { RouterService } from '../../router/router.service';
 import { ReqPlan } from '../Models/ResponsePlan';
 import { PlanCreateComponent } from '../plan-create/plan-create.component';
 import { PlanEditComponent } from '../plan-edit/plan-edit.component';
