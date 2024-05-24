@@ -9,22 +9,37 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { InvoicePaidComponent } from './invoice-paid/invoice-paid.component';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     InvoiceCreateComponent,
-    InvoiceListComponent
+    InvoiceListComponent,
+    InvoicePaidComponent
   ],
   imports: [
     CommonModule,
     InvoiceRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
     MatMenu,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCard,
+    MatCardActions,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
   ]
 })
 export class InvoiceModule { }

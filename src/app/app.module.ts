@@ -6,7 +6,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 
-
 import { CustomerModule } from './customer/customer.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { AuthModule } from './auth/auth.module';
@@ -19,8 +18,12 @@ import { SpinnerInterceptor } from './shared/spinner/spinner.interceptor';
 import { DatePipe } from '@angular/common';
 import { InvoiceModule } from './invoice/invoice.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
-
+//Para fechas en spanish
+import localeEs from "@angular/common/locales/es";
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
     PlanModule,
     ContractModule,
     InvoiceModule,
-    DashboardModule
+    DashboardModule,
+    SweetAlert2Module
     
   ],
   providers: [
@@ -47,6 +51,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     provideAnimationsAsync(),
     DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'es' },
 
   ],
   bootstrap: [AppComponent]

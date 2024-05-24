@@ -58,10 +58,6 @@ export class ContractService {
 
   //Cambiar Plan de Cliente
   updatePlantCustomer(contractId: number, planId: number): Observable<any> {
-    // return this.clienteHttp.put(this.API + 'services/' + contractId, datos, { headers: this.headers })
-    //   .pipe(tap(() => {
-    //     this._refresh$.next()
-    //   }));
     return this.clienteHttp.patch(`${this.API}services/${contractId}/update-plan`, { plan_id: planId }, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()

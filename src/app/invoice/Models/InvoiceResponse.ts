@@ -1,14 +1,18 @@
 export interface Invoice {
     invoiceId: number;
     contractId: string;
-    amount: string;
-    dueDate: string;
-    status: string;
-    discount: string;
-    startDate: string;
-    endDate: string;
     customerName: string;
     planName: string;
+    price: number;
+    discount: number;
+    amount: number;
+    startDate: string;
+    endDate: string;
+    dueDate: string;
+    paidDated: string;
+    receipt: string;
+    note: string;
+    status: string;
 }
 
 export interface InvoiceResponse {

@@ -36,9 +36,8 @@ import { ContractEditPlanComponent } from './contract-edit-plan/contract-edit-pl
   ],
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
     ContractRoutingModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,

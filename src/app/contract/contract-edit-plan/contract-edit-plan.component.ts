@@ -29,14 +29,11 @@ export class ContractEditPlanComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log('Contrato', this.getData.id);
-
-
+   // console.log('Contrato', this.getData.id);
     this.initForm();
     this.getPlans();
 
   }
-
 
   initForm() {
     this.formContrato = this.fb.group({
@@ -44,7 +41,6 @@ export class ContractEditPlanComponent implements OnInit {
       plan_id: [this.planInicial, Validators.required],
     });
   }
-
 
 
   getPlans() {
@@ -60,24 +56,18 @@ export class ContractEditPlanComponent implements OnInit {
 
 
   getPlanbyID(id: number) {
-
     if (this.planes.length > 0) {
       this.planSelected = this.planes.filter(plan => plan.id == id)
       // console.log('Plan', this.planSelected[0].id);
     }
-
   }
 
 
   enviarDatos(): any {
-
-    // console.log(this.formContrato.value);
-
     if (this.formContrato.valid) {
       //console.log('agregar....')
       this.contractService.updatePlantCustomer(this.getData.id, this.planSelected[0].id).subscribe(respuesta => {
-        console.log('Plan actualizado', respuesta);
-
+      //  console.log('Plan actualizado', respuesta);
         this.msgSusscess('Contrato agregado correctamente');
         this.dialogRef.close();
       });

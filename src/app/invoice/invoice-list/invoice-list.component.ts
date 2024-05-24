@@ -6,6 +6,8 @@ import { InvoiceService } from '../invoice.service';
 import { Invoice } from '../Models/InvoiceResponse';
 import { merge, startWith, switchMap, map, catchError, of, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
+import { InvoicePaidComponent } from '../invoice-paid/invoice-paid.component';
 @Component({
   selector: 'app-invoice-list',
   templateUrl: './invoice-list.component.html',
@@ -13,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class InvoiceListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'amount', 'startDate', 'endDate', 'dueDate', 'status', 'acciones'];
+  displayedColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'status', 'acciones'];
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
   isLoadingResults = true;
@@ -24,7 +26,8 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private invoiceService: InvoiceService,
-    private _snackBar: MatSnackBar,) { }
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -94,12 +97,16 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
   //Aciones
   paid(row: any) {
-    throw new Error('Method not implemented.');
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = row;
+    this.dialog.open(InvoicePaidComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
   }
+  
   print(row: any) {
-    throw new Error('Method not implemented.');
-  }
-  applyDiscount(row: any) {
     throw new Error('Method not implemented.');
   }
 
@@ -111,5 +118,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
       verticalPosition: 'bottom'
     })
   }
+
+
 
 }
