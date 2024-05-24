@@ -25,6 +25,7 @@ export class InvoicePaidComponent implements OnInit {
     private dialogRef: MatDialogRef<InvoicePaidComponent>,) { }
 
   ngOnInit() {
+   console.log(this.getData);
    
     this.initForm();
   }

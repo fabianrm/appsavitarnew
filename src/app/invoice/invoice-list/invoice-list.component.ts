@@ -61,8 +61,8 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
         map(data => {
           this.isLoadingResults = false;
           this.totalInvoices = data.meta.total;
-
-          return data.data.invoices;
+          return data.data;
+          
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -86,9 +86,10 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   loadInvoices() {
     this.isLoadingResults = true;
     this.invoiceService.getInvoices(this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(data => {
+     
       this.isLoadingResults = false;
       this.totalInvoices = data.meta.total;
-      this.dataSource.data = data.data.invoices;
+      this.dataSource.data = data.data;
     }, () => {
       this.isLoadingResults = false;
     });
