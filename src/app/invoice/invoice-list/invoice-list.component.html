@@ -1,6 +1,6 @@
-<div class="row-filter" style="background: lightgreen">
+<div class="row-filter">
   <div class="col-sm-10">
-    <div class="row" style="background: lightpink">
+    <div class="row">
       <div class="col-sm-12 row-sub-filter">
         <mat-form-field>
           <mat-label>Cliente</mat-label>
@@ -13,7 +13,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Desde</mat-label>
-          <input matInput [matDatepicker]="pickerDesde" />
+          <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="qDesde"/>
           <mat-datepicker-toggle
             matIconSuffix
             [for]="pickerDesde"
@@ -23,7 +23,7 @@
 
         <mat-form-field>
           <mat-label>Hasta</mat-label>
-          <input matInput [matDatepicker]="pickerHasta" />
+          <input matInput [matDatepicker]="pickerHasta" [(ngModel)]="qHasta" />
           <mat-datepicker-toggle
             matIconSuffix
             [for]="pickerHasta"

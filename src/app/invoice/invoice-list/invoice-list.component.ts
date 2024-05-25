@@ -26,7 +26,11 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
   status?: string = '';
   qCustomer?: string = '';
-  
+  qDesde?: Date | null;
+  qHasta?: Date | null;
+
+  qf1?: string = '';
+  qf2?: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -51,10 +55,12 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.getInvoices()
+    // this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
+    // this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
   }
 
   getInvoices() {
-    this.loadInvoices(this.status, this.qCustomer);
+    this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2);
     merge(this.paginator.page, this.sort.sortChange)
       .pipe(
         startWith({}),
@@ -63,6 +69,8 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
           return this.invoiceService.getInvoices(
             this.status,
             this.qCustomer,
+            this.qf1,
+            this.qf2,
             this.paginator.pageIndex + 1,
             this.paginator.pageSize
           );
@@ -94,9 +102,9 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   }
 
   //Cargar Invoices
-  loadInvoices(status?: string, qCustomer?: string) {
+  loadInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string) {
     this.isLoadingResults = true;
-    this.invoiceService.getInvoices(status, qCustomer,this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(response => {
+    this.invoiceService.getInvoices(status, qCustomer, qDesde, qHasta, this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(response => {
 
       this.isLoadingResults = false;
       this.totalInvoices = response.meta.total;
@@ -108,6 +116,10 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
 
   searchInvoices() {
+    this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
+    this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
+    console.log('qf1', this.qf1);
+    
     this.getInvoices()
   }
 
