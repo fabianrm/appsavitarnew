@@ -6,10 +6,6 @@ table {
     width: 100%;
 }
 
-th {
-   color: var(--accent);
-}
-
 
 mat-form-field {
     font-size: 14px;

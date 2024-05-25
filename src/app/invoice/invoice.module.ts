@@ -14,6 +14,8 @@ import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { MatInputModule } from '@angular/material/input';
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
+    MatDatepickerModule,
+    MatSelectModule
   ]
 })
 export class InvoiceModule { }

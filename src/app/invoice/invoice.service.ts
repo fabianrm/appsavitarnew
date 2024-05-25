@@ -25,8 +25,19 @@ export class InvoiceService {
   });
 
 
-  getInvoices(page: number = 1, pageSize: number = 15): Observable<InvoiceResponse> {
-    return this.clienteHttp.get<InvoiceResponse>(`${this.API}invoices?page=${page}&perPage=${pageSize}`, { headers: this.headers })
+  getInvoices(status?: string, qCustomer?: string, page: number = 1, pageSize: number = 15): Observable<InvoiceResponse> {
+
+    return this.clienteHttp.get<InvoiceResponse>(`${this.API}invoices/search?status=${status}&customer_name=${qCustomer}&page=${page}&perPage=${pageSize}`, { headers: this.headers });
+
+
+    // if (status != "") {
+    //   return this.clienteHttp.get<InvoiceResponse>(`${this.API}invoices/search?status=${status}&page=${page}&perPage=${pageSize}`, { headers: this.headers });
+    // } else {
+    //   return this.clienteHttp.get<InvoiceResponse>(`${this.API}invoices/search?page=${page}&perPage=${pageSize}`, { headers: this.headers });
+    // }
+
+
+
   }
 
 
@@ -36,7 +47,7 @@ export class InvoiceService {
 
 
   paidInvoice(invoiceID: number, datos: RequestPaid): Observable<RequestPaid> {
-    return this.clienteHttp.patch < RequestPaid>(`${this.API}invoices/${invoiceID}`, datos, { headers: this.headers })
+    return this.clienteHttp.patch<RequestPaid>(`${this.API}invoices/${invoiceID}`, datos, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }));

@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { InvoiceService } from '../invoice.service';
 import { Invoice } from '../Models/InvoiceResponse';
-import { FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { now } from 'moment';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-invoice-paid',
@@ -25,15 +25,13 @@ export class InvoicePaidComponent implements OnInit {
     private dialogRef: MatDialogRef<InvoicePaidComponent>,) { }
 
   ngOnInit() {
-   console.log(this.getData);
-   
     this.initForm();
   }
 
   initForm() {
     this.formPaid = this.fb.group({
-      discount:[0],
-      receipt: [''],
+      discount: [0],
+      receipt: ['', Validators.required],
       note: [''],
       status: ['pagada'],
     });
@@ -65,15 +63,34 @@ export class InvoicePaidComponent implements OnInit {
       amount: this.finalPrice
     };
 
-    
+
     if (this.formPaid.valid) {
-      this.invoiceService.paidInvoice(this.getData.invoiceId,dataToSend).subscribe(respuesta => {
-        this.msgSusscess('Factura pagada correctamente');
-        this.dialogRef.close();
-        // console.log(respuesta);
-      }, error => {
-        console.error('Error al guardar los datos:', error);
+      Swal.fire({
+        title: "Esta seguro?",
+        text: "No podrá modificar después de guardar!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#43a047",
+        cancelButtonColor: "#e91e63",
+        confirmButtonText: "Si, registrar pago!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.invoiceService.paidInvoice(this.getData.invoiceId, dataToSend).subscribe(respuesta => {
+            Swal.fire(
+              'Guardado!',
+              'Pago realizado con éxito.',
+              'success'
+            ).then(r => {
+              if (r) {
+                this.dialogRef.close();
+              }
+            })
+          }, error => {
+            console.error('Error al guardar los datos:', error);
+          });
+        }
       });
+
     }
   }
 
@@ -89,8 +106,8 @@ export class InvoicePaidComponent implements OnInit {
 
   onCancel() {
     console.log(this.formPaid.get('amount'));
-   // console.log(this.formPaid.value);
-    
+    // console.log(this.formPaid.value);
+
     this.dialogRef.close();
   }
 

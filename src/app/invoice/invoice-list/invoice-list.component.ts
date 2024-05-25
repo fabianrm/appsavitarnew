@@ -6,8 +6,11 @@ import { InvoiceService } from '../invoice.service';
 import { Invoice } from '../Models/InvoiceResponse';
 import { merge, startWith, switchMap, map, catchError, of, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { InvoicePaidComponent } from '../invoice-paid/invoice-paid.component';
+
+
+
 @Component({
   selector: 'app-invoice-list',
   templateUrl: './invoice-list.component.html',
@@ -20,6 +23,10 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   totalInvoices = 0;
   isLoadingResults = true;
   subscription!: Subscription
+
+  status?: string = '';
+  qCustomer?: string = '';
+  
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -47,13 +54,15 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   }
 
   getInvoices() {
-    this.loadInvoices();
+    this.loadInvoices(this.status, this.qCustomer);
     merge(this.paginator.page, this.sort.sortChange)
       .pipe(
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
           return this.invoiceService.getInvoices(
+            this.status,
+            this.qCustomer,
             this.paginator.pageIndex + 1,
             this.paginator.pageSize
           );
@@ -62,7 +71,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
           this.isLoadingResults = false;
           this.totalInvoices = data.meta.total;
           return data.data;
-          
+
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -72,27 +81,34 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
       .subscribe(data => (this.dataSource.data = data));
   }
 
+  //Generar Invoices
   generateInvoices() {
     this.invoiceService.generateInvoices().subscribe((respuesta) => {
       if (respuesta.totalInvoices > 0) {
         this.msgSusscess(`Se han generado ${respuesta.totalInvoices} facturas`);
-        this.loadInvoices();
+        this.loadInvoices(this.status);
       } else {
         this.msgSusscess('No se encontraron facturas para generar');
       }
     })
   }
 
-  loadInvoices() {
+  //Cargar Invoices
+  loadInvoices(status?: string, qCustomer?: string) {
     this.isLoadingResults = true;
-    this.invoiceService.getInvoices(this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(data => {
-     
+    this.invoiceService.getInvoices(status, qCustomer,this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(response => {
+
       this.isLoadingResults = false;
-      this.totalInvoices = data.meta.total;
-      this.dataSource.data = data.data;
+      this.totalInvoices = response.meta.total;
+      this.dataSource.data = response.data;
     }, () => {
       this.isLoadingResults = false;
     });
+  }
+
+
+  searchInvoices() {
+    this.getInvoices()
   }
 
 
@@ -106,7 +122,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     this.dialog.open(InvoicePaidComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
   }
-  
+
   print(row: any) {
     throw new Error('Method not implemented.');
   }
