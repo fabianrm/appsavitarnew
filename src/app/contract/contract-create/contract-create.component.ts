@@ -12,7 +12,6 @@ import { RouterService } from './../../router/router.service';
 import { Box } from '../../box/Models/ResponseBox';
 import { BoxService } from '../../box/box.service';
 import { ReqCustomer } from '../../customer/Models/ResponseCustomer';
-import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 import { EquipmentService } from '../../equipment/equipment.service';
@@ -36,7 +35,6 @@ interface Ports {
 @Component({
   selector: 'app-contract-create',
   templateUrl: './contract-create.component.html',
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'fr' }, provideMomentDateAdapter(undefined, { useUtc: true })],
   styleUrl: './contract-create.component.css',
 })
 export class ContractCreateComponent implements OnInit {
@@ -83,7 +81,6 @@ export class ContractCreateComponent implements OnInit {
     private cityService: CityService,
     private equipmentService: EquipmentService,
     @Inject(MAT_DIALOG_DATA) public getData: ReqCustomer,
-    @Inject(MAT_DATE_LOCALE) private _locale: string,
     private _snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private dialogRef: MatDialogRef<ContractCreateComponent>) { }
@@ -217,9 +214,19 @@ export class ContractCreateComponent implements OnInit {
 
 
   enviarDatos(): any {
+
+    const formData = this.formContrato.value;
+    const installDate = new Date(formData.installationDate).toISOString().split('T')[0]; 
+
+    const dataToSend = {
+      ...formData,
+      installationDate: installDate,
+    };
+
+
     if (this.formContrato.valid) {
       //console.log('agregar....')
-      this.contractService.addService(this.formContrato.value).subscribe(respuesta => {
+      this.contractService.addService(dataToSend).subscribe(respuesta => {
 
         this.msgSusscess('Contrato agregado correctamente');
         this.dialogRef.close();

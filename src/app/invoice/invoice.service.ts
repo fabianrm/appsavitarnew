@@ -25,7 +25,7 @@ export class InvoiceService {
   });
 
 
-  getInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string, page: number = 1, pageSize: number = 15): Observable<InvoiceResponse> {
+  getInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string, page: number = 1, pageSize: number = 10): Observable<InvoiceResponse> {
 
     return this.clienteHttp.get<InvoiceResponse>(
       `${this.API}invoices/search?status=${status}&start_date=${qDesde}&end_date=${qHasta}&customer_name=${qCustomer}&page=${page}&perPage=${pageSize}`, { headers: this.headers });

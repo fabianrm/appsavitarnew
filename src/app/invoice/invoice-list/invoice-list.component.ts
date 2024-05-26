@@ -9,8 +9,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { InvoicePaidComponent } from '../invoice-paid/invoice-paid.component';
 
-
-
 @Component({
   selector: 'app-invoice-list',
   templateUrl: './invoice-list.component.html',
@@ -21,6 +19,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'status', 'acciones'];
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
+  perPage = 0;
   isLoadingResults = true;
   subscription!: Subscription
 
@@ -32,8 +31,10 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   qf1?: string = '';
   qf2?: string = '';
 
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(
     private invoiceService: InvoiceService,
@@ -41,6 +42,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
+  
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -54,9 +56,8 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+
     this.getInvoices()
-    // this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
-    // this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
   }
 
   getInvoices() {
@@ -94,7 +95,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     this.invoiceService.generateInvoices().subscribe((respuesta) => {
       if (respuesta.totalInvoices > 0) {
         this.msgSusscess(`Se han generado ${respuesta.totalInvoices} facturas`);
-        this.loadInvoices(this.status);
+        this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2);
       } else {
         this.msgSusscess('No se encontraron facturas para generar');
       }
@@ -108,6 +109,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
       this.isLoadingResults = false;
       this.totalInvoices = response.meta.total;
+      this.perPage = response.meta.per_page;
       this.dataSource.data = response.data;
     }, () => {
       this.isLoadingResults = false;
@@ -116,10 +118,19 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
 
   searchInvoices() {
-    this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
-    this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
-    console.log('qf1', this.qf1);
-    
+
+    if (this.qDesde === undefined || this.qDesde ==null) {
+      this.qf1 = ''
+    } else {
+      this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
+    }
+
+    if (this.qHasta === undefined || this.qDesde == null) {
+      this.qf2 = ''
+    } else {
+      this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
+    }
+
     this.getInvoices()
   }
 

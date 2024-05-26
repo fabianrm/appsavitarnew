@@ -15,7 +15,7 @@
               <div class="col-sm-4"></div>
 
               <div class="col-sm-4">
-              <p>Activo:</p>
+                <p>Activo:</p>
               </div>
             </div>
           </mat-card-content>
@@ -68,7 +68,6 @@
                   <!-- Otros datos del plan -->
                 </div>
               </div>
-
 
               <div class="col-sm-4">
                 @for (itemPlan of plan; track itemPlan) {
@@ -124,30 +123,18 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-4">
-                <!-- <mat-form-field>
-                <mat-label>Choose a date</mat-label>
-                <input
-                  matInput
-                  [matDatepicker]="picker"
-                  formControlName="registration_date"
-                />
-                <mat-hint>DD/MM/YYYY</mat-hint>
-                <mat-datepicker-toggle
-                  matIconSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field> -->
-
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <mat-label>Fecha de Instalación</mat-label>
+              <div class="col-sm-4">            
+                <mat-form-field>
+                  <mat-label>Desde</mat-label>
                   <input
                     matInput
-                    type="date"
-                    formControlName="installationDate"
-                  />
-                  <!-- <mat-hint>DD/MM/YYYY</mat-hint> -->
+                    [matDatepicker]="pickerDesde"
+                    formControlName="installationDate"/>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="pickerDesde"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #pickerDesde></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-sm-4">
@@ -298,9 +285,7 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div class="col-sm-4">
-               
-              </div>
+              <div class="col-sm-4"></div>
             </div>
           </mat-card-content>
         </mat-card>

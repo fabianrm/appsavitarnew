@@ -19,11 +19,26 @@ import { DatePipe } from '@angular/common';
 import { InvoiceModule } from './invoice/invoice.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 
 //Para fechas en spanish
 import localeEs from "@angular/common/locales/es";
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs, 'es');
+
+
+export const MY_DATE_FORMATS: MatDateFormats = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'DD/MM/YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 
 @NgModule({
   declarations: [
@@ -52,6 +67,8 @@ registerLocaleData(localeEs, 'es');
     DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'es' },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
 
   ],
   bootstrap: [AppComponent]
