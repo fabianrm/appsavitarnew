@@ -8,7 +8,7 @@ import { ContractService } from '../contract.service';
 import { ContractEditComponent } from '../contract-edit/contract-edit.component';
 
 import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-plan.component';
-import { DataService, Service } from '../Models/ResponseServices';
+import { Service, ServiceResponse } from '../Models/ServiceResponse';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class ContractListComponent implements OnInit {
 
   subscription!: Subscription
 
-  public respuesta!: DataService;
+  public respuesta!: Service;
 
   constructor(private contractService: ContractService, public dialog: MatDialog) { }
 
@@ -47,8 +47,8 @@ export class ContractListComponent implements OnInit {
 
       // console.log(respuesta.data.services)
 
-      if (respuesta.data.services.length > 0) {
-        this.dataSource = new MatTableDataSource(respuesta.data.services);
+      if (respuesta.data.length > 0) {
+        this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
@@ -57,25 +57,6 @@ export class ContractListComponent implements OnInit {
   }
 
 
-
-  openEditDialog(id: number) {
-
-    this.contractService.getServiceByID(id).subscribe(respuesta => {
-      this.respuesta = respuesta.data;
-      // console.log(this.respuesta);
-
-      const dialogConfig = new MatDialogConfig();
-
-      dialogConfig.disableClose = true;
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = '50%';
-      dialogConfig.data = this.respuesta;
-
-      this.dialog.open(ContractEditComponent, dialogConfig);
-      this.dialog.afterAllClosed.subscribe(() => { })
-
-    });
-  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

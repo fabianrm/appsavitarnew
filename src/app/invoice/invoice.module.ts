@@ -43,7 +43,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatCardHeader,
     MatCardTitle,
     MatDatepickerModule,
-    MatSelectModule
+    MatSelectModule,
   ]
 })
 export class InvoiceModule { }

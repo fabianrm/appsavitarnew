@@ -3,7 +3,7 @@
 }
 
 mat-form-field {
-  width: 100%;
+  //width: 60%;
   margin: 10px;
 }
 
@@ -25,10 +25,10 @@ table {
   align-items: center;
 }
 
-.row-sub-filter {
+.sub-filter {
 height: 50px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   //align-content: center;
   flex-direction: row;

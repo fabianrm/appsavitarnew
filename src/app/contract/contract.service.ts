@@ -4,6 +4,7 @@ import { Subject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { RequestService } from './Models/RequestService';
 import { ResponseServices } from './Models/ResponseServices';
+import { ServiceResponse } from './Models/ServiceResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class ContractService {
     "Content-Type": "application/json"
   });
 
-  getservices(): Observable<ResponseServices> {
-    return this.clienteHttp.get<ResponseServices>(this.API + 'services', { headers: this.headers })
+  getservices(): Observable<ServiceResponse> {
+    return this.clienteHttp.get<ServiceResponse>(this.API + 'services', { headers: this.headers })
   }
 
 
@@ -52,8 +53,8 @@ export class ContractService {
   // }
 
 
-  getServiceByID(id: number): Observable<ResponseServices> {
-    return this.clienteHttp.get<ResponseServices>(this.API + 'services/' + id, { headers: this.headers })
+  getServiceByID(id: number): Observable<ServiceResponse> {
+    return this.clienteHttp.get<ServiceResponse>(this.API + 'services/' + id, { headers: this.headers })
   }
 
   //Cambiar Plan de Cliente

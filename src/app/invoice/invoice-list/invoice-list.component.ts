@@ -8,6 +8,7 @@ import { merge, startWith, switchMap, map, catchError, of, Subscription } from '
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { InvoicePaidComponent } from '../invoice-paid/invoice-paid.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-invoice-list',
@@ -42,7 +43,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
-  
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -119,7 +120,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
   searchInvoices() {
 
-    if (this.qDesde === undefined || this.qDesde ==null) {
+    if (this.qDesde === undefined || this.qDesde == null) {
       this.qf1 = ''
     } else {
       this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
@@ -132,6 +133,36 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     }
 
     this.getInvoices()
+  }
+
+
+  //Export
+  exportInvoices() {
+
+    if (this.qDesde === undefined || this.qDesde == null) {
+      this.qf1 = ''
+    } else {
+      this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
+    }
+
+    if (this.qHasta === undefined || this.qDesde == null) {
+      this.qf2 = ''
+    } else {
+      this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
+    }
+
+    const filters = {
+      status: this.status, // example filter
+      start_date: this.qf1,
+      end_date: this.qf2,
+      customer_name: this.qCustomer
+    };
+    console.log(filters);
+    
+
+    this.invoiceService.exportInvoices(filters).subscribe((blob: Blob) => {
+      saveAs(blob, 'invoices.xlsx');
+    });
   }
 
 

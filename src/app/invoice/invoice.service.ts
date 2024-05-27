@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -29,16 +29,6 @@ export class InvoiceService {
 
     return this.clienteHttp.get<InvoiceResponse>(
       `${this.API}invoices/search?status=${status}&start_date=${qDesde}&end_date=${qHasta}&customer_name=${qCustomer}&page=${page}&perPage=${pageSize}`, { headers: this.headers });
-
-
-    // if (status != "") {
-    //   return this.clienteHttp.get<InvoiceResponse>(`${this.API}invoices/search?status=${status}&page=${page}&perPage=${pageSize}`, { headers: this.headers });
-    // } else {
-    //   return this.clienteHttp.get<InvoiceResponse>(`${this.API}invoices/search?page=${page}&perPage=${pageSize}`, { headers: this.headers });
-    // }
-
-
-
   }
 
 
@@ -52,6 +42,29 @@ export class InvoiceService {
       .pipe(tap(() => {
         this._refresh$.next()
       }));
+  }
+
+  //Exportar facturas
+
+  exportInvoices(filters: any) {
+    let params = new HttpParams();
+    if (filters.status) {
+      params = params.append('status', filters.status);
+    }
+    if (filters.start_date) {
+      params = params.append('start_date', filters.start_date);
+    }
+    if (filters.end_date) {
+      params = params.append('end_date', filters.end_date);
+    }
+    if (filters.customer_name) {
+      params = params.append('customer_name', filters.customer_name);
+    }
+
+    return this.clienteHttp.get(`${this.API}invoices/export`, {
+      params,
+      responseType: 'blob'
+    });
   }
 
 }

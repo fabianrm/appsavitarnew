@@ -1,7 +1,7 @@
 <div class="row-filter">
   <div class="col-sm-10">
     <div class="row">
-      <div class="col-sm-12 row-sub-filter">
+      <div class="col-sm-12 sub-filter">
         <mat-form-field>
           <mat-label>Cliente</mat-label>
           <input
@@ -13,7 +13,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Desde</mat-label>
-          <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="qDesde"/>
+          <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="qDesde" />
           <mat-datepicker-toggle
             matIconSuffix
             [for]="pickerDesde"
@@ -40,8 +40,12 @@
             <mat-option value="anulada">Anulada</mat-option>
           </mat-select>
         </mat-form-field>
+        
         <button (click)="searchInvoices()" mat-raised-button color="accent">
           Filtrar
+        </button>
+        <button style="margin-left: 10px;" (click)="exportInvoices()" mat-raised-button color="accent">
+          Exportar
         </button>
       </div>
     </div>
