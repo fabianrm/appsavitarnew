@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  servidor: 'http://api.munipiura.gob.pe/fici/api/'
+  servidor: 'http://34.162.134.146/api/v1/'
 };
 
 

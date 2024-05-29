@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { Observable, Subject, pipe, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ReqCustomer } from './Models/ResponseCustomer';
+import { CustomerResponse } from './Models/CustomerResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class CustomerService {
     "Content-Type": "application/json"
   });
 
-  getCustomers(): Observable<any> {
-    return this.clienteHttp.get(this.API + 'customers', { headers: this.headers })
+  getCustomers(): Observable<CustomerResponse> {
+    return this.clienteHttp.get<CustomerResponse>(this.API + 'customers', { headers: this.headers })
   }
 
   getCustomersPipe(): Observable<any> {

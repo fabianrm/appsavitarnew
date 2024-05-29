@@ -3,7 +3,6 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { CustomerService } from '../customer.service';
-import { CCustomer } from '../Models/CCustomer';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CustomerCreateComponent } from '../customer-create/customer-create.component';
@@ -11,6 +10,7 @@ import { CustomerEditComponent } from '../customer-edit/customer-edit.component'
 import { ReqCustomer } from '../Models/ResponseCustomer';
 import { ContractCreateComponent } from '../../contract/contract-create/contract-create.component';
 import { ContractService } from '../../contract/contract.service';
+import { Customer } from '../Models/CustomerResponse';
 
 @Component({
   selector: 'app-customer-list',
@@ -28,8 +28,8 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     }
   }
 
-  displayedColumns: string[] = ['id', 'client_code', 'type', 'document_number', 'name', 'address', 'reference', 'latitude', 'longitude', 'phone_number', 'email', 'status', 'acciones'];
-  public dataSource!: MatTableDataSource<CCustomer[]>;
+  displayedColumns: string[] = ['id', 'customerCode', 'customerName', 'address', 'reference', 'latitude', 'longitude', 'phoneNumber', 'status', 'acciones'];
+  public dataSource!: MatTableDataSource<Customer>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
