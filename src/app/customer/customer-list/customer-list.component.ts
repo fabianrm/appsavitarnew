@@ -11,6 +11,7 @@ import { ReqCustomer } from '../Models/ResponseCustomer';
 import { ContractCreateComponent } from '../../contract/contract-create/contract-create.component';
 import { ContractService } from '../../contract/contract.service';
 import { Customer } from '../Models/CustomerResponse';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-customer-list',
@@ -122,5 +123,15 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
 
 
+  viewMap(latitude: string, longitude: string) {
+    //'https://www.google.com/maps?q=-4.907545,-81.057223&hl=es-Pe&gl=pe&shorturl=1;'
+    window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");
+  }
+
+  exportToExcel() {
+    this.customerService.exportCustomers().subscribe((response) => {
+      saveAs(response, 'customers.xlsx');
+    });
+  }
 
 }

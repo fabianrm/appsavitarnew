@@ -21,6 +21,7 @@ import { CustomerDetailsComponent } from './customer-details/customer-details.co
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerRoutingModule } from './customer-routing.module';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { MatMenu, MatMenuModule } from '@angular/material/menu';
     MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
+    MatTooltipModule
 
   ]
 })

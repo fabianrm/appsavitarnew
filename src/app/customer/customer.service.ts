@@ -56,6 +56,11 @@ export class CustomerService {
       }));
   }
 
+  exportCustomers() {
+    return this.clienteHttp.get(this.API + 'export-customers', { responseType: 'blob' });
+  }
+
+
 
 
 }
