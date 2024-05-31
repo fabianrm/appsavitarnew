@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
 import { CustomerService } from './../customer.service';
+import { City } from '../../city/Models/CityResponse';
+import { CityService } from '../../city/city.service';
 
 
 interface Tipo {
@@ -29,12 +31,15 @@ export class CustomerCreateComponent implements OnInit {
   disabled = false;
   selected = 'natural';
 
+  cities: City[] = [];
+
   tipos: Tipo[] = [
     { value: 'natural', viewValue: 'Natural' },
     { value: 'juridica', viewValue: 'Juridica' },
   ]
 
   constructor(public formulario: FormBuilder,
+    private cityService: CityService,
     private customerService: CustomerService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
     private _snackBar: MatSnackBar,
@@ -42,9 +47,8 @@ export class CustomerCreateComponent implements OnInit {
     private dialogRef: MatDialogRef<CustomerCreateComponent>) { }
 
   
-
-
   ngOnInit(): void {
+    this.getCities();
     this.initForm();
    // this.documentNumber!.nativeElement.focus();
   }
@@ -55,6 +59,7 @@ export class CustomerCreateComponent implements OnInit {
       type: [this.selected, Validators.required],
       documentNumber: ['', Validators.required],
       name: ['', Validators.required],
+      cityId: ['', Validators.required],
       address: ['', Validators.required],
       reference: [''],
       latitude: [''],
@@ -73,6 +78,16 @@ export class CustomerCreateComponent implements OnInit {
         // console.log(respuesta);
       });
     }
+  }
+
+  getCities() {
+    this.cityService.getCities().subscribe((respuesta) => {
+
+      if (respuesta.data.length > 0) {
+        this.cities = respuesta.data
+      }
+
+    });
   }
 
   msgSusscess(mensaje: string) {

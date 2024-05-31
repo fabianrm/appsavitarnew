@@ -16,7 +16,18 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-sm-6">
+
+         <div class="col-sm-4">
+          <mat-form-field>
+            <mat-label>Nro. Documento</mat-label>
+            <input
+              matInput
+              placeholder="Nro. Documento"
+              formControlName="documentNumber"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-2">
           <mat-slide-toggle [color]="color" [checked]="checked"
             >Activo</mat-slide-toggle
           >
@@ -25,13 +36,13 @@
 
       <div class="row">
         <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Nro. Documento</mat-label>
-            <input
-              matInput
-              placeholder="Nro. Documento"
-              formControlName="documentNumber"
-            />
+          <mat-form-field class="control-full-width" appearance="fill">
+            <mat-label>Ciudad</mat-label>
+            <mat-select formControlName="cityId">
+              @for (city of cities; track city) {
+              <mat-option [value]="city.id">{{ city.name }}</mat-option>
+              }
+            </mat-select>
           </mat-form-field>
         </div>
         <div class="col-sm-6">

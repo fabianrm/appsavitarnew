@@ -9,6 +9,7 @@ export interface Customer {
     customerName: string;
     documentNumber: string;
     name: string;
+    city: string;
     address: string;
     reference: string;
     latitude: string;
