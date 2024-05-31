@@ -5,6 +5,7 @@ export interface ResponseRouter {
 export interface ReqRouter {
     id: number;
     ip: string;
+    vlan: string;
     usuario: string;
     password: string;
     port: string;

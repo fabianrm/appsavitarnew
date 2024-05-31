@@ -4,7 +4,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { SpinnerInterceptor } from './shared/spinner/spinner.interceptor';
+import { AuthInterceptor } from './auth/auth/AuthInterceptor';
 
 import { CustomerModule } from './customer/customer.module';
 import { NavigationModule } from './navigation/navigation.module';
@@ -14,7 +17,6 @@ import { RouterModule } from './router/router.module';
 import { PlanModule } from './plan/plan.module';
 import { ContractModule } from './contract/contract.module';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
-import { SpinnerInterceptor } from './shared/spinner/spinner.interceptor';
 import { DatePipe } from '@angular/common';
 import { InvoiceModule } from './invoice/invoice.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -65,6 +67,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     provideClientHydration(),
     provideAnimationsAsync(),
     DatePipe,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'es' },
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },

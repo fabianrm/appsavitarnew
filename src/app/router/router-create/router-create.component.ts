@@ -33,6 +33,7 @@ export class RouterCreateComponent {
     this.formRouter = this.formulario.group({
 
       ip: ['', Validators.required],
+      vlan: ['', Validators.required],
       usuario: ['', Validators.required],
       password: ['', Validators.required],
       port: ['', Validators.required],
@@ -45,7 +46,7 @@ export class RouterCreateComponent {
   enviarDatos() {
     if (this.formRouter.valid) {
       this.routerService.addRouter(this.formRouter.value).subscribe(respuesta => {
-        this.msgSusscess('Cliente agregado correctamente');
+        this.msgSusscess('Router agregado correctamente');
         this.dialogRef.close();
         // console.log(respuesta);
       });

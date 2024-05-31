@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-auth',
@@ -14,12 +16,14 @@ export class AuthComponent implements OnInit {
 
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder,
+    private authService:
+      AuthService, private router: Router,
+    private _snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
     this.initForm();
   }
-
 
 
   initForm() {
@@ -29,38 +33,54 @@ export class AuthComponent implements OnInit {
     });
   }
 
+  // onSubmit(): void {
+  //   if (this.loginForm.valid) {
+  //     const { email, password } = this.loginForm.value;
+  //     this.authService.login(email, password).subscribe(
+  //       (response) => {
+  //         console.log(response);
+  //         localStorage.setItem('token', response.token);
+  //         this.router.navigate(['/dashboard/customer/customers']);
+  //       },
+  //       (error) => {
+  //         this.msgSusscess('Credenciales incorrectas')
+  //         console.error(error);
+  //         //alert('Credenciales incorrectas.');
+  //       }
+  //     );
+  //   }
+  // }
+
+
+
+
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.authService.login(email, password).subscribe(
-        (response) => {
-          console.log(response);
+      this.authService.login(email, password).pipe(
+        tap(response => {
           localStorage.setItem('token', response.token);
+        })
+      ).subscribe(
+        (response) => {
+         // console.log(response);
           this.router.navigate(['/dashboard/customer/customers']);
         },
         (error) => {
+          this.msgSusscess('Credenciales incorrectas');
           console.error(error);
-          alert('Credenciales incorrectas.');
+          // alert('Credenciales incorrectas.');
         }
       );
     }
   }
-
-
-  login() {
-    this.authService.login(this.email, this.password).subscribe(
-      (response) => {
-        console.log(response);
-        localStorage.setItem('token', response.token);
-        this.router.navigate(['/dashboard']);
-      },
-      (error) => {
-        console.error(error);
-        alert('Credenciales incorrectas.');
-      }
-    );
-    // this.router.navigateByUrl('/dashboard/customer/customers')
+  
+  msgSusscess(mensaje: string) {
+    this._snackBar.open(mensaje, 'SAVITAR', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    })
   }
-
 
 }

@@ -6,13 +6,19 @@
 
     <mat-card-content>
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <mat-form-field>
             <mat-label>IP</mat-label>
             <input matInput placeholder="IP" formControlName="ip" />
           </mat-form-field>
         </div>
-        <div class="col-sm-6">
+         <div class="col-sm-4">
+          <mat-form-field>
+            <mat-label>VLAN</mat-label>
+            <input matInput placeholder="VLAN" formControlName="vlan" />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
           <mat-slide-toggle [color]="color" [checked]="checked"
             >Activo</mat-slide-toggle
           >

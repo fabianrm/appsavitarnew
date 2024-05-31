@@ -22,8 +22,10 @@ export class ContractService {
   }
 
   headers: HttpHeaders = new HttpHeaders({
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
   });
+
 
   getservices(): Observable<ServiceResponse> {
     return this.clienteHttp.get<ServiceResponse>(this.API + 'services', { headers: this.headers })

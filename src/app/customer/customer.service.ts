@@ -20,7 +20,8 @@ export class CustomerService {
   }
 
   headers: HttpHeaders = new HttpHeaders({
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
   });
 
   getCustomers(): Observable<CustomerResponse> {

@@ -35,6 +35,7 @@ export class RouterEditComponent {
 
       id: [this.getData.id, Validators.required],
       ip: [this.getData.ip, Validators.required],
+      vlan: [this.getData.vlan, Validators.required],
       usuario: [this.getData.usuario, Validators.required],
       password: [this.getData.password],
       port: [this.getData.port],
