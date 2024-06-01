@@ -24,7 +24,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MAT_DATE_LOCALE } from '@angular/material/core'
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { ContractEditPlanComponent } from './contract-edit-plan/contract-edit-plan.component';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -60,7 +60,9 @@ import { ContractEditPlanComponent } from './contract-edit-plan/contract-edit-pl
     MatMomentDateModule,
     MatTabsModule,
     MatMenu,
-    MatMenuModule
+    MatMenuModule,
+    MatAutocompleteModule
+  
   ]
 })
 export class ContractModule { }

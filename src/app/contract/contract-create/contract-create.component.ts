@@ -1,6 +1,6 @@
-import {  Component, Inject, LOCALE_ID, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DATE_LOCALE, ThemePalette } from '@angular/material/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -17,6 +17,7 @@ import { CityService } from '../../city/city.service';
 import { EquipmentService } from '../../equipment/equipment.service';
 import { Equipment } from '../../equipment/Models/Equipment';
 import { DatePipe } from '@angular/common';
+import { Observable, map, startWith } from 'rxjs';
 
 //TODO: QUITAR LOS CAMPOS DIA DE FACTURACION Y CORTE Y AGREGARLOS EN EL INVOICE
 
@@ -57,8 +58,11 @@ export class ContractCreateComponent implements OnInit {
   cities: City[] = [];
   planes: ReqPlan[] = [];
   plan: ReqPlan[] = [];
-  equipments: Equipment[] = [];
   equipment: Equipment[] = [];
+
+  equipments: Equipment[] = [];
+  filteredEquipos!: Observable<Equipment[]>;
+  selectedEquipment!: Equipment | null;
 
 
   ciclos: Dias[] = [
@@ -97,6 +101,7 @@ export class ContractCreateComponent implements OnInit {
 
 
   initForm() {
+
     this.formContrato = this.formulario.group({
       customerId: [this.getData.id],
       planId: [this.planInicial, Validators.required],
@@ -116,7 +121,37 @@ export class ContractCreateComponent implements OnInit {
       status: ['activo'],
       endDate: [''],
     });
+
+    this.filteredEquipos = this.formContrato.get('equipmentId')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value?.serie)),
+      map(serie => (serie ? this._filter(serie) : this.equipments.slice()))
+    );
+
+    this.formContrato.get('equipmentId')!.valueChanges.subscribe(value => {
+      this.selectedEquipment = typeof value === 'object' ? value : null;
+    });
+
+
   }
+
+  displayFn(equipment: Equipment): string {
+    return equipment && equipment.serie ? equipment.serie : '';
+  }
+
+  private _filter(name: string): Equipment[] {
+    const filterValue = name.toLowerCase();
+
+    return this.equipments.filter(option => option.serie.toLowerCase().includes(filterValue));
+  }
+
+
+  // Para obtener solo el id cuando se guarda el formulario
+  get equipmentIdValue(): number | null {
+    const equipment = this.formContrato.get('equipmentId')!.value;
+    return equipment ? equipment.id : null;
+  }
+
 
   getPlans() {
     this.planService.getPlans().subscribe((respuesta: ResponsePlan) => {
@@ -216,7 +251,7 @@ export class ContractCreateComponent implements OnInit {
   enviarDatos(): any {
 
     const formData = this.formContrato.value;
-    const installDate = new Date(formData.installationDate).toISOString().split('T')[0]; 
+    const installDate = new Date(formData.installationDate).toISOString().split('T')[0];
 
     const dataToSend = {
       ...formData,

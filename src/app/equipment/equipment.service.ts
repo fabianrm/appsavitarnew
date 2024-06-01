@@ -23,8 +23,8 @@ export class EquipmentService {
     "Content-Type": "application/json"
   });
 
-  getEquipments(): Observable<EquipmentResponse>{
-    return this.clienteHttp.get<EquipmentResponse>(this.API + 'equipments', { headers: this.headers })
+  getEquipments(): Observable<any>{
+    return this.clienteHttp.get<any>(this.API + 'equipments', { headers: this.headers })
   }
 
   addEquipment(datos: Equipment): Observable<any> {

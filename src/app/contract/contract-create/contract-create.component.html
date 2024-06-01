@@ -123,13 +123,14 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-4">            
+              <div class="col-sm-4">
                 <mat-form-field>
                   <mat-label>Fecha de Instalación</mat-label>
                   <input
                     matInput
                     [matDatepicker]="pickerDesde"
-                    formControlName="installationDate"/>
+                    formControlName="installationDate"
+                  />
                   <mat-datepicker-toggle
                     matIconSuffix
                     [for]="pickerDesde"
@@ -174,7 +175,9 @@
                   <mat-label>VLAN</mat-label>
                   <mat-select formControlName="routerId">
                     @for (router of routers; track router) {
-                    <mat-option [value]="router.id">{{ router.vlan }}</mat-option>
+                    <mat-option [value]="router.id">{{
+                      router.vlan
+                    }}</mat-option>
                     }
                   </mat-select>
                 </mat-form-field>
@@ -217,20 +220,35 @@
           <mat-card-content>
             <div class="row">
               <div class="col-sm-4">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <mat-label>Serie</mat-label>
-                  <mat-select
-                    [(value)]="equipmentSelected"
-                    (selectionChange)="getEquipmentsByID(equipmentSelected)"
+                <mat-form-field class="example-full-width">
+                  <mat-label>Assignee</mat-label>
+                  <input
+                    type="text"
+                    matInput
                     formControlName="equipmentId"
+                    [matAutocomplete]="auto"
+                  />
+                  <mat-autocomplete
+                    #auto="matAutocomplete"
+                    [displayWith]="displayFn"
                   >
-                    @for (equipment of equipments; track equipment) {
-                    <mat-option [value]="equipment.id">{{
-                      equipment.serie
-                    }}</mat-option>
-                    }
-                  </mat-select>
+                    <mat-option
+                      *ngFor="let option of filteredEquipos | async"
+                      [value]="option"
+                    >
+                      {{ option.serie }}
+                    </mat-option>
+                  </mat-autocomplete>
                 </mat-form-field>
+
+                <!-- Etiquetas <p> para mostrar la marca y modelo del equipo seleccionado -->
+                <p *ngIf="selectedEquipment">
+                  Marca: {{ selectedEquipment.brand }}
+                </p>
+                <p *ngIf="selectedEquipment">
+                  Modelo: {{ selectedEquipment.model }}
+                </p>
+
               </div>
               <div class="col-sm-8 row-items">
                 @for (itemEq of equipment; track itemEq) {
