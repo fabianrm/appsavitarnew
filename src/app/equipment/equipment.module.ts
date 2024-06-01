@@ -18,6 +18,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 
@@ -47,6 +48,7 @@ import { MatTableModule } from '@angular/material/table';
     MatCardTitle,
     MatSelectModule,
     MatOptionModule,
+    MatDatepickerModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,

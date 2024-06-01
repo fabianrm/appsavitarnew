@@ -15,7 +15,7 @@ export class PlanCreateComponent {
   color: ThemePalette = 'accent';
   checked = true;
   disabled = false;
-
+  selected = 'normal';
 
   constructor(public formulario: FormBuilder,
     private planService: PlanService,
@@ -34,11 +34,11 @@ export class PlanCreateComponent {
       download: ['', Validators.required],
       upload: ['', Validators.required],
       price: ['', Validators.required],
+      priority: [this.selected, Validators.required],
       guaranteedSpeed: [''],
-      priority: [''],
-      burstLimit: [''],
-      burstThreshold: [''],
-      burstTime: [''],
+      burstLimit: [0],
+      burstThreshold: [0],
+      burstTime: [0],
       status: [this.checked],
     });
   }

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,  FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -91,12 +91,12 @@ export class ContractCreateComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.initForm()
     this.getPlans()
     this.getCities()
     this.getRouters()
     this.getBoxs()
     this.getEquipments()
+    this.initForm()
   }
 
 
@@ -127,11 +127,10 @@ export class ContractCreateComponent implements OnInit {
       map(value => (typeof value === 'string' ? value : value?.serie)),
       map(serie => (serie ? this._filter(serie) : this.equipments.slice()))
     );
-
+    
     this.formContrato.get('equipmentId')!.valueChanges.subscribe(value => {
       this.selectedEquipment = typeof value === 'object' ? value : null;
     });
-
 
   }
 
@@ -141,7 +140,6 @@ export class ContractCreateComponent implements OnInit {
 
   private _filter(name: string): Equipment[] {
     const filterValue = name.toLowerCase();
-
     return this.equipments.filter(option => option.serie.toLowerCase().includes(filterValue));
   }
 
@@ -162,89 +160,58 @@ export class ContractCreateComponent implements OnInit {
         // this.formContrato.patchValue({ plan_id: this.planInicial });
         //Después de cargar los planes llamamos al seleccionado
         this.getPlanbyID(this.planInicial);
-
       }
     });
   }
 
 
   getPlanbyID(id: number) {
-
     if (this.planes.length > 0) {
       this.planSelected = this.planes.filter(plan => plan.id == id);
     }
-
   }
 
 
   getRouters() {
     this.routerService.getRouters().subscribe((respuesta: ResponseRouter) => {
-
       if (respuesta.data.length > 0) {
         this.routers = respuesta.data;
       }
-
-      //  console.log(this.routers)
     });
   }
 
   getBoxs() {
     this.boxService.getBoxes().subscribe((respuesta) => {
-
-
       if (respuesta.data.boxs.length > 0) {
         this.boxs = respuesta.data.boxs;
       }
-
-      // console.log('Boxs',this.boxs)
     });
   }
 
   getPorts(id: number) {
     this.boxService.getPortsAvailables(id).subscribe((respuesta: Ports[]) => {
-
       if (respuesta.length > 0) {
         this.ports = respuesta
       }
-
-      //  console.log(this.ports);
-
     });
   }
 
 
   getCities() {
     this.cityService.getCities().subscribe((respuesta) => {
-
       if (respuesta.data.length > 0) {
         this.cities = respuesta.data
       }
-
-      // console.log('Cities', this.cities);
-
     });
   }
 
 
   getEquipments() {
     this.equipmentService.getEquipments().subscribe((respuesta) => {
-
       if (respuesta.data.length > 0) {
         this.equipments = respuesta.data
       }
-
-      // console.log(this.equipments);
-
     });
-  }
-
-  getEquipmentsByID(id: number) {
-
-    if (this.equipments.length > 0) {
-      this.equipment = this.equipments.filter(equipment => equipment.id == id)
-      //  console.log('Equipment', this.equipment[0].type);
-    }
-
   }
 
 
@@ -253,9 +220,12 @@ export class ContractCreateComponent implements OnInit {
     const formData = this.formContrato.value;
     const installDate = new Date(formData.installationDate).toISOString().split('T')[0];
 
+    const equipmentId = this.equipmentIdValue;
+
     const dataToSend = {
       ...formData,
       installationDate: installDate,
+      equipmentId: equipmentId
     };
 
 

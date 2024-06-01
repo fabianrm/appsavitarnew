@@ -21,7 +21,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MAT_DATE_LOCALE } from '@angular/material/core'
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { ContractEditPlanComponent } from './contract-edit-plan/contract-edit-plan.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';

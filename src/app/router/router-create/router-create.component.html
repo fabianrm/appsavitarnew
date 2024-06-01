@@ -15,7 +15,10 @@
          <div class="col-sm-4">
           <mat-form-field>
             <mat-label>VLAN</mat-label>
-            <input matInput placeholder="VLAN" formControlName="vlan" />
+            <input matInput placeholder="VLAN" formControlName="vlan"
+             #code 
+             (input)="code.value = code.value.toUpperCase()"
+            />
           </mat-form-field>
         </div>
         <div class="col-sm-4">
@@ -43,7 +46,7 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Port</mat-label>
-            <input matInput placeholder="Port" formControlName="port" />
+            <input matInput placeholder="Port" formControlName="port" type="number" />
           </mat-form-field>
         </div>
         <div class="col-sm-6">

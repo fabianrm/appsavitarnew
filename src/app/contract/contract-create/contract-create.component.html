@@ -41,19 +41,6 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-
-                <!-- <mat-form-field class="control-full-width" appearance="fill">
-                  <mat-label>Plan</mat-label>
-                  <mat-select
-                    [(value)]="planSelected"
-                    formControlName="plan_id"
-                    (selectionChange)="getPlanbyID(planSelected)"
-                  >
-                    @for (plan of planes; track plan) {
-                    <mat-option [value]="plan.id">{{ plan.name }}</mat-option>
-                    }
-                  </mat-select>
-                </mat-form-field> -->
               </div>
 
               <div class="col-sm-4">
@@ -108,6 +95,8 @@
                     matInput
                     placeholder="Dirección de instalación"
                     formControlName="addressInstallation"
+                    #codeDir
+                    (input)="codeDir.value = codeDir.value.toUpperCase()"
                   />
                 </mat-form-field>
               </div>
@@ -117,6 +106,8 @@
                     matInput
                     placeholder="Referencia"
                     formControlName="reference"
+                    #codeRef
+                    (input)="codeRef.value = codeRef.value.toUpperCase()"
                   />
                 </mat-form-field>
               </div>
@@ -124,7 +115,7 @@
 
             <div class="row">
               <div class="col-sm-4">
-                <mat-form-field>
+                <mat-form-field class="control-full-width">
                   <mat-label>Fecha de Instalación</mat-label>
                   <input
                     matInput
@@ -144,6 +135,7 @@
                     matInput
                     placeholder="Latitud"
                     formControlName="latitude"
+                    type="number"
                   />
                 </mat-form-field>
               </div>
@@ -153,6 +145,7 @@
                     matInput
                     placeholder="Longitud"
                     formControlName="longitude"
+                    type="number"
                   />
                 </mat-form-field>
               </div>
@@ -220,13 +213,15 @@
           <mat-card-content>
             <div class="row">
               <div class="col-sm-4">
-                <mat-form-field class="example-full-width">
-                  <mat-label>Assignee</mat-label>
+                <mat-form-field class="control-full-width">
+                  <mat-label>Serie</mat-label>
                   <input
                     type="text"
                     matInput
                     formControlName="equipmentId"
                     [matAutocomplete]="auto"
+                    #codeSer
+                    (input)="codeSer.value = codeSer.value.toUpperCase()"
                   />
                   <mat-autocomplete
                     #auto="matAutocomplete"
@@ -240,32 +235,28 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
-
-                <!-- Etiquetas <p> para mostrar la marca y modelo del equipo seleccionado -->
-                <p *ngIf="selectedEquipment">
-                  Marca: {{ selectedEquipment.brand }}
-                </p>
-                <p *ngIf="selectedEquipment">
-                  Modelo: {{ selectedEquipment.model }}
-                </p>
-
               </div>
               <div class="col-sm-8 row-items">
-                @for (itemEq of equipment; track itemEq) {
                 <div>
-                  <p>Tipo:</p>
-                  {{ itemEq.type }}
+                  <p *ngIf="selectedEquipment">
+                    Tipo: {{ selectedEquipment.type | uppercase }}
+                  </p>
                 </div>
                 <div>
-                  <p>Marca:</p>
-                  {{ itemEq.brand }}
+                  <p *ngIf="selectedEquipment">
+                    Marca: {{ selectedEquipment.brand | uppercase }}
+                  </p>
                 </div>
                 <div>
-                  <p>Modelo:</p>
-                  {{ itemEq.model }}
+                  <p *ngIf="selectedEquipment">
+                    Modelo: {{ selectedEquipment.model | uppercase }}
+                  </p>
                 </div>
-
-                }
+                <div>
+                  <p *ngIf="selectedEquipment">
+                    Modelo: {{ selectedEquipment.status | uppercase }}
+                  </p>
+                </div>
               </div>
             </div>
           </mat-card-content>

@@ -9,7 +9,13 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Nombre" formControlName="name" />
+            <input
+              matInput
+              placeholder="Nombre"
+              formControlName="name"
+              #codeRef
+              (input)="codeRef.value = codeRef.value.toUpperCase()"
+            />
           </mat-form-field>
         </div>
 
@@ -28,17 +34,25 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
-               <mat-label>Dirección</mat-label>
-            <input matInput placeholder="Dirección" formControlName="address" />
+            <mat-label>Dirección</mat-label>
+            <input
+              matInput
+              placeholder="Dirección"
+              formControlName="address"
+              #codeDir
+              (input)="codeDir.value = codeDir.value.toUpperCase()"
+            />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
-             <mat-label>Referencia</mat-label>
+            <mat-label>Referencia</mat-label>
             <input
               matInput
               placeholder="Referencia"
               formControlName="reference"
+              #codeRe
+              (input)="codeRe.value = codeRe.value.toUpperCase()"
             />
           </mat-form-field>
         </div>
@@ -46,17 +60,23 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
-             <mat-label>Latitud</mat-label>
-            <input matInput placeholder="Latitud" formControlName="latitude" />
+            <mat-label>Latitud</mat-label>
+            <input
+              matInput
+              placeholder="Latitud"
+              formControlName="latitude"
+              type="number"
+            />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
-             <mat-label>Longitud</mat-label>
+            <mat-label>Longitud</mat-label>
             <input
               matInput
               placeholder="Longitud"
               formControlName="longitude"
+              type="number"
             />
           </mat-form-field>
         </div>
@@ -64,21 +84,23 @@
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>
-               <mat-label>Nro. de Puertos</mat-label>
+            <mat-label>Nro. de Puertos</mat-label>
             <input
               matInput
               placeholder="Nro. de Puertos"
               formControlName="totalPorts"
+              type="number"
             />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
-             <mat-label>Puertos libres</mat-label>
+            <mat-label>Puertos libres</mat-label>
             <input
               matInput
               placeholder="Puertos libres"
               formControlName="availablePorts"
+              type="number"
             />
           </mat-form-field>
         </div>

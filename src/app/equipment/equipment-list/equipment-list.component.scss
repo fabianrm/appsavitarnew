@@ -64,8 +64,7 @@ mat-form-field {
     cursor: pointer;
 }
 
-
-.activos {
+.status-good {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,7 +76,7 @@ mat-form-field {
   color: #000000;
 }
 
-.no-activos {
+.status-regular {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,6 +84,18 @@ mat-form-field {
   text-align: center;
   border-radius: 20px;
   padding: 8px;
-  background-color: rgb(189, 89, 89);
-  color: #FFFFFF;
+  background-color: #ffecb3;
+  color: #000000;
+}
+
+.status-bad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 8px;
+  background-color: rgb(238, 108, 108);
+  color: #ffffff;
 }
