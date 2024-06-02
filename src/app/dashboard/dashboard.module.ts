@@ -8,7 +8,6 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
 
-
 @NgModule({
   declarations: [
     DashboardComponent
@@ -19,7 +18,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     MatListModule,
     MatCardModule,
     MatMenuModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+   
   ]
 })
 export class DashboardModule { }

@@ -1,29 +1,3 @@
-.grid-container {
-  margin: 20px;
-}
-
-.dashboard-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-}
-
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
-
-.dashboard-card-content {
-  text-align: center;
-}
-
-.card1{
-  background: lightgreen;
-}
-
 .welcome-card {
     display: flex;
     align-items: center;
@@ -38,6 +12,11 @@
     font-size: 40px;
     margin-right: 15px;
     color: #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Ajusta según sea necesario */
+    height: 50px; /* Ajusta según sea necesario */
 }
 
 .welcome-card .content .text {
@@ -63,6 +42,11 @@
     font-size: 40px;
     margin-right: 15px;
     color: #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Ajusta según sea necesario */
+    height: 50px; /* Ajusta según sea necesario */
 }
 
 .data-box .content .number {
@@ -73,4 +57,12 @@
 .data-box .content .label {
     font-size: 14px;
     color: #6c757d;
+}
+
+mat-icon {
+    font-size: 40px;
+    color: #007bff;
+    width: 100%; /* Asegura que el icono ocupe el contenedor */
+    height: 100%; /* Asegura que el icono ocupe el contenedor */
+    box-sizing: border-box;
 }

@@ -5,6 +5,6 @@ export interface SummaryResponse {
 export interface Summary {
     activeCustomers: number;
     activePlans: number;
-    activeServices: number;
+    pendingInvoices: number;
     overdueInvoices: number;
 }

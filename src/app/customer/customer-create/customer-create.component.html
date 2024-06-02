@@ -48,7 +48,12 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Nombre" formControlName="name" />
+            <input matInput 
+            placeholder="Nombre" 
+            formControlName="name"
+              #codeNam
+              (input)="codeNam.value = codeNam.value.toUpperCase()"
+            />
           </mat-form-field>
         </div>
       </div>
@@ -57,7 +62,13 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Dirección</mat-label>
-            <input matInput placeholder="Dirección" formControlName="address" />
+            <input 
+            matInput 
+            placeholder="Dirección" 
+            formControlName="address" 
+              #codeDir
+              (input)="codeDir.value = codeDir.value.toUpperCase()"
+            />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
@@ -67,6 +78,8 @@
               matInput
               placeholder="Referencia"
               formControlName="reference"
+                #codeRe
+              (input)="codeRe.value = codeRe.value.toUpperCase()"
             />
           </mat-form-field>
         </div>
@@ -75,7 +88,13 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Latitud</mat-label>
-            <input matInput placeholder="Latitud" formControlName="latitude" />
+            <input 
+            matInput 
+            placeholder="Latitud" 
+            formControlName="latitude"
+            type="number"
+            
+            />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
@@ -85,6 +104,7 @@
               matInput
               placeholder="Longitud"
               formControlName="longitude"
+               type="number"
             />
           </mat-form-field>
         </div>
