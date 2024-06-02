@@ -8,15 +8,15 @@ export interface Customer {
     customerCode: string;
     customerName: string;
     documentNumber: string;
-    name: string;
     city: string;
+    cityId: number;
     address: string;
     reference: string;
     latitude: string;
     longitude: string;
     phoneNumber: string;
     email: string;
-    status: string;
+    status: boolean;
     createdAt: Date;
     updatedAt: Date;
     totalContracts: number;

@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CustomerCreateComponent } from '../customer-create/customer-create.component';
 import { CustomerEditComponent } from '../customer-edit/customer-edit.component';
-import { ReqCustomer } from '../Models/ResponseCustomer';
 import { ContractCreateComponent } from '../../contract/contract-create/contract-create.component';
 import { ContractService } from '../../contract/contract.service';
 import { Customer } from '../Models/CustomerResponse';
@@ -37,7 +36,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription
 
-  public respuesta?: ReqCustomer;
+  public respuesta?: Customer[];
 
 
   constructor(private customerService: CustomerService, public dialog: MatDialog) { }
@@ -66,12 +65,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     });
   }
 
-  getCustomerById(id: number) {
-    this.customerService.getCustomerByID(id).subscribe(respuesta => {
-      this.respuesta = respuesta;
-      //  console.log(respuesta);
-    });
-  }
+
 
   openDialog(row: any) {
     const dialogConfig = new MatDialogConfig();
@@ -88,24 +82,30 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
   openEditDialog(id: number) {
 
-    this.customerService.getCustomerByID(id).subscribe(respuesta => {
-      this.respuesta = respuesta.data;
+    const dialogConfig = new MatDialogConfig();
 
-      if (respuesta.data) {
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = id;
 
-        const dialogConfig = new MatDialogConfig();
+    this.dialog.open(CustomerEditComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { })
 
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.width = '40%';
-        dialogConfig.data = this.respuesta;
+    // this.customerService.getCustomerByID(id).subscribe(respuesta => {
+    //   this.respuesta = respuesta.data;
 
-        this.dialog.open(CustomerEditComponent, dialogConfig);
-        this.dialog.afterAllClosed.subscribe(() => { })
-      }
+    //     const dialogConfig = new MatDialogConfig();
 
-      // console.log(respuesta);
-    });
+    //     dialogConfig.disableClose = true;
+    //     dialogConfig.autoFocus = true;
+    //     dialogConfig.width = '40%';
+    //     dialogConfig.data = this.respuesta;
+
+    //     this.dialog.open(CustomerEditComponent, dialogConfig);
+    //     this.dialog.afterAllClosed.subscribe(() => { })
+    //  //  console.log(respuesta);
+    // });
 
   }
 

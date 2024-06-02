@@ -82,11 +82,9 @@ export class CustomerCreateComponent implements OnInit {
 
   getCities() {
     this.cityService.getCities().subscribe((respuesta) => {
-
       if (respuesta.data.length > 0) {
         this.cities = respuesta.data
       }
-
     });
   }
 

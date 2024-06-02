@@ -11,13 +11,13 @@ import { ReqRouter, ResponseRouter } from '../../router/Models/ResponseRouter';
 import { RouterService } from './../../router/router.service';
 import { Box } from '../../box/Models/ResponseBox';
 import { BoxService } from '../../box/box.service';
-import { ReqCustomer } from '../../customer/Models/ResponseCustomer';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 import { EquipmentService } from '../../equipment/equipment.service';
 import { Equipment } from '../../equipment/Models/Equipment';
 import { DatePipe } from '@angular/common';
 import { Observable, map, startWith } from 'rxjs';
+import { Customer } from '../../customer/Models/CustomerResponse';
 
 //TODO: QUITAR LOS CAMPOS DIA DE FACTURACION Y CORTE Y AGREGARLOS EN EL INVOICE
 
@@ -84,7 +84,7 @@ export class ContractCreateComponent implements OnInit {
     private boxService: BoxService,
     private cityService: CityService,
     private equipmentService: EquipmentService,
-    @Inject(MAT_DIALOG_DATA) public getData: ReqCustomer,
+    @Inject(MAT_DIALOG_DATA) public getData: Customer,
     private _snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private dialogRef: MatDialogRef<ContractCreateComponent>) { }

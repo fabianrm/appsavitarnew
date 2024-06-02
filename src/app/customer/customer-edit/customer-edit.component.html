@@ -1,8 +1,4 @@
-<form
-  ngNativeValidate
-  [formGroup]="formEditar"
-  (ngSubmit)="enviarDatos(getData.id)"
->
+<form ngNativeValidate [formGroup]="formEditar" (ngSubmit)="enviarDatos(getId)">
   <mat-card>
     <mat-card-header class="header-form">
       <mat-card-title> Editar Cliente </mat-card-title>
@@ -20,15 +16,8 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-sm-6">
-          <mat-slide-toggle [color]="color" [checked]="checked"
-            >Activo</mat-slide-toggle
-          >
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-6">
+         <div class="col-sm-4">
           <mat-form-field>
             <mat-label>Nro. Documento</mat-label>
             <input
@@ -38,10 +27,33 @@
             />
           </mat-form-field>
         </div>
+        <div class="col-sm-2">
+          <mat-slide-toggle [color]="color" [checked]="checked"
+            >Activo</mat-slide-toggle
+          >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field class="control-full-width" appearance="fill">
+            <mat-label>Ciudad</mat-label>
+            <mat-select formControlName="cityId">
+              @for (city of cities; track city) {
+              <mat-option [value]="city.id">{{ city.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Nombre" formControlName="name" />
+            <input matInput 
+            placeholder="Nombre" 
+            formControlName="name"
+              #codeNam
+              (input)="codeNam.value = codeNam.value.toUpperCase()"
+            />
           </mat-form-field>
         </div>
       </div>
@@ -50,7 +62,13 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Dirección</mat-label>
-            <input matInput placeholder="Dirección" formControlName="address" />
+            <input 
+            matInput 
+            placeholder="Dirección" 
+            formControlName="address" 
+              #codeDir
+              (input)="codeDir.value = codeDir.value.toUpperCase()"
+            />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
@@ -60,6 +78,8 @@
               matInput
               placeholder="Referencia"
               formControlName="reference"
+                #codeRe
+              (input)="codeRe.value = codeRe.value.toUpperCase()"
             />
           </mat-form-field>
         </div>
@@ -68,7 +88,13 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Latitud</mat-label>
-            <input matInput placeholder="Latitud" formControlName="latitude" />
+            <input 
+            matInput 
+            placeholder="Latitud" 
+            formControlName="latitude"
+            type="number"
+            
+            />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
@@ -78,6 +104,7 @@
               matInput
               placeholder="Longitud"
               formControlName="longitude"
+               type="number"
             />
           </mat-form-field>
         </div>

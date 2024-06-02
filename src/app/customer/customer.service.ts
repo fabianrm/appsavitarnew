@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable, Subject, tap } from 'rxjs';
+import { Observable, Subject, map, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CustomerResponse } from './Models/CustomerResponse';
+import { Customer, CustomerResponse } from './Models/CustomerResponse';
 import { CustomerRequest } from './Models/CustomerRequest';
 
 @Injectable({
@@ -50,12 +50,19 @@ export class CustomerService {
       }));
   }
 
-  getCustomerByID(id: number): Observable<any> {
-    return this.clienteHttp.get(this.API + 'customers/' + id, { headers: this.headers })
-      .pipe(tap(() => {
-        this._refresh$.next()
-      }));
+  // getCustomerByID(id: number): Observable<Customer> {
+  //   return this.clienteHttp.get<CustomerResponse>(this.API + 'customers/' + id, { headers: this.headers })
+  //     .pipe(map(response =>response.data));
+  // }
+
+
+  getCustomerById(id: number): Observable<Customer> {
+    return this.clienteHttp.get<any>(`${this.API}customers/${id}`, { headers: this.headers }).pipe(
+      map(response => response.data)  // Asumiendo que `data` es un array y queremos el primer elemento
+    );
   }
+
+
 
   exportCustomers() {
     return this.clienteHttp.get(this.API + 'export-customers', { responseType: 'blob' });

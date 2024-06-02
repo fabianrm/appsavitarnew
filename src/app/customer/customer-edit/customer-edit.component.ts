@@ -1,10 +1,12 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerService } from '../customer.service';
 import { ThemePalette } from '@angular/material/core';
-import { ReqCustomer } from '../Models/ResponseCustomer';
+import { City } from '../../city/Models/CityResponse';
+import { CityService } from '../../city/city.service';
+
 
 interface Tipo {
   value: string;
@@ -20,46 +22,77 @@ export class CustomerEditComponent implements OnInit {
 
   formEditar!: FormGroup;
   color: ThemePalette = 'accent';
-  checked = (this.getData.status == 1) ? true : false;
+  checked: boolean = false;
   disabled = false;
 
-  id_customer = this.getData.id;
+  // id_customer = this.getData;
 
   tipos: Tipo[] = [
     { value: 'natural', viewValue: 'Natural' },
     { value: 'juridica', viewValue: 'Juridica' },
   ]
 
+  cities: City[] = [];
+
+
   constructor(public formulario: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public getData: ReqCustomer,
+    @Inject(MAT_DIALOG_DATA) public getId: number,
+    private cityService: CityService,
     private _snackBar: MatSnackBar,
     private customerService: CustomerService,
     private dialogRef: MatDialogRef<CustomerEditComponent>) { }
 
-
   ngOnInit(): void {
-    this.initForm();
+
+    this.formEditar = this.formulario.group({
+      id: ['',],
+      type: ['', Validators.required],
+      documentNumber: ['', Validators.required],
+      name: ['', Validators.required],
+      cityId: ['', Validators.required],
+      address: ['', Validators.required],
+      reference: [''],
+      latitude: [''],
+      longitude: [''],
+      phoneNumber: ['', Validators.required],
+      email: [''],
+      status: ['', Validators.required],
+    });
+
+    this.getCities();
+    this.getCustomer(this.getId);
   }
 
 
-  initForm() {
-    this.formEditar = this.formulario.group({
-      id: [this.getData.id, Validators.required],
-      type: [this.getData.type, Validators.required],
-      documentNumber: [this.getData.document_number, Validators.required],
-      name: [this.getData.name, Validators.required],
+  getCustomer(id: number) {
+    this.customerService.getCustomerById(id).subscribe(customer => {
 
-      address: [this.getData.address, Validators.required],
-      reference: [this.getData.reference,''],
-      latitude: [this.getData.latitude, ''],
-      longitude: [this.getData.longitude, ''],
+      this.formEditar.patchValue({
+        type: customer.type,
+        documentNumber: customer.documentNumber,
+        name: customer.customerName,
+        cityId: customer.cityId,
+        address: customer.address,
+        reference: customer.reference,
+        latitude: customer.latitude,
+        longitude: customer.longitude,
+        phoneNumber: customer.phoneNumber,
+        email: customer.email,
+        status: (customer.status==true) ? this.checked = true : false
 
-      phoneNumber: [this.getData.phone_number],
-      email: [this.getData.email],
-      status: [this.checked],
+      });
+
     });
   }
 
+
+  getCities() {
+    this.cityService.getCities().subscribe((respuesta) => {
+      if (respuesta.data.length > 0) {
+        this.cities = respuesta.data
+      }
+    });
+  }
 
   msgSusscess(mensaje: string) {
     this._snackBar.open('Cliente editado correctamente', 'Info', {
