@@ -40,7 +40,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   public respuesta?: ReqCustomer;
 
 
-  constructor(private customerService: CustomerService, private contractService: ContractService, public dialog: MatDialog) { }
+  constructor(private customerService: CustomerService, public dialog: MatDialog) { }
 
 
   ngOnInit() {

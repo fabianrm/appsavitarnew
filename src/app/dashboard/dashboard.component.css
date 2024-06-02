@@ -19,3 +19,58 @@
 .dashboard-card-content {
   text-align: center;
 }
+
+.card1{
+  background: lightgreen;
+}
+
+.welcome-card {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.welcome-card .icon {
+    font-size: 40px;
+    margin-right: 15px;
+    color: #007bff;
+}
+
+.welcome-card .content .text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.welcome-card .content .user-name {
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.data-box {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.data-box .icon {
+    font-size: 40px;
+    margin-right: 15px;
+    color: #007bff;
+}
+
+.data-box .content .number {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.data-box .content .label {
+    font-size: 14px;
+    color: #6c757d;
+}

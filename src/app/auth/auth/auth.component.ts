@@ -52,8 +52,6 @@ export class AuthComponent implements OnInit {
   // }
 
 
-
-
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
@@ -64,7 +62,7 @@ export class AuthComponent implements OnInit {
       ).subscribe(
         (response) => {
          // console.log(response);
-          this.router.navigate(['/dashboard/customer/customers']);
+          this.router.navigate(['/dashboard/home']);
         },
         (error) => {
           this.msgSusscess('Credenciales incorrectas');

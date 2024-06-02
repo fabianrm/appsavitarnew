@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'dashboard', component: NavigationComponent,
     children: [
       {
+        path: 'home',
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
         path: 'customer',
         loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule)
       },
