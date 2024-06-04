@@ -11,16 +11,13 @@
       <span>Savitar</span>
     </mat-toolbar>
     <mat-nav-list>
-
-
-       <mat-list-item
+      <mat-list-item
         routerLinkActive="active-link"
         [routerLink]="['/dashboard/home/home']"
       >
         <mat-icon matListItemIcon>people</mat-icon>
         <span matListItemTitle>Inicio</span>
       </mat-list-item>
-
 
       <mat-list-item
         routerLinkActive="active-link"
@@ -71,6 +68,13 @@
         <mat-icon matListItemIcon>request_quote</mat-icon>
         <span matListItemTitle>Facturas</span>
       </mat-list-item>
+       <mat-list-item
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/expense/expenses']"
+      >
+        <mat-icon matListItemIcon>payments</mat-icon>
+        <span matListItemTitle>Gastos</span>
+      </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -88,8 +92,11 @@
 
       <div class="divider"></div>
 
-      <mat-slide-toggle color="accent" [checked]="isDark"
-       (change)="setTheme($event.checked)">
+      <mat-slide-toggle
+        color="accent"
+        [checked]="isDark"
+        (change)="setTheme($event.checked)"
+      >
         Dark Mode
       </mat-slide-toggle>
 

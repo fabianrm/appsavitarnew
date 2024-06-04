@@ -31,6 +31,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ExpenseModule } from './expense/expense.module';
 registerLocaleData(localeEs, 'es');
 
 
@@ -64,13 +65,14 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     PlanModule,
     ContractModule,
     InvoiceModule,
+    ExpenseModule,
     DashboardModule,
     SweetAlert2Module,
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
 
   ],
   providers: [

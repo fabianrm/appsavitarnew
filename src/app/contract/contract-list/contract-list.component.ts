@@ -5,10 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ContractService } from '../contract.service';
-import { ContractEditComponent } from '../contract-edit/contract-edit.component';
+
 
 import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-plan.component';
-import { Service, ServiceResponse } from '../Models/ServiceResponse';
+import { Service } from '../Models/ServiceResponse';
 
 
 @Component({

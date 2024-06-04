@@ -62,7 +62,7 @@ export class AuthComponent implements OnInit {
       ).subscribe(
         (response) => {
          // console.log(response);
-          this.router.navigate(['/dashboard/home']);
+          this.router.navigate(['/dashboard/home/home']);
         },
         (error) => {
           this.msgSusscess('Credenciales incorrectas');

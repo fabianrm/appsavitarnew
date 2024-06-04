@@ -43,6 +43,10 @@ const routes: Routes = [
         loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule)
       },
       {
+        path: 'expense',
+        loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule)
+      },
+      {
         path: 'login',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
       }

@@ -45,7 +45,7 @@
       <ng-container matColumnDef="installationDate">
         <th mat-header-cell *matHeaderCellDef>Fecha de instalación</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.installationDate }}
+          {{ element.installationDate | date }}
         </td>
       </ng-container>
 

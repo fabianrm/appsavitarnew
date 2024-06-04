@@ -26,12 +26,10 @@ interface Dias {
   viewValue: string;
 }
 
-
 interface Ports {
   id: string;
   port_number: string;
 }
-
 
 @Component({
   selector: 'app-contract-create',
@@ -51,7 +49,6 @@ export class ContractCreateComponent implements OnInit {
   citySelected = 1;
   recurrent = true
 
-
   routers: ReqRouter[] = [];
   boxs: Box[] = [];
   ports: Ports[] = [];
@@ -63,7 +60,6 @@ export class ContractCreateComponent implements OnInit {
   equipments: Equipment[] = [];
   filteredEquipos!: Observable<Equipment[]>;
   selectedEquipment!: Equipment | null;
-
 
   ciclos: Dias[] = [
     { value: '1', viewValue: '01' },
