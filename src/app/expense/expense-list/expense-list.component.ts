@@ -5,7 +5,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { ExpenseService } from '../expense.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ExpenseCreateComponent } from '../expense-create/expense-create.component';
 
 @Component({
   selector: 'app-expense-list',
@@ -13,15 +14,6 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './expense-list.component.scss'
 })
 export class ExpenseListComponent implements OnInit, OnDestroy {
-openEditDialog(arg0: any) {
-throw new Error('Method not implemented.');
-}
-openDialog(arg0: string) {
-throw new Error('Method not implemented.');
-}
-exportToExcel() {
-throw new Error('Method not implemented.');
-}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -67,6 +59,28 @@ throw new Error('Method not implemented.');
       }
       //  console.log(respuesta)
     });
+  }
+
+
+  openDialog(arg0: string) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+
+    this.dialog.open(ExpenseCreateComponent, dialogConfig);
+
+    this.dialog.afterAllClosed.subscribe(() => {
+    })
+  }
+
+  openEditDialog(arg0: any) {
+    throw new Error('Method not implemented.');
+  }
+
+  exportToExcel() {
+    throw new Error('Method not implemented.');
   }
 
 

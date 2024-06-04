@@ -72,11 +72,27 @@ export class CustomerCreateComponent implements OnInit {
 
   enviarDatos() {
     if (this.formCliente.valid) {
-      this.customerService.addCustomer(this.formCliente.value).subscribe(respuesta => {
-        this.msgSusscess('Cliente agregado correctamente');
-        this.dialogRef.close();
-        // console.log(respuesta);
+      //const equipment = this.formContrato.get('equipmentId')!.value;
+      const form = this.formCliente.value;
+      const documento = form.documentNumber
+      this.customerService.getCustomerByDocument(documento).subscribe(respuesta => {
+      
+        if (respuesta.exists == false) {
+          this.customerService.addCustomer(this.formCliente.value).subscribe(respuesta => {
+            this.msgSusscess('Cliente agregado correctamente');
+            this.dialogRef.close();
+            // console.log(respuesta);
+          });
+        } else {
+          this.msgSusscess("☹️ Cliente ya se encuentra registrado");
+        }
+        
       });
+
+
+
+     
+
     }
   }
 

@@ -5,5 +5,4 @@ export interface ExpenseRequest {
     reason: string;
     voutcher: string;
     note: string;
-    userId: number;
 }

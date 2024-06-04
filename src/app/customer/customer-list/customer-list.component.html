@@ -106,6 +106,15 @@
             >edit</mat-icon
           >
 
+          <mat-icon
+            #tooltip="matTooltip"
+            class="btn-pointer"
+            (click)="deleteCustomer(row.id)"
+            color="primary"
+            matTooltip="Eliminar"
+            >delete</mat-icon
+          >
+
           <button
             #tooltip="matTooltip"
             class="circular-btn"

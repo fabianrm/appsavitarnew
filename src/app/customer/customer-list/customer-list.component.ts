@@ -11,6 +11,8 @@ import { ContractCreateComponent } from '../../contract/contract-create/contract
 import { ContractService } from '../../contract/contract.service';
 import { Customer } from '../Models/CustomerResponse';
 import { saveAs } from 'file-saver';
+import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-customer-list',
@@ -39,7 +41,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   public respuesta?: Customer[];
 
 
-  constructor(private customerService: CustomerService, public dialog: MatDialog) { }
+  constructor(private customerService: CustomerService, public dialog: MatDialog, private _snackBar: MatSnackBar,) { }
 
 
   ngOnInit() {
@@ -62,6 +64,57 @@ export class CustomerListComponent implements OnInit, OnDestroy {
         this.dataSource.sort = this.sort;
       }
       //  console.log(respuesta)
+    });
+  }
+
+  // deleteCustomers(id: number) {
+  //   this.customerService.deleteCustomer(id).subscribe((respuesta) => {
+  //     if (respuesta.data.status == true) { 
+  //       console.log('cliente eliminado', respuesta.data.message);
+        
+  //     } else {
+  //       console.log('error', respuesta.data.message);
+  //     }
+
+  //    // console.log(respuesta);
+      
+  //   });
+
+  // }
+
+
+
+  deleteCustomer(id: number) {
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "No podrá recuperarlo después de eliminar!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, eliminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.customerService.deleteCustomer(id).subscribe((respuesta) => {
+          if (respuesta.data.status == true) {
+
+            Swal.fire(
+              'Eliminado!',
+              respuesta.data.message,
+              'success'
+            ).then(r => {
+              if (r) {
+                //this.dialogRef.close();
+              }
+            })
+          } else {
+            this.msgSusscess(`Error al eliminar el cliente: ${respuesta.data.message}`);
+          
+          }
+        }, error => {
+          console.log('Error al eliminar el cliente', error.message);
+        });
+      }
     });
   }
 
@@ -91,22 +144,6 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
     this.dialog.open(CustomerEditComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })
-
-    // this.customerService.getCustomerByID(id).subscribe(respuesta => {
-    //   this.respuesta = respuesta.data;
-
-    //     const dialogConfig = new MatDialogConfig();
-
-    //     dialogConfig.disableClose = true;
-    //     dialogConfig.autoFocus = true;
-    //     dialogConfig.width = '40%';
-    //     dialogConfig.data = this.respuesta;
-
-    //     this.dialog.open(CustomerEditComponent, dialogConfig);
-    //     this.dialog.afterAllClosed.subscribe(() => { })
-    //  //  console.log(respuesta);
-    // });
-
   }
 
 
@@ -132,6 +169,16 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     this.customerService.exportCustomers().subscribe((response) => {
       saveAs(response, 'customers.xlsx');
     });
+  }
+
+
+
+  msgSusscess(mensaje: string) {
+    this._snackBar.open(mensaje, 'SAVITAR', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    })
   }
 
 }

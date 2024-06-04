@@ -90,7 +90,6 @@ export class InvoicePaidComponent implements OnInit {
           });
         }
       });
-
     }
   }
 
