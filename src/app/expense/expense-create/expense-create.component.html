@@ -7,19 +7,6 @@
     <mat-card-content>
       <div class="row">
         <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Concepto</mat-label>
-            <input
-              matInput
-              placeholder="Concepto"
-              formControlName="description"
-              #codeCon
-              (input)="codeCon.value = codeCon.value.toUpperCase()"
-            />
-          </mat-form-field>
-        </div>
-
-        <div class="col-sm-6">
           <mat-form-field class="control-full-width">
             <mat-label>Fecha</mat-label>
             <input
@@ -34,9 +21,32 @@
             <mat-datepicker #pickerDate></mat-datepicker>
           </mat-form-field>
         </div>
+
+        <div class="col-sm-6">
+          <mat-form-field class="control-full-width" appearance="fill">
+            <mat-label>Motivo</mat-label>
+            <mat-select formControlName="reasonId">
+              @for (reason of reasons; track reason) {
+              <mat-option [value]="reason.id">{{ reason.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
 
       <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <mat-label>Concepto</mat-label>
+            <input
+              matInput
+              placeholder="Concepto"
+              formControlName="description"
+              #codeCon
+              (input)="codeCon.value = codeCon.value.toUpperCase()"
+            />
+          </mat-form-field>
+        </div>
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Monto</mat-label>
@@ -45,18 +55,6 @@
               matInput
               placeholder="Monto"
               formControlName="amount"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Motivo</mat-label>
-            <input
-              matInput
-              placeholder="Motivo"
-              formControlName="reason"
-              #codeMot
-              (input)="codeMot.value = codeMot.value.toUpperCase()"
             />
           </mat-form-field>
         </div>

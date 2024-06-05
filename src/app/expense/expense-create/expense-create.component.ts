@@ -4,6 +4,8 @@ import { ExpenseService } from './../expense.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import { ReasonService } from '../../reason/reason.service';
+import { Reason } from '../../reason/Models/ReasonResponse';
 
 @Component({
   selector: 'app-expense-create',
@@ -14,16 +16,19 @@ export class ExpenseCreateComponent {
 
   formRq!: FormGroup;
   date = new Date();
+  reasons: Reason[] = [];
 
   constructor(
     public fb: FormBuilder,
     private expenseService: ExpenseService,
+    private reasonService: ReasonService,
     private _snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private dialogRef: MatDialogRef<ExpenseCreateComponent>) { }
 
 
   ngOnInit(): void {
+    this.getReasons();
     this.initForm();
   }
 
@@ -33,11 +38,23 @@ export class ExpenseCreateComponent {
       description: ['', Validators.required],
       amount: ['', Validators.required],
       date: [this.datePipe.transform(this.date, "yyyy-MM-dd"), Validators.required],
-      reason: ['', Validators.required],
+      reasonId: ['', Validators.required],
       voutcher: [''],
       note: [''],
     });
   }
+
+
+  getReasons() {
+    this.reasonService.getReasons().subscribe((respuesta) => {
+      if (respuesta.data.length > 0) {
+        this.reasons = respuesta.data
+        console.log(respuesta.data);
+        
+      }
+    });
+  }
+
 
 
   enviarDatos() {
