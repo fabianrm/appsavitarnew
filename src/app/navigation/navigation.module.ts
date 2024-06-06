@@ -9,7 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,9 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatListModule,
     MatSlideToggle,
-    MatMenuModule
+    MatMenuModule,
+    MatExpansionModule,
+
 
   ]
 })

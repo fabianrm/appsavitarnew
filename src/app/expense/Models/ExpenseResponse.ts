@@ -12,9 +12,11 @@ export interface Expense {
     description: string;
     amount: string;
     date: Date;
+    reasonId: number;
     reason: string;
     voutcher: string;
     note: string;
+    datePaid: string;
     userId: number;
     createdBy: null;
     updatedBy: null;

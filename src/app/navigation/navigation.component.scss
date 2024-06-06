@@ -20,3 +20,24 @@
 .divider {
   flex: 1 1 auto;
 }
+
+
+.menu-item mat-icon,
+.menu-item span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.menu-item mat-icon {
+  margin-right: 8px; /* Ajusta este valor según sea necesario */
+}
+
+.menu-item span {
+  flex: 1;
+}
+
+.menu-item.active-link,
+.submenu-item.active-link {
+  border-left: 4px solid green; /* Borde verde en la parte izquierda */
+  padding-left: 12px; /* Ajusta este valor según sea necesario */
+}

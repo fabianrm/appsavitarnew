@@ -118,6 +118,7 @@
           <button
             #tooltip="matTooltip"
             class="circular-btn"
+            (click)="openListContracts(row.id)"
             matTooltip="Ver Contratos"
           >
             {{ row.totalContracts }}

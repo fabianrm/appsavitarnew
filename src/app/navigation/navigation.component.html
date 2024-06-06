@@ -75,6 +75,38 @@
         <mat-icon matListItemIcon>payments</mat-icon>
         <span matListItemTitle>Gastos</span>
       </mat-list-item>
+
+
+     <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="menu-item">
+        <mat-icon>group</mat-icon>
+        <span>Clientes</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-nav-list>
+      <mat-list-item
+        class="submenu-item"
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/clientes/list']"
+      >
+        <mat-icon matListItemIcon>list</mat-icon>
+        <span matListItemTitle>Lista de Clientes</span>
+      </mat-list-item>
+      <mat-list-item
+        class="submenu-item"
+        routerLinkActive="active-link"
+        [routerLink]="['/dashboard/clientes/add']"
+      >
+        <mat-icon matListItemIcon>person_add</mat-icon>
+        <span matListItemTitle>Agregar Cliente</span>
+      </mat-list-item>
+      <!-- Agrega más submenús según sea necesario -->
+    </mat-nav-list>
+  </mat-expansion-panel>
+
+
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

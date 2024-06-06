@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Expense, ExpenseResponse } from './Models/ExpenseResponse';
+import { Expense, ExpenseResponse, ExpenseResponseUnique } from './Models/ExpenseResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +30,20 @@ export class ExpenseService {
     return this.clienteHttp.get<ExpenseResponse>(this.API + 'expenses', { headers: this.headers })
   }
 
+  getExpenseById(id:number): Observable<ExpenseResponseUnique> {
+    return this.clienteHttp.get<ExpenseResponseUnique>(this.API + 'expenses/' + id, { headers: this.headers })
+  }
+
 
   addExpense(datos: Expense): Observable<any> {
     return this.clienteHttp.post(this.API + 'expenses', datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+  updateExpense(id: number, datos: Expense): Observable<any> {
+    return this.clienteHttp.put(this.API + 'expenses/' + id, datos, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }));

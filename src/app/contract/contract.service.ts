@@ -47,12 +47,12 @@ export class ContractService {
       }));
   }
 
-  // getServiceByID(id: number): Observable<any> {
-  //   return this.clienteHttp.get(this.API + 'services/' + id, { headers: this.headers })
-  //     .pipe(tap(() => {
-  //       this._refresh$.next()
-  //     }));
-  // }
+  getServiceByCustomer(id: number): Observable<any> {
+    return this.clienteHttp.get(this.API + 'services/by-customer/' + id, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
 
 
   getServiceByID(id: number): Observable<ServiceResponse> {

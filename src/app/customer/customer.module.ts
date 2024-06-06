@@ -21,6 +21,7 @@ import { CustomerDetailsComponent } from './customer-details/customer-details.co
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerRoutingModule } from './customer-routing.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ContractsListComponent } from './contracts-list/contracts-list.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CustomerCreateComponent,
     CustomerListComponent,
     CustomerDetailsComponent,
-    CustomerEditComponent
+    CustomerEditComponent,
+    ContractsListComponent
   ],
   imports: [
     CommonModule,

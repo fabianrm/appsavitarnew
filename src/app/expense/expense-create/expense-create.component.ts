@@ -49,8 +49,6 @@ export class ExpenseCreateComponent {
     this.reasonService.getReasons().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
         this.reasons = respuesta.data
-        console.log(respuesta.data);
-        
       }
     });
   }

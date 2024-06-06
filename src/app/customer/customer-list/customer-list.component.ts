@@ -13,6 +13,8 @@ import { Customer } from '../Models/CustomerResponse';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ContractListComponent } from '../../contract/contract-list/contract-list.component';
+import { ContractsListComponent } from '../contracts-list/contracts-list.component';
 
 @Component({
   selector: 'app-customer-list',
@@ -41,7 +43,12 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   public respuesta?: Customer[];
 
 
-  constructor(private customerService: CustomerService, public dialog: MatDialog, private _snackBar: MatSnackBar,) { }
+  constructor(
+    private customerService: CustomerService,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private contractService: ContractService,
+  ) { }
 
 
   ngOnInit() {
@@ -66,6 +73,8 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       //  console.log(respuesta)
     });
   }
+
+
 
   // deleteCustomers(id: number) {
   //   this.customerService.deleteCustomer(id).subscribe((respuesta) => {
@@ -144,6 +153,22 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
     this.dialog.open(CustomerEditComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })
+  }
+
+
+  openListContracts(row: any) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '60%';
+    dialogConfig.data = row;
+
+    this.dialog.open(ContractsListComponent, dialogConfig);
+
+    this.dialog.afterAllClosed.subscribe(() => {
+
+    })
   }
 
 

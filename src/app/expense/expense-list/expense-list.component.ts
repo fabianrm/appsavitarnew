@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { ExpenseService } from '../expense.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ExpenseCreateComponent } from '../expense-create/expense-create.component';
+import { ExpenseEditComponent } from '../expense-edit/expense-edit.component';
 
 @Component({
   selector: 'app-expense-list',
@@ -62,23 +63,33 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
 
+  //Nuevo
   openDialog(arg0: string) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
-
     this.dialog.open(ExpenseCreateComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => {
     })
   }
 
-  openEditDialog(arg0: any) {
-    throw new Error('Method not implemented.');
+  //Editar
+  openEditDialog(id: number) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = id;
+
+    this.dialog.open(ExpenseEditComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { })
   }
 
+  
   exportToExcel() {
     throw new Error('Method not implemented.');
   }
