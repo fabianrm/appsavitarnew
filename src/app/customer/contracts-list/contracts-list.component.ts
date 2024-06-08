@@ -11,7 +11,7 @@ import { Service } from '../../contract/Models/ResponseServices';
 })
 export class ContractsListComponent implements OnInit {
 
-  displayedColumns: string[] = ['serviceCode', 'customerName', 'planName', 'installationDate', 'addressInstallation', 'billingDate', 'status'];
+  displayedColumns: string[] = ['serviceCode', 'planName', 'installationDate', 'addressInstallation', 'vlan', 'boxName', 'portNumber','status'];
   public dataSource!: MatTableDataSource<Service>;
 
   public respuesta!: Service;

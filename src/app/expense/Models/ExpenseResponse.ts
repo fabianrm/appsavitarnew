@@ -9,6 +9,7 @@ export interface ExpenseResponseUnique {
 
 export interface Expense {
     id: number;
+    type: string;
     description: string;
     amount: string;
     date: Date;

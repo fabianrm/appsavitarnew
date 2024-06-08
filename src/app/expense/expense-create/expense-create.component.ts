@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExpenseService } from './../expense.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { ReasonService } from '../../reason/reason.service';
 import { Reason } from '../../reason/Models/ReasonResponse';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-expense-create',
@@ -17,9 +18,11 @@ export class ExpenseCreateComponent {
   formRq!: FormGroup;
   date = new Date();
   reasons: Reason[] = [];
+  tipo: string = '';
 
   constructor(
     public fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public getType: string,
     private expenseService: ExpenseService,
     private reasonService: ReasonService,
     private _snackBar: MatSnackBar,
@@ -34,13 +37,25 @@ export class ExpenseCreateComponent {
 
 
   initForm() {
-    this.formRq = this.fb.group({
+
+    const formControlsConfig = {
       description: ['', Validators.required],
       amount: ['', Validators.required],
       date: [this.datePipe.transform(this.date, "yyyy-MM-dd"), Validators.required],
       reasonId: ['', Validators.required],
       voutcher: [''],
       note: [''],
+      status: [true],
+    }
+
+    this.formRq = this.fb.group(formControlsConfig);
+
+    Object.keys(formControlsConfig).forEach(key => {
+      if (key === 'note' || key === 'description' || key === 'voutcher') {
+        this.formRq.get(key)?.valueChanges.subscribe(value => {
+          this.formRq.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        });
+      }
     });
   }
 
@@ -48,16 +63,25 @@ export class ExpenseCreateComponent {
   getReasons() {
     this.reasonService.getReasons().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
-        this.reasons = respuesta.data
+        this.reasons = respuesta.data.filter(item => item.type === this.getType)
       }
     });
   }
 
 
-
   enviarDatos() {
+
+    const formData = this.formRq.value;
+    const purchaseDate = new Date(formData.date).toISOString().split('T')[0];
+
+    const dataToSend = {
+      ...formData,
+      date: purchaseDate,
+
+    };
+
     if (this.formRq.valid) {
-      this.expenseService.addExpense(this.formRq.value).subscribe(respuesta => {
+      this.expenseService.addExpense(dataToSend).subscribe(respuesta => {
         this.msgSusscess('Egreso registrado correctamente');
         this.dialogRef.close();
         console.log(respuesta);
@@ -73,6 +97,9 @@ export class ExpenseCreateComponent {
     })
   }
 
+  close() {
+    this.dialogRef.close();
+  }
 
 
 

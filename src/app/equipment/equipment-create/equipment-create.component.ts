@@ -72,8 +72,7 @@ export class EquipmentCreateComponent implements OnInit {
   }
 
   enviarDatos() {
-
-
+    
     const formData = this.formEquipment.value;
     const purchaseDate = new Date(formData.purchase_date).toISOString().split('T')[0];
 
@@ -82,9 +81,6 @@ export class EquipmentCreateComponent implements OnInit {
       purchase_date: purchaseDate,
 
     };
-
-
-
 
     if (this.formEquipment.valid) {
       this.equipmentService.addEquipment(dataToSend).subscribe(respuesta => {

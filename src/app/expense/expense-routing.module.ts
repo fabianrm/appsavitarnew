@@ -8,7 +8,8 @@ import { ExpenseEditComponent } from './expense-edit/expense-edit.component';
 import { ExpenseDetailsComponent } from './expense-details/expense-details.component';
 
 const routes: Routes = [
-  { path: 'expenses', component: ExpenseListComponent, data: { title: 'Gastos' }, canActivate: [AuthGuard] },
+  { path: 'fixes', component: ExpenseListComponent, data: { title: 'Gastos Fijos', tipo:'fijo' }, canActivate: [AuthGuard] },
+  { path: 'variables', component: ExpenseListComponent, data: { title: 'Gastos Variables', tipo:'variable' }, canActivate: [AuthGuard] },
   { path: 'expensesCreate', component: ExpenseCreateComponent },
   { path: 'expensesEdit/:id', component: ExpenseEditComponent },
   { path: 'expensesDetails/:id', component: ExpenseDetailsComponent },

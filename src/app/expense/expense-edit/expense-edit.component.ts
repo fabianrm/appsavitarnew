@@ -31,24 +31,33 @@ export class ExpenseEditComponent {
 
 
   ngOnInit(): void {
-
     this.initForm();
   }
 
   initForm() {
-    this.formRq = this.fb.group({
+   // this.formRq = this.fb.group({
+      
+      const formControlsConfig = {
       description: ['', Validators.required],
       amount: ['', Validators.required],
       date: [this.datePipe.transform(this.date, "yyyy-MM-dd"), Validators.required],
       reasonId: ['', Validators.required],
       voutcher: [''],
       note: [''],
+    };
+
+    this.formRq = this.fb.group(formControlsConfig);
+
+    Object.keys(formControlsConfig).forEach(key => {
+      if (key === 'note' || key === 'description' || key === 'voutcher') {
+        this.formRq.get(key)?.valueChanges.subscribe(value => {
+          this.formRq.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        });
+      }
     });
 
     this.getReasons();
     this.getExpenseById(this.getId)
-
-
   }
 
 
@@ -78,8 +87,18 @@ export class ExpenseEditComponent {
   }
 
   enviarDatos() {
+
+    const formData = this.formRq.value;
+    const purchaseDate = new Date(formData.date).toISOString().split('T')[0];
+
+    const dataToSend = {
+      ...formData,
+      date: purchaseDate,
+
+    };
+
     if (this.formRq.valid) {
-      this.expenseService.addExpense(this.formRq.value).subscribe(respuesta => {
+      this.expenseService.updateExpense(this.getId, dataToSend).subscribe(respuesta => {
         this.msgSusscess('Egreso editado correctamente');
         this.dialogRef.close();
         console.log(respuesta);
@@ -94,6 +113,9 @@ export class ExpenseEditComponent {
       verticalPosition: 'bottom'
     })
   }
-
+  
+  close() {
+    this.dialogRef.close();
+  }
 
 }
