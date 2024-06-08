@@ -17,6 +17,7 @@ export interface Expense {
     reason: string;
     voutcher: string;
     note: string;
+    status: boolean;
     datePaid: string;
     userId: number;
     createdBy: null;

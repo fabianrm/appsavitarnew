@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Expense, ExpenseResponse, ExpenseResponseUnique } from './Models/ExpenseResponse';
+import { ExpenseRequest } from './Models/ExpenseRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,21 @@ export class ExpenseService {
 
   updateExpense(id: number, datos: Expense): Observable<any> {
     return this.clienteHttp.put(this.API + 'expenses/' + id, datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+  suspendPaid(expenseID: number, datos:any): Observable<any> {
+    return this.clienteHttp.patch<ExpenseRequest>(`${this.API}expenses/${expenseID}`, datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
+  generatePaids(): Observable<any> {
+    return this.clienteHttp.post(`${this.API}expenses/generate-next-month`, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }));

@@ -55,7 +55,7 @@ export class CustomerCreateComponent implements OnInit {
 
 
   initForm() {
-    this.formCliente = this.formulario.group({
+    const formControlsConfig = {
       type: [this.selected, Validators.required],
       documentNumber: ['', Validators.required],
       name: ['', Validators.required],
@@ -67,7 +67,18 @@ export class CustomerCreateComponent implements OnInit {
       phoneNumber: [''],
       email: [''],
       status: [true],
+    }
+
+    this.formCliente = this.formulario.group(formControlsConfig);
+
+    Object.keys(formControlsConfig).forEach(key => {
+      if (key === 'note' || key === 'description' || key === 'voutcher') {
+        this.formCliente.get(key)?.valueChanges.subscribe(value => {
+          this.formCliente.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        });
+      }
     });
+    
   }
 
   enviarDatos() {

@@ -44,7 +44,7 @@ export class CustomerEditComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.formEditar = this.formulario.group({
+    const formControlsConfig = {
       id: ['',],
       type: ['', Validators.required],
       documentNumber: ['', Validators.required],
@@ -57,7 +57,17 @@ export class CustomerEditComponent implements OnInit {
       phoneNumber: ['', Validators.required],
       email: [''],
       status: ['', Validators.required],
+    }
+    this.formEditar = this.formulario.group(formControlsConfig);
+
+    Object.keys(formControlsConfig).forEach(key => {
+      if (key === 'note' || key === 'description' || key === 'voutcher') {
+        this.formEditar.get(key)?.valueChanges.subscribe(value => {
+          this.formEditar.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        });
+      }
     });
+
 
     this.getCities();
     this.getCustomer(this.getId);
@@ -104,6 +114,8 @@ export class CustomerEditComponent implements OnInit {
 
 
   enviarDatos(id: number) {
+    console.log(this.formEditar.value);
+    
     if (this.formEditar.valid) {
       this.customerService.updateCustomer(id, this.formEditar.value).subscribe(respuesta => {
         this.msgSusscess('Cliente editado correctamente');

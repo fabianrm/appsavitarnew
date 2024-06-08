@@ -63,7 +63,6 @@ export class InvoicePaidComponent implements OnInit {
       amount: this.finalPrice
     };
 
-
     if (this.formPaid.valid) {
       Swal.fire({
         title: "Esta seguro?",
