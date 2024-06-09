@@ -24,7 +24,7 @@
 
         <div class="col-sm-6">
           <mat-form-field class="control-full-width" appearance="fill">
-            <mat-label>Motivo</mat-label>
+            <mat-label>Categoría</mat-label>
             <mat-select formControlName="reasonId">
               @for (reason of reasons; track reason) {
               <mat-option [value]="reason.id">{{ reason.name }}</mat-option>

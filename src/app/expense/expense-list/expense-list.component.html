@@ -132,7 +132,7 @@
             >edit</mat-icon
           >
 
-          <mat-icon *ngIf="row.status === 1"
+          <mat-icon *ngIf="row.status === 1 && tipo==='fijo'"
             #tooltip="matTooltip"
             class="btn-pointer"
             (click)="deleteExpense(row.id)"

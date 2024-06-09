@@ -14,6 +14,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -27,18 +33,28 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     CommonModule,
     ReasonRoutingModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatIconModule,
+    HttpClientModule,
+    MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule,
-    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
     MatDialogModule,
+    MatButtonModule,
     MatSnackBarModule,
+    MatCard,
+    MatCardActions,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+    MatSelectModule,
+    MatOptionModule,
+    MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
+    MatTooltipModule
+
   ]
 })
 export class ReasonModule { }

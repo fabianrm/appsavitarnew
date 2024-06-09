@@ -63,7 +63,7 @@ export class ExpenseCreateComponent {
   getReasons() {
     this.reasonService.getReasons().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
-        this.reasons = respuesta.data.filter(item => item.type === this.getType)
+        this.reasons = respuesta.data.filter(item => item.type === this.getType && item.status === 1)
       }
     });
   }

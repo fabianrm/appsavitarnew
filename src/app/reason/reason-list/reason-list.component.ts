@@ -7,6 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ReasonService } from '../reason.service';
 import { ReasonCreateComponent } from '../reason-create/reason-create.component';
+import { ReasonEditComponent } from '../reason-edit/reason-edit.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reason-list',
@@ -73,26 +75,60 @@ export class ReasonListComponent {
   }
 
   //formulario editar
-  openEditDialog(id: number) {
+  openEditDialog(row: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = row;
+    this.dialog.open(ReasonEditComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { })
+  }
 
-    // this.boxService.getBoxByID(id).subscribe(respuesta => {
-    //   this.respuesta = respuesta.data;
+  suspendReason(id: number) {
+    const datosSend = {
+      status: false
+    };
 
-    //   if (respuesta.data) {
 
-    //     const dialogConfig = new MatDialogConfig();
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "Este motivo no se mostrará al registrar nuevos egresos!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, desactivar motivo!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.reasonService.suspendReason(id, datosSend).subscribe(respuesta => {
+          Swal.fire(
+            'Guardado!',
+            'Motivo desactivado éxito.',
+            'success'
+          ).then(r => {
+            if (r) {
+             // this.dialogRef.close();
+            }
+          })
+        }, error => {
+          console.error('Error al guardar los datos:', error);
+        });
+      }
+    });
 
-    //     dialogConfig.disableClose = true;
-    //     dialogConfig.autoFocus = true;
-    //     dialogConfig.width = '40%';
-    //     dialogConfig.data = this.respuesta;
-
-    //     this.dialog.open(BoxEditComponent, dialogConfig);
-    //     this.dialog.afterAllClosed.subscribe(() => { })
-    //   }
+    // this.reasonService.suspendReason(id, status).subscribe(respuesta => {
+    //   this.msgSusscess('Motivo de gasto actualizado correctamente');
+    //   this.dialogRef.close();
+    //   // console.log(respuesta);
     // });
   }
 
 
+
+
+
+
+  
 
 }

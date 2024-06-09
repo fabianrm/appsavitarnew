@@ -98,11 +98,7 @@ export class CustomerCreateComponent implements OnInit {
           this.msgSusscess("☹️ Cliente ya se encuentra registrado");
         }
         
-      });
-
-
-
-     
+      });  
 
     }
   }
