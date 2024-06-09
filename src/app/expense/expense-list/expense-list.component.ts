@@ -11,6 +11,7 @@ import { ExpenseEditComponent } from '../expense-edit/expense-edit.component';
 import { ActivatedRoute} from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ExpensePaidComponent } from '../expense-paid/expense-paid.component';
 
 
 @Component({
@@ -106,6 +107,19 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     this.dialog.open(ExpenseEditComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })
   }
+
+  //Paid Dialog
+
+  openPaidDialog(row: Expense) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data =row;
+    this.dialog.open(ExpensePaidComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { })
+  }
+
 
 
   generatePaids() {

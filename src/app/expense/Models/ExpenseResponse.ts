@@ -11,7 +11,7 @@ export interface Expense {
     id: number;
     type: string;
     description: string;
-    amount: string;
+    amount: number;
     date: Date;
     reasonId: number;
     reason: string;

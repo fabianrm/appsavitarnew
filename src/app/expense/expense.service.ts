@@ -65,6 +65,14 @@ export class ExpenseService {
       }));
   }
 
+  updatePaid(expenseID: number, datos: any): Observable<any> {
+    return this.clienteHttp.patch<ExpenseRequest>(`${this.API}expenses/${expenseID}`, datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
 
 
 }

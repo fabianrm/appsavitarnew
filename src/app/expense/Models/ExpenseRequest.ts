@@ -5,5 +5,6 @@ export interface ExpenseRequest {
     reason: string;
     voutcher: string;
     note: string;
+    datePaid: Date;
     status: boolean;
 }

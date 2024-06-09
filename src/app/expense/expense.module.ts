@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { ExpensePaidComponent } from './expense-paid/expense-paid.component';
 
 
 
@@ -26,13 +27,14 @@ import { MatSelectModule } from '@angular/material/select';
     ExpenseCreateComponent,
     ExpenseEditComponent,
     ExpenseDetailsComponent,
-    ExpenseListComponent
+    ExpenseListComponent,
+    ExpensePaidComponent
   ],
   imports: [
     CommonModule,
+    ExpenseRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    ExpenseRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
