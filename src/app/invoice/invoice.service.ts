@@ -68,4 +68,14 @@ export class InvoiceService {
     });
   }
 
+
+  //Ingresos
+  getPaidInvoicesReport(startDate: string, endDate: string): Observable<any> {
+    let params = new HttpParams()
+      .set('start_date', startDate)
+      .set('end_date', endDate);
+
+    return this.clienteHttp.get(`${this.API}invoices/paid-report`, { params });
+  }
+
 }

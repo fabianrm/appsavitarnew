@@ -68,8 +68,12 @@
         <mat-icon matListItemIcon>request_quote</mat-icon>
         <span matListItemTitle>Facturas</span>
       </mat-list-item>
-  
-      <mat-expansion-panel>
+
+      
+  <mat-accordion>
+
+ 
+       <mat-expansion-panel >
         <mat-expansion-panel-header>
           <mat-panel-title class="menu-item">
             <mat-icon>group</mat-icon>
@@ -94,8 +98,6 @@
             <mat-icon matListItemIcon>paid</mat-icon>
             <span matListItemTitle>Gastos variables</span>
           </mat-list-item>
-
-
           <mat-list-item
             class="submenu-item"
             routerLinkActive="active-link"
@@ -108,6 +110,59 @@
           <!-- Agrega más submenús según sea necesario -->
         </mat-nav-list>
       </mat-expansion-panel>
+
+
+         <!-- Reportes -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="menu-item">
+            <mat-icon>group</mat-icon>
+            <span>Reportes</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="menu-item">
+            <mat-icon>group</mat-icon>
+            <span>Balance</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item
+            class="submenu-item"
+            routerLinkActive="active-link"
+            [routerLink]="['/dashboard/invoices/report']"
+          >
+            <mat-icon matListItemIcon>list</mat-icon>
+            <span matListItemTitle>Ingresos</span>
+          </mat-list-item>
+
+           <mat-list-item
+            class="submenu-item"
+            routerLinkActive="active-link"
+             [routerLink]="['/dashboard/expenses/variables']"
+           >
+            <mat-icon matListItemIcon>paid</mat-icon>
+            <span matListItemTitle>Egresos</span>
+          </mat-list-item>
+          <mat-list-item
+            class="submenu-item"
+            routerLinkActive="active-link"
+             [routerLink]="['/dashboard/reason/reasons']"
+            >
+            <mat-icon matListItemIcon>add_business</mat-icon>
+            <span matListItemTitle>General</span>
+          </mat-list-item>
+
+          <!-- Agrega más submenús según sea necesario -->
+        </mat-nav-list>
+        
+      </mat-expansion-panel>
+      </mat-expansion-panel>
+
+ </mat-accordion>
+
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

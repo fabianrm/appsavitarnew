@@ -15,6 +15,7 @@ export class NavigationComponent implements OnInit {
   currentTitle: string = 'ISP CRM';
   @HostBinding('class') class: string = '';
   isDark: boolean = false;
+  panelOpenState = false;
 
   constructor(
     private router: Router,
