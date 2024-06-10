@@ -24,7 +24,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 
 //Para fechas en spanish
-import localeEs from "@angular/common/locales/es";
+import localeEsPe from '@angular/common/locales/es-PE';
 import { registerLocaleData } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -34,7 +34,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ExpenseModule } from './expense/expense.module';
 import { RetryInterceptor } from './auth/retry.interceptor';
 import { ReasonModule } from './reason/reason.module';
-registerLocaleData(localeEs, 'es');
+
+registerLocaleData(localeEsPe, 'es-PE');
 
 
 export const MY_DATE_FORMATS: MatDateFormats = {
@@ -84,7 +85,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
-    { provide: LOCALE_ID, useValue: 'es' },
+    { provide: LOCALE_ID, useValue: 'es-PE' },
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
 

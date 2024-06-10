@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ExpenseCreateComponent } from './expense-create/expense-create.component';
 import { ExpenseEditComponent } from './expense-edit/expense-edit.component';
 import { ExpenseDetailsComponent } from './expense-details/expense-details.component';
@@ -19,6 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { ExpensePaidComponent } from './expense-paid/expense-paid.component';
+import { ExpenseReportComponent } from './expense-report/expense-report.component';
 
 
 
@@ -28,7 +29,8 @@ import { ExpensePaidComponent } from './expense-paid/expense-paid.component';
     ExpenseEditComponent,
     ExpenseDetailsComponent,
     ExpenseListComponent,
-    ExpensePaidComponent
+    ExpensePaidComponent,
+    ExpenseReportComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,8 @@ import { ExpensePaidComponent } from './expense-paid/expense-paid.component';
     MatCardModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+   
 
   ]
 })

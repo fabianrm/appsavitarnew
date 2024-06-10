@@ -20,6 +20,7 @@ export class ExpenseEditComponent {
   date = new Date();
   reasons: Reason[] = [];
 
+
   constructor(
     public fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public getId: number,
@@ -42,7 +43,8 @@ export class ExpenseEditComponent {
       amount: ['', Validators.required],
       date: [this.datePipe.transform(this.date, "yyyy-MM-dd"), Validators.required],
       reasonId: ['', Validators.required],
-      voutcher: [''],
+        voutcher: [''],
+       
       note: [''],
     };
 
@@ -94,6 +96,7 @@ export class ExpenseEditComponent {
     const dataToSend = {
       ...formData,
       date: purchaseDate,
+      datePaid: this.datePipe.transform(this.date, "yyyy-MM-dd"),
 
     };
 

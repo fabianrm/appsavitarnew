@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -73,6 +73,14 @@ export class ExpenseService {
   }
 
 
+  //Ingresos
+  getExpenseReport(startDate: string, endDate: string): Observable<any> {
+    let params = new HttpParams()
+      .set('start_date', startDate)
+      .set('end_date', endDate);
+
+    return this.clienteHttp.get(`${this.API}expenses/report`, { params });
+  }
 
 
 }

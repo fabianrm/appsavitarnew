@@ -44,6 +44,7 @@ export class ExpenseCreateComponent {
       date: [this.datePipe.transform(this.date, "yyyy-MM-dd"), Validators.required],
       reasonId: ['', Validators.required],
       voutcher: [''],
+      datePaid: this.getType === 'variable' ? [this.datePipe.transform(this.date, "yyyy-MM-dd")] : null,
       note: [''],
       status: [true],
     }
@@ -84,7 +85,7 @@ export class ExpenseCreateComponent {
       this.expenseService.addExpense(dataToSend).subscribe(respuesta => {
         this.msgSusscess('Egreso registrado correctamente');
         this.dialogRef.close();
-        console.log(respuesta);
+       // console.log(respuesta);
       });
     }
   }

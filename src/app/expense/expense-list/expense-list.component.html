@@ -54,7 +54,7 @@
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Monto</th>
         <td style="text-align: right;"mat-cell *matCellDef="let element">
-          {{ element.amount  }}
+          {{ element.amount | currency:'PEN':'symbol':'1.2-2':'es-PE'  }}
         </td>
       </ng-container>
 
