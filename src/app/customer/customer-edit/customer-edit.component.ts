@@ -45,7 +45,6 @@ export class CustomerEditComponent implements OnInit {
   ngOnInit(): void {
 
     const formControlsConfig = {
-      id: ['',],
       type: ['', Validators.required],
       documentNumber: ['', Validators.required],
       name: ['', Validators.required],
@@ -114,7 +113,7 @@ export class CustomerEditComponent implements OnInit {
 
 
   enviarDatos(id: number) {
-    console.log(this.formEditar.value);
+   // console.log(this.formEditar.value);
     
     if (this.formEditar.valid) {
       this.customerService.updateCustomer(id, this.formEditar.value).subscribe(respuesta => {

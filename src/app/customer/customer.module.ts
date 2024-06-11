@@ -22,6 +22,7 @@ import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerRoutingModule } from './customer-routing.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContractsListComponent } from './contracts-list/contracts-list.component';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -47,6 +48,8 @@ import { ContractsListComponent } from './contracts-list/contracts-list.componen
     MatSnackBarModule,
     MatCard,
     MatCardActions,
+    MatMenu,
+    MatMenuModule,
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
