@@ -35,6 +35,10 @@ const routes: Routes = [
         loadChildren: () => import('./contract/contract.module').then(m => m.ContractModule)
       },
       {
+        path: 'contract-create',
+        loadChildren: () => import('./contract/contract.module').then(m => m.ContractModule)
+      },
+      {
         path: 'equipment',
         loadChildren: () => import('./equipment/equipment.module').then(m => m.EquipmentModule)
       },

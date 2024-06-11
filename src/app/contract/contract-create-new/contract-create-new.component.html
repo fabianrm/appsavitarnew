@@ -1,36 +1,27 @@
 <div class="container">
-  <form ngNativeValidate [formGroup]="formContrato" (ngSubmit)="enviarDatos()">
-    <mat-tab-group>
-      <mat-tab label="Datos del Contrato">
+  <form ngNativeValidate [formGroup]="formContrato">
+    <!-- Datos plan cliente -->
+    <div class="row">
+      <!-- Columna Datos del Cliente -->
+      <div class="col-sm-12">
         <mat-card>
           <mat-card-header class="header">
             <mat-card-title> Datos del Cliente </mat-card-title>
           </mat-card-header>
-
           <mat-card-content>
             <div class="row">
-              <div class="col-sm-4">
-                <h3>Cliente: {{ getData.customerName }}</h3>
+              <div class="col-sm-6">
+                <div class="col-sm-8">
+                  <h3>Cliente: Luna Ramirez</h3>
+                  <span>DNI: 42781792</span>
+                </div>
+                <div class="col-sm-4">
+                  <p>Activo:</p>
+                </div>
               </div>
-              <div class="col-sm-4"></div>
 
-              <div class="col-sm-4">
-                <p>Activo:</p>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-
-        <br />
-
-
-        <mat-card>
-          <mat-card-header class="header">
-            <mat-card-title> Datos del Plan </mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div class="row">
+              <div class="col-sm-6">
+                <div class="row">
               <div class="col-sm-4">
                 <mat-form-field>
                   <mat-label>Seleccione un plan</mat-label>
@@ -65,10 +56,19 @@
                 }
               </div>
             </div>
+          
+              </div>
+            </div>
           </mat-card-content>
         </mat-card>
-        <br />
-       
+      </div>
+
+      <!-- Columna Datos del Plan -->
+    </div>
+
+    <!-- Direccion de instalacion -->
+    <div class="row">
+      <div class="col-sm-6">
         <mat-card>
           <mat-card-header class="header">
             <mat-card-title> Dirección de instalación </mat-card-title>
@@ -82,7 +82,7 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-6">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Ciudad</mat-label>
                   <mat-select formControlName="cityId">
@@ -92,33 +92,8 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div class="col-sm-4">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <input
-                  
-                    matInput
-                    placeholder="Dirección de instalación"
-                    formControlName="addressInstallation"
-                    #codeDir
-                    (input)="codeDir.value = codeDir.value.toUpperCase()"
-                  />
-                </mat-form-field>
-              </div>
-              <div class="col-sm-4">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <input
-                    matInput
-                    placeholder="Referencia"
-                    formControlName="reference"
-                    #codeRef
-                    (input)="codeRef.value = codeRef.value.toUpperCase()"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-6">
                 <mat-form-field class="control-full-width">
                   <mat-label>Fecha de Instalación</mat-label>
                   <input
@@ -133,7 +108,36 @@
                   <mat-datepicker #pickerDesde></mat-datepicker>
                 </mat-form-field>
               </div>
-              <div class="col-sm-4">
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <input
+                    matInput
+                    placeholder="Dirección de instalación"
+                    formControlName="addressInstallation"
+                    #codeDir
+                    (input)="codeDir.value = codeDir.value.toUpperCase()"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="col-sm-6">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <input
+                    matInput
+                    placeholder="Referencia"
+                    formControlName="reference"
+                    #codeRef
+                    (input)="codeRef.value = codeRef.value.toUpperCase()"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <input
                     matInput
@@ -143,7 +147,7 @@
                   />
                 </mat-form-field>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-6">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <input
                     matInput
@@ -156,11 +160,12 @@
             </div>
           </mat-card-content>
         </mat-card>
-        <br />
-      </mat-tab>
+      </div>
+    </div>
 
-      <mat-tab label="Datos de Conexión">
-        
+    <!-- Datos de instalacion -->
+    <div class="row">
+      <div class="col-sm-6">
         <mat-card>
           <mat-card-header class="header">
             <mat-card-title> Datos de Instalación </mat-card-title>
@@ -209,7 +214,9 @@
             </div>
           </mat-card-content>
         </mat-card>
-
+      </div>
+      <!-- Col equipo -->
+      <div class="col-sm-6">
         <mat-card>
           <mat-card-header class="header">
             <mat-card-title> Datos del Equipo </mat-card-title>
@@ -266,58 +273,10 @@
             </div>
           </mat-card-content>
         </mat-card>
-      </mat-tab>
-      <mat-tab label="Datos de Facturación">
-        <mat-card>
-          <mat-card-header class="header">
-            <mat-card-title> Datos de Facturación </mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div class="row">
-              <div class="col-sm-4">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <mat-label>Día de Facturación</mat-label>
-                  <mat-select formControlName="billingDate">
-                    @for (ciclo of ciclos; track ciclo) {
-                    <mat-option [value]="ciclo.value">{{
-                      ciclo.viewValue
-                    }}</mat-option>
-                    }
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-4">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <mat-label>Día de Corte</mat-label>
-                  <mat-select formControlName="dueDate">
-                    @for (dia of vencimientos; track dia) {
-                    <mat-option [value]="dia.value">{{
-                      dia.viewValue
-                    }}</mat-option>
-                    }
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-4"></div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </mat-tab>
-    </mat-tab-group>
-
-    <div class="row-buttons">
-      <button
-        [disabled]="formContrato.invalid"
-        color="primary"
-        mat-raised-button
-        style="margin-right: 5px"
-      >
-        Guardar
-      </button>
-      <button mat-dialog-close="" color="accent" mat-raised-button>
-        Cancelar
-      </button>
+      </div>
     </div>
+
+    <!-- Dtos del equipo -->
+    <div class="row"></div>
   </form>
 </div>

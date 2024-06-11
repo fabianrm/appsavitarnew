@@ -4,10 +4,12 @@ import { ContractListComponent } from './contract-list/contract-list.component';
 import { ContractCreateComponent } from './contract-create/contract-create.component';
 import { ContractEditComponent } from './contract-edit/contract-edit.component';
 import { AuthGuard } from '../auth/auth.guard';
+import { ContractCreateNewComponent } from './contract-create-new/contract-create-new.component';
 
 const routes: Routes = [
   { path: 'contracts', component: ContractListComponent, data: { title: 'Contratos' }, canActivate: [AuthGuard] },
   { path: 'contractCreate', component: ContractCreateComponent },
+  { path: 'new-contract', component: ContractCreateNewComponent },
   { path: 'contractEdit/:id', component: ContractEditComponent },
 ];
 

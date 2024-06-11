@@ -143,6 +143,11 @@
             <button mat-menu-item (click)="deleteCustomer(row.id)">
               Eliminar
             </button>
+            <button mat-menu-item 
+             [routerLink]="['/dashboard/contract-create/new-contract']"
+           >
+              Nuevo contrato
+            </button>
           </mat-menu>
         </td>
 

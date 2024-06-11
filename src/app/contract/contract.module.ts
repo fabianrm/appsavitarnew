@@ -24,6 +24,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { ContractEditPlanComponent } from './contract-edit-plan/contract-edit-plan.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ContractCreateNewComponent } from './contract-create-new/contract-create-new.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ContractCreateComponent,
     ContractEditComponent,
     ContractListComponent,
-    ContractEditPlanComponent
+    ContractEditPlanComponent,
+    ContractCreateNewComponent
   ],
   imports: [
     CommonModule,
