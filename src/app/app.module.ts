@@ -21,7 +21,7 @@ import { DatePipe } from '@angular/common';
 import { InvoiceModule } from './invoice/invoice.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats, provideNativeDateAdapter } from '@angular/material/core';
 
 //Para fechas en spanish
 import localeEsPe from '@angular/common/locales/es-PE';
@@ -82,6 +82,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
+    provideNativeDateAdapter(),
     DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },

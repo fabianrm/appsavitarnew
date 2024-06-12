@@ -57,7 +57,7 @@
       <!-- Latitude Column -->
       <ng-container matColumnDef="purchaseDate">
         <th mat-header-cell *matHeaderCellDef>Fecha de Compra</th>
-        <td mat-cell *matCellDef="let element">{{ element.purchaseDate }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.purchaseDate | date : "dd-MM-yyyy" }}</td>
       </ng-container>
 
       <!-- Estado Column -->
@@ -66,9 +66,9 @@
         <td mat-cell *matCellDef="let element">
           <span
             [ngClass]="{
-            'status-good': element.status === 'bueno',
-            'status-bad': element.status === 'malo',
-            'status-regular': element.status === 'regular',
+            'status-good': element.status === 'BUENO',
+            'status-bad': element.status === 'MALO',
+            'status-regular': element.status === 'REGULAR',
           }"
             >{{ element.status | titlecase}}</span
           >

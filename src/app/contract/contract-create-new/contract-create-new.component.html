@@ -12,8 +12,8 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="col-sm-12">
-                  <h3>{{customer?.customerName}}</h3>
-                  <span>Código: {{customer?.customerCode}}</span>
+                  <h3>{{ customer?.customerName }}</h3>
+                  <span>Código: {{ customer?.customerCode }}</span>
                 </div>
               </div>
 
@@ -93,7 +93,7 @@
               </div>
 
               <div class="col-sm-6">
-                <mat-form-field class="control-full-width">
+                <mat-form-field>
                   <mat-label>Fecha de Instalación</mat-label>
                   <input
                     matInput
@@ -250,17 +250,17 @@
               <div class="col-sm-8 row-items">
                 <div>
                   <p *ngIf="selectedEquipment">
-                    Tipo: {{ selectedEquipment.type | uppercase }} /
+                    Tipo: {{ selectedEquipment.type | uppercase }}
                   </p>
                 </div>
                 <div>
                   <p *ngIf="selectedEquipment">
-                    Marca: {{ selectedEquipment.brand | uppercase }}/
+                    Marca: {{ selectedEquipment.brand | uppercase }}
                   </p>
                 </div>
                 <div>
                   <p *ngIf="selectedEquipment">
-                    Modelo: {{ selectedEquipment.model | uppercase }}/
+                    Modelo: {{ selectedEquipment.model | uppercase }}
                   </p>
                 </div>
                 <div>
@@ -276,7 +276,7 @@
     </div>
     <!-- Botones -->
 
-     <div class="row-buttons">
+    <div class="row-buttons">
       <button
         [disabled]="formContrato.invalid"
         color="primary"

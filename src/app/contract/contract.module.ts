@@ -18,13 +18,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { ContractEditPlanComponent } from './contract-edit-plan/contract-edit-plan.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ContractCreateNewComponent } from './contract-create-new/contract-create-new.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -58,7 +57,6 @@ import { ContractCreateNewComponent } from './contract-create-new/contract-creat
     MatOptionModule,
     MatSlideToggleModule,
     MatDatepickerModule,
-    MatMomentDateModule,
     MatTabsModule,
     MatMenu,
     MatMenuModule,
