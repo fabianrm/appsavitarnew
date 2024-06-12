@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_LOCALE, ThemePalette } from '@angular/material/core';
 import { Box } from '../../box/Models/ResponseBox';
 import { City } from '../../city/Models/CityResponse';
-import { Equipment } from '../../equipment/Models/Equipment';
+
 import { ReqPlan, ResponsePlan } from '../../plan/Models/ResponsePlan';
 import { ReqRouter, ResponseRouter } from '../../router/Models/ResponseRouter';
 import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';

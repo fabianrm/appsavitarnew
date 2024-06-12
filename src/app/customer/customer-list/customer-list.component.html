@@ -15,7 +15,7 @@
     <button (click)="exportToExcel()" mat-raised-button color="accent">
       Exportar
     </button>
-    <button (click)="openDialog('')" mat-raised-button color="accent">
+    <button (click)="openDialog()" mat-raised-button color="accent">
       + Nuevo
     </button>
   </div>
@@ -131,10 +131,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openDialogContract(row)">
-              Crear contrato
-            </button>
-            <button mat-menu-item (click)="openEditDialog(row.id)">
+                      <button mat-menu-item (click)="openEditDialog(row.id)">
               Editar cliente
             </button>
             <button mat-menu-item (click)="viewMap(row.latitude, row.longitude)">
@@ -143,9 +140,7 @@
             <button mat-menu-item (click)="deleteCustomer(row.id)">
               Eliminar
             </button>
-            <button mat-menu-item 
-             [routerLink]="['/dashboard/contract-create/new-contract']"
-           >
+            <button mat-menu-item (click)="onSelectCustomer(row) ">
               Nuevo contrato
             </button>
           </mat-menu>

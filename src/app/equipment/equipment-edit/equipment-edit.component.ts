@@ -5,7 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EquipmentCreateComponent } from '../equipment-create/equipment-create.component';
 import { EquipmentService } from '../equipment.service';
-import { Equipment } from '../Models/Equipment';
+import { Equipment } from '../Models/EquipmentResponse';
+
 
 interface Tipo {
   value: string;
@@ -65,7 +66,7 @@ export class EquipmentEditComponent {
       serie: [this.getData.serie, Validators.required],
       model: [this.getData.model, Validators.required],
       brand: [this.getData.brand],
-      purchase_date: [this.getData.purchase_date, ''],
+      purchase_date: [this.getData.purchaseDate, ''],
       status: [this.selectedEstado, Validators.required],
     });
   }

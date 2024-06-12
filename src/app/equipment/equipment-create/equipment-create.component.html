@@ -45,15 +45,13 @@
           </mat-form-field>
         </div>
         <div class="col-sm-6">
-          <mat-form-field>
+          <mat-form-field class="control-full-width" appearance="fill">
             <mat-label>Marca</mat-label>
-            <input
-              matInput
-              placeholder="Marca"
-              formControlName="brand"
-              #codeMar
-              (input)="codeMar.value = codeMar.value.toUpperCase()"
-            />
+            <mat-select formControlName="brandId">
+              @for (brand of brands; track brand) {
+              <mat-option [value]="brand.id">{{ brand.name }}</mat-option>
+              }
+            </mat-select>
           </mat-form-field>
         </div>
       </div>
@@ -64,7 +62,7 @@
             <input
               matInput
               [matDatepicker]="pickerDesde"
-              formControlName="purchase_date"
+              formControlName="purchaseDate"
             />
             <mat-datepicker-toggle
               matIconSuffix

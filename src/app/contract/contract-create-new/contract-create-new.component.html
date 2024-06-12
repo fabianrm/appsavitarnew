@@ -1,5 +1,5 @@
 <div class="container">
-  <form ngNativeValidate [formGroup]="formContrato">
+  <form ngNativeValidate [formGroup]="formContrato" (ngSubmit)="enviarDatos()">
     <!-- Datos plan cliente -->
     <div class="row">
       <!-- Columna Datos del Cliente -->
@@ -10,53 +10,52 @@
           </mat-card-header>
           <mat-card-content>
             <div class="row">
-              <div class="col-sm-6">
-                <div class="col-sm-8">
-                  <h3>Cliente: Luna Ramirez</h3>
-                  <span>DNI: 42781792</span>
-                </div>
-                <div class="col-sm-4">
-                  <p>Activo:</p>
+              <div class="col-sm-4">
+                <div class="col-sm-12">
+                  <h3>{{customer?.customerName}}</h3>
+                  <span>Código: {{customer?.customerCode}}</span>
                 </div>
               </div>
 
-              <div class="col-sm-6">
+              <div class="col-sm-8">
                 <div class="row">
-              <div class="col-sm-4">
-                <mat-form-field>
-                  <mat-label>Seleccione un plan</mat-label>
-                  <mat-select
-                    formControlName="planId"
-                    (selectionChange)="getPlanbyID($event.value)"
-                  >
-                    <mat-option *ngFor="let plan of planes" [value]="plan.id">
-                      {{ plan.name }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
+                  <div class="col-sm-7">
+                    <mat-form-field>
+                      <mat-label>Seleccione un plan</mat-label>
+                      <mat-select
+                        formControlName="planId"
+                        (selectionChange)="getPlanbyID($event.value)"
+                      >
+                        <mat-option
+                          *ngFor="let plan of planes"
+                          [value]="plan.id"
+                        >
+                          {{ plan.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
 
-              <div class="col-sm-4">
-                <div *ngIf="planSelected">
-                  @for (itemPlan of planSelected; track itemPlan) {
-                  <p>Plan de Servicio: {{ itemPlan.name }}</p>
-                  <mat-icon class="valign-center">upload</mat-icon>
-                  <span> {{ itemPlan.download }}</span>
-                  <mat-icon class="valign-center">download</mat-icon>
-                  <span>{{ itemPlan.upload }}</span>
-                  }
-                  <!-- Otros datos del plan -->
+                  <div class="col-sm-5">
+                    <div *ngIf="planSelected">
+                      @for (itemPlan of planSelected; track itemPlan) {
+                      <p>Plan de Servicio: {{ itemPlan.name }}</p>
+                      <mat-icon class="valign-center">upload</mat-icon>
+                      <span> {{ itemPlan.download }}</span>
+                      <mat-icon class="valign-center">download</mat-icon>
+                      <span>{{ itemPlan.upload }}</span>
+                      }
+                      <!-- Otros datos del plan -->
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    @for (itemPlan of plan; track itemPlan) {
+                    <p>Precio:</p>
+                    {{ itemPlan.price | currency : "PEN" }}
+                    }
+                  </div>
                 </div>
-              </div>
-
-              <div class="col-sm-4">
-                @for (itemPlan of plan; track itemPlan) {
-                <p>Precio:</p>
-                {{ itemPlan.price | currency : "PEN" }}
-                }
-              </div>
-            </div>
-          
               </div>
             </div>
           </mat-card-content>
@@ -224,7 +223,7 @@
 
           <mat-card-content>
             <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-4 row-items">
                 <mat-form-field class="control-full-width">
                   <mat-label>Serie</mat-label>
                   <input
@@ -251,22 +250,22 @@
               <div class="col-sm-8 row-items">
                 <div>
                   <p *ngIf="selectedEquipment">
-                    Tipo: {{ selectedEquipment.type | uppercase }}
+                    Tipo: {{ selectedEquipment.type | uppercase }} /
                   </p>
                 </div>
                 <div>
                   <p *ngIf="selectedEquipment">
-                    Marca: {{ selectedEquipment.brand | uppercase }}
+                    Marca: {{ selectedEquipment.brand | uppercase }}/
                   </p>
                 </div>
                 <div>
                   <p *ngIf="selectedEquipment">
-                    Modelo: {{ selectedEquipment.model | uppercase }}
+                    Modelo: {{ selectedEquipment.model | uppercase }}/
                   </p>
                 </div>
                 <div>
                   <p *ngIf="selectedEquipment">
-                    Modelo: {{ selectedEquipment.status | uppercase }}
+                    Estado: {{ selectedEquipment.status | uppercase }}
                   </p>
                 </div>
               </div>
@@ -275,8 +274,22 @@
         </mat-card>
       </div>
     </div>
+    <!-- Botones -->
 
-    <!-- Dtos del equipo -->
-    <div class="row"></div>
+     <div class="row-buttons">
+      <button
+        [disabled]="formContrato.invalid"
+        color="primary"
+        mat-raised-button
+        style="margin-right: 5px"
+      >
+        Guardar
+      </button>
+      <button mat-dialog-close="" color="accent" mat-raised-button>
+        Cancelar
+      </button>
+    </div>
+
+    <!-- Texts bootstrap -->
   </form>
 </div>

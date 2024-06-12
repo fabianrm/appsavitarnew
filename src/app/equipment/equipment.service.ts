@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Equipment, EquipmentResponse } from './Models/Equipment';
+import { Equipment } from './Models/EquipmentResponse';
+
 
 @Injectable({
   providedIn: 'root'

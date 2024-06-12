@@ -8,7 +8,7 @@ import { ContractCreateNewComponent } from './contract-create-new/contract-creat
 
 const routes: Routes = [
   { path: 'contracts', component: ContractListComponent, data: { title: 'Contratos' }, canActivate: [AuthGuard] },
-  { path: 'contractCreate', component: ContractCreateComponent },
+  { path: 'contractCreate', component: ContractCreateComponent, data: { title: 'Nuevo Contrato' }, canActivate: [AuthGuard] },
   { path: 'new-contract', component: ContractCreateNewComponent },
   { path: 'contractEdit/:id', component: ContractEditComponent },
 ];

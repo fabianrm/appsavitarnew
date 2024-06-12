@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Equipment } from '../Models/Equipment';
+
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,7 @@ import { EquipmentService } from './../equipment.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EquipmentCreateComponent } from '../equipment-create/equipment-create.component';
 import { EquipmentEditComponent } from '../equipment-edit/equipment-edit.component';
+import { Equipment } from '../Models/EquipmentResponse';
 
 @Component({
   selector: 'app-equipment-list',
@@ -16,7 +17,7 @@ import { EquipmentEditComponent } from '../equipment-edit/equipment-edit.compone
 })
 export class EquipmentListComponent {
 
-  displayedColumns: string[] = ['id', 'type', 'serie', 'model', 'brand', 'purchase_date', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'type', 'serie', 'model', 'brand', 'purchaseDate', 'status', 'acciones'];
 
   public dataSource!: MatTableDataSource<Equipment>
 

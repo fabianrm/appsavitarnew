@@ -9,3 +9,16 @@ mat-form-field {
 mat-card {
     margin-top: 10px;
 }
+
+.row-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row-buttons {
+  margin-top: 20px;
+  height: 80px;
+  display: flex;
+  justify-content: flex-end;
+}

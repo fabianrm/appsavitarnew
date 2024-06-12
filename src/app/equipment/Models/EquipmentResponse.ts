@@ -8,6 +8,6 @@ export interface Equipment {
     serie: string;
     model: string;
     brand: string;
-    purchase_date: Date;
+    purchaseDate: Date;
     status: string;
 }

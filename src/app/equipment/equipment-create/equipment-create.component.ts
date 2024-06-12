@@ -4,7 +4,9 @@ import { ThemePalette } from '@angular/material/core';
 import { EquipmentService } from '../equipment.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DatePipe } from '@angular/common';
+import { BrandService } from '../../brand/brand.service';
+import { Brand } from '../../brand/Models/BrandResponse';
+
 
 interface Tipo {
   value: string;
@@ -31,31 +33,32 @@ export class EquipmentCreateComponent implements OnInit {
   selectedTipo = 'router';
   selectedEstado = 'bueno';
 
+  brands: Brand[] = [];
+
   date = new Date();
 
   tipos: Tipo[] = [
-    { value: 'router', viewValue: 'Router' },
-    { value: 'switch', viewValue: 'Switch' },
-    { value: 'caja', viewValue: 'Caja' },
-    { value: 'mufa', viewValue: 'Mufa' },
+    { value: 'ROUTER', viewValue: 'ROUTER' },
+    { value: 'SWITCH', viewValue: 'SWITCH' },
   ]
 
 
   estados: Estado[] = [
-    { value: 'bueno', viewValue: 'Bueno' },
-    { value: 'regular', viewValue: 'Regular' },
-    { value: 'malo', viewValue: 'Malo' },
+    { value: 'BUENO', viewValue: 'BUENO' },
+    { value: 'REGULAR', viewValue: 'REGULAR' },
+    { value: 'MALO', viewValue: 'MALO' },
   ]
 
   constructor(public formulario: FormBuilder,
     private equipmentService: EquipmentService, @Inject(MAT_DIALOG_DATA) public getData: any,
     private _snackBar: MatSnackBar,
-    private datePipe: DatePipe,
+    private brandService: BrandService,
     private dialogRef: MatDialogRef<EquipmentCreateComponent>
   ) { }
 
 
   ngOnInit(): void {
+    this.getBrands();
     this.initForm();
     
   }
@@ -65,20 +68,31 @@ export class EquipmentCreateComponent implements OnInit {
       type: [this.selectedTipo, Validators.required],
       serie: ['', Validators.required],
       model: ['', Validators.required],
-      brand: [''],
-      purchase_date: [],
+      brandId: [''],
+      purchaseDate: [''],
       status: [this.selectedEstado, Validators.required],
     });
   }
 
+
+  //Marcas
+  getBrands() {
+    this.brandService.getBrands().subscribe((respuesta) => {
+      if (respuesta.data.length > 0) {
+        this.brands = respuesta.data
+      }
+    });
+  }
+
+
   enviarDatos() {
     
     const formData = this.formEquipment.value;
-    const purchaseDate = new Date(formData.purchase_date).toISOString().split('T')[0];
+    const purchaseDate = new Date(formData.purchaseDate).toISOString().split('T')[0];
 
     const dataToSend = {
       ...formData,
-      purchase_date: purchaseDate,
+      purchaseDate: purchaseDate,
 
     };
 

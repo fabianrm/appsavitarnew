@@ -4,16 +4,28 @@ import { Observable, Subject, catchError, map, of, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Customer, CustomerResponse } from './Models/CustomerResponse';
 import { CustomerRequest } from './Models/CustomerRequest';
+import { CustomerDTO } from './Models/CustomerDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
+
   private _refresh$ = new Subject<void>()
+  private customer?: CustomerDTO;
 
   API: string = environment.servidor;
 
   constructor(private clienteHttp: HttpClient) { }
+
+  setCustomer(customer: CustomerDTO) {
+    this.customer = customer;
+  }
+
+  getCustomer(): CustomerDTO {
+    return this.customer!;
+  }
+
 
   get refresh$() {
     return this._refresh$;

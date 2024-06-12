@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContractListComponent } from '../../contract/contract-list/contract-list.component';
 import { ContractsListComponent } from '../contracts-list/contracts-list.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-list',
@@ -47,7 +48,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     private customerService: CustomerService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private contractService: ContractService,
+    private router: Router
   ) { }
 
 
@@ -73,24 +74,6 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       //  console.log(respuesta)
     });
   }
-
-
-
-  // deleteCustomers(id: number) {
-  //   this.customerService.deleteCustomer(id).subscribe((respuesta) => {
-  //     if (respuesta.data.status == true) { 
-  //       console.log('cliente eliminado', respuesta.data.message);
-        
-  //     } else {
-  //       console.log('error', respuesta.data.message);
-  //     }
-
-  //    // console.log(respuesta);
-      
-  //   });
-
-  // }
-
 
 
   deleteCustomer(id: number) {
@@ -129,7 +112,14 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
 
 
-  openDialog(row: any) {
+  onSelectCustomer(row: { id: number, customerName: string, customerCode: string }) {
+   // console.log(row); 
+    this.customerService.setCustomer(row);
+    this.router.navigate(['/dashboard/contract-create/new-contract']); // Navega al componente "contrato"
+  }
+
+
+  openDialog() {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
@@ -195,7 +185,6 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       saveAs(response, 'customers.xlsx');
     });
   }
-
 
 
   msgSusscess(mensaje: string) {

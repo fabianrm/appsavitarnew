@@ -1,24 +1,23 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Box } from '../../box/Models/ResponseBox';
 import { City } from '../../city/Models/CityResponse';
-import { Equipment } from '../../equipment/Models/Equipment';
 import { ReqPlan, ResponsePlan } from '../../plan/Models/ResponsePlan';
 import { ReqRouter, ResponseRouter } from '../../router/Models/ResponseRouter';
 import { Ports } from '../Models/Ports';
 import { DatePipe } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BoxService } from '../../box/box.service';
 import { CityService } from '../../city/city.service';
-import { Customer } from '../../customer/Models/CustomerResponse';
 import { EquipmentService } from '../../equipment/equipment.service';
 import { PlanService } from '../../plan/plan.service';
 import { RouterService } from '../../router/router.service';
-import { ContractCreateComponent } from '../contract-create/contract-create.component';
 import { ContractService } from '../contract.service';
 import { Observable, map, startWith } from 'rxjs';
+import { CustomerService } from '../../customer/customer.service';
+import { Router } from '@angular/router';
+import { Equipment } from '../../equipment/Models/EquipmentResponse';
 
 @Component({
   selector: 'app-contract-create-new',
@@ -27,12 +26,9 @@ import { Observable, map, startWith } from 'rxjs';
 })
 export class ContractCreateNewComponent implements OnInit {
 
- 
-
-
-
   formContrato!: FormGroup;
   color: ThemePalette = 'accent';
+  customer?: { id: number, customerName: string, customerCode: string };
   checked = true;
   disabled = false;
   planInicial = 1;
@@ -58,6 +54,7 @@ export class ContractCreateNewComponent implements OnInit {
 
 
   constructor(public formulario: FormBuilder,
+    private customerService: CustomerService,
     private contractService: ContractService,
     private planService: PlanService,
     private routerService: RouterService,
@@ -66,10 +63,12 @@ export class ContractCreateNewComponent implements OnInit {
     private equipmentService: EquipmentService,
     private _snackBar: MatSnackBar,
     private datePipe: DatePipe,
-   ) { }
+    private router: Router
+  ) { }
 
-  
+
   ngOnInit(): void {
+    this.getCustomer();
     this.getPlans()
     this.getCities();
     this.getRouters();
@@ -83,7 +82,7 @@ export class ContractCreateNewComponent implements OnInit {
   initForm() {
 
     this.formContrato = this.formulario.group({
-      customerId: [],
+      customerId: [this.customer?.id],
       planId: [this.planInicial, Validators.required],
       routerId: ['', Validators.required],
       boxId: ['', Validators.required],
@@ -96,8 +95,8 @@ export class ContractCreateNewComponent implements OnInit {
       installationDate: ['', Validators.required],
       latitude: ['', Validators.required],
       longitude: ['', Validators.required],
-      billingDate: ['', Validators.required],
-      dueDate: ['', Validators.required],
+      billingDate: [''],
+      dueDate: [''],
       status: ['activo'],
       endDate: [''],
     });
@@ -113,7 +112,12 @@ export class ContractCreateNewComponent implements OnInit {
     });
 
   }
-  
+
+  //cliente:
+  getCustomer() {
+    this.customer = this.customerService.getCustomer();
+  }
+
   //Planes
   getPlans() {
     this.planService.getPlans().subscribe((respuesta: ResponsePlan) => {
@@ -123,7 +127,7 @@ export class ContractCreateNewComponent implements OnInit {
       }
     });
   }
-  
+
 
   getPlanbyID(id: number) {
     if (this.planes.length > 0) {
@@ -190,5 +194,37 @@ export class ContractCreateNewComponent implements OnInit {
     return equipment ? equipment.id : null;
   }
 
+
+  //Enviar Datos
+  enviarDatos(): any {
+
+    const formData = this.formContrato.value;
+    const installDate = new Date(formData.installationDate).toISOString().split('T')[0];
+
+    const equipmentId = this.equipmentIdValue;
+
+    const dataToSend = {
+      ...formData,
+      installationDate: installDate,
+      equipmentId: equipmentId
+    };
+
+
+    if (this.formContrato.valid) {
+      //console.log('agregar....')
+      this.contractService.addService(dataToSend).subscribe(respuesta => {
+        this.router.navigate(['/dashboard/contract/contracts']); // Navega al componente "contrato"
+        this.msgSusscess('Contrato agregado correctamente');
+      });
+    }
+  }
+
+  msgSusscess(mensaje: string) {
+    this._snackBar.open(mensaje, 'APPSAVITAR', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    })
+  }
 
 }

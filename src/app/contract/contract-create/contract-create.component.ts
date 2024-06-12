@@ -14,10 +14,11 @@ import { BoxService } from '../../box/box.service';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 import { EquipmentService } from '../../equipment/equipment.service';
-import { Equipment } from '../../equipment/Models/Equipment';
+
 import { DatePipe } from '@angular/common';
 import { Observable, map, startWith } from 'rxjs';
 import { Customer } from '../../customer/Models/CustomerResponse';
+import { Equipment } from '../../equipment/Models/EquipmentResponse';
 
 //TODO: QUITAR LOS CAMPOS DIA DE FACTURACION Y CORTE Y AGREGARLOS EN EL INVOICE
 
