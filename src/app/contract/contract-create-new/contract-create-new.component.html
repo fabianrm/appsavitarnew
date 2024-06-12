@@ -116,8 +116,6 @@
                     matInput
                     placeholder="Dirección de instalación"
                     formControlName="addressInstallation"
-                    #codeDir
-                    (input)="codeDir.value = codeDir.value.toUpperCase()"
                   />
                 </mat-form-field>
               </div>
@@ -128,8 +126,6 @@
                     matInput
                     placeholder="Referencia"
                     formControlName="reference"
-                    #codeRef
-                    (input)="codeRef.value = codeRef.value.toUpperCase()"
                   />
                 </mat-form-field>
               </div>
@@ -143,6 +139,7 @@
                     placeholder="Latitud"
                     formControlName="latitude"
                     type="number"
+                    step="any"
                   />
                 </mat-form-field>
               </div>
@@ -153,10 +150,25 @@
                     placeholder="Longitud"
                     formControlName="longitude"
                     type="number"
+                    step="any"
                   />
                 </mat-form-field>
               </div>
             </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-sm-6">
+        <mat-card class="container-map">
+          <mat-card-content class="center-content">
+            <app-map-loading
+              *ngIf="!locationReady; else mapReady"
+              class="full-size"
+            ></app-map-loading>
+
+            <ng-template #mapReady>
+              <app-map-view class="full-size"></app-map-view>
+            </ng-template>
           </mat-card-content>
         </mat-card>
       </div>

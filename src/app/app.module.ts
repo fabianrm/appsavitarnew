@@ -35,6 +35,7 @@ import { ExpenseModule } from './expense/expense.module';
 import { RetryInterceptor } from './auth/retry.interceptor';
 import { ReasonModule } from './reason/reason.module';
 
+
 registerLocaleData(localeEsPe, 'es-PE');
 
 

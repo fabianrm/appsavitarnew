@@ -24,6 +24,7 @@ import { ContractEditPlanComponent } from './contract-edit-plan/contract-edit-pl
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ContractCreateNewComponent } from './contract-create-new/contract-create-new.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MapsModule } from '../maps/maps.module';
 
 
 @NgModule({
@@ -32,11 +33,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     ContractEditComponent,
     ContractListComponent,
     ContractEditPlanComponent,
-    ContractCreateNewComponent
+    ContractCreateNewComponent,
   ],
   imports: [
     CommonModule,
     ContractRoutingModule,
+    MapsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

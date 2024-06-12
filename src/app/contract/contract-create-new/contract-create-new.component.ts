@@ -18,6 +18,8 @@ import { Observable, map, startWith } from 'rxjs';
 import { CustomerService } from '../../customer/customer.service';
 import { Router } from '@angular/router';
 import { Equipment } from '../../equipment/Models/EquipmentResponse';
+import { PlacesService } from '../../maps/places.service';
+import { MapsService } from '../../maps/maps.service';
 
 @Component({
   selector: 'app-contract-create-new',
@@ -51,7 +53,7 @@ export class ContractCreateNewComponent implements OnInit {
   selectedEquipment!: Equipment | null;
 
   date = new Date();
-
+  coordinates: [number, number] | null = null;
 
   constructor(public formulario: FormBuilder,
     private customerService: CustomerService,
@@ -61,6 +63,9 @@ export class ContractCreateNewComponent implements OnInit {
     private boxService: BoxService,
     private cityService: CityService,
     private equipmentService: EquipmentService,
+    private locationService: PlacesService,
+    private mapService: MapsService,
+
     private _snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private router: Router
@@ -68,12 +73,15 @@ export class ContractCreateNewComponent implements OnInit {
 
 
   ngOnInit(): void {
+   // console.log(this.locationService.location);
+
     this.getCustomer();
     this.getPlans()
     this.getCities();
     this.getRouters();
     this.getBoxs();
     this.getEquipments();
+    this.getLocations();
     this.initForm();
   }
 
@@ -81,7 +89,7 @@ export class ContractCreateNewComponent implements OnInit {
   //Initform
   initForm() {
 
-    this.formContrato = this.formulario.group({
+    const formControlsConfig = {
       customerId: [this.customer?.id],
       planId: [this.planInicial, Validators.required],
       routerId: ['', Validators.required],
@@ -93,13 +101,24 @@ export class ContractCreateNewComponent implements OnInit {
       reference: ['', Validators.required],
       registrationDate: [this.datePipe.transform(this.date, "yyyy-MM-dd")],
       installationDate: ['', Validators.required],
-      latitude: ['', Validators.required],
-      longitude: ['', Validators.required],
+      latitude: [0, Validators.required],
+      longitude: [0, Validators.required],
       billingDate: [''],
       dueDate: [''],
       status: ['activo'],
       endDate: [''],
+    }
+
+    this.formContrato = this.formulario.group(formControlsConfig);
+
+    Object.keys(formControlsConfig).forEach(key => {
+      if (key === 'addressInstallation' || key === 'reference') {
+        this.formContrato.get(key)?.valueChanges.subscribe(value => {
+          this.formContrato.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        });
+      }
     });
+
 
     this.filteredEquipos = this.formContrato.get('equipmentId')!.valueChanges.pipe(
       startWith(''),
@@ -178,6 +197,11 @@ export class ContractCreateNewComponent implements OnInit {
     });
   }
 
+  get locationReady() {
+   // console.log(this.locationService.location);
+    return this.locationService.locationReady;
+  }
+
   displayFn(equipment: Equipment): string {
     return equipment && equipment.serie ? equipment.serie : '';
   }
@@ -194,13 +218,28 @@ export class ContractCreateNewComponent implements OnInit {
     return equipment ? equipment.id : null;
   }
 
+  //Obtener coordenadas
+  getLocations() {
+    this.mapService.currentCoordinates.subscribe(coordinates => {
+      this.coordinates = coordinates;
+
+      if (coordinates) {
+        // Actualizar los campos del formulario
+        this.formContrato.patchValue({
+          latitude: coordinates[1],
+          longitude: coordinates[0]
+        });
+      }
+   //   console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
+    });
+  }
+
 
   //Enviar Datos
   enviarDatos(): any {
 
     const formData = this.formContrato.value;
     const installDate = new Date(formData.installationDate).toISOString().split('T')[0];
-
     const equipmentId = this.equipmentIdValue;
 
     const dataToSend = {
@@ -209,14 +248,15 @@ export class ContractCreateNewComponent implements OnInit {
       equipmentId: equipmentId
     };
 
-
     if (this.formContrato.valid) {
-      //console.log('agregar....')
+      console.log(dataToSend);
+      
       this.contractService.addService(dataToSend).subscribe(respuesta => {
         this.router.navigate(['/dashboard/contract/contracts']); // Navega al componente "contrato"
         this.msgSusscess('Contrato agregado correctamente');
       });
     }
+
   }
 
   msgSusscess(mensaje: string) {
