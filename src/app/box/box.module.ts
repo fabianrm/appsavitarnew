@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MapsModule } from '../maps/maps.module';
 
 
 
@@ -30,6 +31,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   imports: [
     CommonModule,
     BoxRoutingModule,
+    MapsModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,

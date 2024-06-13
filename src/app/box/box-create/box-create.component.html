@@ -1,134 +1,157 @@
-<form ngNativeValidate [formGroup]="formBox" (ngSubmit)="enviarDatos()">
-  <mat-card>
-    <mat-card-header class="header-form">
-      <mat-card-title> Nueva Caja </mat-card-title>
-    </mat-card-header>
+<div class="container">
+  <form ngNativeValidate [formGroup]="formBox" (ngSubmit)="enviarDatos()">
+    <div class="row">
+      <!-- Datos de la caja -->
+      <div class="col-sm-6">
+        <mat-card>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-form-field>
+                  <mat-label>Nombre</mat-label>
+                  <input matInput placeholder="Nombre" formControlName="name" />
+                </mat-form-field>
+              </div>
+            </div>
 
-    <mat-card-content>
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Nombre</mat-label>
-            <input
-              matInput
-              placeholder="Nombre"
-              formControlName="name"
-              #codeRef
-              (input)="codeRef.value = codeRef.value.toUpperCase()"
-            />
-          </mat-form-field>
-        </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Ciudad</mat-label>
+                  <mat-select formControlName="city_id">
+                    @for (city of cities; track city) {
+                    <mat-option [value]="city.id">{{ city.name }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
 
-        <div class="col-sm-6">
-          <mat-form-field class="control-full-width" appearance="fill">
-            <mat-label>Ciudad</mat-label>
-            <mat-select formControlName="city_id">
-              @for (city of cities; track city) {
-              <mat-option [value]="city.id">{{ city.name }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-form-field>
+                  <mat-label>Dirección</mat-label>
+                  <input
+                    matInput
+                    placeholder="Dirección"
+                    formControlName="address"
+                    #codeDir
+                    (input)="codeDir.value = codeDir.value.toUpperCase()"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-form-field>
+                  <mat-label>Referencia</mat-label>
+                  <input
+                    matInput
+                    placeholder="Referencia"
+                    formControlName="reference"
+                    #codeRe
+                    (input)="codeRe.value = codeRe.value.toUpperCase()"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Latitud</mat-label>
+                  <input
+                    matInput
+                    placeholder="Latitud"
+                    formControlName="latitude"
+                     type="number"
+                    step="any"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Longitud</mat-label>
+                  <input
+                    matInput
+                    placeholder="Longitud"
+                    formControlName="longitude"
+                     type="number"
+                    step="any"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Nro. de Puertos</mat-label>
+                  <input
+                    matInput
+                    placeholder="Nro. de Puertos"
+                    formControlName="totalPorts"
+                    type="number"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Puertos libres</mat-label>
+                  <input
+                    matInput
+                    placeholder="Puertos libres"
+                    formControlName="availablePorts"
+                    type="number"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-slide-toggle [color]="color" [checked]="checked"
+                  >Activo</mat-slide-toggle
+                >
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
 
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Dirección</mat-label>
-            <input
-              matInput
-              placeholder="Dirección"
-              formControlName="address"
-              #codeDir
-              (input)="codeDir.value = codeDir.value.toUpperCase()"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Referencia</mat-label>
-            <input
-              matInput
-              placeholder="Referencia"
-              formControlName="reference"
-              #codeRe
-              (input)="codeRe.value = codeRe.value.toUpperCase()"
-            />
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Latitud</mat-label>
-            <input
-              matInput
-              placeholder="Latitud"
-              formControlName="latitude"
-              type="number"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Longitud</mat-label>
-            <input
-              matInput
-              placeholder="Longitud"
-              formControlName="longitude"
-              type="number"
-            />
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Nro. de Puertos</mat-label>
-            <input
-              matInput
-              placeholder="Nro. de Puertos"
-              formControlName="totalPorts"
-              type="number"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Puertos libres</mat-label>
-            <input
-              matInput
-              placeholder="Puertos libres"
-              formControlName="availablePorts"
-              type="number"
-            />
-          </mat-form-field>
-        </div>
-      </div>
+      <!-- Mapa -->
+      <div class="col-sm-6">
+        <mat-card class="container-map">
+          <mat-card-content class="center-content">
+           
+            <app-map-loading
+              *ngIf="!locationReady; else mapReady"
+              class="full-size"
+            ></app-map-loading>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <mat-slide-toggle [color]="color" [checked]="checked"
-            >Activo</mat-slide-toggle
-          >
-        </div>
+            <ng-template #mapReady>
+              <app-map-view class="full-size"></app-map-view>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
       </div>
-    </mat-card-content>
-
-    <mat-card-actions>
+    </div>
+ 
+    <!-- Botones -->
       <div class="row-buttons">
-        <button
-          [disabled]="formBox.invalid"
-          color="primary"
-          mat-raised-button
-          style="margin-right: 5px"
-        >
-          Guardar
-        </button>
-        <button mat-dialog-close="" color="accent" mat-raised-button>
-          Cancelar
-        </button>
-      </div>
-    </mat-card-actions>
-  </mat-card>
-</form>
+          <button
+            [disabled]="formBox.invalid"
+            color="primary"
+            mat-raised-button
+            style="margin-right: 5px"
+          >
+            Guardar
+          </button>
+          <button mat-dialog-close="" color="accent" mat-raised-button>
+            Cancelar
+          </button>
+        </div>
+
+  </form>
+</div>

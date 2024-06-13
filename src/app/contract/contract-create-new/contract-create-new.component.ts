@@ -198,7 +198,6 @@ export class ContractCreateNewComponent implements OnInit {
   }
 
   get locationReady() {
-   // console.log(this.locationService.location);
     return this.locationService.locationReady;
   }
 
@@ -252,7 +251,7 @@ export class ContractCreateNewComponent implements OnInit {
       console.log(dataToSend);
       
       this.contractService.addService(dataToSend).subscribe(respuesta => {
-        this.router.navigate(['/dashboard/contract/contracts']); // Navega al componente "contrato"
+        this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "contrato"
         this.msgSusscess('Contrato agregado correctamente');
       });
     }

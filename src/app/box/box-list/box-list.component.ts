@@ -9,6 +9,7 @@ import { BoxService } from '../box.service';
 import { BoxCreateComponent } from '../box-create/box-create.component';
 import { BoxEditComponent } from '../box-edit/box-edit.component';
 import { ReqBox } from '../Models/RequestBox';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -28,7 +29,10 @@ export class BoxListComponent {
 
   public respuesta: ReqBox[]=[];
 
-  constructor(private boxService: BoxService, public dialog: MatDialog) { }
+  constructor(private boxService: BoxService,
+    public dialog: MatDialog,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.getBoxes();
@@ -60,6 +64,14 @@ export class BoxListComponent {
       //  console.log(respuesta);
     });
   }
+
+
+  newBox() {
+    // console.log(row); 
+   // this.customerService.setCustomer(row);
+    this.router.navigate(['/dashboard/box/boxCreate']); // Navega al componente "contrato"
+  }
+
 
 
   openDialog(row: any) {

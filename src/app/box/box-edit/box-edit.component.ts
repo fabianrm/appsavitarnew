@@ -31,10 +31,7 @@ export class BoxEditComponent {
     private dialogRef: MatDialogRef<BoxEditComponent>) { }
 
 
-
   ngOnInit(): void {
-
-   // this.getBoxById(this.getData.name);
 
     this.initForm();
     this.getCities();
@@ -43,7 +40,7 @@ export class BoxEditComponent {
 
   initForm() {
 
-    this.formEditBox = this.formulario.group({
+    const formControlsConfig ={
       id: [this.getData.id, Validators.required],
       name: [this.getData.name, Validators.required],
       city_id: [this.getData.city_id, Validators.required],
@@ -55,34 +52,35 @@ export class BoxEditComponent {
       availablePorts: [this.getData.availablePorts],
       status: [this.checked],
 
+    }
+
+    this.formEditBox = this.formulario.group(formControlsConfig);
+
+    Object.keys(formControlsConfig).forEach(key => {
+      if (key === 'name' || key === 'address' || key === 'reference') {
+        this.formEditBox.get(key)?.valueChanges.subscribe(value => {
+          this.formEditBox.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        });
+      }
     });
+
   }
 
 
   getCities() {
     this.cityService.getCities().subscribe((respuesta) => {
-
       if (respuesta.data.length > 0) {
         this.cities = respuesta.data
       }
-
-      //  console.log(this.cities);
-
     });
   }
 
 
   getBoxById(id: number) {
     this.boxService.getBoxByID(id).subscribe((respuesta) => {
-
       this.box = respuesta.data;
-     // console.log(this.box);
-      
-
     });
   }
-
-
 
 
   enviarDatos(id: number) {

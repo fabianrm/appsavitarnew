@@ -2,10 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { BoxService } from '../box.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CityService } from '../../city/city.service';
 import { City } from '../../city/Models/CityResponse';
+import { MapsService } from '../../maps/maps.service';
+import { PlacesService } from '../../maps/places.service';
 
 @Component({
   selector: 'app-box-create',
@@ -20,24 +21,29 @@ export class BoxCreateComponent {
   disabled = false;
 
   cities: City[] = [];
+  coordinates: [number, number] | null = null;
 
 
   constructor(public formulario: FormBuilder,
     private boxService: BoxService,
     private cityService: CityService,
-    @Inject(MAT_DIALOG_DATA) public getData: any,
+    private locationService: PlacesService,
+    private mapService: MapsService,
+    
     private _snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<BoxCreateComponent>) { }
+   ) { }
 
 
   ngOnInit(): void {
-    this.initForm();
+    // console.log(this.locationService.location);
     this.getCities();
+    this.getLocations()
+    this.initForm();
     // this.documentNumber!.nativeElement.focus();
   }
 
   initForm() {
-    this.formBox = this.formulario.group({
+    const formControlsConfig = {
       name: ['', Validators.required],
       city_id: ['', Validators.required],
       address: ['', Validators.required],
@@ -47,7 +53,17 @@ export class BoxCreateComponent {
       totalPorts: [''],
       availablePorts: [''],
       status: [true],
+    }
+    this.formBox = this.formulario.group(formControlsConfig);
+
+    Object.keys(formControlsConfig).forEach(key => {
+      if (key === 'name' || key === 'address' || key === 'reference') {
+        this.formBox.get(key)?.valueChanges.subscribe(value => {
+          this.formBox.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        });
+      }
     });
+
   }
 
 
@@ -62,12 +78,35 @@ export class BoxCreateComponent {
     });
   }
 
+  get locationReady() {
+  //  console.log(this.locationService.location);
+    return this.locationService.locationReady;
+  }
+
+  //Obtener coordenadas
+  getLocations() {
+    this.mapService.currentCoordinates.subscribe(coordinates => {
+      this.coordinates = coordinates;
+
+      if (coordinates) {
+        // Actualizar los campos del formulario
+        this.formBox.patchValue({
+          latitude: coordinates[1],
+          longitude: coordinates[0]
+        });
+      }
+         console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
+    });
+  }
+
 
   enviarDatos() {
     if (this.formBox.valid) {
       this.boxService.addBox(this.formBox.value).subscribe(respuesta => {
+        this.formBox.reset();
         this.msgSusscess('Caja agregada correctamente');
-        this.dialogRef.close();
+
+       // this.dialogRef.close();
         // console.log(respuesta);
       });
     }

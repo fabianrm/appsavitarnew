@@ -20,6 +20,8 @@ export class MapViewComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
+   // console.log(this.locationService.location);
+    
 
     if (!this.locationService.location) throw Error('No hay localización');
 
