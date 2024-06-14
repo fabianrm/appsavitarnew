@@ -1,11 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerService } from '../customer.service';
 import { ThemePalette } from '@angular/material/core';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
+import { MapsService } from '../../maps/maps.service';
+import { PlacesService } from '../../maps/places.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Customer } from '../Models/CustomerResponseU';
 
 
 interface Tipo {
@@ -20,32 +23,46 @@ interface Tipo {
 })
 export class CustomerEditComponent implements OnInit {
 
-  formEditar!: FormGroup;
+  formCliente!: FormGroup;
   color: ThemePalette = 'accent';
-  checked: boolean = false;
+  checked = true;
   disabled = false;
+  selected = 'natural';
 
-  // id_customer = this.getData;
+  cities: City[] = [];
+  coordinates: [number, number] | null = null;
+
+  id!: number;
+  dataCustomer?: Customer;
 
   tipos: Tipo[] = [
     { value: 'natural', viewValue: 'Natural' },
     { value: 'juridica', viewValue: 'Juridica' },
   ]
 
-  cities: City[] = [];
-
-
   constructor(public formulario: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public getId: number,
     private cityService: CityService,
-    private _snackBar: MatSnackBar,
     private customerService: CustomerService,
-    private dialogRef: MatDialogRef<CustomerEditComponent>) { }
+    private locationService: PlacesService,
+    private mapService: MapsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private _snackBar: MatSnackBar,
+  ) { }
+
 
   ngOnInit(): void {
+    this.initForm();
+    this.getCustomerById();
+    this.getCities();
+    this.getLocations();
+    // this.documentNumber!.nativeElement.focus();
+  }
 
+
+  initForm() {
     const formControlsConfig = {
-      type: ['', Validators.required],
+      type: [this.selected, Validators.required],
       documentNumber: ['', Validators.required],
       name: ['', Validators.required],
       cityId: ['', Validators.required],
@@ -53,47 +70,106 @@ export class CustomerEditComponent implements OnInit {
       reference: [''],
       latitude: [''],
       longitude: [''],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: [''],
       email: [''],
-      status: ['', Validators.required],
+      status: [true],
     }
-    this.formEditar = this.formulario.group(formControlsConfig);
+
+    this.formCliente = this.formulario.group(formControlsConfig);
 
     Object.keys(formControlsConfig).forEach(key => {
-      if (key === 'note' || key === 'description' || key === 'voutcher') {
-        this.formEditar.get(key)?.valueChanges.subscribe(value => {
-          this.formEditar.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+      if (key === 'name' || key === 'address' || key === 'reference') {
+        this.formCliente.get(key)?.valueChanges.subscribe(value => {
+          this.formCliente.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
         });
       }
     });
 
+  }
 
-    this.getCities();
-    this.getCustomer(this.getId);
+  get locationReady() {
+    //  console.log(this.locationService.location);
+    return this.locationService.locationReady;
+  }
+
+  //Obtener coordenadas
+  getLocations() {
+    this.mapService.currentCoordinates.subscribe(coordinates => {
+      this.coordinates = coordinates;
+
+      if (coordinates) {
+        // Actualizar los campos del formulario
+        this.formCliente.patchValue({
+          latitude: coordinates[1],
+          longitude: coordinates[0]
+        });
+      }
+      // console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
+    });
+  }
+
+  //Obtener customer por id
+  getCustomerById() {
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('id');
+      if (idParam !== null) {
+        this.id = +idParam; // Usa el símbolo "+" para convertir a número
+        this.fetchCustomerDetails(this.id); // Llama a la función para obtener los detalles del box
+      } else {
+        // Manejar el caso cuando idParam es null, asignando un valor por defecto o manejando el error
+        console.error('ID parameter is null');
+      }
+    });
   }
 
 
-  getCustomer(id: number) {
-    this.customerService.getCustomerById(id).subscribe(customer => {
-
-      this.formEditar.patchValue({
-        type: customer.type,
-        documentNumber: customer.documentNumber,
-        name: customer.customerName,
-        cityId: customer.cityId,
-        address: customer.address,
-        reference: customer.reference,
-        latitude: customer.latitude,
-        longitude: customer.longitude,
-        phoneNumber: customer.phoneNumber,
-        email: customer.email,
-        status: (customer.status==true) ? this.checked = true : false
-
+  fetchCustomerDetails(id: number) {
+    this.customerService.getCustomerById(id).subscribe((respuesta) => {
+      this.dataCustomer = respuesta.data;
+      //Llenamos el formEdit
+      this.formCliente.patchValue({
+        type: this.dataCustomer.type,
+        documentNumber: this.dataCustomer.documentNumber,
+        name: this.dataCustomer.customerName,
+        cityId: this.dataCustomer.cityId,
+        address: this.dataCustomer.address,
+        reference: this.dataCustomer.reference,
+        latitude: this.dataCustomer.latitude,
+        longitude: this.dataCustomer.longitude,
+        phoneNumber: this.dataCustomer.phoneNumber,
+        email: this.dataCustomer.email,
+        status: this.dataCustomer.status,
       });
+
+      this.setNewCoordinates(this.dataCustomer.longitude, this.dataCustomer.latitude);
 
     });
   }
 
+  //Setear coordenadas (edit)
+  setNewCoordinates(long: number, lat: number) {
+    const newCoordinates: [number, number] = [long, lat];
+    this.mapService.changeCoordinates(newCoordinates);
+  }
+
+  //Guardar datos
+  enviarDatos() {
+    if (this.formCliente.valid) {
+      //const equipment = this.formContrato.get('equipmentId')!.value;
+      const form = this.formCliente.value;
+      const documento = form.documentNumber
+      this.customerService.getCustomerByDocument(documento).subscribe(respuesta => {
+        this.customerService.updateCustomer(this.id, this.formCliente.value).subscribe(respuesta => {
+          this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "cliente"
+          this.msgSusscess('Cliente editado correctamente');
+        });
+      });
+    }
+  }
+
+  goCustomers() {
+    this.router.navigate(['/dashboard/customer/customers']);
+  }
 
   getCities() {
     this.cityService.getCities().subscribe((respuesta) => {
@@ -104,24 +180,11 @@ export class CustomerEditComponent implements OnInit {
   }
 
   msgSusscess(mensaje: string) {
-    this._snackBar.open('Cliente editado correctamente', 'Info', {
+    this._snackBar.open(mensaje, 'SAVITAR', {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom'
     })
-  }
-
-
-  enviarDatos(id: number) {
-   // console.log(this.formEditar.value);
-    
-    if (this.formEditar.valid) {
-      this.customerService.updateCustomer(id, this.formEditar.value).subscribe(respuesta => {
-        this.msgSusscess('Cliente editado correctamente');
-        this.dialogRef.close();
-        // console.log(respuesta);
-      });
-    }
   }
 
 

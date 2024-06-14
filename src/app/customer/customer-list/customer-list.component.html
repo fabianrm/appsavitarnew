@@ -15,7 +15,7 @@
     <button (click)="exportToExcel()" mat-raised-button color="accent">
       Exportar
     </button>
-    <button (click)="openDialog()" mat-raised-button color="accent">
+    <button (click)="newCustomer()" mat-raised-button color="accent">
       + Nuevo
     </button>
   </div>
@@ -131,7 +131,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-                      <button mat-menu-item (click)="openEditDialog(row.id)">
+                      <button mat-menu-item (click)="editCustomer(row.id)">
               Editar cliente
             </button>
             <button mat-menu-item (click)="viewMap(row.latitude, row.longitude)">

@@ -5,15 +5,10 @@ import { MatSort } from "@angular/material/sort";
 import { CustomerService } from '../customer.service';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { CustomerCreateComponent } from '../customer-create/customer-create.component';
-import { CustomerEditComponent } from '../customer-edit/customer-edit.component';
-import { ContractCreateComponent } from '../../contract/contract-create/contract-create.component';
-import { ContractService } from '../../contract/contract.service';
 import { Customer } from '../Models/CustomerResponse';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ContractListComponent } from '../../contract/contract-list/contract-list.component';
 import { ContractsListComponent } from '../contracts-list/contracts-list.component';
 import { Router } from '@angular/router';
 
@@ -40,7 +35,6 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   subscription!: Subscription
-
   public respuesta?: Customer[];
 
 
@@ -62,6 +56,15 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+  newCustomer() {
+    this.router.navigate(['/dashboard/customer/customerCreate']); // Navega al componente "customer create"
+  }
+
+  editCustomer(id: number) {
+    this.router.navigate(['/dashboard/customer/customerEdit/' + id]); // Navega al componente "customer edit"
+  }
+
 
   getCustomers() {
     this.customerService.getCustomers().subscribe((respuesta) => {
@@ -111,7 +114,6 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
 
 
-
   onSelectCustomer(row: { id: number, customerName: string, customerCode: string }) {
    // console.log(row); 
     this.customerService.setCustomer(row);
@@ -119,57 +121,13 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
 
 
-  openDialog() {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
-
-    this.dialog.open(CustomerCreateComponent, dialogConfig);
-
-    this.dialog.afterAllClosed.subscribe(() => {
-    })
-  }
-
-  openEditDialog(id: number) {
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
-    dialogConfig.data = id;
-
-    this.dialog.open(CustomerEditComponent, dialogConfig);
-    this.dialog.afterAllClosed.subscribe(() => { })
-  }
-
-
   openListContracts(row: any) {
     const dialogConfig = new MatDialogConfig();
-
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
     dialogConfig.data = row;
-
     this.dialog.open(ContractsListComponent, dialogConfig);
-
-    this.dialog.afterAllClosed.subscribe(() => {
-
-    })
-  }
-
-
-  openDialogContract(row: any) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
-    dialogConfig.data = row;
-    this.dialog.open(ContractCreateComponent, dialogConfig);
-
     this.dialog.afterAllClosed.subscribe(() => {
     })
   }

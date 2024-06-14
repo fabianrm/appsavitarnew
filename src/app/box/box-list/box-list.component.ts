@@ -78,10 +78,7 @@ export class BoxListComponent {
     })
   }
 
-
   
-
-
   goToLinkMap(latitude: string, longitude: string) {
     //'https://www.google.com/maps?q=-4.907545,-81.057223&hl=es-Pe&gl=pe&shorturl=1;'
     window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");

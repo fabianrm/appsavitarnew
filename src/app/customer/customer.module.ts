@@ -23,6 +23,7 @@ import { CustomerRoutingModule } from './customer-routing.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContractsListComponent } from './contracts-list/contracts-list.component';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MapsModule } from '../maps/maps.module';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { MatMenu, MatMenuModule } from '@angular/material/menu';
   imports: [
     CommonModule,
     CustomerRoutingModule,
+    MapsModule,
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,

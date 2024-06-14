@@ -1,11 +1,13 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { Component,  OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
 import { CustomerService } from './../customer.service';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
+import { PlacesService } from '../../maps/places.service';
+import { MapsService } from '../../maps/maps.service';
+import { Router } from '@angular/router';
 
 
 interface Tipo {
@@ -32,6 +34,7 @@ export class CustomerCreateComponent implements OnInit {
   selected = 'natural';
 
   cities: City[] = [];
+  coordinates: [number, number] | null = null;
 
   tipos: Tipo[] = [
     { value: 'natural', viewValue: 'Natural' },
@@ -41,15 +44,17 @@ export class CustomerCreateComponent implements OnInit {
   constructor(public formulario: FormBuilder,
     private cityService: CityService,
     private customerService: CustomerService,
-    @Inject(MAT_DIALOG_DATA) public getData: any,
+    private locationService: PlacesService,
+    private mapService: MapsService,
+    private router: Router,
     private _snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    private dialogRef: MatDialogRef<CustomerCreateComponent>) { }
+) { }
 
   
   ngOnInit(): void {
-    this.getCities();
     this.initForm();
+    this.getCities();
+    this.getLocations();
    // this.documentNumber!.nativeElement.focus();
   }
 
@@ -72,7 +77,7 @@ export class CustomerCreateComponent implements OnInit {
     this.formCliente = this.formulario.group(formControlsConfig);
 
     Object.keys(formControlsConfig).forEach(key => {
-      if (key === 'note' || key === 'description' || key === 'voutcher') {
+      if (key === 'name' || key === 'address' || key === 'reference') {
         this.formCliente.get(key)?.valueChanges.subscribe(value => {
           this.formCliente.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
         });
@@ -81,6 +86,28 @@ export class CustomerCreateComponent implements OnInit {
     
   }
 
+  get locationReady() {
+    //  console.log(this.locationService.location);
+    return this.locationService.locationReady;
+  }
+
+  //Obtener coordenadas
+  getLocations() {
+    this.mapService.currentCoordinates.subscribe(coordinates => {
+      this.coordinates = coordinates;
+
+      if (coordinates) {
+        // Actualizar los campos del formulario
+        this.formCliente.patchValue({
+          latitude: coordinates[1],
+          longitude: coordinates[0]
+        });
+      }
+      console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
+    });
+  }
+
+//Guardar datos
   enviarDatos() {
     if (this.formCliente.valid) {
       //const equipment = this.formContrato.get('equipmentId')!.value;
@@ -90,17 +117,19 @@ export class CustomerCreateComponent implements OnInit {
       
         if (respuesta.exists == false) {
           this.customerService.addCustomer(this.formCliente.value).subscribe(respuesta => {
+            this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "cliente"
             this.msgSusscess('Cliente agregado correctamente');
-            this.dialogRef.close();
-            // console.log(respuesta);
           });
         } else {
           this.msgSusscess("☹️ Cliente ya se encuentra registrado");
         }
         
       });  
-
     }
+  }
+
+  goCustomers() {
+    this.router.navigate(['/dashboard/customer/customers']); 
   }
 
   getCities() {

@@ -37,7 +37,7 @@ export class BoxCreateComponent {
   ngOnInit(): void {
     // console.log(this.locationService.location);
     this.getCities();
-    this.getLocations()
+    this.getLocations();
     this.initForm();
     // this.documentNumber!.nativeElement.focus();
   }
@@ -94,7 +94,7 @@ export class BoxCreateComponent {
           longitude: coordinates[0]
         });
       }
-         console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
+       //  console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
     });
   }
 

@@ -10,8 +10,8 @@ import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
   { path: 'customers', component: CustomerListComponent, data: { title: 'Clientes' }, canActivate: [AuthGuard] },
-  { path: 'customerCreate', component: CustomerCreateComponent },
-  { path: 'customerEdit/:id', component: CustomerEditComponent },
+  { path: 'customerCreate', component: CustomerCreateComponent, data: { title: 'Registro de Cliente' }, canActivate: [AuthGuard] },
+  { path: 'customerEdit/:id', component: CustomerEditComponent, data: { title: 'Editar Cliente' }, canActivate: [AuthGuard] },
   { path: 'customerDetails/:id', component: CustomerDetailsComponent },
 ];
 

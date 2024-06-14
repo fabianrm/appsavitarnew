@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Customer, CustomerResponse } from './Models/CustomerResponse';
 import { CustomerRequest } from './Models/CustomerRequest';
 import { CustomerDTO } from './Models/CustomerDTO';
+import { CustomerResponseU } from './Models/CustomerResponseU';
 
 @Injectable({
   providedIn: 'root'
@@ -82,10 +83,8 @@ export class CustomerService {
       );
   }
 
-  getCustomerById(id: number): Observable<Customer> {
-    return this.clienteHttp.get<any>(`${this.API}customers/${id}`, { headers: this.headers }).pipe(
-      map(response => response.data)  // Asumiendo que `data` es un array y queremos el primer elemento
-    );
+  getCustomerById(id: number): Observable<CustomerResponseU> {
+    return this.clienteHttp.get<CustomerResponseU>(`${this.API}customers/${id}`, { headers: this.headers });
   }
 
   getCustomerByDocument(document: string): Observable<any> {
