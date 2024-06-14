@@ -1,71 +1,78 @@
-import { Component, Inject } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BoxService } from '../box.service';
-import { Box } from '../Models/ResponseBox';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
-import { ReqBox, RequestBox } from '../Models/RequestBox';
+import { MapsService } from '../../maps/maps.service';
+import { PlacesService } from '../../maps/places.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Box } from '../Models/BoxResponseU';
 
 @Component({
   selector: 'app-box-edit',
   templateUrl: './box-edit.component.html',
   styleUrl: './box-edit.component.css'
 })
-export class BoxEditComponent {
-  formEditBox!: FormGroup;
+export class BoxEditComponent implements OnInit{
+  formBox!: FormGroup;
   color: ThemePalette = 'accent';
-  checked = (this.getData.status == 1) ? true : false;
+  checked = true;
   disabled = false;
+  id?: number;
+
+  dataBox?: Box;
+
   cities: City[] = [];
-  box: ReqBox[] = [];
+  coordinates: [number, number] | null = null;
 
 
   constructor(public formulario: FormBuilder,
     private boxService: BoxService,
     private cityService: CityService,
-    @Inject(MAT_DIALOG_DATA) public getData: ReqBox,
+    private locationService: PlacesService,
+    private mapService: MapsService,
+    private route: ActivatedRoute,
+    private router: Router,
     private _snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<BoxEditComponent>) { }
+  ) { }
 
 
   ngOnInit(): void {
-
     this.initForm();
+    this.getBoxById();
     this.getCities();
+    this.getLocations()
+
     // this.documentNumber!.nativeElement.focus();
   }
+  
+
 
   initForm() {
-
-    const formControlsConfig ={
-      id: [this.getData.id, Validators.required],
-      name: [this.getData.name, Validators.required],
-      city_id: [this.getData.city_id, Validators.required],
-      address: [this.getData.address, Validators.required],
-      reference: [this.getData.reference],
-      latitude: [this.getData.latitude],
-      longitude: [this.getData.longitude],
-      totalPorts: [this.getData.totalPorts],
-      availablePorts: [this.getData.availablePorts],
-      status: [this.checked],
-
+    const formControlsConfig = {
+      name: ['', Validators.required],
+      city_id: ['', Validators.required],
+      address: ['', Validators.required],
+      reference: [''],
+      latitude: [''],
+      longitude: [''],
+      totalPorts: [''],
+      availablePorts: [''],
+      status: [true],
     }
-
-    this.formEditBox = this.formulario.group(formControlsConfig);
+    this.formBox = this.formulario.group(formControlsConfig);
 
     Object.keys(formControlsConfig).forEach(key => {
       if (key === 'name' || key === 'address' || key === 'reference') {
-        this.formEditBox.get(key)?.valueChanges.subscribe(value => {
-          this.formEditBox.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        this.formBox.get(key)?.valueChanges.subscribe(value => {
+          this.formBox.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
         });
       }
     });
 
   }
-
 
   getCities() {
     this.cityService.getCities().subscribe((respuesta) => {
@@ -75,20 +82,81 @@ export class BoxEditComponent {
     });
   }
 
+  get locationReady() {
+    return this.locationService.locationReady;
+  }
 
-  getBoxById(id: number) {
-    this.boxService.getBoxByID(id).subscribe((respuesta) => {
-      this.box = respuesta.data;
+  //Obtener coordenadas
+  getLocations() {
+    this.mapService.currentCoordinates.subscribe(coordinates => {
+      this.coordinates = coordinates;
+
+      if (coordinates) {
+        // Actualizar los campos del formulario
+        this.formBox.patchValue({
+          latitude: coordinates[1],
+          longitude: coordinates[0]
+        });
+      }
+      //console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
     });
   }
 
 
-  enviarDatos(id: number) {
-    if (this.formEditBox.valid) {
-      this.boxService.updateBox(id, this.formEditBox.value).subscribe(respuesta => {
-        this.msgSusscess('Caja actualizada correctamente');
-        this.dialogRef.close();
-        // console.log(respuesta);
+  //Obtener box por id
+  getBoxById() {
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('id');
+      if (idParam !== null) {
+        this.id = +idParam; // Usa el símbolo "+" para convertir a número
+        this.fetchBoxDetails(this.id); // Llama a la función para obtener los detalles del box
+      } else {
+        // Manejar el caso cuando idParam es null, asignando un valor por defecto o manejando el error
+        console.error('ID parameter is null');
+      }
+    });
+  }
+
+
+  fetchBoxDetails(id: number) { 
+    this.boxService.getBoxByID(id).subscribe((respuesta) => {
+      this.dataBox = respuesta.data;
+      //Llenamos el formEdit
+      this.formBox.patchValue({
+        name: this.dataBox.name,
+        city_id: this.dataBox.city_id,
+        address: this.dataBox.address,
+        reference: this.dataBox.reference,
+        latitude: this.dataBox.latitude,
+        longitude: this.dataBox.longitude,
+        totalPorts: this.dataBox.totalPorts,
+        availablePorts: this.dataBox.availablePorts,
+        status: this.dataBox.status,
+      });
+
+      this.setNewCoordinates(this.dataBox.longitude, this.dataBox.latitude);
+
+    });
+  }
+
+
+  //Setear coordenadas (edit)
+  setNewCoordinates(long:number, lat:number) {
+    const newCoordinates: [number, number] = [long, lat];
+    this.mapService.changeCoordinates(newCoordinates);
+  }
+
+
+  resetForm() {
+    this.formBox.reset();
+  }
+
+
+  enviarDatos() {
+    if (this.formBox.valid) {
+      this.boxService.updateBox(this.id!, this.formBox.value).subscribe(respuesta => {
+        this.router.navigate(['/dashboard/box/boxes']); // Navega al componente "contrato"
+        this.msgSusscess('Caja editada correctamente');
       });
     }
   }

@@ -3,7 +3,8 @@ import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResponseBox } from './Models/ResponseBox';
-import { RequestBox } from './Models/RequestBox';
+import { RequestBox, RequestBoxUnique } from './Models/RequestBox';
+import { BoxResponseU } from './Models/BoxResponseU';
 
 @Injectable({
   providedIn: 'root'
@@ -42,11 +43,8 @@ export class BoxService {
       }));
   }
 
-  getBoxByID(id: number): Observable<RequestBox> {
-    return this.clienteHttp.get<RequestBox>(this.API + 'boxs/' + id, { headers: this.headers })
-      .pipe(tap(() => {
-        this._refresh$.next()
-      }));
+  getBoxByID(id: number): Observable<BoxResponseU> {
+    return this.clienteHttp.get<BoxResponseU>(this.API + 'boxs/' + id, { headers: this.headers })
   }
 
 

@@ -2,6 +2,10 @@ export interface RequestBox {
     data: ReqBox[];
 }
 
+export interface RequestBoxUnique {
+    data: ReqBox;
+}
+
 export interface ReqBox {
     id: number;
     name: string;

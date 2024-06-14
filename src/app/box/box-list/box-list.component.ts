@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BoxService } from '../box.service';
 import { BoxCreateComponent } from '../box-create/box-create.component';
-import { BoxEditComponent } from '../box-edit/box-edit.component';
 import { ReqBox } from '../Models/RequestBox';
 import { Router } from '@angular/router';
 
@@ -58,20 +57,14 @@ export class BoxListComponent {
   }
 
 
-  getBoxById(id: number) {
-    this.boxService.getBoxByID(id).subscribe(respuesta => {
-      this.respuesta = respuesta.data;
-      //  console.log(respuesta);
-    });
-  }
-
 
   newBox() {
-    // console.log(row); 
-   // this.customerService.setCustomer(row);
     this.router.navigate(['/dashboard/box/boxCreate']); // Navega al componente "contrato"
   }
 
+  EditBox(id:number) {
+    this.router.navigate(['/dashboard/box/boxEdit/'+id]); // Navega al componente "contrato"
+  }
 
 
   openDialog(row: any) {
@@ -86,27 +79,7 @@ export class BoxListComponent {
   }
 
 
-  openEditDialog(id: number) {
-
-    this.boxService.getBoxByID(id).subscribe(respuesta => {
-      this.respuesta = respuesta.data;
-      
-      if (respuesta.data) {
-
-        const dialogConfig = new MatDialogConfig();
-
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.width = '40%';
-        dialogConfig.data = this.respuesta;
-
-        this.dialog.open(BoxEditComponent, dialogConfig);
-        this.dialog.afterAllClosed.subscribe(() => { })
-      }
-
-
-    });
-  }
+  
 
 
   goToLinkMap(latitude: string, longitude: string) {

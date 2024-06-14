@@ -67,7 +67,6 @@ export class BoxCreateComponent {
   }
 
 
-
   getCities() {
     this.cityService.getCities().subscribe((respuesta) => {
 
@@ -97,6 +96,11 @@ export class BoxCreateComponent {
       }
          console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
     });
+  }
+
+
+  resetForm() {
+    this.formBox.reset();
   }
 
 

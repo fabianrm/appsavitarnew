@@ -8,7 +8,7 @@ import { AuthGuard } from '../auth/auth.guard';
 const routes: Routes = [
   { path: 'boxes', component: BoxListComponent, data: { title: 'Cajas' }, canActivate: [AuthGuard] },
   { path: 'boxCreate', component: BoxCreateComponent, data: { title: 'Crear Caja' }, canActivate: [AuthGuard] },
-  { path: 'boxEdit/:id', component: BoxEditComponent },
+  { path: 'boxEdit/:id', component: BoxEditComponent, data: { title: 'Editar Caja' }, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

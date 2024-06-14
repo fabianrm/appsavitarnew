@@ -148,8 +148,12 @@
           >
             Guardar
           </button>
-          <button mat-dialog-close="" color="accent" mat-raised-button>
-            Cancelar
+          <button
+          type="button"
+          (click)="resetForm()"
+           color="accent" mat-raised-button>
+
+            Limpiar
           </button>
         </div>
 
