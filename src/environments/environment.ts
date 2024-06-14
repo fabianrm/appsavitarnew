@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   servidor: 'http://localhost:8000/api/v1/'
+  // servidor: 'http://localhost:8000/api/v1/'
 };
 
 //'http://192.168.1.40/api/v1/'
