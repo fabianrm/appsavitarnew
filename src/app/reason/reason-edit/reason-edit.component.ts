@@ -2,11 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReasonCreateComponent } from '../reason-create/reason-create.component';
 import { ReasonService } from '../reason.service';
-import { ReasonRequest } from '../Models/ReasonRequest';
-import { ReasonResponse } from '../Models/ReasonResponse';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 
 interface Tipo {
@@ -34,7 +32,7 @@ export class ReasonEditComponent {
 
   constructor(public fb: FormBuilder,
     private reasonService: ReasonService,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public getData: any,
     private dialogRef: MatDialogRef<ReasonCreateComponent>) { }
@@ -67,19 +65,20 @@ export class ReasonEditComponent {
     if (this.frmRq.valid) {
 
       this.reasonService.updateReason( this.getData.id, this.frmRq.value).subscribe(respuesta => {
-        this.msgSusscess('Motivo de gasto actualizado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
       });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro editado correctamente');
+  }
+
 
 }

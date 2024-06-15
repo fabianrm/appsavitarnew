@@ -7,6 +7,8 @@ import { CityService } from '../../city/city.service';
 import { City } from '../../city/Models/CityResponse';
 import { MapsService } from '../../maps/maps.service';
 import { PlacesService } from '../../maps/places.service';
+import { Router } from '@angular/router';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-box-create',
@@ -29,8 +31,9 @@ export class BoxCreateComponent {
     private cityService: CityService,
     private locationService: PlacesService,
     private mapService: MapsService,
+    private router: Router,
     
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
    ) { }
 
 
@@ -103,12 +106,16 @@ export class BoxCreateComponent {
     this.formBox.reset();
   }
 
+  //Cancelar
+  goBoxes() {
+    this.router.navigate(['/dashboard/box/boxes']);
+  }
 
   enviarDatos() {
     if (this.formBox.valid) {
       this.boxService.addBox(this.formBox.value).subscribe(respuesta => {
-        this.formBox.reset();
-        this.msgSusscess('Caja agregada correctamente');
+        this.router.navigate(['/dashboard/box/boxes']);
+        this.showSuccess();
 
        // this.dialogRef.close();
         // console.log(respuesta);
@@ -116,12 +123,14 @@ export class BoxCreateComponent {
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro agregado correctamente');
+  }
+
+
 
 }

@@ -76,3 +76,30 @@ th{
 
 /* Importing Bootstrap SCSS file. */
 @import "bootstrap/scss/bootstrap";
+
+
+// .error-snackbar {
+//   background-color: #f44336 !important; /* Rojo */
+//   color: white !important;
+// }
+
+// .success-snackbar {
+//   background-color: #2336be !important; /* Verde */
+//   color: white !important;
+// }
+
+.mat-mdc-snack-bar-container {
+    &.error-snackbar {
+      --mdc-snackbar-container-color:   #f44336;
+      --mat-mdc-snack-bar-button-color: #fff;
+      --mdc-snackbar-supporting-text-color: #fff;
+    }
+  }
+
+  .mat-mdc-snack-bar-container {
+    &.success-snackbar {
+      --mdc-snackbar-container-color: #2336be;
+      --mat-mdc-snack-bar-button-color: #fff;
+      --mdc-snackbar-supporting-text-color: #fff;
+    }
+  }

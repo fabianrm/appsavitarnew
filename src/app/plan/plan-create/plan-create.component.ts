@@ -2,8 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PlanService } from '../plan.service';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-plan-create',
@@ -20,7 +20,7 @@ export class PlanCreateComponent {
   constructor(public formulario: FormBuilder,
     private planService: PlanService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private dialogRef: MatDialogRef<PlanCreateComponent>) { }
 
 
@@ -47,18 +47,20 @@ export class PlanCreateComponent {
   enviarDatos() {
     if (this.formCreate.valid) {
       this.planService.addPlan(this.formCreate.value).subscribe(respuesta => {
-        this.msgSusscess('Plan agregado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
       });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro agregado correctamente');
+  }
+
+
 }

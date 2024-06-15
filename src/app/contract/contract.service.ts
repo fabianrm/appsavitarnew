@@ -58,6 +58,13 @@ export class ContractService {
     return this.clienteHttp.get<ServiceResponse>(this.API + 'services/' + id, { headers: this.headers })
   }
 
+
+  //Chequear si existe el equipo en un contrato
+  getServiceByEquipment(id: number): Observable<any> {
+    return this.clienteHttp.get<any>(`${this.API}services/check-equipment?equipmentId=${id}` , { headers: this.headers })
+  }
+
+
   //Cambiar Plan de Cliente
   updatePlantCustomer(contractId: number, planId: number): Observable<any> {
     return this.clienteHttp.patch(`${this.API}services/${contractId}/update-plan`, { plan_id: planId }, { headers: this.headers })

@@ -8,6 +8,7 @@ import { CityService } from '../../city/city.service';
 import { PlacesService } from '../../maps/places.service';
 import { MapsService } from '../../maps/maps.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 
 interface Tipo {
@@ -47,7 +48,8 @@ export class CustomerCreateComponent implements OnInit {
     private locationService: PlacesService,
     private mapService: MapsService,
     private router: Router,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService
+
 ) { }
 
   
@@ -118,10 +120,10 @@ export class CustomerCreateComponent implements OnInit {
         if (respuesta.exists == false) {
           this.customerService.addCustomer(this.formCliente.value).subscribe(respuesta => {
             this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "cliente"
-            this.msgSusscess('Cliente agregado correctamente');
+            this.showSuccess();
           });
         } else {
-          this.msgSusscess("☹️ Cliente ya se encuentra registrado");
+          this.showError();
         }
         
       });  
@@ -140,14 +142,13 @@ export class CustomerCreateComponent implements OnInit {
     });
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Cliente ya se encuentra registrado');
   }
 
+  showSuccess() {
+    this.snackbarService.showSuccess('Cliente agregado correctamente');
+  }
 
 
 }

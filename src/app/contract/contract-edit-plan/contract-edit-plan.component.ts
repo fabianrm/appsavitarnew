@@ -4,9 +4,9 @@ import { PlanService } from '../../plan/plan.service';
 import { ReqPlan, ResponsePlan } from '../../plan/Models/ResponsePlan';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContractService } from '../contract.service';
 import { Service } from '../Models/ResponseServices';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-contract-edit-plan',
@@ -22,7 +22,7 @@ export class ContractEditPlanComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
     private planService: PlanService,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private contractService: ContractService,
     @Inject(MAT_DIALOG_DATA) public getData: Service,
     private dialogRef: MatDialogRef<ContractEditPlanComponent>) { }
@@ -68,18 +68,18 @@ export class ContractEditPlanComponent implements OnInit {
       //console.log('agregar....')
       this.contractService.updatePlantCustomer(this.getData.id, this.planSelected[0].id).subscribe(respuesta => {
       //  console.log('Plan actualizado', respuesta);
-        this.msgSusscess('Contrato agregado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
       });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'APPSAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('Ocurrio un error...');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Plan actualizado correctamente');
   }
 
 }

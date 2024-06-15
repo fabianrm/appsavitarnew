@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerService } from '../customer.service';
 import { ThemePalette } from '@angular/material/core';
 import { City } from '../../city/Models/CityResponse';
@@ -9,6 +8,7 @@ import { MapsService } from '../../maps/maps.service';
 import { PlacesService } from '../../maps/places.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from '../Models/CustomerResponseU';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 
 interface Tipo {
@@ -47,7 +47,7 @@ export class CustomerEditComponent implements OnInit {
     private mapService: MapsService,
     private route: ActivatedRoute,
     private router: Router,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService
   ) { }
 
 
@@ -161,7 +161,7 @@ export class CustomerEditComponent implements OnInit {
       this.customerService.getCustomerByDocument(documento).subscribe(respuesta => {
         this.customerService.updateCustomer(this.id, this.formCliente.value).subscribe(respuesta => {
           this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "cliente"
-          this.msgSusscess('Cliente editado correctamente');
+          this.showSuccess();
         });
       });
     }
@@ -179,12 +179,14 @@ export class CustomerEditComponent implements OnInit {
     });
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+
+
+  showError() {
+    this.snackbarService.showError('☹️ Cliente ya se encuentra registrado');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Cliente editado correctamente');
   }
 
 

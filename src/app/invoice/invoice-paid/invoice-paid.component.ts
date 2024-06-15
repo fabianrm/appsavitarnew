@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from "sweetalert2";
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-invoice-paid',
@@ -21,7 +22,7 @@ export class InvoicePaidComponent implements OnInit {
   constructor(public fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public getData: Invoice,
     private invoiceService: InvoiceService,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private dialogRef: MatDialogRef<InvoicePaidComponent>,) { }
 
   ngOnInit() {
@@ -93,12 +94,12 @@ export class InvoicePaidComponent implements OnInit {
   }
 
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro agregado correctamente');
   }
 
 

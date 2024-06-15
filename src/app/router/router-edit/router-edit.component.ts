@@ -4,7 +4,8 @@ import { ThemePalette } from '@angular/material/core';
 import { RouterService } from '../router.service';
 import { ReqRouter } from '../Models/ResponseRouter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+
 
 @Component({
   selector: 'app-router-edit',
@@ -21,7 +22,7 @@ export class RouterEditComponent {
   constructor(public formulario: FormBuilder,
     private routerService: RouterService,
     @Inject(MAT_DIALOG_DATA) public getData: ReqRouter,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private dialogRef: MatDialogRef<RouterEditComponent>) { }
 
 
@@ -48,19 +49,20 @@ export class RouterEditComponent {
   enviarDatos(id: number) {
     if (this.formEditRouter.valid) {
       this.routerService.updateRouter(id, this.formEditRouter.value).subscribe(respuesta => {
-        this.msgSusscess('Router actualizado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
       });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro editado correctamente');
   }
 
 

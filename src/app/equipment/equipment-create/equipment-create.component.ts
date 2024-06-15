@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BrandService } from '../../brand/brand.service';
 import { Brand } from '../../brand/Models/BrandResponse';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 
 interface Tipo {
@@ -51,7 +52,7 @@ export class EquipmentCreateComponent implements OnInit {
 
   constructor(public formulario: FormBuilder,
     private equipmentService: EquipmentService, @Inject(MAT_DIALOG_DATA) public getData: any,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private brandService: BrandService,
     private dialogRef: MatDialogRef<EquipmentCreateComponent>
   ) { }
@@ -98,7 +99,7 @@ export class EquipmentCreateComponent implements OnInit {
 
     if (this.formEquipment.valid) {
       this.equipmentService.addEquipment(dataToSend).subscribe(respuesta => {
-        this.msgSusscess('Equipo agregado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
       });
@@ -106,13 +107,14 @@ export class EquipmentCreateComponent implements OnInit {
   }
 
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Equipo agregado correctamente');
+  }
+
 
 
 }

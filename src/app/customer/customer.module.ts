@@ -9,7 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
@@ -47,7 +46,6 @@ import { MapsModule } from '../maps/maps.module';
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
-    MatSnackBarModule,
     MatCard,
     MatCardActions,
     MatMenu,

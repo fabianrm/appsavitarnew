@@ -2,10 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { EquipmentCreateComponent } from '../equipment-create/equipment-create.component';
 import { EquipmentService } from '../equipment.service';
 import { Equipment } from '../Models/EquipmentResponse';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 
 interface Tipo {
@@ -50,7 +50,7 @@ export class EquipmentEditComponent {
 
   constructor(public formulario: FormBuilder,
     private equipmentService: EquipmentService, @Inject(MAT_DIALOG_DATA) public getData: Equipment,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private dialogRef: MatDialogRef<EquipmentCreateComponent>
   ) { }
 
@@ -74,19 +74,20 @@ export class EquipmentEditComponent {
   enviarDatos() {
     if (this.formEquipment.valid) {
       this.equipmentService.updateEquipment(this.getData.id, this.formEquipment.value).subscribe(respuesta => {
-        this.msgSusscess('Equipo editado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
       });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
+  }
+
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Equipo editado correctamente');
   }
 
 

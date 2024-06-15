@@ -9,6 +9,7 @@ import { MapsService } from '../../maps/maps.service';
 import { PlacesService } from '../../maps/places.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Box } from '../Models/BoxResponseU';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-box-edit',
@@ -35,7 +36,7 @@ export class BoxEditComponent implements OnInit{
     private mapService: MapsService,
     private route: ActivatedRoute,
     private router: Router,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
   ) { }
 
 
@@ -151,21 +152,30 @@ export class BoxEditComponent implements OnInit{
     this.formBox.reset();
   }
 
+  //Cancelar
+  goBoxes() {
+    this.router.navigate(['/dashboard/box/boxes']);
+  }
+
+
 
   enviarDatos() {
     if (this.formBox.valid) {
       this.boxService.updateBox(this.id!, this.formBox.value).subscribe(respuesta => {
         this.router.navigate(['/dashboard/box/boxes']); // Navega al componente "contrato"
-        this.msgSusscess('Caja editada correctamente');
+        this.showSuccess();
       });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro editado correctamente');
+  }
+
+
 }

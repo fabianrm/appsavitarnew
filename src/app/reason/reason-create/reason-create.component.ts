@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { ReasonService } from '../reason.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 interface Tipo {
   value: string;
@@ -33,7 +33,7 @@ export class ReasonCreateComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
     private reasonService: ReasonService,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<ReasonCreateComponent>) { }
 
@@ -65,19 +65,20 @@ export class ReasonCreateComponent implements OnInit {
     if (this.frmRq.valid) {
 
           this.reasonService.addReason(this.frmRq.value).subscribe(respuesta => {
-            this.msgSusscess('Motivo de gasto registrado correctamente');
+            this.showSuccess();
             this.dialogRef.close();
             // console.log(respuesta);
           });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro agregado correctamente');
+  }
+
 
 }

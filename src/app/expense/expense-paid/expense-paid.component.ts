@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExpenseService } from '../expense.service';
 import { Expense } from '../Models/ExpenseResponse';
 import { DatePipe } from '@angular/common';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-expense-paid',
@@ -23,7 +24,7 @@ export class ExpensePaidComponent {
   constructor(public fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public getData: Expense,
     private expenseService: ExpenseService,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private datePipe: DatePipe,
     private dialogRef: MatDialogRef<ExpensePaidComponent>,) { }
 
@@ -57,7 +58,7 @@ export class ExpensePaidComponent {
 
     if (this.formPaid.valid) {
       this.expenseService.updatePaid(this.getData.id, dataToSend).subscribe(respuesta => {
-        this.msgSusscess('Pago registrado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
         //console.log(respuesta);
       });
@@ -65,14 +66,15 @@ export class ExpensePaidComponent {
   }
 
 
-
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro agregado correctamente');
+  }
+
+
 
 
   onCancel() {

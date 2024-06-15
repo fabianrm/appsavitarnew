@@ -7,7 +7,6 @@ import { ReqPlan, ResponsePlan } from '../../plan/Models/ResponsePlan';
 import { ReqRouter, ResponseRouter } from '../../router/Models/ResponseRouter';
 import { Ports } from '../Models/Ports';
 import { DatePipe } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { BoxService } from '../../box/box.service';
 import { CityService } from '../../city/city.service';
 import { EquipmentService } from '../../equipment/equipment.service';
@@ -20,6 +19,7 @@ import { Router } from '@angular/router';
 import { Equipment } from '../../equipment/Models/EquipmentResponse';
 import { PlacesService } from '../../maps/places.service';
 import { MapsService } from '../../maps/maps.service';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-contract-create-new',
@@ -66,7 +66,7 @@ export class ContractCreateNewComponent implements OnInit {
     private locationService: PlacesService,
     private mapService: MapsService,
 
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private datePipe: DatePipe,
     private router: Router
   ) { }
@@ -233,10 +233,15 @@ export class ContractCreateNewComponent implements OnInit {
     });
   }
 
+  //Cancelar
+
+  cancel() {
+    this.router.navigate(['/dashboard/customer/customers']);
+  }
+
 
   //Enviar Datos
   enviarDatos(): any {
-
     const formData = this.formContrato.value;
     const installDate = new Date(formData.installationDate).toISOString().split('T')[0];
     const equipmentId = this.equipmentIdValue;
@@ -248,22 +253,25 @@ export class ContractCreateNewComponent implements OnInit {
     };
 
     if (this.formContrato.valid) {
-      console.log(dataToSend);
-      
-      this.contractService.addService(dataToSend).subscribe(respuesta => {
-        this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "contrato"
-        this.msgSusscess('Contrato agregado correctamente');
-      });
+      this.contractService.getServiceByEquipment(equipmentId!).subscribe(respuesta => { 
+        if (respuesta.exists == false) { 
+          this.contractService.addService(dataToSend).subscribe(respuesta => {
+            this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "contrato"
+            this.showSuccess();
+          });
+        } else {
+          this.showError();
+        }
+      })
     }
-
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'APPSAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('El equipo se encuentra asignado a otro cliente...');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Operación exitosa');
   }
 
 }

@@ -4,6 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { RouterService } from '../router.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-router-create',
@@ -20,7 +21,7 @@ export class RouterCreateComponent {
   constructor(public formulario: FormBuilder,
     private routerService: RouterService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private dialogRef: MatDialogRef<RouterCreateComponent>) { }
 
 
@@ -46,18 +47,21 @@ export class RouterCreateComponent {
   enviarDatos() {
     if (this.formRouter.valid) {
       this.routerService.addRouter(this.formRouter.value).subscribe(respuesta => {
-        this.msgSusscess('Router agregado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
       });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro agregado correctamente');
+  }
+
+
+
 }

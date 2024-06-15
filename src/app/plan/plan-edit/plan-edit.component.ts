@@ -2,9 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReqPlan } from '../Models/ResponsePlan';
 import { PlanService } from '../plan.service';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-plan-edit',
@@ -21,7 +21,7 @@ export class PlanEditComponent {
   constructor(public formulario: FormBuilder,
     private planService: PlanService,
     @Inject(MAT_DIALOG_DATA) public getData: ReqPlan,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private dialogRef: MatDialogRef<PlanEditComponent>) { }
 
 
@@ -50,19 +50,20 @@ export class PlanEditComponent {
   enviarDatos(id: number) {
     if (this.formEditPlan.valid) {
       this.planService.updatePlans(id, this.formEditPlan.value).subscribe(respuesta => {
-        this.msgSusscess('Plan actualizado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
       });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro editado correctamente');
+  }
+
 
 }

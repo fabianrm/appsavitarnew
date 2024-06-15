@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { ReasonService } from '../../reason/reason.service';
 import { Reason } from '../../reason/Models/ReasonResponse';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ExpenseCreateComponent {
     @Inject(MAT_DIALOG_DATA) public getType: string,
     private expenseService: ExpenseService,
     private reasonService: ReasonService,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private datePipe: DatePipe,
     private dialogRef: MatDialogRef<ExpenseCreateComponent>) { }
 
@@ -83,20 +84,22 @@ export class ExpenseCreateComponent {
 
     if (this.formRq.valid) {
       this.expenseService.addExpense(dataToSend).subscribe(respuesta => {
-        this.msgSusscess('Egreso registrado correctamente');
+        this.showSuccess();
         this.dialogRef.close();
        // console.log(respuesta);
       });
     }
   }
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
   }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro agregado correctamente');
+  }
+
 
   close() {
     this.dialogRef.close();

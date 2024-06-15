@@ -297,7 +297,11 @@
       >
         Guardar
       </button>
-      <button mat-dialog-close="" color="accent" mat-raised-button>
+
+      <button 
+      type="button"
+      (click)="cancel()"
+      color="accent" mat-raised-button>
         Cancelar
       </button>
     </div>

@@ -88,7 +88,7 @@ export class CustomerService {
   }
 
   getCustomerByDocument(document: string): Observable<any> {
-    return this.clienteHttp.get<any>(`${this.API}customers/check-exists?document_number=${document}`, { headers: this.headers });
+    return this.clienteHttp.get<any>(`${this.API}customers/check-exists?documentNumber=${document}`, { headers: this.headers });
   }
   
   exportCustomers() {
