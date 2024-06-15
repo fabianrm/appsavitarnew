@@ -15,11 +15,12 @@ import { RouterService } from '../../router/router.service';
 import { ContractService } from '../contract.service';
 import { Observable, map, startWith } from 'rxjs';
 import { CustomerService } from '../../customer/customer.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Equipment } from '../../equipment/Models/EquipmentResponse';
 import { PlacesService } from '../../maps/places.service';
 import { MapsService } from '../../maps/maps.service';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { Customer } from '../../customer/Models/CustomerResponseU';
 
 @Component({
   selector: 'app-contract-create-new',
@@ -30,7 +31,6 @@ export class ContractCreateNewComponent implements OnInit {
 
   formContrato!: FormGroup;
   color: ThemePalette = 'accent';
-  customer?: { id: number, customerName: string, customerCode: string };
   checked = true;
   disabled = false;
   planInicial = 1;
@@ -55,6 +55,9 @@ export class ContractCreateNewComponent implements OnInit {
   date = new Date();
   coordinates: [number, number] | null = null;
 
+  id!: number;
+  customer?: Customer;
+
   constructor(public formulario: FormBuilder,
     private customerService: CustomerService,
     private contractService: ContractService,
@@ -68,14 +71,16 @@ export class ContractCreateNewComponent implements OnInit {
 
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
+
   ) { }
 
 
   ngOnInit(): void {
    // console.log(this.locationService.location);
 
-    this.getCustomer();
+    this.getCustomerById();
     this.getPlans()
     this.getCities();
     this.getRouters();
@@ -90,7 +95,7 @@ export class ContractCreateNewComponent implements OnInit {
   initForm() {
 
     const formControlsConfig = {
-      customerId: [this.customer?.id],
+      customerId: [''],
       planId: [this.planInicial, Validators.required],
       routerId: ['', Validators.required],
       boxId: ['', Validators.required],
@@ -132,10 +137,32 @@ export class ContractCreateNewComponent implements OnInit {
 
   }
 
-  //cliente:
-  getCustomer() {
-    this.customer = this.customerService.getCustomer();
+
+  //Cliente por id
+
+  //Obtener customer por id
+  getCustomerById() {
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('id');
+      if (idParam !== null) {
+        this.id = +idParam; // Usa el símbolo "+" para convertir a número
+        this.fetchCustomerDetails(this.id); // Llama a la función para obtener los detalles del box
+      } else {
+        // Manejar el caso cuando idParam es null, asignando un valor por defecto o manejando el error
+        console.error('ID parameter is null');
+      }
+    });
   }
+
+
+
+  fetchCustomerDetails(id: number) {
+    this.customerService.getCustomerById(id).subscribe((respuesta) => {
+      this.customer = respuesta.data;
+    });
+  }
+
+
 
   //Planes
   getPlans() {
@@ -248,8 +275,9 @@ export class ContractCreateNewComponent implements OnInit {
 
     const dataToSend = {
       ...formData,
+      customerId: this.id,
       installationDate: installDate,
-      equipmentId: equipmentId
+      equipmentId: equipmentId,
     };
 
     if (this.formContrato.valid) {
@@ -267,11 +295,11 @@ export class ContractCreateNewComponent implements OnInit {
   }
 
   showError() {
-    this.snackbarService.showError('El equipo se encuentra asignado a otro cliente...');
+    this.snackbarService.showError('Ocurrio un error...');
   }
 
   showSuccess() {
-    this.snackbarService.showSuccess('Operación exitosa');
+    this.snackbarService.showSuccess('Contrato registrado correctamente');
   }
 
 }

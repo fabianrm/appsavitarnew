@@ -67,16 +67,7 @@ export class BoxListComponent {
   }
 
 
-  openDialog(row: any) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
-    this.dialog.open(BoxCreateComponent, dialogConfig);
 
-    this.dialog.afterAllClosed.subscribe(() => {
-    })
-  }
 
   
   goToLinkMap(latitude: string, longitude: string) {

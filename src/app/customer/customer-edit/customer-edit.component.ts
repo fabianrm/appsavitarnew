@@ -140,9 +140,7 @@ export class CustomerEditComponent implements OnInit {
         email: this.dataCustomer.email,
         status: this.dataCustomer.status,
       });
-
       this.setNewCoordinates(this.dataCustomer.longitude, this.dataCustomer.latitude);
-
     });
   }
 

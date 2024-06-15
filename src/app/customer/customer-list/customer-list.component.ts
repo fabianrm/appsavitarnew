@@ -114,10 +114,10 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
 
 
-  onSelectCustomer(row: { id: number, customerName: string, customerCode: string }) {
+  onSelectCustomer( id: number) {
    // console.log(row); 
-    this.customerService.setCustomer(row);
-    this.router.navigate(['/dashboard/contract-create/new-contract']); // Navega al componente "contrato"
+   // this.customerService.setCustomer(id);
+    this.router.navigate(['/dashboard/contract-create/new-contract/'+id]); // Navega al componente "contrato"
   }
 
 
