@@ -28,6 +28,8 @@ export class EquipmentListComponent {
 
   public respuesta: Equipment[] = [];
 
+  eqSelected: any;
+
   constructor(private equipmentService: EquipmentService, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -47,6 +49,7 @@ export class EquipmentListComponent {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.respuesta = respuesta.data;
       }
     }));
 
@@ -75,15 +78,21 @@ export class EquipmentListComponent {
 
  
 
-  openDialogEdit(row: any) {
+  openDialogEdit(id: number) {
+
+    if (this.respuesta.length > 0) {
+      this.eqSelected = this.respuesta.filter(equipment => equipment.id == id);
+    }
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
-    dialogConfig.data = row;
+    dialogConfig.data = this.eqSelected;
     this.dialog.open(EquipmentEditComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })
   }
+
 
 
 }

@@ -75,8 +75,8 @@
 
           <mat-card-content>
             <div class="row">
-              <div class="col-sm-4">
-                <p>Usar direccion de cliente</p>
+              <div class="col-12">
+               <mat-checkbox formControlName="check">Usar dirección del cliente</mat-checkbox>
               </div>
             </div>
 
@@ -298,10 +298,7 @@
         Guardar
       </button>
 
-      <button 
-      type="button"
-      (click)="cancel()"
-      color="accent" mat-raised-button>
+      <button type="button" (click)="cancel()" color="accent" mat-raised-button>
         Cancelar
       </button>
     </div>

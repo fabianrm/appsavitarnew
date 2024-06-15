@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, Subject, catchError, map, of, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Customer, CustomerResponse } from './Models/CustomerResponse';
 import { CustomerRequest } from './Models/CustomerRequest';
-import { CustomerDTO } from './Models/CustomerDTO';
+
 import { CustomerResponseU } from './Models/CustomerResponseU';
+import { CustomerResponse } from './Models/CustomerResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +13,8 @@ import { CustomerResponseU } from './Models/CustomerResponseU';
 export class CustomerService {
 
   private _refresh$ = new Subject<void>()
-  private customer?: CustomerDTO;
-
   API: string = environment.servidor;
-
   constructor(private clienteHttp: HttpClient) { }
-
-  setCustomer(customer: CustomerDTO) {
-    this.customer = customer;
-  }
-
-  getCustomer(): CustomerDTO {
-    return this.customer!;
-  }
-
 
   get refresh$() {
     return this._refresh$;
@@ -94,8 +82,5 @@ export class CustomerService {
   exportCustomers() {
     return this.clienteHttp.get(this.API + 'export-customers', { responseType: 'blob' });
   }
-
-
-
 
 }

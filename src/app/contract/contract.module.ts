@@ -23,6 +23,7 @@ import { ContractEditPlanComponent } from './contract-edit-plan/contract-edit-pl
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ContractCreateNewComponent } from './contract-create-new/contract-create-new.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MapsModule } from '../maps/maps.module';
 
 
@@ -60,7 +61,8 @@ import { MapsModule } from '../maps/maps.module';
     MatTabsModule,
     MatMenu,
     MatMenuModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatCheckboxModule
   
   ]
 })

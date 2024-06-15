@@ -28,6 +28,11 @@ export class EquipmentService {
     return this.clienteHttp.get<any>(this.API + 'equipments', { headers: this.headers })
   }
 
+
+  getEquipmentById(id: number): Observable<any> {
+    return this.clienteHttp.get<any>(`${this.API}equipments/${id}`, { headers: this.headers });
+  }
+
   addEquipment(datos: Equipment): Observable<any> {
     return this.clienteHttp.post(this.API + 'equipments', datos, { headers: this.headers })
       .pipe(tap(() => {

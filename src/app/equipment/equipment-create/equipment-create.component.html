@@ -24,8 +24,7 @@
               matInput
               placeholder="Serie"
               formControlName="serie"
-              #codeSer
-              (input)="codeSer.value = codeSer.value.toUpperCase()"
+            
             />
           </mat-form-field>
         </div>
@@ -39,8 +38,7 @@
               matInput
               placeholder="Modelo"
               formControlName="model"
-              #codeMod
-              (input)="codeMod.value = codeMod.value.toUpperCase()"
+             
             />
           </mat-form-field>
         </div>
@@ -70,13 +68,6 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #pickerDesde></mat-datepicker>
           </mat-form-field>
-
-          <!-- <mat-form-field>
-            <mat-label>Fecha de compra</mat-label>
-            <input matInput
-            type="date"
-            placeholder="Fecha de Compra" formControlName="purchase_date" />
-          </mat-form-field> -->
         </div>
         <div class="col-sm-6">
           <mat-form-field>

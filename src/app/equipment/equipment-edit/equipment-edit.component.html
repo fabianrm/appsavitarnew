@@ -9,7 +9,7 @@
         <div class="col-sm-6">
           <mat-form-field appearance="fill">
             <mat-label>Tipo</mat-label>
-            <mat-select [(value)]="selectedTipo" formControlName="type">
+            <mat-select  formControlName="type">
               @for (tipo of tipos; track tipo) {
               <mat-option [value]="tipo.value">{{ tipo.viewValue }}</mat-option>
               }
@@ -20,7 +20,12 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Serie</mat-label>
-            <input matInput placeholder="Serie" formControlName="serie" />
+            <input
+              matInput
+              placeholder="Serie"
+              formControlName="serie"
+            
+            />
           </mat-form-field>
         </div>
       </div>
@@ -29,29 +34,45 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Modelo</mat-label>
-            <input matInput placeholder="Modelo" formControlName="model" />
+            <input
+              matInput
+              placeholder="Modelo"
+              formControlName="model"
+             
+            />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
-          <mat-form-field>
+          <mat-form-field class="control-full-width" appearance="fill">
             <mat-label>Marca</mat-label>
-            <input matInput placeholder="Marca" formControlName="brand" />
+            <mat-select formControlName="brandId">
+              @for (brand of brands; track brand) {
+              <mat-option [value]="brand.id">{{ brand.name }}</mat-option>
+              }
+            </mat-select>
           </mat-form-field>
         </div>
       </div>
       <div class="row">
-         <div class="col-sm-6">
+        <div class="col-sm-6">
           <mat-form-field>
-            <mat-label>Fecha de compra</mat-label>
-            <input matInput
-            type="date"
-            placeholder="Fecha de Compra" formControlName="purchase_date" />
+            <mat-label>Fecha de Compra</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerDesde"
+              formControlName="purchaseDate"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="pickerDesde"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickerDesde></mat-datepicker>
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Estado</mat-label>
-            <mat-select [(value)]="selectedEstado" formControlName="status">
+            <mat-select  formControlName="status">
               @for (estado of estados; track estado) {
               <mat-option [value]="estado.value">{{
                 estado.viewValue
@@ -80,4 +101,3 @@
     </mat-card-actions>
   </mat-card>
 </form>
-

@@ -2,8 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { EquipmentService } from '../equipment.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
 import { BrandService } from '../../brand/brand.service';
 import { Brand } from '../../brand/Models/BrandResponse';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
@@ -31,8 +30,8 @@ export class EquipmentCreateComponent implements OnInit {
   color: ThemePalette = 'accent';
   checked = true;
   disabled = false;
-  selectedTipo = 'router';
-  selectedEstado = 'bueno';
+  selectedTipo = 'ROUTER';
+  selectedEstado = 'BUENO';
 
   brands: Brand[] = [];
 
@@ -51,7 +50,7 @@ export class EquipmentCreateComponent implements OnInit {
   ]
 
   constructor(public formulario: FormBuilder,
-    private equipmentService: EquipmentService, @Inject(MAT_DIALOG_DATA) public getData: any,
+    private equipmentService: EquipmentService,
     private snackbarService: SnackbarService,
     private brandService: BrandService,
     private dialogRef: MatDialogRef<EquipmentCreateComponent>
@@ -65,14 +64,28 @@ export class EquipmentCreateComponent implements OnInit {
   }
 
   initForm() {
-    this.formEquipment = this.formulario.group({
+
+    const formControlsConfig = {
       type: [this.selectedTipo, Validators.required],
       serie: ['', Validators.required],
       model: ['', Validators.required],
       brandId: [''],
       purchaseDate: [''],
       status: [this.selectedEstado, Validators.required],
+  
+    }
+
+    this.formEquipment = this.formulario.group(formControlsConfig);
+
+    //Convertir a mayusculas
+    Object.keys(formControlsConfig).forEach(key => {
+      if (key === 'serie' || key === 'model') {
+        this.formEquipment.get(key)?.valueChanges.subscribe(value => {
+          this.formEquipment.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        });
+      }
     });
+
   }
 
 

@@ -78,7 +78,7 @@ export class ContractCreateNewComponent implements OnInit {
 
 
   ngOnInit(): void {
-   // console.log(this.locationService.location);
+    // console.log(this.locationService.location);
 
     this.getCustomerById();
     this.getPlans()
@@ -87,6 +87,7 @@ export class ContractCreateNewComponent implements OnInit {
     this.getBoxs();
     this.getEquipments();
     this.getLocations();
+
     this.initForm();
   }
 
@@ -112,10 +113,13 @@ export class ContractCreateNewComponent implements OnInit {
       dueDate: [''],
       status: ['activo'],
       endDate: [''],
+      check: [false],
     }
+
 
     this.formContrato = this.formulario.group(formControlsConfig);
 
+    //Convertir a mayusculas
     Object.keys(formControlsConfig).forEach(key => {
       if (key === 'addressInstallation' || key === 'reference') {
         this.formContrato.get(key)?.valueChanges.subscribe(value => {
@@ -125,20 +129,25 @@ export class ContractCreateNewComponent implements OnInit {
     });
 
 
+    //Subscribirse a los cambios del combo equipo
+    this.formContrato.get('equipmentId')!.valueChanges.subscribe(value => {
+      this.selectedEquipment = typeof value === 'object' ? value : null;
+    });
+
+    //Filtrar combo equipos por serie 
     this.filteredEquipos = this.formContrato.get('equipmentId')!.valueChanges.pipe(
       startWith(''),
       map(value => (typeof value === 'string' ? value : value?.serie)),
       map(serie => (serie ? this._filter(serie) : this.equipments.slice()))
     );
 
-    this.formContrato.get('equipmentId')!.valueChanges.subscribe(value => {
-      this.selectedEquipment = typeof value === 'object' ? value : null;
+    //Subscribirse a los cambios del check
+    this.formContrato.get('check')?.valueChanges.subscribe(checked => {
+      this.onCheckboxChange(checked);
     });
 
   }
 
-
-  //Cliente por id
 
   //Obtener customer por id
   getCustomerById() {
@@ -155,7 +164,6 @@ export class ContractCreateNewComponent implements OnInit {
   }
 
 
-
   fetchCustomerDetails(id: number) {
     this.customerService.getCustomerById(id).subscribe((respuesta) => {
       this.customer = respuesta.data;
@@ -163,6 +171,59 @@ export class ContractCreateNewComponent implements OnInit {
   }
 
 
+  //Setear direccion de cliente
+  onCheckboxChange(checked: boolean) {
+    if (checked) {
+      this.applyAddressAndDisableControls();
+      this.setNewCoordinates(this.customer!.longitude, this.customer!.latitude);
+    } else {
+      this.enableControls();
+    }
+  }
+
+  //enable controls
+  enableControls() {
+    this.formContrato.get('cityId')?.enable();
+    this.formContrato.get('addressInstallation')?.enable();
+    this.formContrato.get('reference')?.enable();
+    this.formContrato.get('longitude')?.enable();
+    this.formContrato.get('latitude')?.enable();
+  }
+
+  //Disable controls
+  disableControls() {
+    this.formContrato.get('cityId')?.disable();
+    this.formContrato.get('addressInstallation')?.disable();
+    this.formContrato.get('reference')?.disable();
+    this.formContrato.get('longitude')?.disable();
+    this.formContrato.get('latitude')?.disable();
+  }
+
+  enableAllControls() {
+    Object.keys(this.formContrato.controls).forEach(key => {
+      this.formContrato.get(key)?.enable();
+    });
+  }
+
+
+  //Obtener direccion de cliente
+  applyAddressAndDisableControls() {
+    this.formContrato.patchValue({
+      cityId: this.customer?.cityId,
+      addressInstallation: this.customer?.address,
+      reference: this.customer?.reference,
+      latitude: this.customer?.latitude,
+      longitude: this.customer?.longitude,
+    });
+    this.disableControls();
+  }
+
+
+  //Setear coordenadas (edit)
+  setNewCoordinates(long: number, lat: number) {
+    const newCoordinates: [number, number] = [long, lat];
+    this.mapService.changeCoordinates(newCoordinates);
+  }
 
   //Planes
   getPlans() {
@@ -174,7 +235,7 @@ export class ContractCreateNewComponent implements OnInit {
     });
   }
 
-
+//Obtener plan por id
   getPlanbyID(id: number) {
     if (this.planes.length > 0) {
       this.planSelected = this.planes.filter(plan => plan.id == id);
@@ -199,6 +260,7 @@ export class ContractCreateNewComponent implements OnInit {
     });
   }
 
+  //Obtener cajas
   getBoxs() {
     this.boxService.getBoxes().subscribe((respuesta) => {
       if (respuesta.data.boxs.length > 0) {
@@ -207,6 +269,7 @@ export class ContractCreateNewComponent implements OnInit {
     });
   }
 
+  //Obtener puertos
   getPorts(id: number) {
     this.boxService.getPortsAvailables(id).subscribe((respuesta: Ports[]) => {
       if (respuesta.length > 0) {
@@ -215,7 +278,7 @@ export class ContractCreateNewComponent implements OnInit {
     });
   }
 
-  //Equipo
+  //Equipos
   getEquipments() {
     this.equipmentService.getEquipments().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
@@ -256,12 +319,11 @@ export class ContractCreateNewComponent implements OnInit {
           longitude: coordinates[0]
         });
       }
-   //   console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
+      //   console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
     });
   }
 
   //Cancelar
-
   cancel() {
     this.router.navigate(['/dashboard/customer/customers']);
   }
@@ -269,6 +331,7 @@ export class ContractCreateNewComponent implements OnInit {
 
   //Enviar Datos
   enviarDatos(): any {
+    this.enableControls();
     const formData = this.formContrato.value;
     const installDate = new Date(formData.installationDate).toISOString().split('T')[0];
     const equipmentId = this.equipmentIdValue;
@@ -281,6 +344,7 @@ export class ContractCreateNewComponent implements OnInit {
     };
 
     if (this.formContrato.valid) {
+      this.disableControls();
       this.contractService.getServiceByEquipment(equipmentId!).subscribe(respuesta => { 
         if (respuesta.exists == false) { 
           this.contractService.addService(dataToSend).subscribe(respuesta => {
