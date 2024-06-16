@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PlacesService } from '../places.service';
-import { Map } from 'mapbox-gl';
 import mapboxgl from 'mapbox-gl';
 import { MapsService } from '../maps.service';
 import { Subscription } from 'rxjs';

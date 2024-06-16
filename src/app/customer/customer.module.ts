@@ -23,6 +23,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContractsListComponent } from './contracts-list/contracts-list.component';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { MapsModule } from '../maps/maps.module';
+import { MapleafModule } from '../mapleaf/mapleaf.module';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { MapsModule } from '../maps/maps.module';
     MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MapleafModule
 
   ]
 })
