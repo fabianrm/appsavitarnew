@@ -72,14 +72,9 @@ export class EquipmentEditComponent {
 
     const purchaseDate = this.getData[0].purchaseDate;
     // Formatear la fecha usando DatePipe
-    // Convertir la fecha a GMT+0
-    const dateInGMT = new Date(purchaseDate);
-    const gmtDate = new Date(dateInGMT.getTime() + dateInGMT.getTimezoneOffset() * 60000);
-
-    // Formatear la fecha usando DatePipe
-    const formattedDate = this.datePipe.transform(purchaseDate, 'yyyy-MM-dd', 'GMT+0');
-
-    
+    //const formattedDate = this.datePipe.transform(purchaseDate, 'yyyy-MM-dd', 'GMT-5');
+    const formattedDate = this.datePipe.transform(purchaseDate, 'yyyy-MM-dd');
+    console.log('format', formattedDate);
 
     const formControlsConfig = {
       id: [this.getData[0].id, Validators.required],
