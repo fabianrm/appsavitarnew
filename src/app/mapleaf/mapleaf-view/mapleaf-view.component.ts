@@ -1,15 +1,32 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import { Subscription } from 'rxjs';
 import { MapleafService } from '../mapleaf.service';
+
+// const iconRetinaUrl = 'assets/marker-icon-2x.png';
+// const iconUrl = 'assets/marker-icon.png';
+// const shadowUrl = 'assets/marker-shadow.png';
+// const iconDefault = L.icon({
+//   iconRetinaUrl,
+//   iconUrl,
+//   shadowUrl,
+//   iconSize: [25, 41],
+//   iconAnchor: [12, 41],
+//   popupAnchor: [1, -34],
+//   tooltipAnchor: [16, -28],
+//   shadowSize: [41, 41]
+// });
+// L.Marker.prototype.options.icon = iconDefault;
+
 
 @Component({
   selector: 'app-mapleaf-view',
   templateUrl: './mapleaf-view.component.html',
   styleUrl: './mapleaf-view.component.scss'
 })
-export class MapleafViewComponent implements OnInit, OnDestroy  {
+export class MapleafViewComponent implements OnInit, AfterViewInit, OnDestroy  {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
+  @Input() allowMultipleMarkers: boolean = true; // Parámetro de configuración
   map!: L.Map;
   markers: L.Marker[] = [];
   coordinatesSubscription!: Subscription;
@@ -21,13 +38,21 @@ export class MapleafViewComponent implements OnInit, OnDestroy  {
     this.coordinatesSubscription = this.coordinateService.currentCoordinates.subscribe(coordinates => {
       this.setMarkers(coordinates);
     });
+    // Configurar la ruta de los iconos de Leaflet
+    (L.Icon.Default as any).imagePath = 'assets/';
+
   }
 
   ngAfterViewInit(): void {
-    // this.initializeMap();
+    this.initializeMap();
+
+    // Espera un momento para asegurarte de que el mapa se haya renderizado completamente y luego invalida el tamaño
     setTimeout(() => {
-      this.initializeMap();
-    }, 0);
+      this.map.invalidateSize();
+    }, 100); // Puedes ajustar el retraso si es necesario
+
+    // Prueba el método aquí
+
   }
 
   ngOnDestroy(): void {
@@ -38,7 +63,7 @@ export class MapleafViewComponent implements OnInit, OnDestroy  {
   }
 
   initializeMap() {
-    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.904696, -81.056678], 14);
+    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.908505, -81.058287], 14.5);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
@@ -47,10 +72,15 @@ export class MapleafViewComponent implements OnInit, OnDestroy  {
     // Añadir evento de clic para agregar coordenadas
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       const coordinates: [number, number] = [event.latlng.lat, event.latlng.lng];
-      this.coordinateService.addCoordinate(coordinates);
+      if (this.allowMultipleMarkers) {
+        this.coordinateService.addCoordinate(coordinates);
+      } else {
+        this.setSingleMarker(coordinates);
+        this.coordinateService.setSingleCoordinate(coordinates);
+      }
     });
 
-    // Redimensionar el mapa cuando la ventana cambia de tamaño
+    // Invalida el tamaño del mapa
     this.map.invalidateSize();
   }
 
@@ -66,5 +96,19 @@ export class MapleafViewComponent implements OnInit, OnDestroy  {
       this.markers.push(marker);
     });
   }
+
+  // Setear un único marcador
+  setSingleMarker(coordinates: [number, number]) {
+    // Eliminar todos los marcadores actuales
+    this.markers.forEach(marker => marker.remove());
+    this.markers = [];
+
+    // Añadir nuevo marcador
+    const marker = L.marker([coordinates[0], coordinates[1]]).addTo(this.map);
+    this.markers.push(marker);
+  }
+
+
+
 
 }

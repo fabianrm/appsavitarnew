@@ -1,14 +1,14 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
 import { CustomerService } from './../customer.service';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 import { PlacesService } from '../../maps/places.service';
-import { MapsService } from '../../maps/maps.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { MapleafService } from '../../mapleaf/mapleaf.service';
+import { Subscription } from 'rxjs';
 
 
 interface Tipo {
@@ -24,7 +24,7 @@ interface Tipo {
 })
 
 
-export class CustomerCreateComponent implements OnInit {
+export class CustomerCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
  // @ViewChild('documentNumber') documentNumber: ElementRef | undefined;
 
@@ -35,7 +35,8 @@ export class CustomerCreateComponent implements OnInit {
   selected = 'natural';
 
   cities: City[] = [];
-  coordinates: [number, number] | null = null;
+  coordinates: [number, number][] = [];
+  coordinatesSubscription!: Subscription;
 
   tipos: Tipo[] = [
     { value: 'natural', viewValue: 'Natural' },
@@ -44,21 +45,42 @@ export class CustomerCreateComponent implements OnInit {
 
   constructor(public formulario: FormBuilder,
     private cityService: CityService,
+    private mapleafService: MapleafService,
     private customerService: CustomerService,
     private locationService: PlacesService,
-    private mapService: MapsService,
     private router: Router,
     private snackbarService: SnackbarService
 
-) { }
+  ) { }
+  
+
+  ngAfterViewInit(): void {
+    this.setSingleCoordinate();
+  }
 
   
   ngOnInit(): void {
+    // Suscribirse a los cambios de coordenadas
+    this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
+      this.coordinates = coordinates;
+      console.log('Nuevas coordenadas:', this.coordinates);
+    });
+
     this.initForm();
     this.getCities();
-    this.getLocations();
+  
+   // this.getLocations();
    // this.documentNumber!.nativeElement.focus();
   }
+
+  ngOnDestroy(): void {
+    // Desuscribirse de los cambios de coordenadas para evitar fugas de memoria
+    if (this.coordinatesSubscription) {
+      this.coordinatesSubscription.unsubscribe();
+    }
+  }
+
+
 
 
   initForm() {
@@ -88,6 +110,11 @@ export class CustomerCreateComponent implements OnInit {
     
   }
 
+  setSingleCoordinate() {
+    const singleCoordinate: [number, number] = [-4.905, -81.045];
+    this.mapleafService.setSingleCoordinate(singleCoordinate);
+  }
+
   get locationReady() {
     //  console.log(this.locationService.location);
     return this.locationService.locationReady;
@@ -95,19 +122,19 @@ export class CustomerCreateComponent implements OnInit {
 
   //Obtener coordenadas
   getLocations() {
-    this.mapService.currentCoordinates.subscribe(coordinates => {
+    this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
       this.coordinates = coordinates;
-
       if (coordinates) {
         // Actualizar los campos del formulario
-        this.formCliente.patchValue({
-          latitude: coordinates[1],
-          longitude: coordinates[0]
-        });
+        // this.formCliente.patchValue({
+        //   latitude: coordinates[0][1],
+        //   longitude: coordinates[0][0]
+        // });
       }
-      console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
+      console.log('Nuevas coordenadas:', this.coordinates);
     });
-  }
+}
+
 
 //Guardar datos
   enviarDatos() {

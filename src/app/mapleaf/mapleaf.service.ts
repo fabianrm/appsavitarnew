@@ -20,6 +20,10 @@ export class MapleafService {
     this.coordinatesSource.next([...currentCoords, coordinate]);
   }
 
+  setSingleCoordinate(coordinate: [number, number]) {
+    this.coordinatesSource.next([coordinate]);
+  }
+
   clearCoordinates() {
     this.coordinatesSource.next([]);
   }
