@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { CustomerService } from './../customer.service';
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { Subscription } from 'rxjs';
+import { MapleafViewComponent } from '../../mapleaf/mapleaf-view/mapleaf-view.component';
 
 
 interface Tipo {
@@ -24,9 +25,10 @@ interface Tipo {
 })
 
 
-export class CustomerCreateComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CustomerCreateComponent implements OnInit, OnDestroy {
 
- // @ViewChild('documentNumber') documentNumber: ElementRef | undefined;
+  // @ViewChild('documentNumber') documentNumber: ElementRef | undefined;
+  @ViewChild(MapleafViewComponent) mapComponent!: MapleafViewComponent;
 
   formCliente!: FormGroup;
   color: ThemePalette = 'accent';
@@ -37,6 +39,7 @@ export class CustomerCreateComponent implements OnInit, AfterViewInit, OnDestroy
   cities: City[] = [];
   coordinates: [number, number][] = [];
   coordinatesSubscription!: Subscription;
+
 
   tipos: Tipo[] = [
     { value: 'natural', viewValue: 'Natural' },
@@ -52,25 +55,28 @@ export class CustomerCreateComponent implements OnInit, AfterViewInit, OnDestroy
     private snackbarService: SnackbarService
 
   ) { }
-  
 
-  ngAfterViewInit(): void {
-    this.setSingleCoordinate();
-  }
 
-  
   ngOnInit(): void {
+
+
+    this.initForm();
+
+    this.clearCoordinates();
+
     // Suscribirse a los cambios de coordenadas
     this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
       this.coordinates = coordinates;
-      console.log('Nuevas coordenadas:', this.coordinates);
+      if (this.coordinates.length > 0) {
+        // Actualizar los campos del formulario
+        this.formCliente.patchValue({
+          latitude: this.coordinates[0][0],
+          longitude: this.coordinates[0][1]
+        });
+      }
     });
 
-    this.initForm();
     this.getCities();
-  
-   // this.getLocations();
-   // this.documentNumber!.nativeElement.focus();
   }
 
   ngOnDestroy(): void {
@@ -80,7 +86,9 @@ export class CustomerCreateComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
-
+  clearCoordinates() {
+    this.mapleafService.clearCoordinates();
+  }
 
 
   initForm() {
@@ -107,7 +115,7 @@ export class CustomerCreateComponent implements OnInit, AfterViewInit, OnDestroy
         });
       }
     });
-    
+
   }
 
   setSingleCoordinate() {
@@ -133,17 +141,17 @@ export class CustomerCreateComponent implements OnInit, AfterViewInit, OnDestroy
       }
       console.log('Nuevas coordenadas:', this.coordinates);
     });
-}
+  }
 
 
-//Guardar datos
+  //Guardar datos
   enviarDatos() {
     if (this.formCliente.valid) {
       //const equipment = this.formContrato.get('equipmentId')!.value;
       const form = this.formCliente.value;
       const documento = form.documentNumber
       this.customerService.getCustomerByDocument(documento).subscribe(respuesta => {
-      
+
         if (respuesta.exists == false) {
           this.customerService.addCustomer(this.formCliente.value).subscribe(respuesta => {
             this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "cliente"
@@ -152,13 +160,13 @@ export class CustomerCreateComponent implements OnInit, AfterViewInit, OnDestroy
         } else {
           this.showError();
         }
-        
-      });  
+
+      });
     }
   }
 
   goCustomers() {
-    this.router.navigate(['/dashboard/customer/customers']); 
+    this.router.navigate(['/dashboard/customer/customers']);
   }
 
   getCities() {

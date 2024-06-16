@@ -131,16 +131,21 @@
           </mat-card-content>
         </mat-card>
       </div>
-      <div class="col-sm-6">
+<!-- Mapa -->
+      <div class="col-12 col-sm-6">
         <mat-card class="container-map">
           <mat-card-content class="center-content">
-            <app-map-loading
+            <app-mapleaf-loading
               *ngIf="!locationReady; else mapReady"
               class="full-size"
-            ></app-map-loading>
+            ></app-mapleaf-loading>
 
             <ng-template #mapReady>
-              <app-map-view class="full-size"></app-map-view>
+              <div class="mapa">
+                <app-mapleaf-view
+                  [allowMultipleMarkers]="false"
+                ></app-mapleaf-view>
+              </div>
             </ng-template>
           </mat-card-content>
         </mat-card>

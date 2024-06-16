@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { MapleafService } from '../mapleaf.service';
 
 // const iconRetinaUrl = 'assets/marker-icon-2x.png';
@@ -38,9 +38,9 @@ export class MapleafViewComponent implements OnInit, AfterViewInit, OnDestroy  {
     this.coordinatesSubscription = this.coordinateService.currentCoordinates.subscribe(coordinates => {
       this.setMarkers(coordinates);
     });
+
     // Configurar la ruta de los iconos de Leaflet
     (L.Icon.Default as any).imagePath = 'assets/';
-
   }
 
   ngAfterViewInit(): void {
@@ -50,9 +50,6 @@ export class MapleafViewComponent implements OnInit, AfterViewInit, OnDestroy  {
     setTimeout(() => {
       this.map.invalidateSize();
     }, 100); // Puedes ajustar el retraso si es necesario
-
-    // Prueba el método aquí
-
   }
 
   ngOnDestroy(): void {
@@ -63,7 +60,7 @@ export class MapleafViewComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
 
   initializeMap() {
-    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.908505, -81.058287], 14.5);
+    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907195, -81.057193], 14.5);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'

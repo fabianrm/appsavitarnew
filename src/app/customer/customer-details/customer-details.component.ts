@@ -23,7 +23,7 @@ export class CustomerDetailsComponent implements OnInit, AfterViewInit {
     // Suscribirse a los cambios de coordenadas
     this.coordinatesSubscription = this.coordinateService.currentCoordinates.subscribe(coordinates => {
       this.coordinates = coordinates;
-      console.log('Nuevas coordenadas:', this.coordinates);
+    //  console.log('Nuevas coordenadas:', this.coordinates);
     });
   }
 

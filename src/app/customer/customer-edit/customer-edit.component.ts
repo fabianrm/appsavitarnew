@@ -4,11 +4,12 @@ import { CustomerService } from '../customer.service';
 import { ThemePalette } from '@angular/material/core';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
-import { MapsService } from '../../maps/maps.service';
 import { PlacesService } from '../../maps/places.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from '../Models/CustomerResponseU';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { MapleafService } from '../../mapleaf/mapleaf.service';
+import { Subscription } from 'rxjs';
 
 
 interface Tipo {
@@ -30,7 +31,8 @@ export class CustomerEditComponent implements OnInit {
   selected = 'natural';
 
   cities: City[] = [];
-  coordinates: [number, number] | null = null;
+  coordinates: [number, number][] = [];
+  coordinatesSubscription!: Subscription;
 
   id!: number;
   dataCustomer?: Customer;
@@ -44,7 +46,7 @@ export class CustomerEditComponent implements OnInit {
     private cityService: CityService,
     private customerService: CustomerService,
     private locationService: PlacesService,
-    private mapService: MapsService,
+    private mapleafService: MapleafService,
     private route: ActivatedRoute,
     private router: Router,
     private snackbarService: SnackbarService
@@ -52,11 +54,25 @@ export class CustomerEditComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     this.initForm();
+    this.clearCoordinates();
+
+     // Suscribirse a los cambios de coordenadas
+    this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
+      this.coordinates = coordinates;
+      if (this.coordinates.length > 0) {
+        // Actualizar los campos del formulario
+        this.formCliente.patchValue({
+          latitude: this.coordinates[0][0],
+          longitude: this.coordinates[0][1]
+        });
+      }
+    });
+
     this.getCustomerById();
     this.getCities();
-    this.getLocations();
-    // this.documentNumber!.nativeElement.focus();
+
   }
 
 
@@ -88,25 +104,9 @@ export class CustomerEditComponent implements OnInit {
   }
 
   get locationReady() {
-    //  console.log(this.locationService.location);
     return this.locationService.locationReady;
   }
 
-  //Obtener coordenadas
-  getLocations() {
-    this.mapService.currentCoordinates.subscribe(coordinates => {
-      this.coordinates = coordinates;
-
-      if (coordinates) {
-        // Actualizar los campos del formulario
-        this.formCliente.patchValue({
-          latitude: coordinates[1],
-          longitude: coordinates[0]
-        });
-      }
-      // console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
-    });
-  }
 
   //Obtener customer por id
   getCustomerById() {
@@ -140,15 +140,21 @@ export class CustomerEditComponent implements OnInit {
         email: this.dataCustomer.email,
         status: this.dataCustomer.status,
       });
-      this.setNewCoordinates(this.dataCustomer.longitude, this.dataCustomer.latitude);
+      this.setNewCoordinates(this.dataCustomer.latitude, this.dataCustomer.longitude);
     });
   }
 
   //Setear coordenadas (edit)
   setNewCoordinates(long: number, lat: number) {
-    const newCoordinates: [number, number] = [long, lat];
-    this.mapService.changeCoordinates(newCoordinates);
+    const singleCoordinate: [number, number] = [long, lat];
+    this.mapleafService.setSingleCoordinate(singleCoordinate);
   }
+
+  clearCoordinates() {
+    this.mapleafService.clearCoordinates();
+  }
+
+
 
   //Guardar datos
   enviarDatos() {
@@ -176,8 +182,6 @@ export class CustomerEditComponent implements OnInit {
       }
     });
   }
-
-
 
   showError() {
     this.snackbarService.showError('☹️ Cliente ya se encuentra registrado');
