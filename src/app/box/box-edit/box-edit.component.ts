@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { BoxService } from '../box.service';
@@ -16,7 +16,7 @@ import { MapleafService } from '../../mapleaf/mapleaf.service';
   templateUrl: './box-edit.component.html',
   styleUrl: './box-edit.component.css'
 })
-export class BoxEditComponent implements OnInit {
+export class BoxEditComponent implements OnInit, OnDestroy {
   formBox!: FormGroup;
   color: ThemePalette = 'accent';
   checked = true;
@@ -176,6 +176,13 @@ export class BoxEditComponent implements OnInit {
 
   showSuccess() {
     this.snackbarService.showSuccess('Registro editado correctamente');
+  }
+
+  ngOnDestroy(): void {
+    // Desuscribirse de los cambios de coordenadas para evitar fugas de memoria
+    if (this.coordinatesSubscription) {
+      this.coordinatesSubscription.unsubscribe();
+    }
   }
 
 

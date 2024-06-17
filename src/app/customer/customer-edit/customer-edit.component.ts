@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomerService } from '../customer.service';
 import { ThemePalette } from '@angular/material/core';
@@ -22,7 +22,7 @@ interface Tipo {
   templateUrl: './customer-edit.component.html',
   styleUrl: './customer-edit.component.css'
 })
-export class CustomerEditComponent implements OnInit {
+export class CustomerEditComponent implements OnInit, OnDestroy {
 
   formCliente!: FormGroup;
   color: ThemePalette = 'accent';
@@ -189,6 +189,13 @@ export class CustomerEditComponent implements OnInit {
 
   showSuccess() {
     this.snackbarService.showSuccess('Cliente editado correctamente');
+  }
+
+  ngOnDestroy(): void {
+    // Desuscribirse de los cambios de coordenadas para evitar fugas de memoria
+    if (this.coordinatesSubscription) {
+      this.coordinatesSubscription.unsubscribe();
+    }
   }
 
 

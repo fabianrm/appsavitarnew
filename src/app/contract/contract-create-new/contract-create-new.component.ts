@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Box } from '../../box/Models/ResponseBox';
@@ -13,7 +13,7 @@ import { EquipmentService } from '../../equipment/equipment.service';
 import { PlanService } from '../../plan/plan.service';
 import { RouterService } from '../../router/router.service';
 import { ContractService } from '../contract.service';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, Subscription, map, startWith } from 'rxjs';
 import { CustomerService } from '../../customer/customer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Equipment } from '../../equipment/Models/EquipmentResponse';
@@ -21,13 +21,14 @@ import { PlacesService } from '../../maps/places.service';
 import { MapsService } from '../../maps/maps.service';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 import { Customer } from '../../customer/Models/CustomerResponseU';
+import { MapleafService } from '../../mapleaf/mapleaf.service';
 
 @Component({
   selector: 'app-contract-create-new',
   templateUrl: './contract-create-new.component.html',
   styleUrl: './contract-create-new.component.scss'
 })
-export class ContractCreateNewComponent implements OnInit {
+export class ContractCreateNewComponent implements OnInit, OnDestroy {
 
   formContrato!: FormGroup;
   color: ThemePalette = 'accent';
@@ -53,7 +54,8 @@ export class ContractCreateNewComponent implements OnInit {
   selectedEquipment!: Equipment | null;
 
   date = new Date();
-  coordinates: [number, number] | null = null;
+  coordinates: [number, number][] = [];
+  coordinatesSubscription!: Subscription;
 
   id!: number;
   customer?: Customer;
@@ -67,6 +69,7 @@ export class ContractCreateNewComponent implements OnInit {
     private cityService: CityService,
     private equipmentService: EquipmentService,
     private locationService: PlacesService,
+    private mapleafService: MapleafService,
     private mapService: MapsService,
 
     private snackbarService: SnackbarService,
@@ -79,16 +82,17 @@ export class ContractCreateNewComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log(this.locationService.location);
-
+    this.initForm();
+    this.clearCoordinates();
+    this.getLocations();
     this.getCustomerById();
+
     this.getPlans()
     this.getCities();
     this.getRouters();
     this.getBoxs();
     this.getEquipments();
-    this.getLocations();
 
-    this.initForm();
   }
 
 
@@ -175,7 +179,7 @@ export class ContractCreateNewComponent implements OnInit {
   onCheckboxChange(checked: boolean) {
     if (checked) {
       this.applyAddressAndDisableControls();
-      this.setNewCoordinates(this.customer!.longitude, this.customer!.latitude);
+      this.setNewCoordinates(this.customer!.latitude, this.customer!.longitude);
     } else {
       this.enableControls();
     }
@@ -221,9 +225,10 @@ export class ContractCreateNewComponent implements OnInit {
 
   //Setear coordenadas (edit)
   setNewCoordinates(long: number, lat: number) {
-    const newCoordinates: [number, number] = [long, lat];
-    this.mapService.changeCoordinates(newCoordinates);
+    const singleCoordinate: [number, number] = [long, lat];
+    this.mapleafService.setSingleCoordinate(singleCoordinate);
   }
+
 
   //Planes
   getPlans() {
@@ -309,19 +314,23 @@ export class ContractCreateNewComponent implements OnInit {
 
   //Obtener coordenadas
   getLocations() {
-    this.mapService.currentCoordinates.subscribe(coordinates => {
+    this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
       this.coordinates = coordinates;
-
-      if (coordinates) {
+      if (this.coordinates.length > 0) {
         // Actualizar los campos del formulario
         this.formContrato.patchValue({
-          latitude: coordinates[1],
-          longitude: coordinates[0]
+          latitude: this.coordinates[0][0],
+          longitude: this.coordinates[0][1]
         });
       }
-      //   console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
     });
   }
+
+  //Limpiar las coordenadas
+  clearCoordinates() {
+    this.mapleafService.clearCoordinates();
+  }
+
 
   //Cancelar
   cancel() {
@@ -364,6 +373,13 @@ export class ContractCreateNewComponent implements OnInit {
 
   showSuccess() {
     this.snackbarService.showSuccess('Contrato registrado correctamente');
+  }
+
+  ngOnDestroy(): void {
+    // Desuscribirse de los cambios de coordenadas para evitar fugas de memoria
+    if (this.coordinatesSubscription) {
+      this.coordinatesSubscription.unsubscribe();
+    }
   }
 
 }

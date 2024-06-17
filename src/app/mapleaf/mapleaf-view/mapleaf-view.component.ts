@@ -60,7 +60,7 @@ export class MapleafViewComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
 
   initializeMap() {
-    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907195, -81.057193], 14.5);
+    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907195, -81.057193], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'

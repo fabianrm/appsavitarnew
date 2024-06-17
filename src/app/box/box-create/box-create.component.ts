@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { BoxService } from '../box.service';
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './box-create.component.html',
   styleUrl: './box-create.component.css'
 })
-export class BoxCreateComponent {
+export class BoxCreateComponent implements OnInit, OnDestroy {
 
   formBox!: FormGroup;
   color: ThemePalette = 'accent';
@@ -121,6 +121,12 @@ export class BoxCreateComponent {
     this.snackbarService.showSuccess('Registro agregado correctamente');
   }
 
+  ngOnDestroy(): void {
+    // Desuscribirse de los cambios de coordenadas para evitar fugas de memoria
+    if (this.coordinatesSubscription) {
+      this.coordinatesSubscription.unsubscribe();
+    }
+  }
 
 
 }

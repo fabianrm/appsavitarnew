@@ -25,6 +25,7 @@ import { ContractCreateNewComponent } from './contract-create-new/contract-creat
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MapsModule } from '../maps/maps.module';
+import { MapleafModule } from '../mapleaf/mapleaf.module';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { MapsModule } from '../maps/maps.module';
     MatMenu,
     MatMenuModule,
     MatAutocompleteModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MapleafModule
   
   ]
 })
