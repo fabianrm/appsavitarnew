@@ -4,7 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { CustomerService } from './../customer.service';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
-import { PlacesService } from '../../maps/places.service';
+import { PlacesService } from '../../mapleaf/places.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 import { MapleafService } from '../../mapleaf/mapleaf.service';

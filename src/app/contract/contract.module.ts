@@ -24,7 +24,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ContractCreateNewComponent } from './contract-create-new/contract-create-new.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MapsModule } from '../maps/maps.module';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
 
 
@@ -38,7 +37,6 @@ import { MapleafModule } from '../mapleaf/mapleaf.module';
   imports: [
     CommonModule,
     ContractRoutingModule,
-    MapsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

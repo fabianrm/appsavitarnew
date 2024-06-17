@@ -4,7 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { BoxService } from '../box.service';
 import { CityService } from '../../city/city.service';
 import { City } from '../../city/Models/CityResponse';
-import { PlacesService } from '../../maps/places.service';
+import { PlacesService } from '../../mapleaf/places.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
@@ -33,9 +33,9 @@ export class BoxCreateComponent implements OnInit, OnDestroy {
     private locationService: PlacesService,
     private mapleafService: MapleafService,
     private router: Router,
-    
+
     private snackbarService: SnackbarService,
-   ) { }
+  ) { }
 
 
   ngOnInit(): void {

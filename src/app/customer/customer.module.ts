@@ -22,7 +22,6 @@ import { CustomerRoutingModule } from './customer-routing.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContractsListComponent } from './contracts-list/contracts-list.component';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
-import { MapsModule } from '../maps/maps.module';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
 
 
@@ -37,7 +36,6 @@ import { MapleafModule } from '../mapleaf/mapleaf.module';
   imports: [
     CommonModule,
     CustomerRoutingModule,
-    MapsModule,
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,

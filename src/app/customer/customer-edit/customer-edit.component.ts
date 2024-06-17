@@ -4,7 +4,7 @@ import { CustomerService } from '../customer.service';
 import { ThemePalette } from '@angular/material/core';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
-import { PlacesService } from '../../maps/places.service';
+import { PlacesService } from '../../mapleaf/places.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from '../Models/CustomerResponseU';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
@@ -58,7 +58,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
     this.initForm();
     this.clearCoordinates();
 
-     // Suscribirse a los cambios de coordenadas
+    // Suscribirse a los cambios de coordenadas
     this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
       this.coordinates = coordinates;
       if (this.coordinates.length > 0) {

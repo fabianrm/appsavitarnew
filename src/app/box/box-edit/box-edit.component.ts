@@ -4,7 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { BoxService } from '../box.service';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
-import { PlacesService } from '../../maps/places.service';
+import { PlacesService } from '../../mapleaf/places.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Box } from '../Models/BoxResponseU';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';

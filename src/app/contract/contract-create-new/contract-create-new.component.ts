@@ -17,8 +17,7 @@ import { Observable, Subscription, map, startWith } from 'rxjs';
 import { CustomerService } from '../../customer/customer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Equipment } from '../../equipment/Models/EquipmentResponse';
-import { PlacesService } from '../../maps/places.service';
-import { MapsService } from '../../maps/maps.service';
+import { PlacesService } from '../../mapleaf/places.service';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 import { Customer } from '../../customer/Models/CustomerResponseU';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
@@ -70,7 +69,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     private equipmentService: EquipmentService,
     private locationService: PlacesService,
     private mapleafService: MapleafService,
-    private mapService: MapsService,
+   
 
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
@@ -240,7 +239,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     });
   }
 
-//Obtener plan por id
+  //Obtener plan por id
   getPlanbyID(id: number) {
     if (this.planes.length > 0) {
       this.planSelected = this.planes.filter(plan => plan.id == id);
@@ -354,10 +353,10 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
 
     if (this.formContrato.valid) {
       this.disableControls();
-      this.contractService.getServiceByEquipment(equipmentId!).subscribe(respuesta => { 
-        if (respuesta.exists == false) { 
+      this.contractService.getServiceByEquipment(equipmentId!).subscribe(respuesta => {
+        if (respuesta.exists == false) {
           this.contractService.addService(dataToSend).subscribe(respuesta => {
-            this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "contrato"
+            this.router.navigate(['/dashboard/contract/contracts']); // Navega al componente "contrato"
             this.showSuccess();
           });
         } else {
