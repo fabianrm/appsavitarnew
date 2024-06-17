@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { Box } from '../../box/Models/ResponseBox';
+import { Box } from '../../box/Models/BoxResponse';
 import { City } from '../../city/Models/CityResponse';
 import { ReqPlan, ResponsePlan } from '../../plan/Models/ResponsePlan';
 import { ReqRouter, ResponseRouter } from '../../router/Models/ResponseRouter';
@@ -54,6 +54,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
 
   date = new Date();
   coordinates: [number, number][] = [];
+  coordsBox: [number, number][] = [];
   coordinatesSubscription!: Subscription;
 
   id!: number;
@@ -69,7 +70,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     private equipmentService: EquipmentService,
     private locationService: PlacesService,
     private mapleafService: MapleafService,
-   
+
 
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
@@ -267,8 +268,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   //Obtener cajas
   getBoxs() {
     this.boxService.getBoxes().subscribe((respuesta) => {
-      if (respuesta.data.boxs.length > 0) {
-        this.boxs = respuesta.data.boxs;
+      if (respuesta.data.length > 0) {
+        this.boxs = respuesta.data;
       }
     });
   }
@@ -322,6 +323,15 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
           longitude: this.coordinates[0][1]
         });
       }
+    });
+  }
+
+  //Coordenadas de cajas
+  getCoords() {
+    this.boxService.getBoxes().subscribe(response => {
+      this.coordsBox = response.data.map((item: any) => {
+        return [parseFloat(item.coordinates[0]), parseFloat(item.coordinates[1])];
+      });
     });
   }
 

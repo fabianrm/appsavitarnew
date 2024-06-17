@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { CRouter } from '../Models/CRouter';
-import { Box } from '../../box/Models/ResponseBox';
+import { Box } from '../../box/Models/BoxResponse';
 import { RouterCreateComponent } from '../router-create/router-create.component';
 import { RouterEditComponent } from '../router-edit/router-edit.component';
 import { RouterService } from '../router.service';

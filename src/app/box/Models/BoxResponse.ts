@@ -1,20 +1,19 @@
-export interface ResponseBox {
-    data: DataBox;
-}
-
-export interface DataBox {
-    boxs: Box[];
+export interface BoxResponse {
+    data: Box[];
+    total: number;
 }
 
 export interface Box {
     id: number;
     name: string;
+    city_id: number;
     city: string;
     address: string;
     reference: string;
     latitude: string;
     longitude: string;
-    total_ports: number;
-    available_ports: number;
+    totalPorts: number;
+    availablePorts: number;
     status: number;
+    coordinates: string[];
 }

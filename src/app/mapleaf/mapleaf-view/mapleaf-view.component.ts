@@ -27,6 +27,7 @@ import { MapleafService } from '../mapleaf.service';
 export class MapleafViewComponent implements OnInit, AfterViewInit, OnDestroy  {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
   @Input() allowMultipleMarkers: boolean = true; // Parámetro de configuración
+  
   map!: L.Map;
   markers: L.Marker[] = [];
   coordinatesSubscription!: Subscription;

@@ -1,12 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Box} from '../Models/ResponseBox';
+import { Box } from '../Models/BoxResponse';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { BoxService } from '../box.service';
-import { BoxCreateComponent } from '../box-create/box-create.component';
 import { ReqBox } from '../Models/RequestBox';
 import { Router } from '@angular/router';
 
@@ -18,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class BoxListComponent {
 
-  displayedColumns: string[] = ['id', 'name', 'city', 'address', 'reference', 'latitude', 'longitude', 'total_ports', 'available_ports', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'name', 'city', 'address', 'reference', 'latitude', 'longitude', 'totalPorts', 'availablePorts', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<Box>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -26,7 +25,8 @@ export class BoxListComponent {
 
   subscription!: Subscription
 
-  public respuesta: ReqBox[]=[];
+  public respuesta: ReqBox[] = [];
+
 
   constructor(private boxService: BoxService,
     public dialog: MatDialog,
@@ -39,6 +39,7 @@ export class BoxListComponent {
       this.getBoxes()
     });
 
+
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -46,30 +47,24 @@ export class BoxListComponent {
 
   getBoxes() {
     this.boxService.getBoxes().subscribe((respuesta) => {
-
-      if (respuesta.data.boxs.length > 0) {
-        this.dataSource = new MatTableDataSource(respuesta.data.boxs);
+      if (respuesta.data.length > 0) {
+        this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
-      //  console.log(respuesta)
     });
   }
-
 
 
   newBox() {
     this.router.navigate(['/dashboard/box/boxCreate']); // Navega al componente "contrato"
   }
 
-  EditBox(id:number) {
-    this.router.navigate(['/dashboard/box/boxEdit/'+id]); // Navega al componente "contrato"
+  EditBox(id: number) {
+    this.router.navigate(['/dashboard/box/boxEdit/' + id]); // Navega al componente "contrato"
   }
 
 
-
-
-  
   goToLinkMap(latitude: string, longitude: string) {
     //'https://www.google.com/maps?q=-4.907545,-81.057223&hl=es-Pe&gl=pe&shorturl=1;'
     window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");
