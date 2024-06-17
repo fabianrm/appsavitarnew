@@ -1,19 +1,20 @@
-.container{
-    margin-top: 30px;
-}
-
 mat-form-field {
   width: 100%;
 }
 
-mat-card {
-    margin-top: 10px;
+.valign-center {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
 }
 
-.row-items {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+.control-full-width {
+  width: 100%;
+}
+
+.control-full-50 {
+  width: 49%;
 }
 
 .row-buttons {
@@ -24,6 +25,24 @@ mat-card {
   justify-content: flex-end;
 }
 
+.row{
+  margin-top: 10px;
+}
+
+mat-card-title {
+  color: rgb(0, 0, 0);
+  font-size: 1.3rem;
+}
+
+.container {
+  margin-top: 30px;
+  /* margin-bottom: 20px; */
+}
+
+.row-items {
+  display: flex;
+  justify-content: space-between;
+}
 
 /* Mapa */
 
@@ -33,12 +52,14 @@ mat-card {
   display: flex;
 }
 
+
 .center-content {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%; /* Asegúrate de que el contenedor tenga una altura definida */
 }
+
 
 .full-size {
   width: 100%;

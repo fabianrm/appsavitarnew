@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MapleafService } from '../mapleaf.service';
 
 // const iconRetinaUrl = 'assets/marker-icon-2x.png';
