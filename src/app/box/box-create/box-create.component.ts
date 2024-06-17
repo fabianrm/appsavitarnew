@@ -2,13 +2,13 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { BoxService } from '../box.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CityService } from '../../city/city.service';
 import { City } from '../../city/Models/CityResponse';
-import { MapsService } from '../../maps/maps.service';
 import { PlacesService } from '../../maps/places.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { MapleafService } from '../../mapleaf/mapleaf.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-box-create',
@@ -23,14 +23,15 @@ export class BoxCreateComponent {
   disabled = false;
 
   cities: City[] = [];
-  coordinates: [number, number] | null = null;
+  coordinates: [number, number][] = [];
+  coordinatesSubscription!: Subscription;
 
 
   constructor(public formulario: FormBuilder,
     private boxService: BoxService,
     private cityService: CityService,
     private locationService: PlacesService,
-    private mapService: MapsService,
+    private mapleafService: MapleafService,
     private router: Router,
     
     private snackbarService: SnackbarService,
@@ -38,11 +39,20 @@ export class BoxCreateComponent {
 
 
   ngOnInit(): void {
-    // console.log(this.locationService.location);
-    this.getCities();
-    this.getLocations();
     this.initForm();
-    // this.documentNumber!.nativeElement.focus();
+    this.clearCoordinates();
+    // Suscribirse a los cambios de coordenadas
+    this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
+      this.coordinates = coordinates;
+      if (this.coordinates.length > 0) {
+        // Actualizar los campos del formulario
+        this.formBox.patchValue({
+          latitude: this.coordinates[0][0],
+          longitude: this.coordinates[0][1]
+        });
+      }
+    });
+    this.getCities();
   }
 
   initForm() {
@@ -66,41 +76,24 @@ export class BoxCreateComponent {
         });
       }
     });
-
   }
 
 
   getCities() {
     this.cityService.getCities().subscribe((respuesta) => {
-
       if (respuesta.data.length > 0) {
         this.cities = respuesta.data
       }
-
     });
   }
 
   get locationReady() {
-  //  console.log(this.locationService.location);
     return this.locationService.locationReady;
   }
 
-  //Obtener coordenadas
-  getLocations() {
-    this.mapService.currentCoordinates.subscribe(coordinates => {
-      this.coordinates = coordinates;
-
-      if (coordinates) {
-        // Actualizar los campos del formulario
-        this.formBox.patchValue({
-          latitude: coordinates[1],
-          longitude: coordinates[0]
-        });
-      }
-       //  console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
-    });
+  clearCoordinates() {
+    this.mapleafService.clearCoordinates();
   }
-
 
   resetForm() {
     this.formBox.reset();
@@ -116,9 +109,6 @@ export class BoxCreateComponent {
       this.boxService.addBox(this.formBox.value).subscribe(respuesta => {
         this.router.navigate(['/dashboard/box/boxes']);
         this.showSuccess();
-
-       // this.dialogRef.close();
-        // console.log(respuesta);
       });
     }
   }

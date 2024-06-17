@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MapsModule } from '../maps/maps.module';
+import { MapleafModule } from '../mapleaf/mapleaf.module';
 
 
 
@@ -52,6 +53,7 @@ import { MapsModule } from '../maps/maps.module';
     MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
+    MapleafModule
 
   ]
 })

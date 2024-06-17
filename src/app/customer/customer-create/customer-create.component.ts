@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { CustomerService } from './../customer.service';
@@ -9,8 +9,6 @@ import { Router } from '@angular/router';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { Subscription } from 'rxjs';
-import { MapleafViewComponent } from '../../mapleaf/mapleaf-view/mapleaf-view.component';
-
 
 interface Tipo {
   value: string;
@@ -26,9 +24,6 @@ interface Tipo {
 
 
 export class CustomerCreateComponent implements OnInit, OnDestroy {
-
-  // @ViewChild('documentNumber') documentNumber: ElementRef | undefined;
-  @ViewChild(MapleafViewComponent) mapComponent!: MapleafViewComponent;
 
   formCliente!: FormGroup;
   color: ThemePalette = 'accent';
@@ -58,12 +53,8 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-
-
     this.initForm();
-
     this.clearCoordinates();
-
     // Suscribirse a los cambios de coordenadas
     this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
       this.coordinates = coordinates;
@@ -124,23 +115,7 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
   }
 
   get locationReady() {
-    //  console.log(this.locationService.location);
     return this.locationService.locationReady;
-  }
-
-  //Obtener coordenadas
-  getLocations() {
-    this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
-      this.coordinates = coordinates;
-      if (coordinates) {
-        // Actualizar los campos del formulario
-        // this.formCliente.patchValue({
-        //   latitude: coordinates[0][1],
-        //   longitude: coordinates[0][0]
-        // });
-      }
-      console.log('Nuevas coordenadas:', this.coordinates);
-    });
   }
 
 

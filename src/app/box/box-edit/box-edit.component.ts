@@ -1,22 +1,22 @@
-import {  Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { BoxService } from '../box.service';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
-import { MapsService } from '../../maps/maps.service';
 import { PlacesService } from '../../maps/places.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Box } from '../Models/BoxResponseU';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { Subscription } from 'rxjs';
+import { MapleafService } from '../../mapleaf/mapleaf.service';
 
 @Component({
   selector: 'app-box-edit',
   templateUrl: './box-edit.component.html',
   styleUrl: './box-edit.component.css'
 })
-export class BoxEditComponent implements OnInit{
+export class BoxEditComponent implements OnInit {
   formBox!: FormGroup;
   color: ThemePalette = 'accent';
   checked = true;
@@ -26,14 +26,15 @@ export class BoxEditComponent implements OnInit{
   dataBox?: Box;
 
   cities: City[] = [];
-  coordinates: [number, number] | null = null;
+  coordinates: [number, number][] = [];
+  coordinatesSubscription!: Subscription;
 
 
   constructor(public formulario: FormBuilder,
     private boxService: BoxService,
     private cityService: CityService,
     private locationService: PlacesService,
-    private mapService: MapsService,
+    private mapleafService: MapleafService,
     private route: ActivatedRoute,
     private router: Router,
     private snackbarService: SnackbarService,
@@ -42,13 +43,13 @@ export class BoxEditComponent implements OnInit{
 
   ngOnInit(): void {
     this.initForm();
-    this.getBoxById();
-    this.getCities();
+    this.clearCoordinates();
+
     this.getLocations()
 
-    // this.documentNumber!.nativeElement.focus();
+    this.getBoxById();
+    this.getCities();
   }
-  
 
 
   initForm() {
@@ -89,17 +90,16 @@ export class BoxEditComponent implements OnInit{
 
   //Obtener coordenadas
   getLocations() {
-    this.mapService.currentCoordinates.subscribe(coordinates => {
-      this.coordinates = coordinates;
 
-      if (coordinates) {
+    this.coordinatesSubscription = this.mapleafService.currentCoordinates.subscribe(coordinates => {
+      this.coordinates = coordinates;
+      if (this.coordinates.length > 0) {
         // Actualizar los campos del formulario
         this.formBox.patchValue({
-          latitude: coordinates[1],
-          longitude: coordinates[0]
+          latitude: this.coordinates[0][0],
+          longitude: this.coordinates[0][1]
         });
       }
-      //console.log('Coordenadas recibidas en ContractComponent:', this.coordinates);
     });
   }
 
@@ -119,7 +119,7 @@ export class BoxEditComponent implements OnInit{
   }
 
 
-  fetchBoxDetails(id: number) { 
+  fetchBoxDetails(id: number) {
     this.boxService.getBoxByID(id).subscribe((respuesta) => {
       this.dataBox = respuesta.data;
       //Llenamos el formEdit
@@ -135,18 +135,20 @@ export class BoxEditComponent implements OnInit{
         status: this.dataBox.status,
       });
 
-      this.setNewCoordinates(this.dataBox.longitude, this.dataBox.latitude);
+      this.setNewCoordinates(this.dataBox.latitude, this.dataBox.longitude);
 
     });
   }
 
-
-  //Setear coordenadas (edit)
-  setNewCoordinates(long:number, lat:number) {
-    const newCoordinates: [number, number] = [long, lat];
-    this.mapService.changeCoordinates(newCoordinates);
+  clearCoordinates() {
+    this.mapleafService.clearCoordinates();
   }
 
+  //Setear coordenadas (edit)
+  setNewCoordinates(long: number, lat: number) {
+    const singleCoordinate: [number, number] = [long, lat];
+    this.mapleafService.setSingleCoordinate(singleCoordinate);
+  }
 
   resetForm() {
     this.formBox.reset();
@@ -156,7 +158,6 @@ export class BoxEditComponent implements OnInit{
   goBoxes() {
     this.router.navigate(['/dashboard/box/boxes']);
   }
-
 
 
   enviarDatos() {
