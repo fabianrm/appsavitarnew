@@ -76,7 +76,9 @@
           <mat-card-content>
             <div class="row">
               <div class="col-12">
-               <mat-checkbox formControlName="check">Usar dirección del cliente</mat-checkbox>
+                <mat-checkbox formControlName="check"
+                  >Usar dirección del cliente</mat-checkbox
+                >
               </div>
             </div>
 
@@ -159,9 +161,9 @@
         </mat-card>
       </div>
 
-         <!-- Mapa -->
+      <!-- Mapa -->
       <div class="col-12 col-sm-6">
-        <mat-card class="container-map ">
+        <mat-card class="container-map">
           <mat-card-content class="center-content">
             <app-mapleaf-loading
               *ngIf="!locationReady; else mapReady"
@@ -178,7 +180,6 @@
           </mat-card-content>
         </mat-card>
       </div>
-
     </div>
 
     <!-- Datos de instalacion -->
@@ -203,7 +204,8 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div class="col-sm-4">
+
+              <!-- <div class="col-sm-2">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Caja</mat-label>
                   <mat-select
@@ -216,7 +218,33 @@
                     }
                   </mat-select>
                 </mat-form-field>
+              </div> -->
+
+              <div class="col-sm-4">
+                <mat-form-field class="control-full-width">
+                  <mat-label>Caja</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    formControlName="boxId"
+                    [matAutocomplete]="autoB"
+                    #codeBox
+                    (input)="codeBox.value = codeBox.value.toUpperCase()"
+                  />
+                  <mat-autocomplete
+                    #autoB="matAutocomplete"
+                    [displayWith]="displayFnBox"
+                  >
+                    <mat-option
+                      *ngFor="let optionB of filteredBox | async"
+                      [value]="optionB"
+                    >
+                      {{ optionB.name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
               </div>
+
               <div class="col-sm-4">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Puerto</mat-label>

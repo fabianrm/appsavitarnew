@@ -52,6 +52,9 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   filteredEquipos!: Observable<Equipment[]>;
   selectedEquipment!: Equipment | null;
 
+  filteredBox!: Observable<Box[]>;
+  selectedBox!: Box | null;
+
   date = new Date();
   coordinates: [number, number][] = [];
   coordsBox: [number, number][] = [];
@@ -144,6 +147,24 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       map(value => (typeof value === 'string' ? value : value?.serie)),
       map(serie => (serie ? this._filter(serie) : this.equipments.slice()))
     );
+
+    //Subscribirse a los cambios del combo box
+    this.formContrato.get('boxId')!.valueChanges.subscribe(value => {
+      this.selectedBox = typeof value === 'object' ? value : null;
+      if (this.selectedBox !== null) {
+        this.getPorts(this.selectedBox.id);
+     }
+     // console.log(this.selectedBox?.id);
+      
+    });
+
+    //Filtrar combo box por name 
+    this.filteredBox = this.formContrato.get('boxId')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value?.name)),
+      map(name => (name ? this._filterBox(name) : this.boxs.slice()))
+    );
+
 
     //Subscribirse a los cambios del check
     this.formContrato.get('check')?.valueChanges.subscribe(checked => {
@@ -265,14 +286,6 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Obtener cajas
-  getBoxs() {
-    this.boxService.getBoxes().subscribe((respuesta) => {
-      if (respuesta.data.length > 0) {
-        this.boxs = respuesta.data;
-      }
-    });
-  }
 
   //Obtener puertos
   getPorts(id: number) {
@@ -283,17 +296,13 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Equipos
+  //Busqueda incremental de equipos
   getEquipments() {
     this.equipmentService.getEquipments().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
         this.equipments = respuesta.data
       }
     });
-  }
-
-  get locationReady() {
-    return this.locationService.locationReady;
   }
 
   displayFn(equipment: Equipment): string {
@@ -305,11 +314,41 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     return this.equipments.filter(option => option.serie.toLowerCase().includes(filterValue));
   }
 
-
   // Para obtener solo el id cuando se guarda el formulario
   get equipmentIdValue(): number | null {
     const equipment = this.formContrato.get('equipmentId')!.value;
     return equipment ? equipment.id : null;
+  }
+  //Fin equipos
+
+  //Obtener cajas
+  getBoxs() {
+    this.boxService.getBoxes().subscribe((respuesta) => {
+      if (respuesta.data.length > 0) {
+        this.boxs = respuesta.data;
+      }
+    });
+  }
+
+  displayFnBox(box: Box): string {
+    return box && box.name ? box.name : '';
+  }
+
+
+  private _filterBox(name: string): Box[] {
+    const filterValue = name.toLowerCase();
+    return this.boxs.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+  // Para obtener solo el id cuando se guarda el formulario
+  get boxIdValue(): number | null {
+    const box = this.formContrato.get('boxId')!.value;
+    return box ? box.id : null;
+  }
+
+//Localizacion del equipo
+  get locationReady() {
+    return this.locationService.locationReady;
   }
 
   //Obtener coordenadas
@@ -353,12 +392,14 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     const formData = this.formContrato.value;
     const installDate = new Date(formData.installationDate).toISOString().split('T')[0];
     const equipmentId = this.equipmentIdValue;
+    const boxId = this.boxIdValue;
 
     const dataToSend = {
       ...formData,
       customerId: this.id,
       installationDate: installDate,
       equipmentId: equipmentId,
+      boxId: boxId,
     };
 
     if (this.formContrato.valid) {
