@@ -39,7 +39,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   }
 
   initializeMap() {
-    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.904696, -81.056678], 16);
+    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.909248, -81.05750], 17);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'

@@ -44,6 +44,8 @@ export class CustomerDetailsComponent implements OnInit {
   filterCoordinates(center: [number, number]) {
     const filteredCoords = this.coordinateService.filterCoordinatesWithinRadius(center, 300, this.dataPoints);
     this.coordinateService.changeDataPoints(filteredCoords);
+    console.log(center);
+    
   }
 
 

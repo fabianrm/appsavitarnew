@@ -1,5 +1,33 @@
-.mapa {
-  height: 500px;
-  width: 500px;
+.container-map {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.map-container {
+  flex: 1;
   position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: lightgray; /* Solo para depuración, quita este color después */
+}
+
+.map-container > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+
+
+.map-options{
+  background-color: blueviolet;
+  position: sticky;
+  height: 65px;
+  z-index: 100;
 }
