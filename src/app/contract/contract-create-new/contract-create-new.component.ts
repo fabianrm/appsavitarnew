@@ -418,7 +418,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   }
 
   showError() {
-    this.snackbarService.showError('Ocurrio un error...');
+    this.snackbarService.showError('Equipo ya se encuentra asignado a otro usuario...');
   }
 
   showSuccess() {

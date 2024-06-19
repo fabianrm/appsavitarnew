@@ -1,55 +1,49 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
-import { Subscription } from 'rxjs';
+import { DataPoint } from '../../mapleaf/Models/DataPoint';
+import { BoxService } from '../../box/box.service';
 
 @Component({
   selector: 'app-customer-details',
   templateUrl: './customer-details.component.html',
   styleUrl: './customer-details.component.css'
 })
-export class CustomerDetailsComponent implements OnInit, AfterViewInit {
-  constructor(private coordinateService: MapleafService) { }
+export class CustomerDetailsComponent implements OnInit {
 
-  coordinates: [number, number][] = [];
-  coordinatesSubscription!: Subscription;
+  dataPoints: DataPoint[] = [];
+  filteredDataPoints: DataPoint[] = [];
+  
+  constructor(private coordinateService: MapleafService, private boxService: BoxService,) { }
 
-  ngAfterViewInit() {
-   // this.setMultipleCoordinates();
-    this.setSingleCoordinate();
-  //  this.addCoordinate();
-  }
 
   ngOnInit(): void {
-    // Suscribirse a los cambios de coordenadas
-    this.coordinatesSubscription = this.coordinateService.currentCoordinates.subscribe(coordinates => {
-      this.coordinates = coordinates;
-    //  console.log('Nuevas coordenadas:', this.coordinates);
+    this.coordinateService.currentDataPoints.subscribe(dataPoints => {
+      this.filteredDataPoints = dataPoints;
+      console.log('Nuevas coordenadas filtradas:', dataPoints);
+    });
+
+    this.getCoords();
+
+  }
+
+  //Coordenadas de cajas
+  getCoords(){
+    // Obtener datos desde el servicio
+    this.boxService.getBoxes().subscribe(response => {
+      this.dataPoints = response.data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        availablePorts: item.availablePorts,
+        status: item.status,
+        coordinates: [parseFloat(item.coordinates[0]), parseFloat(item.coordinates[1])]
+      }));
     });
   }
 
 
-  setSingleCoordinate() {
-    const singleCoordinate: [number, number] = [-4.905 ,-81.045 ];
-    this.coordinateService.setSingleCoordinate(singleCoordinate);
-  }
-
-  setMultipleCoordinates() {
-    const multipleCoordinates: [number, number][] = [
-      [-4.903854, -81.05783,],
-      [-4.906 ,-81.046, ],
-      [-4.907 ,-81.047, ]
-    ];
-    this.coordinateService.changeCoordinates(multipleCoordinates);
-     
-  }
-
-  addCoordinate() {
-    const coordinate: [number, number] = [-4.908, -81.048];
-    this.coordinateService.addCoordinate(coordinate);
-  }
-
-  clearCoordinates() {
-    this.coordinateService.clearCoordinates();
+  filterCoordinates(center: [number, number]) {
+    const filteredCoords = this.coordinateService.filterCoordinatesWithinRadius(center, 300, this.dataPoints);
+    this.coordinateService.changeDataPoints(filteredCoords);
   }
 
 

@@ -1,5 +1,19 @@
 <div class="container">
+  <div>
+    <h3>Coordenadas seleccionadas:</h3>
+    <ul>
+      <li *ngFor="let coordinate of filteredDataPoints">
+        Nombre: {{ coordinate.name }}, Puertos Disponibles:
+        {{ coordinate.availablePorts }}
+      </li>
+    </ul>
+
     <div class="mapa">
-        <app-mapleaf-view [allowMultipleMarkers]="false"></app-mapleaf-view>
+      <app-mapleaf-multiple-view
+        [dataPoints]="dataPoints"
+        [filterByRadius]="true"
+      >
+      </app-mapleaf-multiple-view>
     </div>
+  </div>
 </div>

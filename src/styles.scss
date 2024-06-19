@@ -74,9 +74,6 @@ th{
   @include mat.all-component-colors($dark-theme);
 }
 
-/* Importing Bootstrap SCSS file. */
-@import "bootstrap/scss/bootstrap";
-
 
 // .error-snackbar {
 //   background-color: #f44336 !important; /* Rojo */
@@ -103,3 +100,7 @@ th{
       --mdc-snackbar-supporting-text-color: #fff;
     }
   }
+
+  /* Importing Bootstrap SCSS file. */
+@import "bootstrap/scss/bootstrap";
+
