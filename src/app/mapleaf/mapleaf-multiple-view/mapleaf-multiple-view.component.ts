@@ -7,12 +7,13 @@ import { DataPoint } from '../Models/DataPoint';
 @Component({
   selector: 'app-mapleaf-multiple-view',
   templateUrl: './mapleaf-multiple-view.component.html',
-  styleUrl: './mapleaf-multiple-view.component.scss'
+  styleUrls: ['./mapleaf-multiple-view.component.scss']
 })
 export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
-  @Input() filterByRadius: boolean = false; // Parámetro para filtrar por radio
-  @Input() dataPoints: DataPoint[] = []; // Lista de datos desde la base de datos
+  @Input() filterByRadius: boolean = false;
+  @Input() dataPoints: DataPoint[] = [];
+  @Input() showAllMarkers = true;
 
   map!: L.Map;
   markers: L.Marker[] = [];
@@ -24,7 +25,6 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
       this.setMarkers(dataPoints);
     });
-    // Configurar la ruta de los iconos de Leaflet
     (L.Icon.Default as any).imagePath = 'assets/';
   }
 
@@ -47,18 +47,20 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       const coordinates: [number, number] = [event.latlng.lat, event.latlng.lng];
-      if (this.filterByRadius) {
-        const filteredDataPoints = this.coordinateService.filterCoordinatesWithinRadius(coordinates, 300, this.dataPoints);
-        this.coordinateService.changeDataPoints(filteredDataPoints);
-      } else {
-        const newPoint: DataPoint = {
-          id: Date.now(),
-          name: "Nuevo Marcador",
-          availablePorts: 0,
-          status: 1,
-          coordinates
-        };
-        this.coordinateService.addDataPoint(newPoint);
+      if (!this.showAllMarkers) {
+        if (this.filterByRadius) {
+          const filteredDataPoints = this.coordinateService.filterCoordinatesWithinRadius(coordinates, 100, this.dataPoints);
+          this.coordinateService.changeDataPoints(filteredDataPoints);
+        } else {
+          const newPoint: DataPoint = {
+            id: Date.now(),
+            name: "Nuevo Marcador",
+            availablePorts: 0,
+            status: 1,
+            coordinates
+          };
+          this.coordinateService.addDataPoint(newPoint);
+        }
       }
     });
   }
@@ -70,6 +72,11 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     this.markers.forEach(marker => this.map.removeLayer(marker));
     this.markers = [];
 
+    if (dataPoints.length === 0) {
+      // No añadir marcadores si no hay puntos de datos
+      return;
+    }
+
     // Añadir nuevos marcadores
     dataPoints.forEach(dataPoint => {
       const marker = L.marker([dataPoint.coordinates[0], dataPoint.coordinates[1]])
@@ -78,5 +85,4 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
       this.markers.push(marker);
     });
   }
-  
 }

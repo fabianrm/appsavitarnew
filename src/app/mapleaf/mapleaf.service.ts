@@ -42,24 +42,30 @@ export class MapleafService {
   }
 
   filterCoordinatesWithinRadius(center: [number, number], radius: number, dataPoints: DataPoint[]): DataPoint[] {
-    const R = 6371; // Radius of the Earth in km
+  const R = 6371e3; // Radio de la Tierra en metros
+  const toRadians = (degrees: number) => degrees * Math.PI / 180;
+  const [lat1, lon1] = center;
 
-    return dataPoints.filter(point => {
-      const [lat1, lon1] = center;
-      const [lat2, lon2] = point.coordinates;
+  return dataPoints.filter(dataPoint => {
+    const [lat2, lon2] = dataPoint.coordinates;
 
-      const dLat = (lat2 - lat1) * (Math.PI / 180);
-      const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const φ1 = toRadians(lat1);
+    const φ2 = toRadians(lat2);
+    const Δφ = toRadians(lat2 - lat1);
+    const Δλ = toRadians(lon2 - lon1);
 
-      const a = Math.sin(dLat / 2) * Math.sin(dLon / 2) +
-        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) *
+      Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      const distance = R * c * 1000; // Distance in meters
+    const d = R * c; // Distancia en metros
 
-      return distance <= radius;
-    });
-  }
+    return d <= radius;
+  });
+}
+
+
+  
 
 }

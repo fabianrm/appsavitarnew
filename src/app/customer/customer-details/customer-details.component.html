@@ -1,20 +1,23 @@
 <div class="container-map">
   <div class="map-options">
     <h3>Filtros</h3>
+    <label>
+      <input type="checkbox" checked [(ngModel)]="showAllMarkers" (change)="toggleMarkers()" />
+      Mostrar todos los marcadores
+    </label>
   </div>
-  <h3>Coordenadas seleccionadas:</h3>
+  <!-- <h3>Coordenadas seleccionadas:</h3>
   <ul>
     <li *ngFor="let coordinate of filteredDataPoints">
-      Nombre: {{ coordinate.name }}, Puertos Disponibles:
-      {{ coordinate.availablePorts }}
+      Nombre: {{ coordinate.name }}, Puertos Disponibles: {{ coordinate.availablePorts }}
     </li>
-  </ul>
+  </ul> -->
 
-  <!-- Only one of the map containers will be used at a time -->
   <div class="map-container">
     <app-mapleaf-multiple-view
       [dataPoints]="dataPoints"
-      [filterByRadius]="true"
+      [filterByRadius]="!showAllMarkers"
+      [showAllMarkers]="showAllMarkers"
     ></app-mapleaf-multiple-view>
   </div>
 </div>

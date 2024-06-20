@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { DataPoint } from '../../mapleaf/Models/DataPoint';
 import { BoxService } from '../../box/box.service';
@@ -6,15 +6,14 @@ import { BoxService } from '../../box/box.service';
 @Component({
   selector: 'app-customer-details',
   templateUrl: './customer-details.component.html',
-  styleUrl: './customer-details.component.css'
+  styleUrls: ['./customer-details.component.css']
 })
 export class CustomerDetailsComponent implements OnInit {
-
   dataPoints: DataPoint[] = [];
   filteredDataPoints: DataPoint[] = [];
-  
-  constructor(private coordinateService: MapleafService, private boxService: BoxService,) { }
+  showAllMarkers: boolean = false;
 
+  constructor(private coordinateService: MapleafService, private boxService: BoxService) { }
 
   ngOnInit(): void {
     this.coordinateService.currentDataPoints.subscribe(dataPoints => {
@@ -23,12 +22,9 @@ export class CustomerDetailsComponent implements OnInit {
     });
 
     this.getCoords();
-
   }
 
-  //Coordenadas de cajas
-  getCoords(){
-    // Obtener datos desde el servicio
+  getCoords() {
     this.boxService.getBoxes().subscribe(response => {
       this.dataPoints = response.data.map((item: any) => ({
         id: item.id,
@@ -37,17 +33,25 @@ export class CustomerDetailsComponent implements OnInit {
         status: item.status,
         coordinates: [parseFloat(item.coordinates[0]), parseFloat(item.coordinates[1])]
       }));
+
+      // Actualizamos los puntos de datos en el servicio cuando se obtienen
+      this.coordinateService.changeDataPoints(this.dataPoints);
     });
   }
 
-
-  filterCoordinates(center: [number, number]) {
-    const filteredCoords = this.coordinateService.filterCoordinatesWithinRadius(center, 300, this.dataPoints);
-    this.coordinateService.changeDataPoints(filteredCoords);
-    console.log(center);
-    
+  toggleMarkers() {
+    if (this.showAllMarkers) {
+      this.coordinateService.changeDataPoints(this.dataPoints);
+    } else {
+      this.coordinateService.clearCoordinates();
+    }
   }
 
-
-
+  filterCoordinates(center: [number, number]) {
+    if (!this.showAllMarkers) {
+      const filteredCoords = this.coordinateService.filterCoordinatesWithinRadius(center, 100, this.dataPoints);
+      this.coordinateService.changeDataPoints(filteredCoords);
+      console.log(center);
+    }
+  }
 }
