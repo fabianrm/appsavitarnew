@@ -1,10 +1,8 @@
 <div class="container-map">
-  <div class="map-options">
-    <h3>Filtros</h3>
-    <label>
-      <input type="checkbox" [(ngModel)]="showAllMarkers" (change)="toggleMarkers()" />
+  <div class="filter-section">
+    <mat-slide-toggle [(ngModel)]="showAllMarkers" (change)="toggleMarkers()" class="toogle-margin">
       Mostrar todas las cajas
-    </label>
+    </mat-slide-toggle>
   </div>
   <!-- <h3>Coordenadas seleccionadas:</h3>
   <ul>

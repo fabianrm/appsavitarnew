@@ -24,10 +24,18 @@
 }
 
 
-
-.map-options{
-  background-color: blueviolet;
+.filter-section {
+  background-color: rgba(179, 245, 179, 0.861);
   position: sticky;
   height: 65px;
   z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.toogle-margin {
+  margin: 10px;
 }

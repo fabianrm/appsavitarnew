@@ -84,7 +84,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
       }
 
       this.centerMarker = L.marker(coordinates, { icon: this.customIcon }).addTo(this.map)
-        .bindPopup(`<b>Centro</b><br>Lat: ${coordinates[0]}<br>Lng: ${coordinates[1]}`);
+        .bindPopup(`<b>Cliente</b><br>Lat: ${coordinates[0]}<br>Lng: ${coordinates[1]}`);
 
 
     });
