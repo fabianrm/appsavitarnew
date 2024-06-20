@@ -42,30 +42,28 @@ export class MapleafService {
   }
 
   filterCoordinatesWithinRadius(center: [number, number], radius: number, dataPoints: DataPoint[]): DataPoint[] {
-  const R = 6371e3; // Radio de la Tierra en metros
-  const toRadians = (degrees: number) => degrees * Math.PI / 180;
-  const [lat1, lon1] = center;
+    const R = 6371e3; // Radio de la Tierra en metros
+    const toRadians = (degrees: number) => degrees * Math.PI / 180;
+    const [lat1, lon1] = center;
 
-  return dataPoints.filter(dataPoint => {
-    const [lat2, lon2] = dataPoint.coordinates;
+    return dataPoints.filter(dataPoint => {
+      const [lat2, lon2] = dataPoint.coordinates;
 
-    const φ1 = toRadians(lat1);
-    const φ2 = toRadians(lat2);
-    const Δφ = toRadians(lat2 - lat1);
-    const Δλ = toRadians(lon2 - lon1);
+      const φ1 = toRadians(lat1);
+      const φ2 = toRadians(lat2);
+      const Δφ = toRadians(lat2 - lat1);
+      const Δλ = toRadians(lon2 - lon1);
 
-    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-      Math.cos(φ1) * Math.cos(φ2) *
-      Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    const d = R * c; // Distancia en metros
+      const d = R * c; // Distancia en metros
 
-    return d <= radius;
-  });
-}
+      return d <= radius;
+    });
+  }
 
-
-  
 
 }

@@ -14,6 +14,17 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   @Input() filterByRadius: boolean = false;
   @Input() dataPoints: DataPoint[] = [];
   @Input() showAllMarkers = true;
+  centerMarker: L.Marker | null = null; // Para almacenar el marcador central
+
+  // Crear un icono personalizado
+  customIcon = L.icon({
+    iconUrl: 'assets/icon-home.png', // Ruta al icono personalizado
+    shadowUrl: 'assets/marker-shadow.png',
+    shadowAnchor: [0,50],
+    iconSize: [40, 45], // Tamaño del icono
+    iconAnchor: [12, 41], // Punto de anclaje del icono
+    
+  });
 
   map!: L.Map;
   markers: L.Marker[] = [];
@@ -22,9 +33,12 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   constructor(private coordinateService: MapleafService) { }
 
   ngOnInit(): void {
+
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
       this.setMarkers(dataPoints);
     });
+
+
     (L.Icon.Default as any).imagePath = 'assets/';
   }
 
@@ -39,7 +53,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   }
 
   initializeMap() {
-    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.909248, -81.05750], 17);
+    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.906832, -81.05745], 16);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
@@ -48,7 +62,9 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       const coordinates: [number, number] = [event.latlng.lat, event.latlng.lng];
       if (!this.showAllMarkers) {
-        if (this.filterByRadius) {
+       
+        this.coordinateService.clearCoordinates();
+        if (this.filterByRadius) { 
           const filteredDataPoints = this.coordinateService.filterCoordinatesWithinRadius(coordinates, 100, this.dataPoints);
           this.coordinateService.changeDataPoints(filteredDataPoints);
         } else {
@@ -62,15 +78,34 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
           this.coordinateService.addDataPoint(newPoint);
         }
       }
+      // Añadir el marcador central
+      if (this.centerMarker) {
+        this.map.removeLayer(this.centerMarker);
+      }
+
+      this.centerMarker = L.marker(coordinates, { icon: this.customIcon }).addTo(this.map)
+        .bindPopup(`<b>Centro</b><br>Lat: ${coordinates[0]}<br>Lng: ${coordinates[1]}`);
+
+
     });
   }
+
 
   setMarkers(dataPoints: DataPoint[]) {
     if (!this.map) return;
 
     // Limpiar los marcadores actuales
-    this.markers.forEach(marker => this.map.removeLayer(marker));
+    // this.markers.forEach(marker => this.map.removeLayer(marker));
+    // this.markers = [];
+
+    // Limpiar los marcadores actuales, pero mantener el marcador central si existe
+    this.markers.forEach(marker => {
+      if (marker !== this.centerMarker) {
+        this.map.removeLayer(marker);
+      }
+    });
     this.markers = [];
+
 
     if (dataPoints.length === 0) {
       // No añadir marcadores si no hay puntos de datos
@@ -84,5 +119,11 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
         .bindPopup(`<b>${dataPoint.name}</b><br>Available Ports: ${dataPoint.availablePorts}`);
       this.markers.push(marker);
     });
+  }
+
+  clearMarkers() {
+    // Limpiar los marcadores actuales
+    this.markers.forEach(marker => this.map.removeLayer(marker));
+    this.markers = [];
   }
 }

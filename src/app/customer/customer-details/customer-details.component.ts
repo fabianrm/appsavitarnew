@@ -11,16 +11,15 @@ import { BoxService } from '../../box/box.service';
 export class CustomerDetailsComponent implements OnInit {
   dataPoints: DataPoint[] = [];
   filteredDataPoints: DataPoint[] = [];
-  showAllMarkers: boolean = false;
+  showAllMarkers: boolean = true;
 
   constructor(private coordinateService: MapleafService, private boxService: BoxService) { }
 
   ngOnInit(): void {
     this.coordinateService.currentDataPoints.subscribe(dataPoints => {
       this.filteredDataPoints = dataPoints;
-      console.log('Nuevas coordenadas filtradas:', dataPoints);
+     // console.log('Nuevas coordenadas filtradas:', dataPoints);
     });
-
     this.getCoords();
   }
 
@@ -40,10 +39,13 @@ export class CustomerDetailsComponent implements OnInit {
   }
 
   toggleMarkers() {
+    
     if (this.showAllMarkers) {
       this.coordinateService.changeDataPoints(this.dataPoints);
     } else {
       this.coordinateService.clearCoordinates();
+      this.coordinateService.changeDataPoints([]); // Esto limpiará los marcadores
+     // this.coordinateService.changeDataPoints(this.dataPoints);
     }
   }
 
@@ -51,7 +53,7 @@ export class CustomerDetailsComponent implements OnInit {
     if (!this.showAllMarkers) {
       const filteredCoords = this.coordinateService.filterCoordinatesWithinRadius(center, 100, this.dataPoints);
       this.coordinateService.changeDataPoints(filteredCoords);
-      console.log(center);
+    
     }
   }
 }
