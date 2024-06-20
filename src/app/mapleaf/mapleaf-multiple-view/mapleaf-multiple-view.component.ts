@@ -23,7 +23,6 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     shadowAnchor: [0,50],
     iconSize: [40, 45], // Tamaño del icono
     iconAnchor: [12, 41], // Punto de anclaje del icono
-    
   });
 
   map!: L.Map;
@@ -33,11 +32,9 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   constructor(private coordinateService: MapleafService) { }
 
   ngOnInit(): void {
-
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
       this.setMarkers(dataPoints);
     });
-
 
     (L.Icon.Default as any).imagePath = 'assets/';
   }
@@ -85,8 +82,6 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
       this.centerMarker = L.marker(coordinates, { icon: this.customIcon }).addTo(this.map)
         .bindPopup(`<b>Cliente</b><br>Lat: ${coordinates[0]}<br>Lng: ${coordinates[1]}`);
-
-
     });
   }
 
