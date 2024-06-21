@@ -17,7 +17,7 @@ import { Equipment } from '../Models/EquipmentResponse';
 })
 export class EquipmentListComponent {
 
-  displayedColumns: string[] = ['id', 'type', 'serie', 'model', 'brand', 'purchaseDate', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'type', 'serie', 'model', 'brand', 'purchaseDate', 'contractCode','status', 'acciones'];
 
   public dataSource!: MatTableDataSource<Equipment>
 

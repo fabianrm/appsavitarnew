@@ -25,6 +25,7 @@ import { ContractCreateNewComponent } from './contract-create-new/contract-creat
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
+import { ChangePortComponent } from './change-port/change-port.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { MapleafModule } from '../mapleaf/mapleaf.module';
     ContractListComponent,
     ContractEditPlanComponent,
     ContractCreateNewComponent,
+    ChangePortComponent,
   ],
   imports: [
     CommonModule,

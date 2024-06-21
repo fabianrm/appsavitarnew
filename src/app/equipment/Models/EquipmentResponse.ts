@@ -10,5 +10,6 @@ export interface Equipment {
     brand: string;
     brandId: number;
     purchaseDate: Date;
+    contractCode: string;
     status: string;
 }

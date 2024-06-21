@@ -1,0 +1,87 @@
+<form ngNativeValidate [formGroup]="formContrato">
+  <mat-card>
+    <mat-card-header class="header-form">
+      <mat-card-title> Cambiar Puerto </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-6"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>Caja:</h2>
+        </div>
+        <div class="col-sm-6">
+          <h2>Puerto activo:</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <mat-form-field class="control-full-width" appearance="fill">
+            <mat-label>VLAN</mat-label>
+            <mat-select formControlName="routerId">
+              @for (router of routers; track router) {
+              <mat-option [value]="router.id">{{ router.vlan }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-4">
+          <mat-form-field class="control-full-width">
+            <mat-label>Caja</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="boxId"
+              [matAutocomplete]="autoB"
+              #codeBox
+              (input)="codeBox.value = codeBox.value.toUpperCase()"
+            />
+            <mat-autocomplete
+              #autoB="matAutocomplete"
+              [displayWith]="displayFnBox"
+            >
+              <mat-option
+                *ngFor="let optionB of filteredBox | async"
+                [value]="optionB"
+              >
+                {{ optionB.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-4">
+          <mat-form-field class="control-full-width" appearance="fill">
+            <mat-label>Puerto</mat-label>
+            <mat-select formControlName="portNumber">
+              @for (port of ports; track port) {
+              <mat-option [value]="port.port_number">{{
+                port.port_number
+              }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="row-buttons">
+        <button
+          [disabled]="formContrato.invalid"
+          color="primary"
+          mat-raised-button
+          style="margin-right: 5px"
+        >
+          Guardar
+        </button>
+        <button mat-dialog-close="" color="accent" mat-raised-button>
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

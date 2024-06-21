@@ -9,6 +9,7 @@ import { ContractService } from '../contract.service';
 
 import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-plan.component';
 import { Service } from '../Models/ServiceResponse';
+import { ChangePortComponent } from '../change-port/change-port.component';
 
 
 @Component({
@@ -84,10 +85,6 @@ export class ContractListComponent implements OnInit {
   }
 
 
-
-  changePuerto(_t114: any) {
-    throw new Error('Method not implemented.');
-  }
   changeBilling(_t114: any) {
     throw new Error('Method not implemented.');
   }
@@ -102,6 +99,16 @@ export class ContractListComponent implements OnInit {
 
   viewDetail(_t114: any) {
     throw new Error('Method not implemented.');
+  }
+
+  changePort(row: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = row;
+    this.dialog.open(ChangePortComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
   }
 
 

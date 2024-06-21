@@ -189,6 +189,7 @@
           </mat-card-header>
 
           <mat-card-content>
+            
             <div class="row">
               <div class="col-sm-4">
                 <mat-form-field class="control-full-width" appearance="fill">
@@ -202,21 +203,6 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
-              <!-- <div class="col-sm-2">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <mat-label>Caja</mat-label>
-                  <mat-select
-                    [(value)]="boxSelected"
-                    (selectionChange)="getPorts(boxSelected)"
-                    formControlName="boxId"
-                  >
-                    @for (box of boxs; track box) {
-                    <mat-option [value]="box.id">{{ box.name }}</mat-option>
-                    }
-                  </mat-select>
-                </mat-form-field>
-              </div> -->
 
               <div class="col-sm-4">
                 <mat-form-field class="control-full-width">
@@ -256,6 +242,8 @@
                 </mat-form-field>
               </div>
             </div>
+
+
           </mat-card-content>
         </mat-card>
       </div>
