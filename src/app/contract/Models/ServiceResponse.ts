@@ -7,7 +7,9 @@ export interface Service {
     serviceCode: string;
     customerName: string;
     planName: string;
+    routerId: number;
     routerIp: string;
+    vlan: string;
     boxName: string;
     portNumber: string;
     equipmentSerie: string;
@@ -18,8 +20,8 @@ export interface Service {
     installationDate: Date;
     latitude: string;
     longitude: string;
-    billingDate: string;
-    dueDate: string;
+    billingDate: null;
+    dueDate: null;
     status: string;
     endDate: null;
 }

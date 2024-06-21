@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { BoxService } from '../../box/box.service';
 import { RouterService } from '../../router/router.service';
 import { Box } from '../../box/Models/BoxResponse';
@@ -6,6 +6,10 @@ import { Ports } from '../Models/Ports';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { ReqRouter, ResponseRouter } from '../../router/Models/ResponseRouter';
+import { Service } from '../Models/ServiceResponse';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ContractService } from '../contract.service';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-change-port',
@@ -17,7 +21,11 @@ export class ChangePortComponent implements OnInit {
   constructor(
     public formulario: FormBuilder,
     private routerService: RouterService,
-    private boxService: BoxService,) { }
+    private boxService: BoxService,
+    private contractService: ContractService,
+    private snackbarService: SnackbarService,
+    @Inject(MAT_DIALOG_DATA) public getData: Service[],
+    private dialogRef: MatDialogRef<ChangePortComponent>) { }
 
   formContrato!: FormGroup;
   boxs: Box[] = [];
@@ -30,13 +38,13 @@ export class ChangePortComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getBoxs();
-    this.getRouters();
+    this.getRouters(); 
   }
 
 
   initForm() {
     const formControlsConfig = {
-      routerId: ['', Validators.required],
+      routerId: [this.getData[0].routerId, Validators.required],
       boxId: ['', Validators.required],
       portNumber: ['', Validators.required],
     }
@@ -110,6 +118,31 @@ export class ChangePortComponent implements OnInit {
     });
   }
 
+  enviarDatos(): any {
+
+    const formData = this.formContrato.value;
+    const boxId = this.boxIdValue;
+    
+    const dataToSend = {
+      ...formData,
+      boxId: boxId,
+    };
+
+    if (this.formContrato.valid) {
+      this.contractService.updatePortCustomer(this.getData[0].id, dataToSend).subscribe(respuesta => {
+        this.showSuccess();
+        this.dialogRef.close();
+      });
+    }
+  }
+
+  showError() {
+    this.snackbarService.showError('Ocurrio un error...');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Plan actualizado correctamente');
+  }
 
 
 

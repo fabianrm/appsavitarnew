@@ -1,4 +1,4 @@
-<form ngNativeValidate [formGroup]="formContrato">
+<form ngNativeValidate [formGroup]="formContrato" (submit)="enviarDatos()">
   <mat-card>
     <mat-card-header class="header-form">
       <mat-card-title> Cambiar Puerto </mat-card-title>
@@ -11,10 +11,10 @@
 
       <div class="row">
         <div class="col-sm-6">
-          <h2>Caja:</h2>
+          <h2>Caja: {{getData[0].boxName}}</h2>
         </div>
         <div class="col-sm-6">
-          <h2>Puerto activo:</h2>
+          <h2>Puerto activo: {{getData[0].portNumber}}</h2>
         </div>
       </div>
       <div class="row">

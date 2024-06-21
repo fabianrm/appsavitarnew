@@ -3,10 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlanService } from '../../plan/plan.service';
 import { ReqPlan, ResponsePlan } from '../../plan/Models/ResponsePlan';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
 import { ContractService } from '../contract.service';
-import { Service } from '../Models/ResponseServices';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { Service } from '../Models/ServiceResponse';
 
 @Component({
   selector: 'app-contract-edit-plan',

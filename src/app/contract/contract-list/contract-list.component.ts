@@ -5,11 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ContractService } from '../contract.service';
-
-
 import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-plan.component';
 import { Service } from '../Models/ServiceResponse';
 import { ChangePortComponent } from '../change-port/change-port.component';
+
 
 
 @Component({
@@ -28,7 +27,8 @@ export class ContractListComponent implements OnInit {
 
   subscription!: Subscription
 
-  public respuesta!: Service;
+  public respuesta!: Service[];
+  public contrato!: Service[];
 
   constructor(private contractService: ContractService, public dialog: MatDialog) { }
 
@@ -52,6 +52,8 @@ export class ContractListComponent implements OnInit {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+
+        this.respuesta = respuesta.data;
       }
       //  console.log(respuesta)
     });
@@ -101,12 +103,17 @@ export class ContractListComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  changePort(row: any) {
+
+  changePort(id: number) {
+
+    //filtrar la caja del contrato
+    this.contrato = this.respuesta.filter(contrato => contrato.id === id)
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
-    dialogConfig.data = row;
+    dialogConfig.data = this.contrato;
     this.dialog.open(ChangePortComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
   }

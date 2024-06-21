@@ -118,11 +118,7 @@ export class EquipmentEditComponent {
     const dataToSend = {
       ...formData,
       purchaseDate: purchaseDate,
-
     };
-
-    console.log(dataToSend);
-    
 
     if (this.formEquipment.valid) {
       this.equipmentService.updateEquipment(this.getData[0].id, dataToSend).subscribe(respuesta => {

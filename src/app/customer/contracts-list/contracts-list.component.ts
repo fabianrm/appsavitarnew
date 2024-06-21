@@ -2,7 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ContractService } from './../../contract/contract.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Service } from '../../contract/Models/ResponseServices';
+import { Service } from '../../contract/Models/ServiceResponse';
+
 
 @Component({
   selector: 'app-contracts-list',
