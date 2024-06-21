@@ -29,4 +29,14 @@ export class SnackbarService {
     });
   }
 
+  showInfo(message: string) {
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      duration: 3000,
+      data: { message: message, icon: 'info' },
+      panelClass: ['info-snackbar'],
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    });
+  }
+
 }

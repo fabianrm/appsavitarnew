@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { InvoicePaidComponent } from '../invoice-paid/invoice-paid.component';
 import { saveAs } from 'file-saver';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-invoice-list',
@@ -40,6 +41,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   constructor(
     private invoiceService: InvoiceService,
     private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -95,10 +97,10 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   generateInvoices() {
     this.invoiceService.generateInvoices().subscribe((respuesta) => {
       if (respuesta.totalInvoices > 0) {
-        this.msgSusscess(`Se han generado ${respuesta.totalInvoices} facturas`);
+        this.snackbarService.showSuccess(`Se han generado ${respuesta.totalInvoices} facturas`);
         this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2);
       } else {
-        this.msgSusscess('No se encontraron facturas para generar');
+        this.snackbarService.showInfo(`No se encontraron facturas para generar`);
       }
     })
   }
@@ -157,8 +159,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
       end_date: this.qf2,
       customer_name: this.qCustomer
     };
-    console.log(filters);
-    
+    // console.log(filters);
 
     this.invoiceService.exportInvoices(filters).subscribe((blob: Blob) => {
       saveAs(blob, 'invoices.xlsx');
@@ -182,12 +183,12 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   }
 
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Cliente ya se encuentra registrado');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Cliente agregado correctamente');
   }
 
 
