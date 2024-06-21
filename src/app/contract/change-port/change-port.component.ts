@@ -137,11 +137,11 @@ export class ChangePortComponent implements OnInit {
   }
 
   showError() {
-    this.snackbarService.showError('Ocurrio un error...');
+    this.snackbarService.showError('Ocurrio un error al actualizar los datos...');
   }
 
   showSuccess() {
-    this.snackbarService.showSuccess('Plan actualizado correctamente');
+    this.snackbarService.showSuccess('Los datos se actualizarón correctamente');
   }
 
 

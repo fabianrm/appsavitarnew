@@ -34,6 +34,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ExpenseModule } from './expense/expense.module';
 import { RetryInterceptor } from './auth/retry.interceptor';
 import { ReasonModule } from './reason/reason.module';
+import { SnackbarComponent } from './shared/snackbar/snackbar.component';
+import { SharedModule } from './shared/shared.module';
 
 
 
@@ -75,8 +77,9 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
-    MatIconModule,
     MatButtonModule,
+    SharedModule
+
 
   ],
   providers: [
