@@ -61,7 +61,7 @@
       <ng-container matColumnDef="latitude">
         <th mat-header-cell *matHeaderCellDef>Latitude</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.latitude }}
+          {{ element.latitude | number:'1.6-6' }}
         </td>
       </ng-container>
 
@@ -69,7 +69,7 @@
       <ng-container matColumnDef="longitude">
         <th mat-header-cell *matHeaderCellDef>Longitude</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.longitude }}
+          {{ element.longitude | number:'1.6-6' }}
         </td>
       </ng-container>
 

@@ -81,4 +81,13 @@ export class ContractService {
       }));
   }
 
+  //Suspender el contrato
+  suspendContract(id: number, data: any,): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}services/${id}/suspend`, data, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
 }

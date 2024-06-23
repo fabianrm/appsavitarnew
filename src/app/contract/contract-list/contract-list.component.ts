@@ -8,6 +8,7 @@ import { ContractService } from '../contract.service';
 import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-plan.component';
 import { Service } from '../Models/ServiceResponse';
 import { ChangePortComponent } from '../change-port/change-port.component';
+import { ContractSuspendComponent } from '../contract-suspend/contract-suspend.component';
 
 
 
@@ -80,7 +81,7 @@ export class ContractListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+   // dialogConfig.width = '40%';
     dialogConfig.data = row;
     this.dialog.open(ContractEditPlanComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
@@ -91,8 +92,14 @@ export class ContractListComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  inactiveService(_t114: any) {
-    throw new Error('Method not implemented.');
+  inactiveService(row: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    //dialogConfig.width = '40%';
+    dialogConfig.data = row;
+    this.dialog.open(ContractSuspendComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
   }
 
   viewMap(latitude: string, longitude: string) {
@@ -112,7 +119,7 @@ export class ContractListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+    //dialogConfig.width = '40%';
     dialogConfig.data = this.contrato;
     this.dialog.open(ChangePortComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });

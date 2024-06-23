@@ -6,7 +6,7 @@
 
     <mat-card-content>
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-12 col-sm-4">
           <mat-form-field>
             <mat-label>Tipo de gasto</mat-label>
             <mat-select [(value)]="selected" formControlName="type">
@@ -17,13 +17,13 @@
           </mat-form-field>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-12 col-sm-6">
           <mat-form-field>
             <mat-label>Nombre</mat-label>
             <input matInput placeholder="Nombre" formControlName="name" />
           </mat-form-field>
         </div>
-        <div class="col-sm-2">
+        <div class="col-12 col-sm-2">
           <mat-slide-toggle
             [color]="color"
             [checked]="checked"

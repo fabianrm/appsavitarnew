@@ -90,7 +90,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+  //  dialogConfig.width = '40%';
     dialogConfig.data = this.tipo;
     this.dialog.open(ExpenseCreateComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => {
@@ -102,7 +102,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+   // dialogConfig.width = '40%';
     dialogConfig.data = id;
     this.dialog.open(ExpenseEditComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })
@@ -114,7 +114,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+  //  dialogConfig.width = '40%';
     dialogConfig.data =row;
     this.dialog.open(ExpensePaidComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })

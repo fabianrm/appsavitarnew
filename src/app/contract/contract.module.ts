@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -26,6 +26,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
 import { ChangePortComponent } from './change-port/change-port.component';
+import { ContractSuspendComponent } from './contract-suspend/contract-suspend.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { ChangePortComponent } from './change-port/change-port.component';
     ContractEditPlanComponent,
     ContractCreateNewComponent,
     ChangePortComponent,
+    ContractSuspendComponent,
   ],
   imports: [
     CommonModule,
@@ -66,6 +68,14 @@ import { ChangePortComponent } from './change-port/change-port.component';
     MatCheckboxModule,
     MapleafModule
   
-  ]
+  ],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        subscriptSizing: 'dynamic'
+      }
+    }
+  ],
 })
 export class ContractModule { }

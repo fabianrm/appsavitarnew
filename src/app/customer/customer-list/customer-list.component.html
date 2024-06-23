@@ -38,17 +38,14 @@
         </td>
       </ng-container>
 
-       <!-- City Column -->
+      <!-- City Column -->
       <ng-container matColumnDef="city">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">
-        Ciudad
-        </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Ciudad</th>
         <!--        <td mat-cell *matCellDef="let element"> {{element.multado  + element.descartado + element.pendiente }} </td>-->
         <td mat-cell *matCellDef="let element">
           {{ element.city | uppercase }}
         </td>
       </ng-container>
-
 
       <!-- Nombre Column -->
       <ng-container matColumnDef="customerName">
@@ -80,13 +77,17 @@
       <!-- Latitude Column -->
       <ng-container matColumnDef="latitude">
         <th mat-header-cell *matHeaderCellDef>Latitud</th>
-        <td mat-cell *matCellDef="let element">{{ element.latitude }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.latitude | number : "1.6-6" }}
+        </td>
       </ng-container>
 
       <!-- Longitude Column -->
       <ng-container matColumnDef="longitude">
         <th mat-header-cell *matHeaderCellDef>Longitude</th>
-        <td mat-cell *matCellDef="let element">{{ element.longitude }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.longitude | number : "1.6-6" }}
+        </td>
       </ng-container>
 
       <!--Phone Column -->
@@ -131,24 +132,26 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-                      <button mat-menu-item (click)="editCustomer(row.id)">
+            <button mat-menu-item (click)="editCustomer(row.id)">
               Editar cliente
             </button>
-            <button mat-menu-item (click)="viewMap(row.latitude, row.longitude)">
+            <button
+              mat-menu-item
+              (click)="viewMap(row.latitude, row.longitude)"
+            >
               Ver ubicación
             </button>
             <button mat-menu-item (click)="deleteCustomer(row.id)">
               Eliminar
             </button>
-            <button mat-menu-item (click)="onSelectCustomer(row.id) ">
+            <button mat-menu-item (click)="onSelectCustomer(row.id)">
               Nuevo contrato
             </button>
-              <button mat-menu-item (click)="detailCustomer(row.id) ">
+            <button mat-menu-item (click)="detailCustomer(row.id)">
               Detalle de cliente
             </button>
           </mat-menu>
         </td>
-
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

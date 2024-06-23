@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Box } from '../../box/Models/BoxResponse';
@@ -22,10 +22,11 @@ import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 import { Customer } from '../../customer/Models/CustomerResponseU';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 
+
 @Component({
   selector: 'app-contract-create-new',
   templateUrl: './contract-create-new.component.html',
-  styleUrl: './contract-create-new.component.scss'
+  styleUrl: './contract-create-new.component.scss',
 })
 export class ContractCreateNewComponent implements OnInit, OnDestroy {
 
@@ -120,6 +121,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       dueDate: [''],
       status: ['activo'],
       endDate: [''],
+      userPppoe:[''],
+      passPppoe:[''],
       check: [false],
     }
 
@@ -128,7 +131,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
 
     //Convertir a mayusculas
     Object.keys(formControlsConfig).forEach(key => {
-      if (key === 'addressInstallation' || key === 'reference') {
+      if (key === 'addressInstallation' || key === 'reference' || key === 'serie') {
         this.formContrato.get(key)?.valueChanges.subscribe(value => {
           this.formContrato.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
         });

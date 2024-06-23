@@ -56,13 +56,13 @@
       <!-- Latitude Column -->
       <ng-container matColumnDef="latitude">
         <th mat-header-cell *matHeaderCellDef>Latitude</th>
-        <td mat-cell *matCellDef="let element">{{ element.latitude }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.latitude  | number:'1.6-6' }}</td>
       </ng-container>
 
       <!-- Longitude Column -->
       <ng-container matColumnDef="longitude">
         <th mat-header-cell *matHeaderCellDef>Longitude</th>
-        <td mat-cell *matCellDef="let element">{{ element.longitude }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.longitude  | number:'1.6-6' }}</td>
       </ng-container>
 
       <!--Phone Column -->

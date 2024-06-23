@@ -67,7 +67,7 @@ export class ReasonListComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+   // dialogConfig.width = '40%';
     this.dialog.open(ReasonCreateComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => {
@@ -79,7 +79,7 @@ export class ReasonListComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+  //  dialogConfig.width = '40%';
     dialogConfig.data = row;
     this.dialog.open(ReasonEditComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })

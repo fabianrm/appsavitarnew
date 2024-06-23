@@ -172,7 +172,7 @@
 
             <ng-template #mapReady>
               <div class="mapa">
-                 <app-mapleaf-single-view></app-mapleaf-single-view>
+                <app-mapleaf-single-view></app-mapleaf-single-view>
               </div>
             </ng-template>
           </mat-card-content>
@@ -189,7 +189,6 @@
           </mat-card-header>
 
           <mat-card-content>
-            
             <div class="row">
               <div class="col-sm-4">
                 <mat-form-field class="control-full-width" appearance="fill">
@@ -242,8 +241,6 @@
                 </mat-form-field>
               </div>
             </div>
-
-
           </mat-card-content>
         </mat-card>
       </div>
@@ -256,16 +253,15 @@
 
           <mat-card-content>
             <div class="row">
-              <div class="col-sm-4 row-items">
-                <mat-form-field class="control-full-width">
+              <div class="col-sm-6 row-items">
+            
+                  <mat-form-field class="control-full-width my-form-field">
                   <mat-label>Serie</mat-label>
                   <input
                     type="text"
                     matInput
                     formControlName="equipmentId"
                     [matAutocomplete]="auto"
-                    #codeSer
-                    (input)="codeSer.value = codeSer.value.toUpperCase()"
                   />
                   <mat-autocomplete
                     #auto="matAutocomplete"
@@ -279,29 +275,61 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
+                <div class="col-sm-12 row-items-2">
+                  <div>
+                    <p *ngIf="selectedEquipment">
+                      Tipo: {{ selectedEquipment.type | uppercase }}
+                    </p>
+                  </div>
+                  <div>
+                    <p *ngIf="selectedEquipment">
+                      Marca: {{ selectedEquipment.brand | uppercase }}
+                    </p>
+                  </div>
+                  <div>
+                    <p *ngIf="selectedEquipment">
+                      Modelo: {{ selectedEquipment.model | uppercase }}
+                    </p>
+                  </div>
+                  <div>
+                    <p *ngIf="selectedEquipment">
+                      Estado: {{ selectedEquipment.status | uppercase }}
+                    </p>
+                  </div>
+                </div>
+             
+
               </div>
-              <div class="col-sm-8 row-items">
-                <div>
-                  <p *ngIf="selectedEquipment">
-                    Tipo: {{ selectedEquipment.type | uppercase }}
-                  </p>
-                </div>
-                <div>
-                  <p *ngIf="selectedEquipment">
-                    Marca: {{ selectedEquipment.brand | uppercase }}
-                  </p>
-                </div>
-                <div>
-                  <p *ngIf="selectedEquipment">
-                    Modelo: {{ selectedEquipment.model | uppercase }}
-                  </p>
-                </div>
-                <div>
-                  <p *ngIf="selectedEquipment">
-                    Estado: {{ selectedEquipment.status | uppercase }}
-                  </p>
-                </div>
-              </div>
+              <div class="col-sm-3">
+                    <mat-form-field
+                      class="control-full-width"
+                      appearance="fill"
+                    >
+                     <mat-label>Usuario pppoe</mat-label>
+                      <input
+                        matInput
+                        placeholder="Usuario pppoe"
+                        formControlName="userPppoe"
+                      />
+                    </mat-form-field>
+                     
+                  </div>
+                  <div class="col-sm-3">
+                    <mat-form-field
+                      class="control-full-width"
+                      appearance="fill"
+                    >
+                      <mat-label>Clave pppoe</mat-label>
+                      <input
+                        matInput
+                        placeholder="Clave pppoe"
+                        formControlName="passPppoe"
+                      />
+                    </mat-form-field>
+                  </div>
+
+             
+
             </div>
           </mat-card-content>
         </mat-card>
