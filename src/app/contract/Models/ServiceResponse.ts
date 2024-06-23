@@ -12,6 +12,7 @@ export interface Service {
     vlan: string;
     boxName: string;
     portNumber: string;
+    equipmentId: number;
     equipmentSerie: string;
     city: string;
     addressInstallation: string;
@@ -24,4 +25,6 @@ export interface Service {
     dueDate: null;
     status: string;
     endDate: null;
+    userPppoe: string;
+    passPppoe: string;
 }

@@ -27,6 +27,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
 import { ChangePortComponent } from './change-port/change-port.component';
 import { ContractSuspendComponent } from './contract-suspend/contract-suspend.component';
+import { ChangeEquipmentComponent } from './change-equipment/change-equipment.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { ContractSuspendComponent } from './contract-suspend/contract-suspend.co
     ContractCreateNewComponent,
     ChangePortComponent,
     ContractSuspendComponent,
+    ChangeEquipmentComponent,
   ],
   imports: [
     CommonModule,

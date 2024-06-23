@@ -73,9 +73,18 @@ export class ContractService {
       }));
   }
 
-  //Cambiar Plan de Cliente
+  //Cambiar puerto de Cliente
   updatePortCustomer(id: number, data: any,): Observable<any> {
     return this.clienteHttp.patch(`${this.API}services/${id}/update-box-port`,  data , { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
+  //Cambiar equipo de Cliente
+  updateEquipment(id: number, data: any,): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}services/${id}/update-equipment`, data, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }));

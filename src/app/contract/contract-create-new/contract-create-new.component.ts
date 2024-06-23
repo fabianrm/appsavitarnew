@@ -121,8 +121,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       dueDate: [''],
       status: ['activo'],
       endDate: [''],
-      userPppoe:[''],
-      passPppoe:[''],
+      userPppoe: ['', Validators.required],
+      passPppoe: ['', Validators.required],
       check: [false],
     }
 

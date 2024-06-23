@@ -171,7 +171,7 @@ export class BoxEditComponent implements OnInit, OnDestroy {
 
 
   showError() {
-    this.snackbarService.showError('☹️ Ocurrio un error');
+    this.snackbarService.showError('Ocurrio un error');
   }
 
   showSuccess() {

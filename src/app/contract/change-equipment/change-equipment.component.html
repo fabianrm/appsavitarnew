@@ -1,0 +1,97 @@
+<form ngNativeValidate [formGroup]="formContrato" (submit)="enviarDatos()">
+  <mat-card>
+    <mat-card-header class="header-form">
+      <mat-card-title> Cambiar Equipo </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-6"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>Equipo: {{ getData[0].equipmentSerie }}</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 row-items">
+          <mat-form-field class="control-full-width my-form-field">
+            <mat-label>Serie</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="equipmentId"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option
+                *ngFor="let option of filteredEquipos | async"
+                [value]="option"
+              >
+                {{ option.serie }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <div class="col-sm-12 row-items-2">
+            <div>
+              <p *ngIf="selectedEquipment">
+                Tipo: {{ selectedEquipment.type | uppercase }}
+              </p>
+            </div>
+            <div>
+              <p *ngIf="selectedEquipment">
+                Marca: {{ selectedEquipment.brand | uppercase }}
+              </p>
+            </div>
+            <div>
+              <p *ngIf="selectedEquipment">
+                Modelo: {{ selectedEquipment.model | uppercase }}
+              </p>
+            </div>
+            <div>
+              <p *ngIf="selectedEquipment">
+                Estado: {{ selectedEquipment.status | uppercase }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field class="control-full-width" appearance="fill">
+            <mat-label>Usuario pppoe</mat-label>
+            <input
+              matInput
+              placeholder="Usuario pppoe"
+              formControlName="userPppoe"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field class="control-full-width" appearance="fill">
+            <mat-label>Clave pppoe</mat-label>
+            <input
+              matInput
+              placeholder="Clave pppoe"
+              formControlName="passPppoe"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="row-buttons">
+        <button
+          [disabled]="formContrato.invalid || selectedEquipment == null"
+          color="primary"
+          mat-raised-button
+          style="margin-right: 5px"
+        >
+          Guardar
+        </button>
+        <button mat-dialog-close="" color="accent" mat-raised-button>
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

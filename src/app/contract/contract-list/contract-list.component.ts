@@ -9,6 +9,7 @@ import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-p
 import { Service } from '../Models/ServiceResponse';
 import { ChangePortComponent } from '../change-port/change-port.component';
 import { ContractSuspendComponent } from '../contract-suspend/contract-suspend.component';
+import { ChangeEquipmentComponent } from '../change-equipment/change-equipment.component';
 
 
 
@@ -124,6 +125,21 @@ export class ContractListComponent implements OnInit {
     this.dialog.open(ChangePortComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
   }
+
+  changeEquipment(id: number) {
+
+    //filtrar la caja del contrato
+    this.contrato = this.respuesta.filter(contrato => contrato.id === id)
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    //dialogConfig.width = '40%';
+    dialogConfig.data = this.contrato;
+    this.dialog.open(ChangeEquipmentComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
+  }
+
 
 
 
