@@ -83,4 +83,13 @@ export class CustomerService {
     return this.clienteHttp.get(this.API + 'export-customers', { responseType: 'blob' });
   }
 
+  getCustomerByDNI(dni:string) {
+    const headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 546055cac6cf4b7ebb0ba79b86cd86ece522e23686314f7f848da2883d8af6ea',
+    });
+    return this.clienteHttp.post<any>(`https://apiperu.dev/api/dni?dni=${dni}`, { headers: headers });
+  }
+
 }

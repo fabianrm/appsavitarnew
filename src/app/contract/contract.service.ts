@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { RequestService } from './Models/RequestService';
-import { ServiceResponse } from './Models/ServiceResponse';
+import { Service, ServiceResponse, ServiceSingleResponse } from './Models/ServiceResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -54,8 +54,8 @@ export class ContractService {
   }
 
 
-  getServiceByID(id: number): Observable<ServiceResponse> {
-    return this.clienteHttp.get<ServiceResponse>(this.API + 'services/' + id, { headers: this.headers })
+  getServiceByID(id: number): Observable<ServiceSingleResponse> {
+    return this.clienteHttp.get<ServiceSingleResponse>(this.API + 'services/' + id, { headers: this.headers })
   }
 
 

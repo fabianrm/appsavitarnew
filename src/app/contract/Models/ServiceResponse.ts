@@ -2,6 +2,10 @@ export interface ServiceResponse {
     data: Service[];
 }
 
+export interface ServiceSingleResponse {
+    data: Service;
+}
+
 export interface Service {
     id: number;
     serviceCode: string;

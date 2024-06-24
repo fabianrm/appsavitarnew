@@ -10,6 +10,7 @@ import { Service } from '../Models/ServiceResponse';
 import { ChangePortComponent } from '../change-port/change-port.component';
 import { ContractSuspendComponent } from '../contract-suspend/contract-suspend.component';
 import { ChangeEquipmentComponent } from '../change-equipment/change-equipment.component';
+import { Router } from '@angular/router';
 
 
 
@@ -32,7 +33,7 @@ export class ContractListComponent implements OnInit {
   public respuesta!: Service[];
   public contrato!: Service[];
 
-  constructor(private contractService: ContractService, public dialog: MatDialog) { }
+  constructor(private contractService: ContractService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
     this.getContracts();
@@ -107,10 +108,6 @@ export class ContractListComponent implements OnInit {
     window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");
   }
 
-  viewDetail(_t114: any) {
-    throw new Error('Method not implemented.');
-  }
-
 
   changePort(id: number) {
 
@@ -140,6 +137,10 @@ export class ContractListComponent implements OnInit {
     this.dialog.afterAllClosed.subscribe(() => { });
   }
 
+
+  viewDetail(id: number) {
+    this.router.navigate(['/dashboard/contract/contract-detail/' + id]); // Navega al detalle del contrato
+  }
 
 
 

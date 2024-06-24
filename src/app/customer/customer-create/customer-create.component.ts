@@ -140,6 +140,24 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
     }
   }
 
+  getCustomerByDNI(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const dni = inputElement.value;
+
+    if (dni) {
+      this.formCliente.patchValue({ documentNumber: dni });
+      this.customerService.getCustomerByDNI(dni).subscribe(respuesta => {
+        if (respuesta.success) {
+          this.formCliente.patchValue({ name: respuesta.data.nombre_completo });
+        } else {
+          this.snackbarService.showError('DNI inválido o no se encuentra en la BD');
+          this.formCliente.patchValue({ name: '' });
+        }
+        
+      });
+    }
+  }
+
   goCustomers() {
     this.router.navigate(['/dashboard/customer/customers']);
   }
