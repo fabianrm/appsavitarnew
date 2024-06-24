@@ -164,8 +164,8 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
       const documento = form.documentNumber
       this.customerService.getCustomerByDocument(documento).subscribe(respuesta => {
         this.customerService.updateCustomer(this.id, this.formCliente.value).subscribe(respuesta => {
-          this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "cliente"
           this.showSuccess();
+          this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "cliente"
         });
       });
     }

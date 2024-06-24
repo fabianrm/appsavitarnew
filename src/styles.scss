@@ -51,10 +51,15 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+// th {
+//   background-color: var(--comodin) !important;
+//   color: var(--primary);
+// }
+
 th {
-  background-color: var(--comodin) !important;
-  color: var(--primary);
+ font-weight: 800 !important;
 }
+
 
 
 .header-form {

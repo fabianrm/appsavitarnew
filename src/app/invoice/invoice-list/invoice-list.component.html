@@ -170,9 +170,16 @@
             [disabled]="row.status === 'pagada'"
             (click)="paid(row)"
           >
-            Pagar Factura
+           <mat-icon matListItemIcon>paid</mat-icon>
+            Pagar
           </button>
-          <button mat-menu-item (click)="print(row)">Imprimir</button>
+          <button mat-menu-item (click)="print(row)">
+             <mat-icon matListItemIcon>print</mat-icon>
+            Imprimir</button>
+
+             <button mat-menu-item (click)="print(row)">
+             <mat-icon matListItemIcon>delete</mat-icon>
+            Anular</button>
         </mat-menu>
       </td>
     </ng-container>

@@ -50,6 +50,17 @@ export class CustomerService {
       }));
   }
 
+  //Suspender o activar el cliente
+  suspendOrActivateCustomer(id: number, data: any,): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}customer/${id}/suspend`, data, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
+
+
   deleteCustomer1(id: number): Observable<any> {
     return this.clienteHttp.delete(this.API + 'customers/' + id, { headers: this.headers })
       .pipe(tap(() => {
@@ -67,6 +78,8 @@ export class CustomerService {
               message: error.message || 'Error desconocido al eliminar cliente'
             }
           });
+        }), tap(() => {
+          this._refresh$.next()
         })
       );
   }
@@ -78,12 +91,12 @@ export class CustomerService {
   getCustomerByDocument(document: string): Observable<any> {
     return this.clienteHttp.get<any>(`${this.API}customers/check-exists?documentNumber=${document}`, { headers: this.headers });
   }
-  
+
   exportCustomers() {
     return this.clienteHttp.get(this.API + 'export-customers', { responseType: 'blob' });
   }
 
-  getCustomerByDNI(dni:string) {
+  getCustomerByDNI(dni: string) {
     const headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json',

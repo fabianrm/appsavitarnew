@@ -133,8 +133,12 @@
           </button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="editCustomer(row.id)">
-                <mat-icon matListItemIcon>edit</mat-icon>
+              <mat-icon matListItemIcon>edit</mat-icon>
               Editar cliente
+            </button>
+            <button mat-menu-item (click)="detailCustomer(row.id)">
+              <mat-icon matListItemIcon>info</mat-icon>
+              Detalle de cliente
             </button>
             <button
               mat-menu-item
@@ -143,17 +147,21 @@
               <mat-icon matListItemIcon>location_on</mat-icon>
               Ver ubicación
             </button>
-            <button mat-menu-item (click)="deleteCustomer(row.id)">
-               <mat-icon matListItemIcon>delete</mat-icon>
-              Eliminar
-            </button>
-            <button mat-menu-item (click)="onSelectCustomer(row.id)">
-                 <mat-icon matListItemIcon>alternate_email</mat-icon>
+            <button
+              [disabled]="row.status === 0"
+              mat-menu-item
+              (click)="onSelectCustomer(row.id)"
+            >
+              <mat-icon matListItemIcon>alternate_email</mat-icon>
               Nuevo contrato
             </button>
-            <button mat-menu-item (click)="detailCustomer(row.id)">
-               <mat-icon matListItemIcon>contact_emergency</mat-icon>
-              Detalle de cliente
+            <button mat-menu-item (click)="suspend(row)">
+              <mat-icon matListItemIcon>no_accounts</mat-icon>
+              {{ row.status == 1 ? "Suspender" : "Reactivar" }}
+            </button>
+            <button mat-menu-item (click)="deleteCustomer(row.id)">
+              <mat-icon matListItemIcon>delete</mat-icon>
+              Eliminar
             </button>
           </mat-menu>
         </td>

@@ -139,8 +139,8 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
 
         if (respuesta.exists == false) {
           this.customerService.addCustomer(this.formCliente.value).subscribe(respuesta => {
-            this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "cliente"
             this.showSuccess();
+            this.router.navigate(['/dashboard/customer/customers']); // Navega al componente "cliente"
           });
         } else {
           this.showError();

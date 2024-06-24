@@ -28,16 +28,13 @@ mat-form-field {
    display: flex;
    justify-content: space-between;
    align-items:center;
+   padding-bottom: 20px;
 }
 .row-acciones {
   display: flex;
   /*background-color: dodgerblue;*/
   justify-content: flex-end;
   padding: 5px;
-}
-
-.filtro {
-  padding-top: 10px;
 }
 
 .center {

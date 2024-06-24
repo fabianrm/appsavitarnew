@@ -23,6 +23,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContractsListComponent } from './contracts-list/contracts-list.component';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
+import { CustomerSuspendComponent } from './customer-suspend/customer-suspend.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { MapleafModule } from '../mapleaf/mapleaf.module';
     CustomerListComponent,
     CustomerDetailsComponent,
     CustomerEditComponent,
-    ContractsListComponent
+    ContractsListComponent,
+    CustomerSuspendComponent
   ],
   imports: [
     CommonModule,

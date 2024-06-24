@@ -8,9 +8,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Customer } from '../Models/CustomerResponse';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContractsListComponent } from '../contracts-list/contracts-list.component';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { CustomerSuspendComponent } from '../customer-suspend/customer-suspend.component';
 
 @Component({
   selector: 'app-customer-list',
@@ -41,7 +42,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   constructor(
     private customerService: CustomerService,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private router: Router
   ) { }
 
@@ -108,8 +109,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
               }
             })
           } else {
-            this.msgSusscess(`Error al eliminar el cliente: ${respuesta.data.message}`);
-          
+            this.snackbarService.showError(`☹️ Ocurrio un error: ${ respuesta.data.message}`);
           }
         }, error => {
           console.log('Error al eliminar el cliente', error.message);
@@ -136,6 +136,54 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
 
 
+
+  suspend(row: any) {
+    if (row.status == 1) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      //dialogConfig.width = '40%';
+      dialogConfig.data = row;
+      this.dialog.open(CustomerSuspendComponent, dialogConfig);
+      this.dialog.afterAllClosed.subscribe(() => { });   
+    } else {
+      this.activateCustomer(row.id);
+    }
+  }
+
+  activateCustomer(id:number) {
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "Volver a activar cliente suspendido!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, activar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.customerService.suspendOrActivateCustomer(id, {'status': 1, 'observation': 'Activado por sistema'}).subscribe((respuesta) => {
+          if (respuesta.status == true) {
+            Swal.fire(
+              'Activado!',
+              respuesta.data.message,
+              'success'
+            ).then(r => {
+              if (r) {
+                //this.dialogRef.close();
+              }
+            })
+          } else {
+            this.snackbarService.showError(`☹️ Ocurrio un error: ${respuesta.data.message}`);
+          }
+        }, error => {
+          console.log('Error al activar el cliente', error.message);
+        });
+      }
+    });
+  }
+
+
   viewMap(latitude: string, longitude: string) {
     //'https://www.google.com/maps?q=-4.907545,-81.057223&hl=es-Pe&gl=pe&shorturl=1;'
     window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");
@@ -148,12 +196,12 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
 
 
-  msgSusscess(mensaje: string) {
-    this._snackBar.open(mensaje, 'SAVITAR', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    })
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro agregado correctamente');
   }
 
 }
