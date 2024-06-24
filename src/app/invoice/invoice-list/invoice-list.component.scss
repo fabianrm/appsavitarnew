@@ -40,8 +40,8 @@ height: 50px;
   justify-content: center;
   width: 100px;
   text-align: center;
-  border-radius: 20px;
-  padding: 8px;
+  border-radius: 5px;
+  padding: 5px;
   background-color: lightgreen;
   color: #000000;
 }
@@ -52,8 +52,8 @@ height: 50px;
   justify-content: center;
   width: 100px;
   text-align: center;
-  border-radius: 20px;
-  padding: 8px;
+  border-radius: 5px;
+  padding: 5px;
   background-color: #ffecb3;
   color: #000000;
 }
@@ -64,8 +64,8 @@ height: 50px;
   justify-content: center;
   width: 100px;
   text-align: center;
-  border-radius: 20px;
-  padding: 8px;
+  border-radius: 5px;
+  padding: 5px;
   background-color: rgb(238, 108, 108);
   color: #ffffff;
 }
@@ -80,4 +80,8 @@ height: 50px;
   padding: 8px;
   background-color: rgb(144, 144, 144);
   color: #000000;
+}
+
+.row-inactive {
+  background-color: rgba(255, 0, 0, 0.1); /* Rojo tenue */
 }

@@ -178,7 +178,12 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"
+      [ngClass]="{ 'row-inactive': row.status === 'vencida' }"
+    >
+      
+    </tr>
   </table>
 
   <mat-paginator

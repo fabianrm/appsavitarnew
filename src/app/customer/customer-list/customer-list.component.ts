@@ -66,7 +66,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
 
   detailCustomer(id: number) {
-    this.router.navigate(['/dashboard/customer/customerDetails/' + id]); // Navega al componente "customer edit"
+    // Navega al componente "customer edit"
   }
 
 

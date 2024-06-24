@@ -15,6 +15,10 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
+        path: 'factibillity',
+        loadChildren: () => import('./factibillity/factibillity.module').then(m => m.FactibillityModule)
+      },
+      {
         path: 'customer',
         loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule)
       },
@@ -50,7 +54,7 @@ const routes: Routes = [
         path: 'expenses',
         loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule)
       },
-      
+
       {
         path: 'report',
         loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule)

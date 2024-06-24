@@ -16,9 +16,18 @@
           routerLinkActive="active-link"
           [routerLink]="['/dashboard/home/home']"
         >
-          <mat-icon matListItemIcon>people</mat-icon>
+          <mat-icon matListItemIcon>dashboard</mat-icon>
           <span matListItemTitle>Inicio</span>
         </mat-list-item>
+
+         <mat-list-item
+          routerLinkActive="active-link"
+          [routerLink]="['/dashboard/factibillity/factibillity-info']"
+        >
+          <mat-icon matListItemIcon>wifi_tethering</mat-icon>
+          <span matListItemTitle>Factibilidad técnica</span>
+        </mat-list-item>
+
 
         <mat-list-item
           routerLinkActive="active-link"

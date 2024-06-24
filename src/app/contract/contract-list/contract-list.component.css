@@ -61,48 +61,7 @@ mat-form-field {
   cursor: pointer;
 }
 
-.status-active {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  text-align: center;
-  border-radius: 20px;
-  padding: 8px;
-  background-color: lightgreen;
-  color: #000000;
-}
 
-.status-terminated {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  text-align: center;
-  border-radius: 20px;
-  padding: 8px;
-  background-color: rgb(189, 89, 89);
-  color: #ffffff;
-}
-
-.status-inactive {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  text-align: center;
-  border-radius: 20px;
-  padding: 8px;
-  background-color: rgb(116, 111, 111);
-  color: #ffffff;
-}
-
-.estado {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60px;
-}
 
 .row-inactive {
   background-color: rgba(255, 0, 0, 0.1); /* Rojo tenue */

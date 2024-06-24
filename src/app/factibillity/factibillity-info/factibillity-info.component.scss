@@ -1,0 +1,41 @@
+.container-map {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.map-container {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: lightgray; /* Solo para depuración, quita este color después */
+}
+
+.map-container > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+
+.filter-section {
+  background-color: rgba(179, 245, 179, 0.861);
+  position: sticky;
+  height: 65px;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.toogle-margin {
+  margin: 10px;
+}
