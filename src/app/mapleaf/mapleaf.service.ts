@@ -9,9 +9,11 @@ export class MapleafService {
 
   private coordinatesSource = new BehaviorSubject<[number, number][]>([]);
   private dataPointsSource = new BehaviorSubject<DataPoint[]>([]);
+  private addressSource = new BehaviorSubject<string>(''); // Nueva propiedad para la dirección
 
   currentCoordinates = this.coordinatesSource.asObservable();
   currentDataPoints = this.dataPointsSource.asObservable();
+  currentAddress = this.addressSource.asObservable(); // Observable para la dirección
 
   constructor() { }
 
@@ -40,6 +42,13 @@ export class MapleafService {
     const currentDataPoints = this.dataPointsSource.value;
     this.dataPointsSource.next([...currentDataPoints, dataPoint]);
   }
+
+
+  // Nuevo método para cambiar la dirección
+  changeAddress(address: string) {
+    this.addressSource.next(address);
+  }
+
 
   filterCoordinatesWithinRadius(center: [number, number], radius: number, dataPoints: DataPoint[]): DataPoint[] {
     const R = 6371e3; // Radio de la Tierra en metros

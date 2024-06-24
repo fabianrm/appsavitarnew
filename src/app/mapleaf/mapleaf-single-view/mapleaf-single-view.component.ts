@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } fr
 import * as L from 'leaflet';
 import { Subscription } from 'rxjs';
 import { MapleafService } from '../mapleaf.service';
+import { GeocodingService } from '../geocoding.service';
 
 @Component({
   selector: 'app-mapleaf-single-view',
@@ -15,7 +16,7 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
   marker: L.Marker | null = null;
   coordinateSubscription!: Subscription;
 
-  constructor(private coordinateService: MapleafService) { }
+  constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
   
   ngOnInit(): void {
     this.coordinateSubscription = this.coordinateService.currentCoordinates.subscribe(coordinates => {
@@ -53,6 +54,15 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
       const coordinates: [number, number] = [event.latlng.lat, event.latlng.lng];
       this.coordinateService.setSingleCoordinate(coordinates);
       this.setMarker(coordinates);
+
+      this.geocodingService.getAddress(event.latlng.lat, event.latlng.lng).subscribe(result => {
+        if (result && result.address) {
+          const road = result.address.road || 'Sin nombre de calle';
+          this.coordinateService.changeAddress(road); // Enviar la dirección al servicio
+        }
+      });
+
+
     });
 
     // Invalida el tamaño del mapa

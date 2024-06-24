@@ -35,6 +35,7 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
   coordinates: [number, number][] = [];
   coordinatesSubscription!: Subscription;
 
+  address: string = '';
 
   tipos: Tipo[] = [
     { value: 'natural', viewValue: 'Natural' },
@@ -66,6 +67,15 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
         });
       }
     });
+
+    //Obtener la direccion
+    this.mapleafService.currentAddress.subscribe(address => {
+      this.address = address;
+      this.formCliente.patchValue({
+        address: this.address,
+      });
+    });
+
 
     this.getCities();
   }

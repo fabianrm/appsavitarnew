@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { MapleafService } from '../mapleaf.service';
 import { Subscription } from 'rxjs';
 import { DataPoint } from '../Models/DataPoint';
+import { GeocodingService } from '../geocoding.service';
 
 @Component({
   selector: 'app-mapleaf-multiple-view',
@@ -29,7 +30,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   markers: L.Marker[] = [];
   dataPointSubscription!: Subscription;
 
-  constructor(private coordinateService: MapleafService) { }
+  constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
 
   ngOnInit(): void {
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
@@ -83,6 +84,15 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
       this.centerMarker = L.marker(coordinates, { icon: this.customIcon }).addTo(this.map)
         .bindPopup(`<b>Cliente</b><br>Lat: ${coordinates[0]}<br>Lng: ${coordinates[1]}`);
+      
+      // Obtener el nombre de la calle y actualizar el popup
+      // this.geocodingService.getAddress(coordinates[0], coordinates[1]).subscribe(result => {
+      //   if (result && result.address) {
+      //     const road = result.address.road || 'Sin nombre de calle';
+      //     this.centerMarker?.bindPopup(`<b>Centro</b><br>${road}<br>Lat: ${coordinates[0]}<br>Lng: ${coordinates[1]}`).openPopup();
+      //   }
+      // });   
+
     });
   }
 
