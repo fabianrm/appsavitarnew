@@ -34,8 +34,6 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
   constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
 
- 
-
   ngOnInit(): void {
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
       this.setMarkers(dataPoints);
@@ -53,7 +51,6 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
       this.dataPointSubscription.unsubscribe();
     }
   }
-
 
   initializeMap() {
     this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907044, -81.055051], 16.1);
