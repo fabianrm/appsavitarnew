@@ -1,8 +1,23 @@
 <div class="container-map">
   <div class="filter-section">
-    <mat-slide-toggle [(ngModel)]="showAllMarkers" (change)="toggleMarkers()" class="toogle-margin">
+    <mat-slide-toggle
+      [(ngModel)]="showAllMarkers"
+      (change)="toggleMarkers()"
+      class="toogle-margin"
+    >
       Mostrar todas las cajas
     </mat-slide-toggle>
+
+    <label>
+      <select [(ngModel)]="selectedMapType" (change)="showAllMarkers=false">
+        
+        <option value="openstreetmap">OpenStreetMap</option>
+        <option value="roadmap">Roadmap</option>
+        <option value="satellite">Satélite</option>
+        <option value="terrain">Terreno</option>
+        <option value="hybrid">Híbrido</option>
+      </select>    
+    </label>
   </div>
   <!-- <h3>Coordenadas seleccionadas:</h3>
   <ul>
@@ -16,5 +31,7 @@
       [dataPoints]="dataPoints"
       [filterByRadius]="!showAllMarkers"
       [showAllMarkers]="showAllMarkers"
+      [mapType]="selectedMapType"
     ></app-mapleaf-multiple-view>
   </div>
+</div>

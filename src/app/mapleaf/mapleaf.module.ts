@@ -15,7 +15,7 @@ import { MapleafMultipleViewComponent } from './mapleaf-multiple-view/mapleaf-mu
     MapleafMultipleViewComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     MapleafViewComponent,

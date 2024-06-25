@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
+import 'leaflet.gridlayer.googlemutant'; // Importa el plugin
 import { MapleafService } from '../mapleaf.service';
 import { Subscription } from 'rxjs';
 import { DataPoint } from '../Models/DataPoint';
@@ -10,13 +11,13 @@ import { GeocodingService } from '../geocoding.service';
   templateUrl: './mapleaf-multiple-view.component.html',
   styleUrls: ['./mapleaf-multiple-view.component.scss']
 })
-export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
   @Input() filterByRadius: boolean = false;
   @Input() dataPoints: DataPoint[] = [];
   @Input() showAllMarkers = true;
-  centerMarker: L.Marker | null = null; // Para almacenar el marcador central
-
+  @Input() mapType: 'openstreetmap' | 'roadmap' | 'satellite' | 'terrain' | 'hybrid' = 'openstreetmap'; // propiedad entrada
+  
   // Crear un icono personalizado
   customIcon = L.icon({
     iconUrl: 'assets/icon-home.png', // Ruta al icono personalizado
@@ -25,12 +26,19 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     iconSize: [40, 45], // Tamaño del icono
     iconAnchor: [12, 41], // Punto de anclaje del icono
   });
-
+  
   map!: L.Map;
   markers: L.Marker[] = [];
+  centerMarker: L.Marker | null = null; // Para almacenar el marcador central
   dataPointSubscription!: Subscription;
-
+  
   constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['mapType'] && !changes['mapType'].isFirstChange()) {
+      this.updateMapType();
+    }
+  }
 
   ngOnInit(): void {
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
@@ -57,6 +65,11 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
+    this.updateMapType();
+
+    // const googleMutant = L.gridLayer.googleMutant({
+    //   type: this.mapType // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
+    // }).addTo(this.map);
 
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       const coordinates: [number, number] = [event.latlng.lat, event.latlng.lng];
@@ -131,5 +144,24 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     // Limpiar los marcadores actuales
     this.markers.forEach(marker => this.map.removeLayer(marker));
     this.markers = [];
+  }
+
+
+  updateMapType() {
+    if (this.map) {
+      this.map.eachLayer(layer => {
+        this.map.removeLayer(layer);
+      });
+
+      if (this.mapType === 'openstreetmap') {
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(this.map);
+      } else {
+        L.gridLayer.googleMutant({
+          type: this.mapType // 'roadmap', 'satellite', 'terrain', 'hybrid'
+        }).addTo(this.map);
+      }
+    }
   }
 }

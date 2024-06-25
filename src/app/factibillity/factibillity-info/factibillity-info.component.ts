@@ -13,6 +13,7 @@ export class FactibillityInfoComponent implements OnInit {
   dataPoints: DataPoint[] = [];
   filteredDataPoints: DataPoint[] = [];
   showAllMarkers: boolean = true;
+  selectedMapType: 'openstreetmap' | 'roadmap' | 'satellite' | 'terrain' | 'hybrid' = 'openstreetmap';
 
   constructor(private coordinateService: MapleafService, private boxService: BoxService) { }
 
