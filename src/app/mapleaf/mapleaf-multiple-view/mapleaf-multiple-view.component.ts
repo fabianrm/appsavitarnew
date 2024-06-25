@@ -17,21 +17,22 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   @Input() dataPoints: DataPoint[] = [];
   @Input() showAllMarkers = true;
   @Input() mapType: 'openstreetmap' | 'roadmap' | 'satellite' | 'terrain' | 'hybrid' = 'openstreetmap'; // propiedad entrada
-  
+
   // Crear un icono personalizado
   customIcon = L.icon({
     iconUrl: 'assets/icon-home.png', // Ruta al icono personalizado
     shadowUrl: 'assets/marker-shadow.png',
-    shadowAnchor: [0,50],
+    shadowAnchor: [0, 50],
     iconSize: [40, 45], // Tamaño del icono
     iconAnchor: [12, 41], // Punto de anclaje del icono
   });
-  
+
   map!: L.Map;
   markers: L.Marker[] = [];
   centerMarker: L.Marker | null = null; // Para almacenar el marcador central
   dataPointSubscription!: Subscription;
-  
+  typeMap: 'openstreetmap' | 'roadmap' | 'satellite' | 'terrain' | 'hybrid' = 'openstreetmap'; // propiedad entrada
+
   constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -62,10 +63,35 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   initializeMap() {
     this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907044, -81.055051], 16.1);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const openStreetMapLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
-    this.updateMapType();
+
+    //Estilos de mapa de google
+    const googRoadmap = L.gridLayer.googleMutant({
+      type: 'roadmap' // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
+    });
+
+    const googTerrain = L.gridLayer.googleMutant({
+      type: 'terrain' // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
+    });
+
+    const googHybrid = L.gridLayer.googleMutant({
+      type: 'hybrid' // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
+    });
+
+    const googleSatellite = L.gridLayer.googleMutant({
+      type: 'satellite' // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
+    });
+
+    //Agregamos estilos de mapa
+    this.map.addControl(new L.Control.Layers({
+      'OpenStreetMap': openStreetMapLayer,
+      'RoadMap': googRoadmap,
+      'Terrain': googTerrain,
+      'Satellite': googleSatellite,
+      'Hybrid': googHybrid,
+    }, {}))
 
     // const googleMutant = L.gridLayer.googleMutant({
     //   type: this.mapType // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
@@ -74,9 +100,9 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       const coordinates: [number, number] = [event.latlng.lat, event.latlng.lng];
       if (!this.showAllMarkers) {
-       
+
         this.coordinateService.clearCoordinates();
-        if (this.filterByRadius) { 
+        if (this.filterByRadius) {
           const filteredDataPoints = this.coordinateService.filterCoordinatesWithinRadius(coordinates, 100, this.dataPoints);
           this.coordinateService.changeDataPoints(filteredDataPoints);
         } else {
@@ -97,7 +123,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
       this.centerMarker = L.marker(coordinates, { icon: this.customIcon }).addTo(this.map)
         .bindPopup(`<b>Cliente</b><br>Lat: ${coordinates[0]}<br>Lng: ${coordinates[1]}`);
-      
+
       // Obtener el nombre de la calle y actualizar el popup
       // this.geocodingService.getAddress(coordinates[0], coordinates[1]).subscribe(result => {
       //   if (result && result.address) {

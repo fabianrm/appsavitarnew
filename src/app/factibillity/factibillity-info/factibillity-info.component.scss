@@ -30,12 +30,33 @@
   height: 65px;
   z-index: 100;
   display: flex;
+  margin-top: 2px;
   justify-content: flex-end;
   align-content: center;
-  align-items: center;
+  align-items: baseline;
   height: 60px;
 }
 
 .toogle-margin {
   margin: 10px;
 }
+
+// mat-form-field {
+//   padding: -1.25em !important;
+// }
+
+// ::ng-deep .mat-form-field-wrapper{
+//   padding: -1.25em;
+// }
+
+// mat-mdc-form-field-infix{
+//   padding: -1.25em;
+
+// }
+
+
+//  ::ng-deep .mdc-text-field--outlined .mat-mdc-form-field-infix, .mdc-text-field--no-label .mat-mdc-form-field-infix {
+//    padding-top: -2.50em !important; 
+//   padding: -1.25em !important;
+   
+// }

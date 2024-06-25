@@ -8,7 +8,7 @@
       Mostrar todas las cajas
     </mat-slide-toggle>
 
-    <label>
+    <!-- <label>
       <select [(ngModel)]="selectedMapType" (change)="showAllMarkers=false">
         
         <option value="openstreetmap">OpenStreetMap</option>
@@ -17,7 +17,17 @@
         <option value="terrain">Terreno</option>
         <option value="hybrid">Híbrido</option>
       </select>    
-    </label>
+    </label> -->
+
+    <mat-form-field appearance="outline">
+      <mat-select disableRipple [(ngModel)]="selectedMapType" (valueChange)="showAllMarkers=false"  >
+        <mat-option value="openstreetmap">OpenStreetMap</mat-option>
+        <mat-option value="roadmap">Roadmap</mat-option>
+        <mat-option value="satellite">Satélite</mat-option>
+        <mat-option value="terrain">Terreno</mat-option>
+        <mat-option value="hybrid">Híbrido</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <!-- <h3>Coordenadas seleccionadas:</h3>
   <ul>
