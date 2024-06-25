@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.gridlayer.googlemutant'; // Importa el plugin
 import { MapleafService } from '../mapleaf.service';
@@ -11,12 +11,11 @@ import { GeocodingService } from '../geocoding.service';
   templateUrl: './mapleaf-multiple-view.component.html',
   styleUrls: ['./mapleaf-multiple-view.component.scss']
 })
-export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
   @Input() filterByRadius: boolean = false;
   @Input() dataPoints: DataPoint[] = [];
   @Input() showAllMarkers = true;
-  @Input() mapType: 'openstreetmap' | 'roadmap' | 'satellite' | 'terrain' | 'hybrid' = 'openstreetmap'; // propiedad entrada
 
   // Crear un icono personalizado
   customIcon = L.icon({
@@ -35,11 +34,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
   constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['mapType'] && !changes['mapType'].isFirstChange()) {
-      this.updateMapType();
-    }
-  }
+ 
 
   ngOnInit(): void {
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
@@ -173,21 +168,4 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   }
 
 
-  updateMapType() {
-    if (this.map) {
-      this.map.eachLayer(layer => {
-        this.map.removeLayer(layer);
-      });
-
-      if (this.mapType === 'openstreetmap') {
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(this.map);
-      } else {
-        L.gridLayer.googleMutant({
-          type: this.mapType // 'roadmap', 'satellite', 'terrain', 'hybrid'
-        }).addTo(this.map);
-      }
-    }
-  }
 }
