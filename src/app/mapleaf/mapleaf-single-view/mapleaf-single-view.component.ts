@@ -12,6 +12,15 @@ import { GeocodingService } from '../geocoding.service';
 export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDestroy  {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
 
+  // Crear un icono personalizado
+  customIcon = L.icon({
+    iconUrl: 'assets/icon-home.png', // Ruta al icono personalizado
+    shadowUrl: 'assets/marker-shadow.png',
+    shadowAnchor: [0, 50],
+    iconSize: [40, 45], // Tamaño del icono
+    iconAnchor: [12, 41], // Punto de anclaje del icono
+  });
+
   map!: L.Map;
   marker: L.Marker | null = null;
   coordinateSubscription!: Subscription;
@@ -77,7 +86,7 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
       this.map.removeLayer(this.marker);
     }
 
-    this.marker = L.marker(coordinates).addTo(this.map);
+    this.marker = L.marker(coordinates, { icon: this.customIcon }).addTo(this.map);
   }
   
 }

@@ -64,6 +64,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   id!: number;
   customer?: Customer;
 
+  address: string = '';
+
   constructor(public formulario: FormBuilder,
     private customerService: CustomerService,
     private contractService: ContractService,
@@ -96,6 +98,15 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     this.getRouters();
     this.getBoxs();
     this.getEquipments();
+
+    //Obtener la direccion
+    this.mapleafService.currentAddress.subscribe(address => {
+      this.address = address;
+      this.formContrato.patchValue({
+        addressInstallation: this.address,
+      });
+    });
+
 
   }
 
@@ -198,6 +209,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  
 
   //Setear direccion de cliente
   onCheckboxChange(checked: boolean) {

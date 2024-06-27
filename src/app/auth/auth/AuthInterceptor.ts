@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-   
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         const authToken = localStorage.getItem('token');
-        const externalToken = '546055cac6cf4b7ebb0ba79b86cd86ece522e23686314f7f848da2883d8af6ea';
+        const externalToken = '69b635947d4d68d2abe563031f29926a4a20bcc4f44db20d9cf028320bf4cfad';
 
         // Verifica si la URL es del endpoint externo
         if (request.url.includes('https://apiperu.dev/api')) {

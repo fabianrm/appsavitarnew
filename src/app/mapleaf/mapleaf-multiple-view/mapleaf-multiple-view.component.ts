@@ -115,7 +115,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
       this.centerMarker = L.marker(coordinates, { icon: this.customIcon }).addTo(this.map)
         .bindPopup(`<b>Cliente</b><br>Lat: ${coordinates[0]}<br>Lng: ${coordinates[1]}`);
-
+  
       // Obtener el nombre de la calle y actualizar el popup
       // this.geocodingService.getAddress(coordinates[0], coordinates[1]).subscribe(result => {
       //   if (result && result.address) {

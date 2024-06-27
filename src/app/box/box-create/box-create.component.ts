@@ -26,6 +26,8 @@ export class BoxCreateComponent implements OnInit, OnDestroy {
   coordinates: [number, number][] = [];
   coordinatesSubscription!: Subscription;
 
+  address: string = '';
+
 
   constructor(public formulario: FormBuilder,
     private boxService: BoxService,
@@ -53,6 +55,15 @@ export class BoxCreateComponent implements OnInit, OnDestroy {
       }
     });
     this.getCities();
+
+    //Obtener la direccion
+    this.mapleafService.currentAddress.subscribe(address => {
+      this.address = address;
+      this.formBox.patchValue({
+        address: this.address,
+      });
+    });
+
   }
 
   initForm() {
