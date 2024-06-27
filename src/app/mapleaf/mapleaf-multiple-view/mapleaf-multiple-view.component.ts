@@ -153,7 +153,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     dataPoints.forEach(dataPoint => {
       const marker = L.marker([dataPoint.coordinates[0], dataPoint.coordinates[1]])
         .addTo(this.map)
-        .bindPopup(`<b>${dataPoint.name}</b><br>Available Ports: ${dataPoint.availablePorts}`);
+        .bindPopup(`<b>${dataPoint.name}</b><br>Puertos disponibles: ${dataPoint.availablePorts}`);
       this.markers.push(marker);
     });
   }
