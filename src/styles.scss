@@ -56,11 +56,14 @@ body {
 //   color: var(--primary);
 // }
 
-th {
- font-weight: 800 !important;
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.8rem;
 }
 
-
+th {
+  font-weight: 600 !important;
+}
 
 .header-form {
   display: flex;
@@ -82,7 +85,7 @@ th {
 
 .mat-mdc-snack-bar-container {
   &.error-snackbar {
-    --mdc-snackbar-container-color: #9D3C3A;
+    --mdc-snackbar-container-color: #9d3c3a;
     --mat-mdc-snack-bar-button-color: #fff;
     --mdc-snackbar-supporting-text-color: #fff;
   }
@@ -90,7 +93,7 @@ th {
 
 .mat-mdc-snack-bar-container {
   &.success-snackbar {
-    --mdc-snackbar-container-color: #216E93;
+    --mdc-snackbar-container-color: #216e93;
     --mat-mdc-snack-bar-button-color: #fff;
     --mdc-snackbar-supporting-text-color: #fff;
   }
@@ -103,7 +106,6 @@ th {
     --mdc-snackbar-supporting-text-color: #fff;
   }
 }
-
 
 .status-active {
   display: flex;
@@ -140,8 +142,6 @@ th {
   background-color: rgb(116, 111, 111);
   color: #ffffff;
 }
-
-
 
 /* Importing Bootstrap SCSS file. */
 @import "bootstrap/scss/bootstrap";
