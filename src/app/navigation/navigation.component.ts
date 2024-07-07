@@ -4,6 +4,117 @@ import { Observable } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+
+interface MenuNode {
+  name: string;
+  icon: string;
+  route: string;
+  children?: MenuNode[];
+}
+
+
+const TREE_DATA: MenuNode[] = [
+  {
+    name: 'Inicio',
+    icon: 'home',
+    route: '/dashboard/home/home',
+    children: []
+  },
+  {
+    name: 'Factibilidad técnica',
+    icon: 'wifi_tethering',
+    route: '/dashboard/factibillity/factibillity-info',
+    children: []
+  },
+  {
+    name: 'Clientes',
+    icon: 'people',
+    route: '/dashboard/customer/customers',
+    children: []
+  },
+  {
+    name: 'Planes',
+    icon: 'cast_connected',
+    route: '/dashboard/plan/plans',
+    children: []
+  },
+  {
+    name: 'Routers',
+    icon: 'router',
+    route: '/dashboard/router/routers',
+    children: []
+  },
+  {
+    name: 'Cajas',
+    icon: 'inbox',
+    route: '/dashboard/box/boxes',
+    children: []
+  },
+  {
+    name: 'Equipos',
+    icon: 'devices',
+    route: '/dashboard/equipment/equipments',
+    children: []
+  },
+  {
+    name: 'Contratos',
+    icon: 'alternate_email',
+    route: '/dashboard/contract/contracts',
+    children: []
+  },
+  {
+    name: 'Facturación',
+    icon: 'credit_card',
+    route: '/dashboard/invoices/invoices',
+    children: []
+  },
+  {
+    name: 'Gastos',
+    icon: 'paid',
+    route: '',
+    children: [
+      {
+        name: 'Fijos',
+        icon: 'payments',
+        route: '/dashboard/expenses/fixes',
+        children: []
+      },
+      {
+        name: 'Variables',
+        icon: 'paid',
+        route: '/dashboard/expenses/variables',
+        children: []
+      }
+    ]
+  },
+  {
+    name: 'Reportes',
+    icon: 'bar_chart',
+    route: '',
+    children: [
+      {
+        name: 'Ventas por cliente',
+        icon: 'person',
+        route: '/dashboard/reports/client-sales',
+        children: []
+      },
+      {
+        name: 'Ventas por mes',
+        icon: 'date_range',
+        route: '/dashboard/reports/monthly-sales',
+        children: []
+      }
+    ]
+  }
+];
+
+
+
+
+
+
 
 @Component({
   selector: 'app-navigation',
@@ -15,12 +126,29 @@ export class NavigationComponent implements OnInit {
   currentTitle: string = 'ISP CRM';
   @HostBinding('class') class: string = '';
   isDark: boolean = false;
-  panelOpenState = false;
+
+  treeControl = new NestedTreeControl<MenuNode>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<MenuNode>();
+
+  treeData = TREE_DATA;
+  isExpanded = true;
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private renderer: Renderer2) { }
+    private renderer: Renderer2) {
+    this.dataSource.data = TREE_DATA;
+  }
+
+
+  hasChild = (_: number, node: MenuNode) => !!node.children && node.children.length > 0;
+
+  toggleMenu() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  
+
 
 
   ngOnInit() {
@@ -33,15 +161,18 @@ export class NavigationComponent implements OnInit {
 
     this.isDark = localStorage.getItem('theme') == 'dark';
     this.setTheme(this.isDark);
+
+    
   }
+
   private breakpointObserver = inject(BreakpointObserver);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
-    );
-
+  );
+  
 
   getTitle(route: ActivatedRouteSnapshot): string {
     let title = route.data['title'] || 'appsavitar';

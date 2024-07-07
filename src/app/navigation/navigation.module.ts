@@ -10,13 +10,15 @@ import { RouterModule } from '@angular/router';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
   declarations: [
     NavigationComponent,
   ],
   imports: [
-    CommonModule,
+
+  CommonModule,
     RouterModule,
     MatToolbarModule,
     MatButtonModule,
@@ -26,6 +28,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatSlideToggle,
     MatMenuModule,
     MatExpansionModule,
+    MatTreeModule
 
 
   ]

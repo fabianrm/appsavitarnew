@@ -2,161 +2,63 @@
   <mat-sidenav
     #drawer
     fixedInViewport
+    class="dark-theme"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
-    class="dark-theme"
+    [ngClass]="isExpanded ? 'sidenav' : '.sidenav.mat-drawer-closed'"
   >
-    <mat-toolbar>
-      <span>Savitar</span>
+    <mat-toolbar class="toolbar">
+      <span *ngIf="isExpanded">Savitar</span>
+
+      <button mat-icon-button (click)="toggleMenu()">
+        <mat-icon>{{ isExpanded ? "close" : "menu" }}</mat-icon>
+      </button>
     </mat-toolbar>
-    <mat-accordion>
-      <mat-nav-list>
-        <mat-list-item
-          routerLinkActive="active-link"
-          [routerLink]="['/dashboard/home/home']"
-        >
-          <mat-icon matListItemIcon>dashboard</mat-icon>
-          <span matListItemTitle>Inicio</span>
-        </mat-list-item>
 
-         <mat-list-item
-          routerLinkActive="active-link"
-          [routerLink]="['/dashboard/factibillity/factibillity-info']"
-        >
-          <mat-icon matListItemIcon>wifi_tethering</mat-icon>
-          <span matListItemTitle>Factibilidad técnica</span>
+    <mat-tree
+      [dataSource]="dataSource"
+      [treeControl]="treeControl"
+      class="full-height"
+    >
+      <mat-tree-node
+        *matTreeNodeDef="let node"
+        matTreeNodePadding
+        routerLinkActive="active-link"
+      >
+        <mat-list-item [routerLink]="[node.route]">
+          <mat-icon matListItemIcon>{{ node.icon }}</mat-icon>
+          <span matListItemTitle *ngIf="isExpanded">{{ node.name }}</span>
+         
         </mat-list-item>
+      </mat-tree-node>
 
+      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+        <div matTreeNodeToggle matTreeNodePadding >
+          <mat-list-item>
+            <mat-icon matListItemIcon style="margin-right: 8px;">{{treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}</mat-icon>
+            <mat-icon matListItemIcon >{{ node.icon }}</mat-icon>
+            <span matListItemTitle class="menu-text" *ngIf="isExpanded">{{  node.name }}</span>
+          </mat-list-item>
+        </div>
 
-        <mat-list-item
-          routerLinkActive="active-link"
-          [routerLink]="['/dashboard/customer/customers']"
-        >
-          <mat-icon matListItemIcon>people</mat-icon>
-          <span matListItemTitle>Clientes</span>
-        </mat-list-item>
-        <mat-list-item
-          routerLinkActive="active-link"
-          [routerLink]="['/dashboard/plan/plans']"
-        >
-          <mat-icon matListItemIcon>cast_connected</mat-icon>
-          <span matListItemTitle>Planes</span>
-        </mat-list-item>
-        <mat-list-item
-          routerLinkActive="active-link"
-          [routerLink]="['/dashboard/router/routers']"
-        >
-          <mat-icon matListItemIcon>router</mat-icon>
-          <span matListItemTitle>Routers</span>
-        </mat-list-item>
-        <mat-list-item
-          routerLinkActive="active-link"
-          [routerLink]="['/dashboard/box/boxes']"
-        >
-          <mat-icon matListItemIcon>inbox</mat-icon>
-          <span matListItemTitle>Cajas</span>
-        </mat-list-item>
-        <mat-list-item
-          routerLinkActive="active-link"
-          [routerLink]="['/dashboard/equipment/equipments']"
-        >
-          <mat-icon matListItemIcon>devices</mat-icon>
-          <span matListItemTitle>Equipos</span>
-        </mat-list-item>
-        <mat-list-item
-          routerLinkActive="active-link"
-          [routerLink]="['/dashboard/contract/contracts']"
-        >
-          <mat-icon matListItemIcon>alternate_email</mat-icon>
-          <span matListItemTitle>Contratos</span>
-        </mat-list-item>
-        <mat-list-item
-          routerLinkActive="active-link"
-          [routerLink]="['/dashboard/invoices/invoices']"
-        >
-          <mat-icon matListItemIcon>credit_card</mat-icon>
-          <span matListItemTitle>Facturación</span>
-        </mat-list-item>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title class="menu-item">
-              <mat-icon>account_balance</mat-icon>
-              <span>Gastos</span>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-nav-list>
-            <mat-list-item
-              class="submenu-item"
-              routerLinkActive="active-link"
-              [routerLink]="['/dashboard/expenses/fixes']"
-            >
-              <mat-icon matListItemIcon>payments</mat-icon>
-              <span matListItemTitle>Gastos fijos</span>
+        <div *ngIf="treeControl.isExpanded(node)">
+          <mat-tree-node
+            *ngFor="let child of node.children"
+            matTreeNodePadding
+            style="margin-left: 16px"
+            routerLinkActive="active-link"
+          >
+            <mat-list-item [routerLink]="[child.route]">
+              <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
+              <span matListItemTitle class="menu-text" *ngIf="isExpanded">{{
+                child.name
+              }}</span>
             </mat-list-item>
-
-            <mat-list-item
-              class="submenu-item"
-              routerLinkActive="active-link"
-              [routerLink]="['/dashboard/expenses/variables']"
-            >
-              <mat-icon matListItemIcon>paid</mat-icon>
-              <span matListItemTitle>Gastos variables</span>
-            </mat-list-item>
-            <mat-list-item
-              class="submenu-item"
-              routerLinkActive="active-link"
-              [routerLink]="['/dashboard/reason/reasons']"
-            >
-              <mat-icon matListItemIcon>add_business</mat-icon>
-              <span matListItemTitle>Categorías</span>
-            </mat-list-item>
-
-            <!-- Agrega más submenús según sea necesario -->
-          </mat-nav-list>
-        </mat-expansion-panel>
-
-        <!-- Reportes -->
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title class="menu-item">
-              <mat-icon>group</mat-icon>
-              <span>Reportes</span>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title class="menu-item">
-                <mat-icon>price_change</mat-icon>
-                <span>Balance</span>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-nav-list>
-              <mat-list-item
-                class="submenu-item"
-                routerLinkActive="active-link"
-                [routerLink]="['/dashboard/invoices/report']"
-              >
-                <mat-icon matListItemIcon>list</mat-icon>
-                <span matListItemTitle>Ingresos</span>
-              </mat-list-item>
-
-              <mat-list-item
-                class="submenu-item"
-                routerLinkActive="active-link"
-                [routerLink]="['/dashboard/expenses/report']"
-              >
-                <mat-icon matListItemIcon>paid</mat-icon>
-                <span matListItemTitle>Egresos</span>
-              </mat-list-item>
-
-              <!-- Agrega más submenús según sea necesario -->
-            </mat-nav-list>
-          </mat-expansion-panel>
-        </mat-expansion-panel>
-      </mat-nav-list>
-    </mat-accordion>
+          </mat-tree-node>
+        </div>
+      </mat-nested-tree-node>
+    </mat-tree>
   </mat-sidenav>
 
   <mat-sidenav-content>
