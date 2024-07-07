@@ -23,8 +23,8 @@ export interface Service {
     reference: string;
     registrationDate: Date;
     installationDate: Date;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     billingDate: null;
     dueDate: null;
     status: string;

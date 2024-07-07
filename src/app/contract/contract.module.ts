@@ -5,7 +5,7 @@ import { ContractListComponent } from './contract-list/contract-list.component';
 import { ContractRoutingModule } from './contract-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
@@ -61,6 +61,7 @@ import { ContractDetailComponent } from './contract-detail/contract-detail.compo
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
+    MatCardSubtitle,
     MatSelectModule,
     MatOptionModule,
     MatSlideToggleModule,

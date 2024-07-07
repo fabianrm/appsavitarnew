@@ -1,3 +1,90 @@
-<div class="container">
-    <h2>Detalle de contrato {{contract?.serviceCode}}</h2>
+<!-- contrato-detalle.component.html -->
+<div class="container my-4">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Detalles del Contrato</mat-card-title>
+      <mat-card-subtitle>{{ contract?.customerName }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <strong>Código de Servicio:</strong> {{ contract?.serviceCode }}
+          </div>
+          <div class="mb-3">
+            <strong>Plan:</strong> {{ contract?.planName }}
+          </div>
+          <div class="mb-3">
+            <strong>Fecha de Registro:</strong> {{ contract?.registrationDate }}
+          </div>
+          <div class="mb-3">
+            <strong>Fecha de Instalación:</strong>
+            {{ contract?.installationDate }}
+          </div>
+          <div class="mb-3"><strong>Ciudad:</strong> {{ contract?.city }}</div>
+          <div class="mb-3">
+            <strong>Dirección:</strong> {{ contract?.addressInstallation }}
+          </div>
+          <div class="mb-3">
+            <strong>Referencia:</strong> {{ contract?.reference }}
+          </div>
+          <div class="mb-3">
+            <strong>Latitud:</strong> {{ contract?.latitude }}
+          </div>
+          <div class="mb-3">
+            <strong>Longitud:</strong> {{ contract?.longitude }}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <strong>Router ID:</strong> {{ contract?.routerId }}
+          </div>
+          <div class="mb-3">
+            <strong>IP del Router:</strong> {{ contract?.routerIp }}
+          </div>
+          <div class="mb-3"><strong>VLAN:</strong> {{ contract?.vlan }}</div>
+          <div class="mb-3"><strong>Caja:</strong> {{ contract?.boxName }}</div>
+          <div class="mb-3">
+            <strong>Puerto:</strong> {{ contract?.portNumber }}
+          </div>
+          <div class="mb-3">
+            <strong>Equipo ID:</strong> {{ contract?.equipmentId }}
+          </div>
+          <div class="mb-3">
+            <strong>Serie del Equipo:</strong> {{ contract?.equipmentSerie }}
+          </div>
+          <div class="mb-3">
+            <strong>Usuario PPPoE:</strong> {{ contract?.userPppoe }}
+          </div>
+          <div class="mb-3">
+            <strong>Contraseña PPPoE:</strong> {{ contract?.passPppoe }}
+          </div>
+          <div class="mb-3">
+            <!-- <strong>Observaciones:</strong> {{ contract?.observation ? contract?.observation : 'N/A' }} -->
+          </div>
+          <div class="mb-3">
+            <strong>Estado:</strong> {{ contract?.status }}
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+ 
+<mat-card class="container-map">
+    <mat-card-content class="center-content">
+      <app-mapleaf-loading
+        *ngIf="!locationReady; else mapReady"
+        class="full-size"
+      ></app-mapleaf-loading>
+
+      <ng-template #mapReady>
+        <div class="mapa">
+          <app-mapleaf-single-view></app-mapleaf-single-view>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+
+  
 </div>
