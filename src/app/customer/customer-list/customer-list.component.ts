@@ -7,12 +7,11 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Customer } from '../Models/CustomerResponse';
 import { saveAs } from 'file-saver';
-import Swal from 'sweetalert2';
 import { ContractsListComponent } from '../contracts-list/contracts-list.component';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 import { CustomerSuspendComponent } from '../customer-suspend/customer-suspend.component';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',

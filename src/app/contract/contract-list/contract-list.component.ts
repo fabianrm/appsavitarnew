@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Subscription, startWith } from 'rxjs';
 import { ContractService } from '../contract.service';
 import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-plan.component';
 import { Service } from '../Models/ServiceResponse';
@@ -11,7 +11,8 @@ import { ChangePortComponent } from '../change-port/change-port.component';
 import { ContractSuspendComponent } from '../contract-suspend/contract-suspend.component';
 import { ChangeEquipmentComponent } from '../change-equipment/change-equipment.component';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 
 @Component({
@@ -33,7 +34,10 @@ export class ContractListComponent implements OnInit {
   public respuesta!: Service[];
   public contrato!: Service[];
 
-  constructor(private contractService: ContractService, public dialog: MatDialog, private router: Router) { }
+  constructor(
+    private contractService: ContractService,
+    public dialog: MatDialog, private router: Router,
+    private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     this.getContracts();
@@ -83,7 +87,7 @@ export class ContractListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-   // dialogConfig.width = '40%';
+    // dialogConfig.width = '40%';
     dialogConfig.data = row;
     this.dialog.open(ContractEditPlanComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
@@ -103,6 +107,34 @@ export class ContractListComponent implements OnInit {
     this.dialog.open(ContractSuspendComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
   }
+
+
+  deleteService(id: number) {
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "No podrá recuperar el contrato después de eliminar!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, eliminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.contractService.deleteContract(id).subscribe((respuesta) => {
+        
+          if (respuesta.status == true) {
+            this.snackbarService.showSuccess(`✅${respuesta.message}`);
+          } else {
+            this.snackbarService.showError(`☹️ Ocurrio un error: ${respuesta.message}`);
+          }
+        }, error => {
+          this.snackbarService.showError(`☹️ Ocurrio un error al eliminar el contrato`);
+          console.log('Error al eliminar el cliente', error.message);
+        });
+      }
+    });
+  }
+
 
   viewMap(latitude: string, longitude: string) {
     window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");
@@ -141,6 +173,16 @@ export class ContractListComponent implements OnInit {
   viewDetail(id: number) {
     this.router.navigate(['/dashboard/contract/contract-detail/' + id]); // Navega al detalle del contrato
   }
+
+
+  showError() {
+    this.snackbarService.showError('☹️ Cliente ya se encuentra registrado');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Cliente agregado correctamente');
+  }
+
 
 
 

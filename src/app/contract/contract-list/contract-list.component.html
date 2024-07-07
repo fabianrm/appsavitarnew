@@ -129,19 +129,29 @@
               mat-menu-item
               (click)="inactiveService(row)"
             >
-             <mat-icon matListItemIcon>wifi_off</mat-icon>
+              <mat-icon matListItemIcon>wifi_off</mat-icon>
               Suspender
             </button>
             <button
               mat-menu-item
               (click)="viewMap(row.latitude, row.longitude)"
             >
-             <mat-icon matListItemIcon>location_on</mat-icon>
+              <mat-icon matListItemIcon>location_on</mat-icon>
               Ver Mapa
             </button>
             <button mat-menu-item (click)="viewDetail(row.id)">
               <mat-icon matListItemIcon>info</mat-icon>
-              Ver Detalle</button>
+              Ver Detalle
+            </button>
+
+            <button
+              [disabled]="row.status === 'terminado'"
+              mat-menu-item
+              (click)="deleteService(row.id)"
+            >
+              <mat-icon matListItemIcon>delete</mat-icon>
+              Eliminar Contrato
+            </button>
           </mat-menu>
         </td>
       </ng-container>
