@@ -126,7 +126,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   fetchCustomerDetails(id: number) {
     this.customerService.getCustomerById(id).subscribe((respuesta) => {
       this.dataCustomer = respuesta.data;
-      console.log(this.dataCustomer);
+     // console.log(this.dataCustomer);
       
       //Llenamos el formEdit
       this.formCliente.patchValue({

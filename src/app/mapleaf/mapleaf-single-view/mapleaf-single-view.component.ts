@@ -9,7 +9,7 @@ import { GeocodingService } from '../geocoding.service';
   templateUrl: './mapleaf-single-view.component.html',
   styleUrl: './mapleaf-single-view.component.scss'
 })
-export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDestroy  {
+export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
 
   // Crear un icono personalizado
@@ -26,12 +26,14 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
   coordinateSubscription!: Subscription;
 
   constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
-  
+
   ngOnInit(): void {
     this.coordinateSubscription = this.coordinateService.currentCoordinates.subscribe(coordinates => {
       if (coordinates.length > 0) {
         this.setMarker(coordinates[0]);
-        this.moveToLocation(coordinates[0]);
+        setTimeout(() => {
+          this.moveToLocation(coordinates[0]);
+        }, 50);
       }
     });
 
@@ -55,7 +57,7 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
 
   initializeMap() {
     this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907195, -81.057193], 16);
-    
+
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
@@ -82,7 +84,7 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
 
   setMarker(coordinates: [number, number]) {
     if (!this.map) return;
-    
+
     if (this.marker) {
       this.map.removeLayer(this.marker);
     }
@@ -94,5 +96,5 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
     this.map.setView(coords, 17);
   }
 
-  
+
 }

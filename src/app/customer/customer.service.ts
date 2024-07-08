@@ -85,7 +85,7 @@ export class CustomerService {
   }
 
   getCustomerById(id: number): Observable<CustomerResponseU> {
-    return this.clienteHttp.get<CustomerResponseU>(`${this.API}customers/${id}`, { headers: this.headers });
+    return this.clienteHttp.get<CustomerResponseU>(`${this.API}customers/${id}?includeServices=true`, { headers: this.headers });
   }
 
   getCustomerByDocument(document: string): Observable<any> {
