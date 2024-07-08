@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Customer } from '../Models/CustomerResponseU';
 
 
+
 @Component({
   selector: 'app-customer-details',
   templateUrl: './customer-details.component.html',
@@ -31,7 +32,7 @@ export class CustomerDetailsComponent implements OnInit {
     return this.locationService.locationReady;
   }
 
-  
+
   //Obtener customer por id
   getCustomerById() {
     this.route.paramMap.subscribe(params => {
@@ -50,7 +51,7 @@ export class CustomerDetailsComponent implements OnInit {
   fetchCustomerDetails(id: number) {
     this.customerService.getCustomerById(id).subscribe((respuesta) => {
       this.dataCustomer = respuesta.data;
-     // console.log(this.dataCustomer);
+      console.log(this.dataCustomer);
       this.setNewCoordinates(this.dataCustomer.latitude, this.dataCustomer.longitude);
     });
   }
@@ -61,5 +62,5 @@ export class CustomerDetailsComponent implements OnInit {
     this.mapleafService.setSingleCoordinate(singleCoordinate);
   }
 
- 
+
 }

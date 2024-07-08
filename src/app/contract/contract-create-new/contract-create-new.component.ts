@@ -19,7 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Equipment } from '../../equipment/Models/EquipmentResponse';
 import { PlacesService } from '../../mapleaf/places.service';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
-import { Customer } from '../../customer/Models/CustomerResponseU';
+import { Customer } from '../../customer/Models/CustomerResponseU_bak';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 
 
@@ -167,9 +167,9 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       this.selectedBox = typeof value === 'object' ? value : null;
       if (this.selectedBox !== null) {
         this.getPorts(this.selectedBox.id);
-     }
-     // console.log(this.selectedBox?.id);
-      
+      }
+      // console.log(this.selectedBox?.id);
+
     });
 
     //Filtrar combo box por name 
@@ -210,7 +210,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   }
 
 
-  
+
 
   //Setear direccion de cliente
   onCheckboxChange(checked: boolean) {
@@ -362,7 +362,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     return box ? box.id : null;
   }
 
-//Localizacion del equipo
+  //Localizacion del equipo
   get locationReady() {
     return this.locationService.locationReady;
   }

@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Service } from '../../contract/Models/ServiceResponse';
 import { ContractSuspendComponent } from '../../contract/contract-suspend/contract-suspend.component';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
-import { Customer } from '../Models/CustomerResponseU';
+import { Customer } from '../Models/CustomerResponseU_bak';
 
 @Component({
   selector: 'app-customer-suspend',

@@ -12,7 +12,8 @@
             <strong>Código de Cliente:</strong> {{ dataCustomer?.customerCode }}
           </div>
           <div class="mb-3">
-            <strong>Número de Documento:</strong> {{ dataCustomer?.documentNumber }}
+            <strong>Número de Documento:</strong>
+            {{ dataCustomer?.documentNumber }}
           </div>
           <div class="mb-3">
             <strong>Nombre de Cliente:</strong> {{ dataCustomer?.customerName }}
@@ -21,18 +22,12 @@
             <strong>Ciudad:</strong>
             {{ dataCustomer?.city }}
           </div>
-        
+
           <div class="mb-3">
             <strong>Dirección:</strong> {{ dataCustomer?.address }}
           </div>
           <div class="mb-3">
             <strong>Referencia:</strong> {{ dataCustomer?.reference }}
-          </div>
-          <div class="mb-3">
-            <strong>Latitud:</strong> {{ dataCustomer?.latitude }}
-          </div>
-          <div class="mb-3">
-            <strong>Longitud:</strong> {{ dataCustomer?.longitude }}
           </div>
         </div>
         <div class="col-md-6">
@@ -42,13 +37,20 @@
           <div class="mb-3">
             <strong>Email:</strong> {{ dataCustomer?.email }}
           </div>
-          <div class="mb-3"><strong>Ultima actualización:</strong> {{ dataCustomer?.updated_at | date }}</div>
-          
-          
           <div class="mb-3">
-            <strong>Número de Contratos:</strong> {{ dataCustomer?.totalContracts ? dataCustomer?.totalContracts : 'N/A' }}
+            <strong>Ultima actualización:</strong>
+            {{ dataCustomer?.updated_at | date }}
           </div>
-          <div class="mb-3 estado" >
+
+          <div class="mb-3">
+            <strong>Número de Contratos:</strong>
+            {{
+              dataCustomer?.totalContracts
+                ? dataCustomer?.totalContracts
+                : "N/A"
+            }}
+          </div>
+          <div class="mb-3 estado">
             <strong>Estado:</strong>
             <span
               [ngClass]="{
@@ -62,9 +64,39 @@
           </div>
         </div>
       </div>
+      <!-- Contratos -->
+     <div class="mt-2">
+        <h4><strong>Contratos:</strong></h4>
+        <table *ngIf="dataCustomer?.service!.length > 0; else noContracts" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Cod. Contrato</th>
+              <th>Plan</th>
+              <th>Dir. de Instalación</th>
+              <th>Fec. Instalación</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let contract of dataCustomer?.service">
+              <td>{{ contract.serviceCode }}</td>
+              <td>{{ contract.planName }}</td>
+              <td>{{ contract.addressInstallation }}</td>
+              <td>{{ contract.installationDate | date }}</td>
+              <td>{{ contract.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noContracts>
+          <div class="alert alert-info" role="alert">
+            Sin contratos
+          </div>
+        </ng-template>
+      </div>
     </mat-card-content>
   </mat-card>
 
+   <!-- Mapa -->
   <mat-card class="container-map">
     <mat-card-content class="center-content">
       <app-mapleaf-loading

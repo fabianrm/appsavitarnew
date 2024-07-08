@@ -6,7 +6,7 @@ import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 import { PlacesService } from '../../mapleaf/places.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Customer } from '../Models/CustomerResponseU';
+import { Customer } from '../Models/CustomerResponseU_bak';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { Subscription } from 'rxjs';
@@ -126,8 +126,8 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   fetchCustomerDetails(id: number) {
     this.customerService.getCustomerById(id).subscribe((respuesta) => {
       this.dataCustomer = respuesta.data;
-     // console.log(this.dataCustomer);
-      
+      // console.log(this.dataCustomer);
+
       //Llenamos el formEdit
       this.formCliente.patchValue({
         type: this.dataCustomer.type,
