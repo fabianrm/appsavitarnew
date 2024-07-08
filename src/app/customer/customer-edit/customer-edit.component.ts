@@ -114,7 +114,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
       const idParam = params.get('id');
       if (idParam !== null) {
         this.id = +idParam; // Usa el símbolo "+" para convertir a número
-        this.fetchCustomerDetails(this.id); // Llama a la función para obtener los detalles del box
+        this.fetchCustomerDetails(this.id); // Llama a la función para obtener los detalles del cliente
       } else {
         // Manejar el caso cuando idParam es null, asignando un valor por defecto o manejando el error
         console.error('ID parameter is null');
@@ -126,6 +126,8 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   fetchCustomerDetails(id: number) {
     this.customerService.getCustomerById(id).subscribe((respuesta) => {
       this.dataCustomer = respuesta.data;
+      console.log(this.dataCustomer);
+      
       //Llenamos el formEdit
       this.formCliente.patchValue({
         type: this.dataCustomer.type,

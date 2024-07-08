@@ -1,21 +1,82 @@
-<div class="container-map">
-  <div class="filter-section">
-    <mat-slide-toggle [(ngModel)]="showAllMarkers" (change)="toggleMarkers()" class="toogle-margin">
-      Mostrar todas las cajas
-    </mat-slide-toggle>
-  </div>
-  <!-- <h3>Coordenadas seleccionadas:</h3>
-  <ul>
-    <li *ngFor="let coordinate of filteredDataPoints">
-      Nombre: {{ coordinate.name }}, Puertos Disponibles: {{ coordinate.availablePorts }}
-    </li>
-  </ul> -->
+<!-- contrato-detalle.component.html -->
+<div class="container my-4">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Detalles del Cliente</mat-card-title>
+      <mat-card-subtitle>{{ dataCustomer?.customerName }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <strong>Código de Cliente:</strong> {{ dataCustomer?.customerCode }}
+          </div>
+          <div class="mb-3">
+            <strong>Número de Documento:</strong> {{ dataCustomer?.documentNumber }}
+          </div>
+          <div class="mb-3">
+            <strong>Nombre de Cliente:</strong> {{ dataCustomer?.customerName }}
+          </div>
+          <div class="mb-3">
+            <strong>Ciudad:</strong>
+            {{ dataCustomer?.city }}
+          </div>
+        
+          <div class="mb-3">
+            <strong>Dirección:</strong> {{ dataCustomer?.address }}
+          </div>
+          <div class="mb-3">
+            <strong>Referencia:</strong> {{ dataCustomer?.reference }}
+          </div>
+          <div class="mb-3">
+            <strong>Latitud:</strong> {{ dataCustomer?.latitude }}
+          </div>
+          <div class="mb-3">
+            <strong>Longitud:</strong> {{ dataCustomer?.longitude }}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <strong>Teléfono:</strong> {{ dataCustomer?.phoneNumber }}
+          </div>
+          <div class="mb-3">
+            <strong>Email:</strong> {{ dataCustomer?.email }}
+          </div>
+          <div class="mb-3"><strong>Ultima actualización:</strong> {{ dataCustomer?.updated_at | date }}</div>
+          
+          
+          <div class="mb-3">
+            <!-- <strong>Observaciones:</strong> {{ dataCustomer?.observation ? dataCustomer?.observation : 'N/A' }} -->
+          </div>
+          <div class="mb-3 estado" >
+            <strong>Estado:</strong>
+            <span
+              [ngClass]="{
+                'status-active': dataCustomer?.status == true,
+                'status-inactive': dataCustomer?.status == false
+              }"
+              >{{
+                dataCustomer?.status == false ? "Suspendido" : "Activo"
+              }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-  <div class="map-container">
-    <app-mapleaf-multiple-view
-      [dataPoints]="dataPoints"
-      [filterByRadius]="!showAllMarkers"
-      [showAllMarkers]="showAllMarkers"
-    ></app-mapleaf-multiple-view>
-  </div>
+  <mat-card class="container-map">
+    <mat-card-content class="center-content">
+      <app-mapleaf-loading
+        *ngIf="!locationReady; else mapReady"
+        class="full-size"
+      ></app-mapleaf-loading>
+
+      <ng-template #mapReady>
+        <div class="mapa">
+          <app-mapleaf-single-view></app-mapleaf-single-view>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
 </div>

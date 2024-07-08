@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
-import { DataPoint } from '../../mapleaf/Models/DataPoint';
-import { BoxService } from '../../box/box.service';
+import { CustomerService } from '../customer.service';
+import { PlacesService } from '../../mapleaf/places.service';
+import { ActivatedRoute } from '@angular/router';
+import { Customer } from '../Models/CustomerResponseU';
+
 
 @Component({
   selector: 'app-customer-details',
@@ -9,51 +12,54 @@ import { BoxService } from '../../box/box.service';
   styleUrls: ['./customer-details.component.scss']
 })
 export class CustomerDetailsComponent implements OnInit {
-  dataPoints: DataPoint[] = [];
-  filteredDataPoints: DataPoint[] = [];
-  showAllMarkers: boolean = true;
 
-  constructor(private coordinateService: MapleafService, private boxService: BoxService) { }
+
+  id!: number;
+  dataCustomer?: Customer;
+
+  constructor(
+    private route: ActivatedRoute,
+    private customerService: CustomerService,
+    private locationService: PlacesService,
+    private mapleafService: MapleafService,) { }
 
   ngOnInit(): void {
-    this.coordinateService.currentDataPoints.subscribe(dataPoints => {
-      this.filteredDataPoints = dataPoints;
-     // console.log('Nuevas coordenadas filtradas:', dataPoints);
+    this.getCustomerById();
+  }
+
+  get locationReady() {
+    return this.locationService.locationReady;
+  }
+
+
+  //Obtener customer por id
+  getCustomerById() {
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('id');
+      if (idParam !== null) {
+        this.id = +idParam; // Usa el símbolo "+" para convertir a número
+        this.fetchCustomerDetails(this.id); // Llama a la función para obtener los detalles del cliente
+      } else {
+        // Manejar el caso cuando idParam es null, asignando un valor por defecto o manejando el error
+        console.error('ID parameter is null');
+      }
     });
-    this.getCoords();
   }
 
-  getCoords() {
-    this.boxService.getBoxes().subscribe(response => {
-      this.dataPoints = response.data.map((item: any) => ({
-        id: item.id,
-        name: item.name,
-        availablePorts: item.availablePorts,
-        status: item.status,
-        coordinates: [parseFloat(item.coordinates[0]), parseFloat(item.coordinates[1])]
-      }));
 
-      // Actualizamos los puntos de datos en el servicio cuando se obtienen
-      this.coordinateService.changeDataPoints(this.dataPoints);
+  fetchCustomerDetails(id: number) {
+    this.customerService.getCustomerById(id).subscribe((respuesta) => {
+      this.dataCustomer = respuesta.data;
+    //  console.log(this.dataCustomer);
+      this.setNewCoordinates(this.dataCustomer.latitude, this.dataCustomer.longitude);
     });
   }
 
-  toggleMarkers() {
-    
-    if (this.showAllMarkers) {
-      this.coordinateService.changeDataPoints(this.dataPoints);
-    } else {
-      this.coordinateService.clearCoordinates();
-      this.coordinateService.changeDataPoints([]); // Esto limpiará los marcadores
-     // this.coordinateService.changeDataPoints(this.dataPoints);
-    }
+  //Setear coordenadas (edit)
+  setNewCoordinates(long: number, lat: number) {
+    const singleCoordinate: [number, number] = [long, lat];
+    this.mapleafService.setSingleCoordinate(singleCoordinate);
   }
 
-  filterCoordinates(center: [number, number]) {
-    if (!this.showAllMarkers) {
-      const filteredCoords = this.coordinateService.filterCoordinatesWithinRadius(center, 100, this.dataPoints);
-      this.coordinateService.changeDataPoints(filteredCoords);
-    
-    }
-  }
+ 
 }

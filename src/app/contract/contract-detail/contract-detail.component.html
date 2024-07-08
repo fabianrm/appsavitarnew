@@ -62,16 +62,24 @@
           <div class="mb-3">
             <!-- <strong>Observaciones:</strong> {{ contract?.observation ? contract?.observation : 'N/A' }} -->
           </div>
-          <div class="mb-3">
-            <strong>Estado:</strong> {{ contract?.status }}
+          <div class="mb-3 estado" >
+            <strong>Estado:</strong>
+            <span
+              [ngClass]="{
+                'status-active': contract?.status == 'activo',
+                'status-inactive': contract?.status == 'suspendido'
+              }"
+              >{{
+                contract?.status == "suspendido" ? "Suspendido" : "Activo"
+              }}</span
+            >
           </div>
         </div>
       </div>
     </mat-card-content>
   </mat-card>
 
- 
-<mat-card class="container-map">
+  <mat-card class="container-map">
     <mat-card-content class="center-content">
       <app-mapleaf-loading
         *ngIf="!locationReady; else mapReady"
@@ -85,6 +93,4 @@
       </ng-template>
     </mat-card-content>
   </mat-card>
-
-  
 </div>

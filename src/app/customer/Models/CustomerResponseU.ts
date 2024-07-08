@@ -18,6 +18,6 @@ export interface Customer {
     email: string;
     status: boolean;
     createdAt: Date;
-    updatedAt: Date;
+    updated_at: Date;
     totalContracts: number;
 }

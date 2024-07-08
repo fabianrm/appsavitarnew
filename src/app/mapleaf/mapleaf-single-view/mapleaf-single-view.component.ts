@@ -31,6 +31,7 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
     this.coordinateSubscription = this.coordinateService.currentCoordinates.subscribe(coordinates => {
       if (coordinates.length > 0) {
         this.setMarker(coordinates[0]);
+        this.moveToLocation(coordinates[0]);
       }
     });
 
@@ -88,5 +89,10 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
 
     this.marker = L.marker(coordinates, { icon: this.customIcon }).addTo(this.map);
   }
+
+  moveToLocation(coords: [number, number]): void {
+    this.map.setView(coords, 17);
+  }
+
   
 }

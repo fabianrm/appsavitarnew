@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -54,6 +54,7 @@ import { CustomerSuspendComponent } from './customer-suspend/customer-suspend.co
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
+    MatCardSubtitle,
     MatSelectModule,
     MatOptionModule,
     MatSlideToggleModule,
