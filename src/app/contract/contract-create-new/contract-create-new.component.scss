@@ -79,3 +79,25 @@ mat-card-title {
   position: relative;
 }
 
+//Precio
+.span-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+
+}
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 767px) {
+  .container-map {
+    margin-top: 5px;
+    height: 300px; /* Ajusta esta altura según tus necesidades */
+  }
+
+  mat-card{
+    margin-top: 2px;
+  }
+
+  mat-form-field{
+    margin-top: 5px;
+  }
+}
