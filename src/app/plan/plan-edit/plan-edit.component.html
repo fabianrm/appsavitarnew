@@ -9,14 +9,14 @@
     </mat-card-header>
     <mat-card-content>
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Nombre</mat-label>
             <input matInput placeholder="Nombre" formControlName="name" />
           </mat-form-field>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-12 col-md-6">
           <mat-slide-toggle
             [color]="color"
             [checked]="checked"
@@ -27,13 +27,13 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Descarga</mat-label>
             <input matInput placeholder="Descarga" formControlName="download" />
           </mat-form-field>
         </div>
-        <div class="col-sm-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Subida</mat-label>
             <input matInput placeholder="Subida" formControlName="upload" />
@@ -41,13 +41,13 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Precio</mat-label>
             <input matInput placeholder="Precio" formControlName="price" />
           </mat-form-field>
         </div>
-        <div class="col-sm-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Velocidad garantizada</mat-label>
             <input
@@ -59,74 +59,65 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
+        <div class="col-12 col-md-6">
+         <mat-form-field>
             <mat-label>Prioridad</mat-label>
+            <mat-select [(value)]="selected" formControlName="priority">
+              <mat-option value="baja">Baja</mat-option>
+              <mat-option value="normal">Normal</mat-option>
+              <mat-option value="alta">Alta</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <h2>Avanzado</h2>
+
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <mat-form-field>
+            <mat-label>Burst limit</mat-label>
             <input
               matInput
-              placeholder="Prioridad"
-              formControlName="priority"
+              placeholder="Burst limit"
+              formControlName="burst_limit"
             />
           </mat-form-field>
         </div>
-
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title> Avanzado </mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div class="row">
-              <div class="col-sm-4">
-                <mat-form-field>
-                  <mat-label>Burst limit</mat-label>
-                  <input
-                    matInput
-                    placeholder="Burst limit"
-                    formControlName="burst_limit"
-                  />
-                </mat-form-field>
-              </div>
-              <div class="col-sm-4">
-                <mat-form-field>
-                  <mat-label>Burst Threshold</mat-label>
-                  <input
-                    matInput
-                    placeholder="Burst Threshold"
-                    formControlName="burst_threshold"
-                  />
-                </mat-form-field>
-              </div>
-              <div class="col-sm-4">
-                <mat-form-field>
-                  <mat-label>Burst Time</mat-label>
-                  <input
-                    matInput
-                    placeholder="Burst Time"
-                    formControlName="burst_time"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
+        <div class="col-12 col-md-4">
+          <mat-form-field>
+            <mat-label>Burst Threshold</mat-label>
+            <input
+              matInput
+              placeholder="Burst Threshold"
+              formControlName="burst_threshold"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4">
+          <mat-form-field>
+            <mat-label>Burst Time</mat-label>
+            <input
+              matInput
+              placeholder="Burst Time"
+              formControlName="burst_time"
+            />
+          </mat-form-field>
+        </div>
       </div>
     </mat-card-content>
-
-    <mat-card-actions>
-      <div class="row-buttons">
-        <button
-          [disabled]="formEditPlan.invalid"
-          color="primary"
-          mat-raised-button
-          style="margin-right: 5px"
-        >
-          Guardar
-        </button>
-        <button mat-dialog-close="" color="accent" mat-raised-button>
-          Cancelar
-        </button>
-      </div>
-    </mat-card-actions>
   </mat-card>
+  <div class="row-buttons">
+    <button
+      [disabled]="formEditPlan.invalid"
+      color="primary"
+      mat-raised-button
+      style="margin-right: 5px"
+    >
+      Guardar
+    </button>
+    <button mat-dialog-close="" color="accent" mat-raised-button>
+      Cancelar
+    </button>
+  </div>
 </form>

@@ -2,9 +2,9 @@
     margin: 20px;
 }
 
-table {
+/* table {
     width: 100%;
-}
+} */
 
 .mat-header-row {
     background-color: #3F51B5;
@@ -22,13 +22,17 @@ table {
 
 mat-form-field {
     font-size: 14px;
-    width: 80%;
+    width: 100%;
+}
+
+button {
+    width: 100%;
 }
 
 .row-filter {
-   display: flex;
-   justify-content: space-between;
-   align-items:center;
+  margin: 5px;
+  display: flex;
+  align-items: center;
 }
 
 .row-acciones {
@@ -88,6 +92,46 @@ mat-form-field {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    height: 52px;
+height: 100%;
+  
 }
 
+/* Media Query para dispositivos móviles */
+@media (max-width: 767px) {
+
+
+  mat-form-field{
+    margin-top: 5px;
+  }
+
+  button {
+    margin-bottom: 5px;
+  }
+}
+
+
+/* Tabla responsive con stick */
+
+.table-container {
+  height: 100%;
+  width: 100vw;
+  max-width: 100%;
+  overflow: auto;
+}
+
+table {
+  width: 800px;
+}
+
+td.mat-column-acciones {
+  width: 20px;
+  padding-right: 8px;
+}
+
+.mat-mdc-table-sticky-border-elem-right {
+  border-left: 1px solid #e0e0e0;
+}
+
+.mat-mdc-table-sticky-border-elem-left {
+  border-right: 1px solid #e0e0e0;
+}

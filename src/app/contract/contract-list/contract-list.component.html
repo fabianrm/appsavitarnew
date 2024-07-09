@@ -13,7 +13,7 @@
     </mat-form-field>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- id Video -->
       <ng-container matColumnDef="id">
@@ -24,7 +24,7 @@
       </ng-container>
 
       <!-- Direccion Column -->
-      <ng-container matColumnDef="serviceCode">
+      <ng-container matColumnDef="serviceCode" sticky>
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Código</th>
         <td mat-cell *matCellDef="let element">{{ element.serviceCode }}</td>
       </ng-container>
@@ -93,7 +93,7 @@
       </ng-container>
 
       <!-- Acciones -->
-      <ng-container matColumnDef="acciones">
+      <ng-container matColumnDef="acciones" stickyEnd>
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row" style="text-align: right">
           <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -162,6 +162,7 @@
         *matRowDef="let row; columns: displayedColumns"
         [ngClass]="{ 'row-inactive': row.status === 'terminado' }"
       ></tr>
+      
     </table>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"

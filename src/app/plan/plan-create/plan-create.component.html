@@ -9,9 +9,12 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Nombre" formControlName="name"
-             #code 
-             (input)="code.value = code.value.toUpperCase()"
+            <input
+              matInput
+              placeholder="Nombre"
+              formControlName="name"
+              #code
+              (input)="code.value = code.value.toUpperCase()"
             />
           </mat-form-field>
         </div>
@@ -30,15 +33,25 @@
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Descarga</mat-label>
-            <input matInput placeholder="Descarga" formControlName="download" type="number"/>
+            <input
+              matInput
+              placeholder="Descarga"
+              formControlName="download"
+              type="number"
+            />
             <span matTextSuffix>Mbps</span>
           </mat-form-field>
         </div>
         <div class="col-sm-6">
           <mat-form-field>
             <mat-label>Subida</mat-label>
-            <input matInput placeholder="Subida" formControlName="upload" type="number" />
-             <span matTextSuffix>Mbps</span>
+            <input
+              matInput
+              placeholder="Subida"
+              formControlName="upload"
+              type="number"
+            />
+            <span matTextSuffix>Mbps</span>
           </mat-form-field>
         </div>
       </div>
@@ -47,7 +60,12 @@
           <mat-form-field>
             <mat-label>Precio</mat-label>
             <span matTextPrefix>S/. &nbsp;</span>
-            <input matInput placeholder="Precio" formControlName="price" type="number" />
+            <input
+              matInput
+              placeholder="Precio"
+              formControlName="price"
+              type="number"
+            />
           </mat-form-field>
         </div>
         <div class="col-sm-6">
@@ -59,7 +77,7 @@
               formControlName="guaranteedSpeed"
               type="number"
             />
-             <span matTextSuffix>Mbps</span>
+            <span matTextSuffix>Mbps</span>
           </mat-form-field>
         </div>
       </div>
@@ -74,67 +92,58 @@
             </mat-select>
           </mat-form-field>
         </div>
+      </div>
+      <h2>Avanzado:</h2>
 
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title> Avanzado </mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div class="row">
-              <div class="col-sm-4">
-                <mat-form-field>
-                  <mat-label>Burst limit</mat-label>
-                  <input
-                    matInput
-                    placeholder="Burst limit"
-                    formControlName="burstLimit"
-                    type="number"
-                  />
-                </mat-form-field>
-              </div>
-              <div class="col-sm-4">
-                <mat-form-field>
-                  <mat-label>Burst Threshold</mat-label>
-                  <input
-                    matInput
-                    placeholder="Burst Threshold"
-                    formControlName="burstThreshold"
-                    type="number"
-                  />
-                </mat-form-field>
-              </div>
-              <div class="col-sm-4">
-                <mat-form-field>
-                  <mat-label>Burst Time</mat-label>
-                  <input
-                    matInput
-                    placeholder="Burst Time"
-                    formControlName="burstTime"
-                    type="number"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
+      <div class="row">
+        <div class="col-sm-4">
+          <mat-form-field>
+            <mat-label>Burst limit</mat-label>
+            <input
+              matInput
+              placeholder="Burst limit"
+              formControlName="burstLimit"
+              type="number"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field>
+            <mat-label>Burst Threshold</mat-label>
+            <input
+              matInput
+              placeholder="Burst Threshold"
+              formControlName="burstThreshold"
+              type="number"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field>
+            <mat-label>Burst Time</mat-label>
+            <input
+              matInput
+              placeholder="Burst Time"
+              formControlName="burstTime"
+              type="number"
+            />
+          </mat-form-field>
+        </div>
       </div>
     </mat-card-content>
-
-    <mat-card-actions>
-      <div class="row-buttons">
-        <button
-          [disabled]="formCreate.invalid"
-          color="primary"
-          mat-raised-button
-          style="margin-right: 5px"
-        >
-          Guardar
-        </button>
-        <button mat-dialog-close="" color="accent" mat-raised-button>
-          Cancelar
-        </button>
-      </div>
-    </mat-card-actions>
   </mat-card>
+
+  <div class="row-buttons">
+    <button
+      [disabled]="formCreate.invalid"
+      color="primary"
+      mat-raised-button
+      style="margin-right: 5px"
+    >
+      Guardar
+    </button>
+    <button mat-dialog-close="" color="accent" mat-raised-button>
+      Cancelar
+    </button>
+  </div>
 </form>

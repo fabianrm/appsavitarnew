@@ -1,5 +1,5 @@
-.table-container {
-  margin: 10px;
+.contenedor{
+    margin: 20px;
 }
 
 mat-form-field {
@@ -7,9 +7,6 @@ mat-form-field {
   //margin: 10px;
 }
 
-table {
-  width: 100%;
-}
 
 button {
   width: 100%;
@@ -17,9 +14,8 @@ button {
 
 
 .row-filter {
-  margin: 5px;
+ // margin: 10px;
   display: flex;
-  // justify-content: center;
   align-items: center;
 }
 
@@ -74,5 +70,32 @@ button {
 }
 
 .row-inactive {
-  background-color: rgba(255, 0, 0, 0.1); /* Rojo tenue */
+  background-color: rgb(243, 172, 172); /* Rojo tenue */
+}
+
+/* Tabla responsive con stick */
+
+.table-container {
+  height: 100%;
+  width: 100vw;
+  max-width: 100%;
+  overflow: auto;
+}
+
+table {
+  width: 800px;
+}
+
+td.mat-column-acciones {
+  width: 20px;
+  padding-right: 8px;
+}
+
+
+.mat-mdc-table-sticky-border-elem-right {
+  border-left: 1px solid #e0e0e0;
+}
+
+.mat-mdc-table-sticky-border-elem-left {
+  border-right: 1px solid #e0e0e0;
 }

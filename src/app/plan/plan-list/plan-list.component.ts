@@ -66,7 +66,8 @@ export class PlanListComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+    // dialogConfig.width = '40%';
+    dialogConfig.height = '680px';
     this.dialog.open(PlanCreateComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => {
@@ -85,7 +86,8 @@ export class PlanListComponent {
 
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        dialogConfig.width = '40%';
+       // dialogConfig.width = '40%';
+        dialogConfig.height = '680px';
         dialogConfig.data = this.respuesta;
 
         this.dialog.open(PlanEditComponent, dialogConfig);
@@ -94,6 +96,10 @@ export class PlanListComponent {
 
 
     });
+  }
+
+  deletePlan(id: number) {
+    
   }
 
   applyFilter(event: Event) {

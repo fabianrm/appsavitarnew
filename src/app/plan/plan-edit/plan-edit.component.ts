@@ -16,6 +16,7 @@ export class PlanEditComponent {
   color: ThemePalette = 'accent';
   checked = (this.getData.status == 1) ? true : false;
   disabled = false;
+  selected = 'normal';
 
 
   constructor(public formulario: FormBuilder,
