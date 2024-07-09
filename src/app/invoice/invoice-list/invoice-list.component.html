@@ -1,62 +1,75 @@
-<div class="row-filter">
-  <div class="col-sm-10">
-    <div class="row">
-      <div class="col-sm-12 sub-filter">
-        <mat-form-field>
-          <mat-label>Cliente</mat-label>
-          <input
-            matInput
-            placeholder="Ej. Fernando Nizama"
-            autocomplete="off"
-            [(ngModel)]="qCustomer"
-          />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Desde</mat-label>
-          <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="qDesde" />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="pickerDesde"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #pickerDesde></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Hasta</mat-label>
-          <input matInput [matDatepicker]="pickerHasta" [(ngModel)]="qHasta" />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="pickerHasta"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #pickerHasta></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Seleccione un estado</mat-label>
-          <mat-select [(value)]="status">
-            <mat-option value="">Seleccione</mat-option>
-            <mat-option value="pendiente">Pendiente</mat-option>
-            <mat-option value="pagada">Pagada</mat-option>
-            <mat-option value="vencida">Vencida</mat-option>
-            <mat-option value="anulada">Anulada</mat-option>
-          </mat-select>
-        </mat-form-field>
-        
-        <button (click)="searchInvoices()" mat-raised-button color="accent">
-          Filtrar
-        </button>
-        <button style="margin-left: 10px;" (click)="exportInvoices()" mat-raised-button color="accent">
-          Exportar
-        </button>
-      </div>
-    </div>
+<div class="row row-filter">
+  <div class="col-12 col-md-2">
+    <mat-form-field>
+      <mat-label>Cliente</mat-label>
+      <input
+        matInput
+        placeholder="Ej. Fernando Nizama"
+        autocomplete="off"
+        [(ngModel)]="qCustomer"
+      />
+    </mat-form-field>
   </div>
 
-  <div class="col-sm-2 row-acciones">
-    <button (click)="generateInvoices()" mat-raised-button color="accent">
-      Generar facturas
+  <div class="col-12 col-md-2">
+    <mat-form-field>
+      <mat-label>Desde</mat-label>
+      <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="qDesde" />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="pickerDesde"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerDesde></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-2">
+    <mat-form-field>
+      <mat-label>Hasta</mat-label>
+      <input matInput [matDatepicker]="pickerHasta" [(ngModel)]="qHasta" />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="pickerHasta"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerHasta></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-2">
+    <mat-form-field>
+      <mat-label>Seleccione un estado</mat-label>
+      <mat-select [(value)]="status">
+        <mat-option value="">Seleccione</mat-option>
+        <mat-option value="pendiente">Pendiente</mat-option>
+        <mat-option value="pagada">Pagada</mat-option>
+        <mat-option value="vencida">Vencida</mat-option>
+        <mat-option value="anulada">Anulada</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-1 mb-2">
+    <button (click)="searchInvoices()" mat-raised-button color="accent">
+      Filtrar
     </button>
   </div>
+
+  <div class="col-12 col-md-1 mb-2">
+    <button (click)="exportInvoices()" mat-raised-button color="accent">
+      Exportar
+    </button>
+  </div>
+  
+  <div class="col-12 col-md-2 mb-2">
+  <button (click)="generateInvoices()" mat-raised-button color="accent">
+    Generar facturas
+  </button>
 </div>
+</div>
+
+
+
+<!-- Tabla -->
 
 <div class="table-container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -76,7 +89,7 @@
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.price |  currency:'PEN':'symbol':'1.2-2':'es-PE' }}
+        {{ element.price | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
       </td>
     </ng-container>
 
@@ -84,7 +97,7 @@
     <ng-container matColumnDef="discount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Descuento</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.discount |  currency:'PEN':'symbol':'1.2-2':'es-PE' }}
+        {{ element.discount | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
       </td>
     </ng-container>
 
@@ -92,7 +105,7 @@
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.amount |  currency:'PEN':'symbol':'1.2-2':'es-PE' }}
+        {{ element.amount | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
       </td>
     </ng-container>
 
@@ -170,27 +183,29 @@
             [disabled]="row.status === 'pagada'"
             (click)="paid(row)"
           >
-           <mat-icon matListItemIcon>paid</mat-icon>
+            <mat-icon matListItemIcon>paid</mat-icon>
             Pagar
           </button>
           <button mat-menu-item (click)="print(row)">
-             <mat-icon matListItemIcon>print</mat-icon>
-            Imprimir</button>
+            <mat-icon matListItemIcon>print</mat-icon>
+            Imprimir
+          </button>
 
-             <button mat-menu-item (click)="print(row)">
-             <mat-icon matListItemIcon>delete</mat-icon>
-            Anular</button>
+          <button mat-menu-item (click)="print(row)">
+            <mat-icon matListItemIcon>delete</mat-icon>
+            Anular
+          </button>
         </mat-menu>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"
+
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
       [ngClass]="{ 'row-inactive': row.status === 'vencida' }"
-    >
-      
-    </tr>
+    ></tr>
   </table>
 
   <mat-paginator

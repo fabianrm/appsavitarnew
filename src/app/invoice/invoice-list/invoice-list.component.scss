@@ -1,38 +1,29 @@
 .table-container {
-  margin: 20px;
+  margin: 10px;
 }
 
 mat-form-field {
-  //width: 60%;
-  margin: 10px;
+   width: 100%;
+  //margin: 10px;
 }
 
 table {
   width: 100%;
 }
 
-.row-acciones {
-  display: flex;
-  /*background-color: dodgerblue;*/
-  justify-content: flex-end;
-  padding: 5px;
+button {
+  width: 100%;
 }
+
 
 .row-filter {
-  margin: 20px;
+  margin: 5px;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
 }
 
-.sub-filter {
-  height: 50px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  //align-content: center;
-  flex-direction: row;
-}
+
 
 .status-paid {
   display: flex;
