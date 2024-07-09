@@ -15,11 +15,6 @@ mat-form-field {
   width: 100%;
 }
 
-
-.control-full-50 {
-  width: 49%;
-}
-
 .row-buttons {
   width: 100%;
   height: 80px;
@@ -30,7 +25,6 @@ mat-form-field {
 mat-card-title {
   color: white;
   font-size: 2.5rem;
-  align-items: center;
   //margin-left: 5px;
 }
 
@@ -42,4 +36,33 @@ mat-card-title {
 .row-items {
   display: flex;
   justify-content: space-between;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title-amount {
+  color: white;
+  font-size: 2.5rem;
+}
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 767px) {
+  .title-amount {
+    color: white;
+    font-size: 1.5rem;
+  }
+
+
+  mat-card-title {
+    color: white;
+    font-size: 1.5rem;
+    //margin-left: 5px;
+  }
+
+  mat-form-field {
+    margin-top: 5px;
+  }
 }

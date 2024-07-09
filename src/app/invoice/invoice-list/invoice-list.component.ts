@@ -172,7 +172,8 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+    // dialogConfig.width = '40%';
+   // dialogConfig.height = '100vh';
     dialogConfig.data = row;
     this.dialog.open(InvoicePaidComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
