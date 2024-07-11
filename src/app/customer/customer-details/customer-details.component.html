@@ -2,8 +2,13 @@
 <div class="container my-4">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Detalles del Cliente</mat-card-title>
-      <mat-card-subtitle>{{ dataCustomer?.customerName }}</mat-card-subtitle>
+      <mat-card-title>
+        <button mat-icon-button [routerLink]="['/dashboard/customer/customers']">
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        Detalles del Cliente</mat-card-title
+      >
+      <mat-card-subtitle style="margin-left: 55px;">{{ dataCustomer?.customerName }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
@@ -65,9 +70,12 @@
         </div>
       </div>
       <!-- Contratos -->
-     <div class="mt-2">
+      <div class="mt-2">
         <h4><strong>Contratos:</strong></h4>
-        <table *ngIf="dataCustomer?.service!.length > 0; else noContracts" class="table table-striped">
+        <table
+          *ngIf="(dataCustomer?.service)!.length > 0; else noContracts"
+          class="table table-striped"
+        >
           <thead>
             <tr>
               <th>Cod. Contrato</th>
@@ -88,15 +96,13 @@
           </tbody>
         </table>
         <ng-template #noContracts>
-          <div class="alert alert-info" role="alert">
-            Sin contratos
-          </div>
+          <div class="alert alert-info" role="alert">Sin contratos</div>
         </ng-template>
       </div>
     </mat-card-content>
   </mat-card>
 
-   <!-- Mapa -->
+  <!-- Mapa -->
   <mat-card class="container-map">
     <mat-card-content class="center-content">
       <app-mapleaf-loading
