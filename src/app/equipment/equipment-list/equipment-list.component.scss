@@ -6,6 +6,13 @@ table {
     width: 100%;
 }
 
+.table-container {
+  height: 100%;
+  width: 100vw;
+  max-width: 100%;
+  overflow: auto;
+}
+
 .mat-header-row {
     background-color: #3F51B5;
     color: white;

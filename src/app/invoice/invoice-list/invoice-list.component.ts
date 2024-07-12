@@ -179,9 +179,19 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     this.dialog.afterAllClosed.subscribe(() => { });
   }
 
-  print(row: any) {
-    throw new Error('Method not implemented.');
+  //Imprimir recibo
+  downloadInvoicePDF(row:Invoice) {
+    this.invoiceService.downloadInvoicePDF(row.invoiceId).subscribe(blob => {
+      const filename = `invoice_${row.contractId}_${row.customerName}.pdf`;
+      this.invoiceService.savePDF(blob, filename);
+    });
   }
+
+  //Anular factura
+  cancel(id: number) {
+    
+  }
+
 
 
   showError() {

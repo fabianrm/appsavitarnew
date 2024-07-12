@@ -1,27 +1,32 @@
+.contenedor{
+    margin: 20px;
+}
+
 .table-container {
-  margin: 20px;
+  height: 100%;
+  width: 100vw;
+  max-width: 100%;
+  overflow: auto;
 }
 
 mat-form-field {
-  //width: 60%;
-  margin: 10px;
+    font-size: 14px;
+    width: 90%;
+}
+
+
+button {
+  width: 100%;
 }
 
 table {
   width: 100%;
 }
 
-.row-acciones {
-  display: flex;
-  /*background-color: dodgerblue;*/
-  justify-content: flex-end;
-  padding: 5px;
-}
 
 .row-filter {
-  margin: 20px;
+  margin: 5px;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -80,4 +85,13 @@ height: 50px;
   padding: 8px;
   background-color: rgb(144, 144, 144);
   color: #000000;
+}
+
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 767px) {
+
+  button {
+    margin-bottom: 5px;
+  }
 }

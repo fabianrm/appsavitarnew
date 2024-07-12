@@ -74,12 +74,16 @@ export class ExpenseEditComponent {
 
   getExpenseById(id: number) {
 
+
+
     this.expenseService.getExpenseById(id).subscribe(expense => {
+
+      let fechaDate = new Date(expense.data.date + ' 0:00:00');
 
       this.formRq.patchValue({
         description: expense.data.description,
         amount: expense.data.amount,
-        date: expense.data.date,
+        date:fechaDate,
         reasonId: expense.data.reasonId,
         voutcher: expense.data.voutcher,
         note: expense.data.note,
@@ -88,6 +92,8 @@ export class ExpenseEditComponent {
     });
 
   }
+
+
 
   enviarDatos() {
 

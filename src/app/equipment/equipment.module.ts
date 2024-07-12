@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -50,6 +51,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatOptionModule,
     MatDatepickerModule,
     MatSlideToggleModule,
+    MatMenuModule,
     ReactiveFormsModule,
     FormsModule,
 

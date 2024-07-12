@@ -189,12 +189,14 @@
             <mat-icon matListItemIcon>paid</mat-icon>
             Pagar
           </button>
-          <button mat-menu-item (click)="print(row)">
+          <button mat-menu-item
+           [disabled]="row.status !== 'pagada'"
+           (click)="downloadInvoicePDF(row)">
             <mat-icon matListItemIcon>print</mat-icon>
             Imprimir
           </button>
 
-          <button mat-menu-item (click)="print(row)">
+          <button mat-menu-item (click)="cancel(row)">
             <mat-icon matListItemIcon>delete</mat-icon>
             Anular
           </button>

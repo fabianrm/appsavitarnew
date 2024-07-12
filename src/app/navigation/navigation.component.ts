@@ -95,9 +95,9 @@ const TREE_DATA: MenuNode[] = [
     route: '',
     children: [
       {
-        name: 'Ventas por cliente',
-        icon: 'person',
-        route: '/dashboard/reports/client-sales',
+        name: 'Ingresos',
+        icon: 'area_chart',
+        route: '/dashboard/reports/report',
         children: []
       },
       {

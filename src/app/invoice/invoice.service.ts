@@ -4,6 +4,7 @@ import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { InvoiceResponse } from './Models/InvoiceResponse';
 import { RequestPaid } from './Models/RequestPaid';
+import { saveAs } from 'file-saver';
 
 
 @Injectable({
@@ -76,6 +77,24 @@ export class InvoiceService {
       .set('end_date', endDate);
 
     return this.clienteHttp.get(`${this.API}invoices/paid-report`, { params });
+  }
+
+  //Recibo
+  printInvoice(id: number,): Observable<any> {
+    let params = new HttpParams()
+      .set('id', id)
+    
+    return this.clienteHttp.get<any>(`${this.API}invoices/${id}/receipt`, { headers: this.headers });
+  }
+
+  downloadInvoicePDF(invoiceId: number): Observable<Blob> {
+
+    const url = `${this.API}invoices/${invoiceId}/receipt`;
+    return this.clienteHttp.get(url, { responseType: 'blob' });
+  }
+
+  savePDF(blob: Blob, filename: string) {
+    saveAs(blob, filename);
   }
 
 }

@@ -93,6 +93,7 @@ export class EquipmentListComponent {
     this.dialog.afterAllClosed.subscribe(() => { })
   }
 
+  delete(id:number) {}
 
 
 }

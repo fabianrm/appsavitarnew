@@ -70,11 +70,13 @@ export class EquipmentEditComponent {
 
   initForm() {
 
-    const purchaseDate = this.getData[0].purchaseDate;
+     const purchaseDate = this.getData[0].purchaseDate;
     // Formatear la fecha usando DatePipe
-    //const formattedDate = this.datePipe.transform(purchaseDate, 'yyyy-MM-dd', 'GMT-5');
-    const formattedDate = this.datePipe.transform(purchaseDate, 'yyyy-MM-dd');
-    console.log('format', formattedDate);
+    // const formattedDate = this.datePipe.transform(purchaseDate, 'yyyy-MM-dd', 'GMT-5');
+    // const formattedDate = this.datePipe.transform(purchaseDate, 'yyyy-MM-dd');
+    // console.log('format', formattedDate);
+
+    let fechaDate = new Date(purchaseDate + ' 0:00:00');
 
     const formControlsConfig = {
       id: [this.getData[0].id, Validators.required],
@@ -82,7 +84,7 @@ export class EquipmentEditComponent {
       serie: [this.getData[0].serie, Validators.required],
       model: [this.getData[0].model, Validators.required],
       brandId: [this.getData[0].brandId],
-      purchaseDate: [formattedDate, Validators.required], 
+      purchaseDate: [fechaDate, Validators.required], 
       status: [this.getData[0].status, Validators.required],
     }
 

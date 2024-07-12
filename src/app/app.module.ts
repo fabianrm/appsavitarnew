@@ -12,33 +12,28 @@ import { AuthInterceptor } from './auth/auth/AuthInterceptor';
 import { CustomerModule } from './customer/customer.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { AuthModule } from './auth/auth.module';
-import { BoxModule } from './box/box.module';
+
 import { RouterModule } from './router/router.module';
 import { PlanModule } from './plan/plan.module';
-import { ContractModule } from './contract/contract.module';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
-import { DatePipe } from '@angular/common';
 import { InvoiceModule } from './invoice/invoice.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats, provideNativeDateAdapter } from '@angular/material/core';
 
-//Para fechas en spanish
-import localeEsPe from '@angular/common/locales/es-PE';
-import { registerLocaleData } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ExpenseModule } from './expense/expense.module';
 import { RetryInterceptor } from './auth/retry.interceptor';
 import { ReasonModule } from './reason/reason.module';
-import { SnackbarComponent } from './shared/snackbar/snackbar.component';
 import { SharedModule } from './shared/shared.module';
 
-
-
+//Para fechas en spanish
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats, provideNativeDateAdapter } from '@angular/material/core';
+import localeEsPe from '@angular/common/locales/es-PE';
+import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEsPe, 'es-PE');
 
 

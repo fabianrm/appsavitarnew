@@ -1,40 +1,45 @@
-<div class="">
-  <div class="col-sm-10">
-    <div class="row">
-      <div class="col-sm-12">
-        <mat-form-field>
-          <mat-label>Desde</mat-label>
-          <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="qDesde" />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="pickerDesde"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #pickerDesde></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Hasta</mat-label>
-          <input matInput [matDatepicker]="pickerHasta" [(ngModel)]="qHasta" />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="pickerHasta"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #pickerHasta></mat-datepicker>
-        </mat-form-field>
-
-        <button (click)="searchInvoices()" mat-raised-button color="accent">
-          Filtrar
-        </button>
-        <button
-          style="margin-left: 10px"
-          (click)="exportInvoices()"
-          mat-raised-button
-          color="accent"
-        >
-          Exportar
-        </button>
-      </div>
+<div class="contenedor">
+  <div class="row row-filter">
+    <div class="col-6 col-md-3">
+      <mat-form-field>
+        <mat-label>Desde</mat-label>
+        <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="qDesde" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="pickerDesde"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerDesde></mat-datepicker>
+      </mat-form-field>
     </div>
+
+    <div class="col-6 col-md-3">
+      <mat-form-field>
+        <mat-label>Hasta</mat-label>
+        <input matInput [matDatepicker]="pickerHasta" [(ngModel)]="qHasta" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="pickerHasta"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerHasta></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <button (click)="searchInvoices()" mat-raised-button color="accent">
+        Filtrar
+      </button>
+    </div>
+
+    <div class="col-12 col-md-3">
+      <button
+        (click)="exportInvoices()"
+        mat-raised-button
+        color="accent"
+      >
+        Exportar
+      </button>
+    </div>
+
   </div>
 </div>
 
@@ -44,19 +49,17 @@
     <ng-container matColumnDef="contractId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nro. Contrato</th>
       <td mat-cell *matCellDef="let element">{{ element.contractId }}</td>
-      <td mat-footer-cell *matFooterCellDef> </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <!-- Price Column -->
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.price | currency:'PEN':'symbol':'1.2-2':'es-PE' }}
+        {{ element.price | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
       </td>
-      <td mat-footer-cell *matFooterCellDef>  </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
-
-   
 
     <!-- Paid Dated Column -->
     <ng-container matColumnDef="paidDated">
@@ -64,45 +67,46 @@
       <td mat-cell *matCellDef="let element">
         {{ element.paidDated | date : "dd-MM-yyyy" }}
       </td>
-      <td mat-footer-cell *matFooterCellDef>  </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <!-- Customer Name Column -->
     <ng-container matColumnDef="customerName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
       <td mat-cell *matCellDef="let element">{{ element.customerName }}</td>
-      <td mat-footer-cell *matFooterCellDef>  </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <!-- Plan Name Column -->
     <ng-container matColumnDef="planName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Plan</th>
       <td mat-cell *matCellDef="let element">{{ element.planName }}</td>
-      <td mat-footer-cell *matFooterCellDef>  </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
-     <!-- Discount Column -->
+    <!-- Discount Column -->
     <ng-container matColumnDef="discount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Descuento</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.discount | currency:'PEN':'symbol':'1.2-2':'es-PE' }}
+        {{ element.discount | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
       </td>
-      <td style="font-weight: bold;" mat-footer-cell *matFooterCellDef> Total </td>
+      <td style="font-weight: bold" mat-footer-cell *matFooterCellDef>Total</td>
     </ng-container>
 
     <!-- Amount Column -->
-    <ng-container matColumnDef="amount">
+    <ng-container matColumnDef="amount" stickyEnd>
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.amount | currency:'PEN':'symbol':'1.2-2':'es-PE' }}
+        {{ element.amount | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
       </td>
-      <td style="font-weight: bold;" mat-footer-cell *matFooterCellDef>{{ total | currency:'PEN':'symbol':'1.2-2':'es-PE' }}</td>
+      <td style="font-weight: bold" mat-footer-cell *matFooterCellDef>
+        {{ total | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-
   </table>
 
   <mat-paginator
