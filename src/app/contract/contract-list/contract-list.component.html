@@ -103,6 +103,15 @@
             <button
               [disabled]="row.status === 'terminado'"
               mat-menu-item
+              (click)="editDataBasic(row.id)"
+            >
+              <mat-icon matListItemIcon>edit</mat-icon>
+              Editar datos básicos
+            </button>
+
+            <button
+              [disabled]="row.status === 'terminado'"
+              mat-menu-item
               (click)="changePlan(row)"
             >
               <mat-icon matListItemIcon>cast_connected</mat-icon>
@@ -162,7 +171,6 @@
         *matRowDef="let row; columns: displayedColumns"
         [ngClass]="{ 'row-inactive': row.status === 'terminado' }"
       ></tr>
-      
     </table>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"

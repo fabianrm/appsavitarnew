@@ -183,7 +183,9 @@ export class ContractListComponent implements OnInit {
     this.snackbarService.showSuccess('Cliente agregado correctamente');
   }
 
-
+  editDataBasic(id: number) {
+    this.router.navigate(['/dashboard/contract/contract-edit-data-basic/' + id]); // Navega al componente "editar datos basicos"
+  }
 
 
 }

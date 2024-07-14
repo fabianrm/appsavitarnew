@@ -98,6 +98,14 @@ export class ContractService {
       }));
   }
 
+//Update datos basicos
+  updateServiceBasic(id: number, data: any): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}services/${id}`, data, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
   //Suspender el contrato
   deleteContract(id: number,): Observable<any> {
     return this.clienteHttp.delete(`${this.API}services/${id}`,  { headers: this.headers })

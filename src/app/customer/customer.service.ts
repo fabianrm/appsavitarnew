@@ -59,8 +59,6 @@ export class CustomerService {
   }
 
 
-
-
   deleteCustomer1(id: number): Observable<any> {
     return this.clienteHttp.delete(this.API + 'customers/' + id, { headers: this.headers })
       .pipe(tap(() => {

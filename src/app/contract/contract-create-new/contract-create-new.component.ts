@@ -19,8 +19,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Equipment } from '../../equipment/Models/EquipmentResponse';
 import { PlacesService } from '../../mapleaf/places.service';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
-import { Customer } from '../../customer/Models/CustomerResponseU_bak';
+
 import { MapleafService } from '../../mapleaf/mapleaf.service';
+import { Customer } from '../../customer/Models/CustomerResponseU';
 
 
 @Component({

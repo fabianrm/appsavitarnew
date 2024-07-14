@@ -18,6 +18,7 @@ export interface Service {
     portNumber: string;
     equipmentId: number;
     equipmentSerie: string;
+    cityId: number;
     city: string;
     addressInstallation: string;
     reference: string;
