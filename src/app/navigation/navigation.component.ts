@@ -15,106 +15,6 @@ interface MenuNode {
 }
 
 
-const TREE_DATA: MenuNode[] = [
-  {
-    name: 'Inicio',
-    icon: 'home',
-    route: '/dashboard/home/home',
-    children: []
-  },
-  {
-    name: 'Factibilidad técnica',
-    icon: 'wifi_tethering',
-    route: '/dashboard/factibillity/factibillity-info',
-    children: []
-  },
-  {
-    name: 'Clientes',
-    icon: 'people',
-    route: '/dashboard/customer/customers',
-    children: []
-  },
-  {
-    name: 'Planes',
-    icon: 'cast_connected',
-    route: '/dashboard/plan/plans',
-    children: []
-  },
-  {
-    name: 'Routers',
-    icon: 'router',
-    route: '/dashboard/router/routers',
-    children: []
-  },
-  {
-    name: 'Cajas',
-    icon: 'inbox',
-    route: '/dashboard/box/boxes',
-    children: []
-  },
-  {
-    name: 'Equipos',
-    icon: 'devices',
-    route: '/dashboard/equipment/equipments',
-    children: []
-  },
-  {
-    name: 'Contratos',
-    icon: 'alternate_email',
-    route: '/dashboard/contract/contracts',
-    children: []
-  },
-  {
-    name: 'Facturación',
-    icon: 'credit_card',
-    route: '/dashboard/invoices/invoices',
-    children: []
-  },
-  {
-    name: 'Gastos',
-    icon: 'paid',
-    route: '',
-    children: [
-      {
-        name: 'Fijos',
-        icon: 'payments',
-        route: '/dashboard/expenses/fixes',
-        children: []
-      },
-      {
-        name: 'Variables',
-        icon: 'paid',
-        route: '/dashboard/expenses/variables',
-        children: []
-      }
-    ]
-  },
-  {
-    name: 'Reportes',
-    icon: 'bar_chart',
-    route: '',
-    children: [
-      {
-        name: 'Ingresos',
-        icon: 'area_chart',
-        route: '/dashboard/reports/report',
-        children: []
-      },
-      {
-        name: 'Ventas por mes',
-        icon: 'date_range',
-        route: '/dashboard/reports/monthly-sales',
-        children: []
-      }
-    ]
-  }
-];
-
-
-
-
-
-
 
 @Component({
   selector: 'app-navigation',
@@ -130,14 +30,13 @@ export class NavigationComponent implements OnInit {
   treeControl = new NestedTreeControl<MenuNode>(node => node.children);
   dataSource = new MatTreeNestedDataSource<MenuNode>();
 
-  treeData = TREE_DATA;
+  treeData = [];
   isExpanded = true;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private renderer: Renderer2) {
-    this.dataSource.data = TREE_DATA;
   }
 
 
@@ -147,11 +46,10 @@ export class NavigationComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
-  
-
-
 
   ngOnInit() {
+    this.getUserPermissions()
+
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -162,7 +60,7 @@ export class NavigationComponent implements OnInit {
     this.isDark = localStorage.getItem('theme') == 'dark';
     this.setTheme(this.isDark);
 
-    
+
   }
 
   private breakpointObserver = inject(BreakpointObserver);
@@ -171,8 +69,16 @@ export class NavigationComponent implements OnInit {
     .pipe(
       map(result => result.matches),
       shareReplay()
-  );
-  
+    );
+
+
+  getUserPermissions() {
+    this.authService.getUserPermissions().subscribe(response => {
+      this.treeData = response.data;
+      this.dataSource.data = this.treeData
+    });
+  }
+
 
   getTitle(route: ActivatedRouteSnapshot): string {
     let title = route.data['title'] || 'appsavitar';
