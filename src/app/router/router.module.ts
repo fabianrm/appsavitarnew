@@ -18,6 +18,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -36,6 +37,7 @@ import { MatTableModule } from '@angular/material/table';
     MatIconModule,
     MatPaginatorModule,
     MatSortModule,
+    MatMenuModule,
     MatTableModule,
     MatButtonModule,
     MatDialogModule,

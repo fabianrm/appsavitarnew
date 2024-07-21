@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +34,19 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats, provideNativeDateAdapter } from '@angular/material/core';
 import localeEsPe from '@angular/common/locales/es-PE';
 import { registerLocaleData } from '@angular/common';
+import { AppConfigService } from './app-config.service';
+import { ClientIdInterceptor } from './client-id.interceptor';
 registerLocaleData(localeEsPe, 'es-PE');
+
+
+export function initializeApp(appConfigService: AppConfigService) {
+  return (): Promise<void> => {
+    return new Promise<void>((resolve) => {
+      appConfigService.configureEnvironment();
+      resolve();
+    });
+  };
+}
 
 
 export const MY_DATE_FORMATS: MatDateFormats = {
@@ -78,10 +90,20 @@ export const MY_DATE_FORMATS: MatDateFormats = {
 
   ],
   providers: [
+
+    AppConfigService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AppConfigService],
+      multi: true
+    },
+
     provideClientHydration(),
     provideAnimationsAsync(),
     provideNativeDateAdapter(),
     DatePipe,
+    { provide: HTTP_INTERCEPTORS, useClass: ClientIdInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'es-PE' },

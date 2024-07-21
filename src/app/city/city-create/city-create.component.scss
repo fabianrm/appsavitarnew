@@ -25,8 +25,9 @@ mat-form-field {
 }
 
 mat-card-title {
-  color: white;
-  font-size: 2.5rem;
+  color: var(--on-surface);
+  font-size: 1.5rem;
+
 }
 
 .container {
@@ -68,8 +69,25 @@ mat-card-title {
   position: relative;
 }
 
+mat-card{
+    height: 400px;
+    display: flex;
+   
+    justify-content: center;
+}
+
+h2{
+    margin: 10px;
+}
+
+
 /* Media Query para dispositivos móviles */
 @media (max-width: 767px) {
+
+    mat-card {
+        height: 100%;
+    }
+
   .container-map {
     margin-top: 5px;
     height: 300px; /* Ajusta esta altura según tus necesidades */

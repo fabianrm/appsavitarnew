@@ -67,3 +67,11 @@ mat-card-title {
   width: 100%;
   position: relative;
 }
+
+/* Media Query para dispositivos móviles */
+@media (max-width: 767px) {
+  .container-map {
+    margin-top: 5px;
+    height: 300px; /* Ajusta esta altura según tus necesidades */
+  }
+}

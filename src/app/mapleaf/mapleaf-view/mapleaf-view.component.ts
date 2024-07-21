@@ -60,6 +60,7 @@ export class MapleafViewComponent implements OnInit, AfterViewInit, OnDestroy  {
     }
   }
 
+  //TODO: Permita setear las coordenadas iniciales desde base de datos
   initializeMap() {
     this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907195, -81.057193], 15);
 

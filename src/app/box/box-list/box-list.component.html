@@ -86,8 +86,8 @@
         <td mat-cell *matCellDef="let element">
           <span
             [ngClass]="{
-              activos: element.status == 1,
-              'no-activos': element.status == 0
+              'status-active': element.status == 1,
+              'status-terminated': element.status == 0
             }"
             >{{ element.status == 0 ? "Suspendido" : "Activo" }}</span
           >

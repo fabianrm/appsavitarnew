@@ -52,6 +52,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     }
   }
 
+  //TODO: Permita setear las coordenadas iniciales desde base de datos
   initializeMap() {
     this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907044, -81.055051], 16.1);
 
