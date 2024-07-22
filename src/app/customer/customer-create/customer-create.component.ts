@@ -119,10 +119,10 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
 
   }
 
-  setSingleCoordinate() {
-    const singleCoordinate: [number, number] = [-4.905, -81.045];
-    this.mapleafService.setSingleCoordinate(singleCoordinate);
-  }
+  // setSingleCoordinate() {
+  //   const singleCoordinate: [number, number] = [-4.905, -81.045];
+  //   this.mapleafService.setSingleCoordinate(singleCoordinate);
+  // }
 
   get locationReady() {
     return this.locationService.locationReady;

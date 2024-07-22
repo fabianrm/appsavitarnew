@@ -11,5 +11,6 @@ export interface City {
     name: string;
     latitude: string;
     longitude: string;
+    coordinates: [number, number];
     status: number;
 }

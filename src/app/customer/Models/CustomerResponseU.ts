@@ -14,6 +14,7 @@ export interface Customer {
     reference: string;
     latitude: number;
     longitude: number;
+    coordinates: [number, number];
     phoneNumber: string;
     email: string;
     status: boolean;

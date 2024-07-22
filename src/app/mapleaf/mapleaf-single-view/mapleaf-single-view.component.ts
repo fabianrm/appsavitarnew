@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, Input } from '@angular/core';
 import * as L from 'leaflet';
 import { Subscription } from 'rxjs';
 import { MapleafService } from '../mapleaf.service';
@@ -25,15 +25,25 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
   marker: L.Marker | null = null;
   coordinateSubscription!: Subscription;
 
+  initCoords: [number, number] = [0, 0];
+
   constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
 
   ngOnInit(): void {
+
+    this.initCoords = JSON.parse(localStorage.getItem("coords")!) 
+
     this.coordinateSubscription = this.coordinateService.currentCoordinates.subscribe(coordinates => {
       if (coordinates.length > 0) {
         this.setMarker(coordinates[0]);
-        setTimeout(() => {
-          this.moveToLocation(coordinates[0]);
-        }, 50);
+      }
+    });
+
+    this.coordinateService.moveToCoordinate.subscribe(coordinate => {
+      if (coordinate) {
+       setTimeout(() => {
+         this.moveToLocation(coordinate);
+       }, 50);
       }
     });
 
@@ -55,9 +65,8 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
     }
   }
 
-  //TODO: Permita setear las coordenadas iniciales desde base de datos
   initializeMap() {
-    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907195, -81.057193], 16);
+    this.map = L.map(this.mapDivElement.nativeElement).setView(this.initCoords, 16);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
@@ -74,7 +83,6 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
           this.coordinateService.changeAddress(road); // Enviar la dirección al servicio
         }
       });
-
 
     });
 
@@ -93,8 +101,7 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
   }
 
   moveToLocation(coords: [number, number]): void {
-    this.map.setView(coords, 17);
+    this.map.setView(coords, 16.1);
   }
-
 
 }

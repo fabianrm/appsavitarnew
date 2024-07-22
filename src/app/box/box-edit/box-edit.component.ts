@@ -122,6 +122,7 @@ export class BoxEditComponent implements OnInit, OnDestroy {
   fetchBoxDetails(id: number) {
     this.boxService.getBoxByID(id).subscribe((respuesta) => {
       this.dataBox = respuesta.data;
+      this.mapleafService.changeMoveToCoordinate(respuesta.data.coordinates);
       //Llenamos el formEdit
       this.formBox.patchValue({
         name: this.dataBox.name,

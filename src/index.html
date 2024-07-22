@@ -15,5 +15,15 @@
   <body class="mat-typography">
     <app-root></app-root>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD16DxDi0y-EjPsadm9GHIw9DfIAvhY2Co"></script>
+
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+      return new bootstrap.Dropdown(dropdownToggleEl)
+    })
+  });
+</script>
+    
   </body>
 </html>

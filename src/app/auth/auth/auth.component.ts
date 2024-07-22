@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
+import { EnterpriseService } from '../../enterprise/enterprise.service';
 
 @Component({
   selector: 'app-auth',
@@ -14,11 +15,14 @@ export class AuthComponent implements OnInit {
   email: string = '';
   password: string = '';
 
+  initCoords: [number, number] = [0, 0];
+
   loginForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
     private authService:
       AuthService, private router: Router,
+    private enterpriseService: EnterpriseService,
     private _snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
@@ -58,6 +62,7 @@ export class AuthComponent implements OnInit {
       this.authService.login(email, password).pipe(
         tap(response => {
           localStorage.setItem('token', response.token);
+          this.setEnterprise();
         })
       ).subscribe(
         (response) => {
@@ -78,6 +83,14 @@ export class AuthComponent implements OnInit {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom'
+    })
+  }
+
+  setEnterprise() {
+    this.enterpriseService.getEnterpriseByID(1).subscribe((respuesta) => {
+      this.initCoords = respuesta.data.coordinates;
+      localStorage.setItem('coords', JSON.stringify(this.initCoords) );
+
     })
   }
 

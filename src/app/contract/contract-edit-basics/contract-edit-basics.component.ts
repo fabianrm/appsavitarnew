@@ -127,6 +127,7 @@ export class ContractEditBasicsComponent implements OnInit {
   fetchserviceDetails(id: number) {
     this.contractService.getServiceByID(id).subscribe((respuesta) => {
       this.service = respuesta.data;
+      this.mapleafService.changeMoveToCoordinate(respuesta.data.coordinates);
       // console.log(this.service);
       
       let fechaDate = new Date(this.service.installationDate + ' 0:00:00');

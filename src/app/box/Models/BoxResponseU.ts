@@ -11,6 +11,7 @@ export interface Box {
     reference: string;
     latitude: number;
     longitude: number;
+    coordinates: [number, number];
     totalPorts: number;
     availablePorts: number;
     status: number;

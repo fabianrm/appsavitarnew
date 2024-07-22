@@ -1,5 +1,22 @@
 <div class="container-map">
   <div class="filter-section">
+    <div class="dropdown"  style="margin-right: 10px;">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Seleccione Ciudad
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li *ngFor="let city of cities" (click)="selectCity(city)">
+          <a class="dropdown-item">{{ city.name }}</a>
+        </li>
+      </ul>
+    </div>
+
     <mat-slide-toggle [(ngModel)]="showAllMarkers" (change)="toggleMarkers()">
       Todas las cajas
     </mat-slide-toggle>
@@ -16,6 +33,7 @@
       [dataPoints]="dataPoints"
       [filterByRadius]="!showAllMarkers"
       [showAllMarkers]="showAllMarkers"
+      [initCoords]="initCoords"
     ></app-mapleaf-multiple-view>
   </div>
 </div>

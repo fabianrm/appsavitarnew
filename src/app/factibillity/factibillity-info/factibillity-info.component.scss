@@ -28,7 +28,7 @@
   background-color: rgba(179, 245, 179, 0.861);
   position: sticky;
   height: 65px;
-  z-index: 100;
+  z-index: 90;
   display: flex;
   justify-content: flex-end;
   align-content: center;
@@ -37,3 +37,13 @@
   height: 60px;
 }
 
+
+/* city-dropdown.component.css */
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  cursor: pointer;
+}

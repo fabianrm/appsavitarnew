@@ -27,8 +27,8 @@ export class AuthInterceptor implements HttpInterceptor {
                 }
             });
         } else if (authToken) {
-            console.log('Cliente ID logueado: ', clientId);
-            console.log('Token: ', authToken);
+            // console.log('Cliente ID logueado: ', clientId);
+            // console.log('Token: ', authToken);
             
             // Aplica el token de autenticación predeterminado
             request = request.clone({

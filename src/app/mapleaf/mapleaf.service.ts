@@ -10,10 +10,12 @@ export class MapleafService {
   private coordinatesSource = new BehaviorSubject<[number, number][]>([]);
   private dataPointsSource = new BehaviorSubject<DataPoint[]>([]);
   private addressSource = new BehaviorSubject<string>(''); // Nueva propiedad para la dirección
+  private moveToCoordinateSource = new BehaviorSubject<[number, number] | null>(null);
 
   currentCoordinates = this.coordinatesSource.asObservable();
   currentDataPoints = this.dataPointsSource.asObservable();
   currentAddress = this.addressSource.asObservable(); // Observable para la dirección
+  moveToCoordinate = this.moveToCoordinateSource.asObservable();
 
   constructor() { }
 
@@ -43,6 +45,10 @@ export class MapleafService {
     this.dataPointsSource.next([...currentDataPoints, dataPoint]);
   }
 
+  //Mover la posicion segun coordenadas
+  changeMoveToCoordinate(coordinate: [number, number]) {
+    this.moveToCoordinateSource.next(coordinate);
+  }
 
   // Nuevo método para cambiar la dirección
   changeAddress(address: string) {

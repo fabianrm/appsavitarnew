@@ -4,7 +4,8 @@ import 'leaflet.gridlayer.googlemutant'; // Importa el plugin
 import { MapleafService } from '../mapleaf.service';
 import { Subscription } from 'rxjs';
 import { DataPoint } from '../Models/DataPoint';
-import { GeocodingService } from '../geocoding.service';
+
+
 
 @Component({
   selector: 'app-mapleaf-multiple-view',
@@ -15,6 +16,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
   @Input() filterByRadius: boolean = false;
   @Input() dataPoints: DataPoint[] = [];
+  @Input() initCoords: [number, number] = [0,0];
   @Input() showAllMarkers = true;
 
   // Crear un icono personalizado
@@ -32,11 +34,25 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   dataPointSubscription!: Subscription;
   typeMap: 'openstreetmap' | 'roadmap' | 'satellite' | 'terrain' | 'hybrid' = 'openstreetmap'; // propiedad entrada
 
-  constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
+  constructor(private coordinateService: MapleafService, ) { }
 
   ngOnInit(): void {
+  
+    this.initCoords  = JSON.parse( localStorage.getItem("coords")!) 
+    
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
       this.setMarkers(dataPoints);
+      setTimeout(() => {
+        this.moveToLocation(this.initCoords);
+      }, 50);
+    });
+
+    this.coordinateService.moveToCoordinate.subscribe(coordinate => {
+      if (coordinate) {
+        setTimeout(() => {
+          this.moveToLocation(coordinate);
+        }, 50);
+      }
     });
 
     (L.Icon.Default as any).imagePath = 'assets/';
@@ -54,7 +70,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
   //TODO: Permita setear las coordenadas iniciales desde base de datos
   initializeMap() {
-    this.map = L.map(this.mapDivElement.nativeElement).setView([-4.907044, -81.055051], 16.1);
+    this.map = L.map(this.mapDivElement.nativeElement).setView(this.initCoords, 16.1);
 
     const openStreetMapLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
@@ -164,6 +180,12 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     this.markers.forEach(marker => this.map.removeLayer(marker));
     this.markers = [];
   }
+
+  moveToLocation(coords: [number, number]): void {
+    this.map.setView(coords, 16.1);
+  }
+
+
 
 
 }

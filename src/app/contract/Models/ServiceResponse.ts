@@ -26,6 +26,7 @@ export interface Service {
     installationDate: Date;
     latitude: number;
     longitude: number;
+    coordinates: [number, number];
     billingDate: null;
     dueDate: null;
     status: string;

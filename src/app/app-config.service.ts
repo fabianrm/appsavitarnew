@@ -31,7 +31,7 @@ export class AppConfigService {
       this.clientId = 'savitar'
     }
 
-    console.log('CLient_Id', this.clientId);
+  //  console.log('CLient_Id', this.clientId);
 
   }
 

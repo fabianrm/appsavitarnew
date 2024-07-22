@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { DataPoint } from '../../mapleaf/Models/DataPoint';
 import { BoxService } from '../../box/box.service';
+import { CityService } from '../../city/city.service';
+import { City } from '../../city/Models/CityResponse';
 
 @Component({
   selector: 'app-factibillity-info',
@@ -13,8 +15,17 @@ export class FactibillityInfoComponent implements OnInit {
   dataPoints: DataPoint[] = [];
   filteredDataPoints: DataPoint[] = [];
   showAllMarkers: boolean = true;
+  cities: City[] = [];
+  cityId?: number;
+  selectedCityName: string = 'Seleccione ciudad';
 
-  constructor(private coordinateService: MapleafService, private boxService: BoxService) { }
+  initCoords: [number, number] = [0, 0];
+
+  constructor(
+    private coordinateService: MapleafService,
+    private boxService: BoxService,
+    private cityService: CityService,
+  ) { }
 
   ngOnInit(): void {
     this.coordinateService.currentDataPoints.subscribe(dataPoints => {
@@ -22,6 +33,7 @@ export class FactibillityInfoComponent implements OnInit {
       // console.log('Nuevas coordenadas filtradas:', dataPoints);
     });
     this.getCoords();
+    this.getCities();
   }
 
   getCoords() {
@@ -46,7 +58,6 @@ export class FactibillityInfoComponent implements OnInit {
     } else {
       this.coordinateService.clearCoordinates();
       this.coordinateService.changeDataPoints([]); // Esto limpiará los marcadores
-      // this.coordinateService.changeDataPoints(this.dataPoints);
     }
   }
 
@@ -54,7 +65,33 @@ export class FactibillityInfoComponent implements OnInit {
     if (!this.showAllMarkers) {
       const filteredCoords = this.coordinateService.filterCoordinatesWithinRadius(center, 100, this.dataPoints);
       this.coordinateService.changeDataPoints(filteredCoords);
-
     }
   }
+
+  getCities() {
+    this.cityService.getCities().subscribe((respuesta) => {
+      if (respuesta.data.length > 0) {
+        this.cities = respuesta.data
+      }
+    });
+  }
+
+  fetchCityDetails(id: number) {
+    this.cityService.getCityByID(id).subscribe((respuesta) => {
+      this.initCoords = respuesta.data.coordinates;
+      this.coordinateService.changeMoveToCoordinate(this.initCoords);
+    });
+  }
+
+  selectCity(city: { id: number; name: string }): void {
+    this.cityId = city.id;
+    this.selectedCityName = city.name;
+    this.fetchCityDetails(this.cityId);
+  }
+
+
+  clearCoordinates() {
+    this.coordinateService.clearCoordinates();
+  }
+
 }
