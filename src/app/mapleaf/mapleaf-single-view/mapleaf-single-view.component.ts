@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
+import 'leaflet.gridlayer.googlemutant'; // Importa el plugin
 import { Subscription } from 'rxjs';
 import { MapleafService } from '../mapleaf.service';
 import { GeocodingService } from '../geocoding.service';
@@ -24,8 +25,9 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
   map!: L.Map;
   marker: L.Marker | null = null;
   coordinateSubscription!: Subscription;
-
   initCoords: [number, number] = [0, 0];
+
+  typeMap: 'openstreetmap' | 'roadmap' | 'satellite' | 'terrain' | 'hybrid' = 'openstreetmap'; // propiedad entrada
 
   constructor(private coordinateService: MapleafService, private geocodingService: GeocodingService) { }
 
@@ -68,9 +70,35 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
   initializeMap() {
     this.map = L.map(this.mapDivElement.nativeElement).setView(this.initCoords, 16);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const openStreetMapLayer =  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
+
+    //Estilos de mapa de google
+    const googRoadmap = L.gridLayer.googleMutant({
+      type: 'roadmap' // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
+    });
+
+    const googTerrain = L.gridLayer.googleMutant({
+      type: 'terrain' // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
+    });
+
+    const googHybrid = L.gridLayer.googleMutant({
+      type: 'hybrid' // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
+    });
+
+    const googleSatellite = L.gridLayer.googleMutant({
+      type: 'satellite' // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
+    });
+
+    //Agregamos estilos de mapa
+    this.map.addControl(new L.Control.Layers({
+      'OpenStreetMap': openStreetMapLayer,
+      'RoadMap': googRoadmap,
+      'Terrain': googTerrain,
+      'Satellite': googleSatellite,
+      'Hybrid': googHybrid,
+    }, {}))
 
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       const coordinates: [number, number] = [event.latlng.lat, event.latlng.lng];
