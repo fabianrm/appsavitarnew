@@ -88,7 +88,7 @@
               <div class="col-12 col-md-6">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Ciudad</mat-label>
-                  <mat-select formControlName="cityId">
+                  <mat-select formControlName="cityId" (selectionChange)="fetchCityDetails($event.value)">
                     @for (city of cities; track city) {
                     <mat-option [value]="city.id">{{ city.name }}</mat-option>
                     }

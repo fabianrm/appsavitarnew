@@ -24,6 +24,7 @@ export class BoxCreateComponent implements OnInit, OnDestroy {
 
   cities: City[] = [];
   coordinates: [number, number][] = [];
+  initCoords: [number, number] = [0, 0];
   coordinatesSubscription!: Subscription;
 
   address: string = '';
@@ -95,6 +96,13 @@ export class BoxCreateComponent implements OnInit, OnDestroy {
       if (respuesta.data.length > 0) {
         this.cities = respuesta.data
       }
+    });
+  }
+
+  fetchCityDetails(id: number) {
+    this.cityService.getCityByID(id).subscribe((respuesta) => {
+      this.initCoords = respuesta.data.coordinates;
+      this.mapleafService.changeMoveToCoordinate(this.initCoords);
     });
   }
 

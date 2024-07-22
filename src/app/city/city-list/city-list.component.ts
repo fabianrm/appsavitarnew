@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs';
 import { CityService } from '../city.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-city-list',
@@ -28,7 +30,8 @@ export class CityListComponent implements OnInit {
 
   constructor(private cityService: CityService,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackbarService: SnackbarService,
   ) { }
 
   ngOnInit() {
@@ -61,6 +64,38 @@ export class CityListComponent implements OnInit {
   EditCity(id: number) {
     this.router.navigate(['/dashboard/city/city-edit/' + id]); // Navega al componente "contrato"
   }
+
+
+  deleteCity(id: number) {
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "No podrá recuperarlo después de eliminar!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, eliminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cityService.deleteCity(id).subscribe((respuesta) => {
+          if (respuesta.data.status === true) {
+            Swal.fire(
+              'Eliminado!',
+              respuesta.data.message,
+              'success'
+            )
+          } else {
+            this.snackbarService.showError(`☹️ Ocurrio un error: ${respuesta.data.message}`);
+          }
+        }, error => {
+          this.snackbarService.showError(`☹️ Ocurrio un error al eliminar el registro`);
+          console.log('Error al eliminar la ciudad', error.message);
+        });
+      }
+    });
+  }
+
+
 
 
 

@@ -33,6 +33,7 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
 
   cities: City[] = [];
   coordinates: [number, number][] = [];
+  initCoords: [number, number] = [0, 0];
   coordinatesSubscription!: Subscription;
 
   address: string = '';
@@ -117,6 +118,13 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+
+  fetchCityDetails(id: number) {
+    this.cityService.getCityByID(id).subscribe((respuesta) => {
+      this.initCoords = respuesta.data.coordinates;
+      this.mapleafService.changeMoveToCoordinate(this.initCoords);
+    });
   }
 
   // setSingleCoordinate() {

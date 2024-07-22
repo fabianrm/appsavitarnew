@@ -59,6 +59,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
 
   date = new Date();
   coordinates: [number, number][] = [];
+  initCoords: [number, number] = [0, 0];
   coordsBox: [number, number][] = [];
   coordinatesSubscription!: Subscription;
 
@@ -210,6 +211,12 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     });
   }
 
+  fetchCityDetails(id: number) {
+    this.cityService.getCityByID(id).subscribe((respuesta) => {
+      this.initCoords = respuesta.data.coordinates;
+      this.mapleafService.changeMoveToCoordinate(this.initCoords);
+    });
+  }
 
 
 
