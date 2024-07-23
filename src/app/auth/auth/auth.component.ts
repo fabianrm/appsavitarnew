@@ -90,7 +90,6 @@ export class AuthComponent implements OnInit {
     this.enterpriseService.getEnterpriseByID(1).subscribe((respuesta) => {
       this.initCoords = respuesta.data.coordinates;
       localStorage.setItem('coords', JSON.stringify(this.initCoords) );
-
     })
   }
 

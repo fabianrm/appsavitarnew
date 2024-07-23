@@ -6,9 +6,10 @@ export interface Enterprise {
     id: number;
     ruc: string;
     name: string;
-    city_id: number;
+    cityId: number;
     city: string;
     address: string;
+    phone: string;
     coordinates: [number, number];
-    status: null;
+    updatedAt: Date;
 }

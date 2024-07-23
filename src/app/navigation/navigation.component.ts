@@ -112,5 +112,13 @@ export class NavigationComponent implements OnInit {
     );
   }
 
+  //TODO:Traer todas las ciudades con limit 1
+  detailEnterprise(id: number) {
+    this.router.navigate(['/dashboard/enterprise/enterpriseDetails/' + id]); // Navega al componente "customer edit"
+  }
+
+  goCities() {
+    this.router.navigate(['/dashboard/city/cities']); // Navega al componente "customer edit"
+  }
 
 }

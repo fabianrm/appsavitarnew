@@ -88,7 +88,8 @@
         <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>Configurar Empresa</button>
+        <button mat-menu-item (click)="goCities()">Configurar Ciudades</button>
+        <button mat-menu-item (click)="detailEnterprise(1)">Configurar Empresa</button>
         <button mat-menu-item>Cambiar Clave</button>
         <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
       </mat-menu>
