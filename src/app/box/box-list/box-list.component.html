@@ -14,7 +14,7 @@
     <button (click)="newBox()" mat-raised-button color="accent">+ Nuevo</button>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div class="table-container" >
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- id Video -->
       <ng-container matColumnDef="id">
@@ -95,7 +95,7 @@
       </ng-container>
 
       <!-- Acciones -->
-      <ng-container matColumnDef="acciones">
+      <ng-container matColumnDef="acciones" stickyEnd>
         <th mat-header-cell *matHeaderCellDef>Accciones</th>
         <td
           mat-cell

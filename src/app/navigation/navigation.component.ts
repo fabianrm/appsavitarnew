@@ -6,6 +6,7 @@ import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { EnterpriseService } from '../enterprise/enterprise.service';
 
 interface MenuNode {
   name: string;
@@ -33,9 +34,12 @@ export class NavigationComponent implements OnInit {
   treeData = [];
   isExpanded = true;
 
+  id: number = 0;
+
   constructor(
     private router: Router,
     private authService: AuthService,
+    private enterpriseService : EnterpriseService,
     private renderer: Renderer2) {
   }
 
@@ -49,6 +53,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.getUserPermissions()
+    this.getEnterprise();
 
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -103,6 +108,7 @@ export class NavigationComponent implements OnInit {
       (response) => {
         console.log(response);
         localStorage.removeItem('token');
+        localStorage.removeItem('coords');
         this.router.navigate(['/login']);
       },
       (error) => {
@@ -112,9 +118,19 @@ export class NavigationComponent implements OnInit {
     );
   }
 
+
+  getEnterprise(): void {
+    this.enterpriseService.getEnterprise().subscribe((response) => {
+      this.id = response.data.id;
+      console.log(this.id);
+      
+    })
+  }
+
+
   //TODO:Traer todas las ciudades con limit 1
   detailEnterprise(id: number) {
-    this.router.navigate(['/dashboard/enterprise/enterpriseDetails/' + id]); // Navega al componente "customer edit"
+    this.router.navigate(['/dashboard/enterprise/enterpriseDetails/' + id]); // Navega al componente "enterprise edit"
   }
 
   goCities() {

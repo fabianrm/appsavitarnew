@@ -24,14 +24,12 @@ export class EnterpriseService {
   });
 
 
-
   // addBox(datos: RequestBox): Observable<any> {
   //   return this.clienteHttp.post(this.API + 'boxs', datos, { headers: this.headers })
   //     .pipe(tap(() => {
   //       this._refresh$.next()
   //     }));
   // }
-
 
   updateEnterprise(id: number, datos: any): Observable<any> {
     return this.clienteHttp.put(this.API + 'enterprises/' + id, datos, { headers: this.headers })
@@ -44,6 +42,9 @@ export class EnterpriseService {
     return this.clienteHttp.get<EnterpriseResponse>(this.API + 'enterprises/' + id, { headers: this.headers })
   }
 
+  getEnterprise(): Observable<EnterpriseResponse> {
+    return this.clienteHttp.get<EnterpriseResponse>(this.API + 'enterprises/', { headers: this.headers })
+  }
 
 
 }
