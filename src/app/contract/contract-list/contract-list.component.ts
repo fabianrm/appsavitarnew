@@ -18,7 +18,7 @@ import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 @Component({
   selector: 'app-contract-list',
   templateUrl: './contract-list.component.html',
-  styleUrl: './contract-list.component.css'
+  styleUrl: './contract-list.component.scss'
 })
 export class ContractListComponent implements OnInit {
 

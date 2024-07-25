@@ -43,7 +43,7 @@ export class EnterpriseService {
   }
 
   getEnterprise(): Observable<EnterpriseResponse> {
-    return this.clienteHttp.get<EnterpriseResponse>(this.API + 'enterprises/', { headers: this.headers })
+    return this.clienteHttp.get<EnterpriseResponse>(this.API + 'enterprises', { headers: this.headers })
   }
 
 

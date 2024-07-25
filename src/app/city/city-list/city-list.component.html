@@ -21,14 +21,14 @@
       <!-- id Video -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">ID</th>
-        <td mat-cell *matCellDef="let element">
+        <td data-title="ID" mat-cell *matCellDef="let element">
           {{ element.id }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Nombre</th>
-        <td mat-cell *matCellDef="let element">
+        <td data-title="Nombre" mat-cell *matCellDef="let element">
           {{ element.name }}
         </td>
       </ng-container>
@@ -36,7 +36,7 @@
       <!-- Latitude Column -->
       <ng-container matColumnDef="latitude">
         <th mat-header-cell *matHeaderCellDef>Latitude</th>
-        <td mat-cell *matCellDef="let element">
+        <td data-title="Latitud" mat-cell *matCellDef="let element">
           {{ element.latitude | number : "1.6-6" }}
         </td>
       </ng-container>
@@ -44,7 +44,7 @@
       <!-- Longitude Column -->
       <ng-container matColumnDef="longitude">
         <th mat-header-cell *matHeaderCellDef>Longitude</th>
-        <td mat-cell *matCellDef="let element">
+        <td data-title="Longitud" mat-cell *matCellDef="let element">
           {{ element.longitude | number : "1.6-6" }}
         </td>
       </ng-container>
@@ -52,7 +52,7 @@
       <!-- Estado Column -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Estado</th>
-        <td mat-cell *matCellDef="let element">
+        <td data-title="Estado" mat-cell *matCellDef="let element">
           <span
             [ngClass]="{
               'status-active': element.status == 1,
