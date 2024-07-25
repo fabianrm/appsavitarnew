@@ -77,26 +77,26 @@
     <!-- Invoice ID Column -->
     <ng-container matColumnDef="invoiceId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-      <td mat-cell *matCellDef="let element">{{ element.invoiceId }}</td>
+      <td data-title="ID" mat-cell *matCellDef="let element">{{ element.invoiceId }}</td>
     </ng-container>
 
     <!-- Contract ID Column -->
     <ng-container matColumnDef="contractId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nro. Contrato</th>
-      <td mat-cell *matCellDef="let element">{{ element.contractId }}</td>
+      <td data-title="Contrato" mat-cell *matCellDef="let element">{{ element.contractId }}</td>
     </ng-container>
 
         <!-- Customer Name Column -->
     <ng-container matColumnDef="customerName" sticky>
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
-      <td mat-cell *matCellDef="let element">{{ element.customerName }}</td>
+      <td data-title="Cliente" mat-cell *matCellDef="let element">{{ element.customerName }}</td>
     </ng-container>
 
 
     <!-- Price Column -->
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
-      <td mat-cell *matCellDef="let element">
+      <td data-title="Precio" mat-cell *matCellDef="let element">
         {{ element.price | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
       </td>
     </ng-container>
@@ -104,7 +104,7 @@
     <!-- Discount Column -->
     <ng-container matColumnDef="discount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Descuento</th>
-      <td mat-cell *matCellDef="let element">
+      <td data-title="Dscto." mat-cell *matCellDef="let element">
         {{ element.discount | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
       </td>
     </ng-container>
@@ -112,7 +112,7 @@
     <!-- Amount Column -->
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
-      <td mat-cell *matCellDef="let element">
+      <td data-title="Total" mat-cell *matCellDef="let element">
         {{ element.amount | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
       </td>
     </ng-container>
@@ -120,7 +120,7 @@
     <!-- Start Date Column -->
     <ng-container matColumnDef="startDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Desde</th>
-      <td mat-cell *matCellDef="let element">
+      <td data-title="Desde" mat-cell *matCellDef="let element">
         {{ element.startDate | date : "dd-MM-yyyy" }}
       </td>
     </ng-container>
@@ -128,7 +128,7 @@
     <!-- End Date Column -->
     <ng-container matColumnDef="endDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Hasta</th>
-      <td mat-cell *matCellDef="let element">
+      <td data-title="Hasta" mat-cell *matCellDef="let element">
         {{ element.endDate | date : "dd-MM-yyyy" }}
       </td>
     </ng-container>
@@ -136,7 +136,7 @@
     <!-- Paid Dated Column -->
     <ng-container matColumnDef="paidDated">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>F. Pago</th>
-      <td mat-cell *matCellDef="let element">
+      <td data-title="F. Pago" mat-cell *matCellDef="let element">
         {{ element.paidDated | date : "dd-MM-yyyy" }}
       </td>
     </ng-container>
@@ -144,7 +144,7 @@
     <!-- Due Date Column -->
     <ng-container matColumnDef="dueDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Vencimiento</th>
-      <td mat-cell *matCellDef="let element">
+      <td data-title="F. Vcmto" mat-cell *matCellDef="let element">
         {{ element.dueDate | date : "dd-MM-yyyy" }}
       </td>
     </ng-container>
@@ -153,13 +153,13 @@
     <!-- Plan Name Column -->
     <ng-container matColumnDef="planName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Plan</th>
-      <td mat-cell *matCellDef="let element">{{ element.planName }}</td>
+      <td data-title="Plan" mat-cell *matCellDef="let element">{{ element.planName }}</td>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
-      <td mat-cell *matCellDef="let element">
+      <td data-title="Estado" mat-cell *matCellDef="let element">
         <span
           [ngClass]="{
             'status-pending': element.status === 'pendiente',
