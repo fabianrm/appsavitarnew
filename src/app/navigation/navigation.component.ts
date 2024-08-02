@@ -6,7 +6,8 @@ import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { EnterpriseService } from '../enterprise/enterprise.service';
+import { EnterpriseService } from '../isp/enterprise/enterprise.service';
+
 
 interface MenuNode {
   name: string;

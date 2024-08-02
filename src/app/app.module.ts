@@ -9,14 +9,14 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { SpinnerInterceptor } from './shared/spinner/spinner.interceptor';
 import { AuthInterceptor } from './auth/auth/AuthInterceptor';
 
-import { CustomerModule } from './customer/customer.module';
+import { CustomerModule } from './isp/customer/customer.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { AuthModule } from './auth/auth.module';
 
-import { RouterModule } from './router/router.module';
-import { PlanModule } from './plan/plan.module';
+import { RouterModule } from './isp/router/router.module';
+import { PlanModule } from './isp/plan/plan.module';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
-import { InvoiceModule } from './invoice/invoice.module';
+import { InvoiceModule } from './isp/invoice/invoice.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
@@ -24,9 +24,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { ExpenseModule } from './expense/expense.module';
+import { ExpenseModule } from './isp/expense/expense.module';
 import { RetryInterceptor } from './auth/retry.interceptor';
-import { ReasonModule } from './reason/reason.module';
+import { ReasonModule } from './isp/reason/reason.module';
 import { SharedModule } from './shared/shared.module';
 
 //Para fechas en spanish
@@ -36,6 +36,7 @@ import localeEsPe from '@angular/common/locales/es-PE';
 import { registerLocaleData } from '@angular/common';
 import { AppConfigService } from './app-config.service';
 import { ClientIdInterceptor } from './client-id.interceptor';
+
 registerLocaleData(localeEsPe, 'es-PE');
 
 

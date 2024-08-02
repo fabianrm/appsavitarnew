@@ -1,0 +1,140 @@
+<form [formGroup]="formMaterial" class="container mt-4" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Código</mat-label>
+        <input matInput formControlName="code" required />
+        <mat-error *ngIf="formMaterial.get('code')?.hasError('required')">
+          Código es requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" required />
+        <mat-error *ngIf="formMaterial.get('name')?.hasError('required')">
+          Nombre es requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <!-- <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Tipo</mat-label>
+        <input matInput formControlName="type" required />
+        <mat-error *ngIf="formMaterial.get('type')?.hasError('required')">
+          Tipo es requerido
+        </mat-error>
+      </mat-form-field> -->
+
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Seleccione un tipo</mat-label>
+        <mat-select formControlName="type" required>
+          <mat-option value="M">MATERIAL</mat-option>
+          <mat-option value="H">HERRAMIENTA</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formMaterial.get('type')?.hasError('required')">
+          Tipo es requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="category_id" required>
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="formMaterial.get('category_id')?.hasError('required')"
+        >
+          Categoría es requerida
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Marca</mat-label>
+        <mat-select formControlName="brand_id" required>
+          <mat-option *ngFor="let brand of brands" [value]="brand.id">
+            {{ brand.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formMaterial.get('brand_id')?.hasError('required')">
+          Marca es requerida
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Presentación</mat-label>
+        <mat-select formControlName="presentation_id" required>
+          <mat-option
+            *ngFor="let presentation of presentations"
+            [value]="presentation.id"
+          >
+            {{ presentation.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="formMaterial.get('presentation_id')?.hasError('required')"
+        >
+          Presentación es requerida
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Serie</mat-label>
+        <input matInput formControlName="serial" />
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Modelo</mat-label>
+        <input matInput formControlName="model" />
+      </mat-form-field>
+    </div>
+    <div class="col-md-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Mínimo</mat-label>
+        <input matInput formControlName="min" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <input
+        type="file"
+        id="image"
+        (change)="onFileSelected($event)"
+        class="form-control"
+      />
+      <div class="image-preview" *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Image Preview" />
+      </div>
+    </div>
+    <div class="col-md-4">
+      <mat-slide-toggle formControlName="status">Status</mat-slide-toggle>
+    </div>
+  </div>
+  <div class="row mt-3 justify-content-end">
+    <div class="col-auto">
+      <button  mat-raised-button type="button" color="accent" (click)="goMaterials()">Cancelar</button>
+    </div>
+    <div class="col-auto">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="formMaterial.invalid"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>

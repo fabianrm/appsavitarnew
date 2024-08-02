@@ -40,7 +40,7 @@ export class AuthService {
     return this.http.delete<any>(this.API + 'logout', { headers });
   }
 
-  getUserPermissions(): Observable<any> { 
+  getUserPermissions(): Observable<any> {
     return this.http.get<any>(this.API + 'user/permissions', { headers: this.headers });
   }
 

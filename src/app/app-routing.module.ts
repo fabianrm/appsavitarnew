@@ -16,60 +16,64 @@ const routes: Routes = [
       },
       {
         path: 'factibillity',
-        loadChildren: () => import('./factibillity/factibillity.module').then(m => m.FactibillityModule)
+        loadChildren: () => import('./isp/factibillity/factibillity.module').then(m => m.FactibillityModule)
       },
       {
         path: 'city',
-        loadChildren: () => import('./city/city.module').then(m => m.CityModule)
+        loadChildren: () => import('./isp/city/city.module').then(m => m.CityModule)
       },
       {
         path: 'customer',
-        loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule)
+        loadChildren: () => import('./isp/customer/customer.module').then(m => m.CustomerModule)
       },
       {
         path: 'box',
-        loadChildren: () => import('./box/box.module').then(m => m.BoxModule)
+        loadChildren: () => import('./isp/box/box.module').then(m => m.BoxModule)
       },
       {
         path: 'router',
-        loadChildren: () => import('./router/router.module').then(m => m.RouterModule)
+        loadChildren: () => import('./isp/router/router.module').then(m => m.RouterModule)
       },
       {
         path: 'plan',
-        loadChildren: () => import('./plan/plan.module').then(m => m.PlanModule)
+        loadChildren: () => import('./isp/plan/plan.module').then(m => m.PlanModule)
       },
       {
         path: 'contract',
-        loadChildren: () => import('./contract/contract.module').then(m => m.ContractModule)
+        loadChildren: () => import('./isp/contract/contract.module').then(m => m.ContractModule)
       },
       {
         path: 'equipment',
-        loadChildren: () => import('./equipment/equipment.module').then(m => m.EquipmentModule)
+        loadChildren: () => import('./isp/equipment/equipment.module').then(m => m.EquipmentModule)
       },
       {
         path: 'invoices',
-        loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule)
+        loadChildren: () => import('./isp/invoice/invoice.module').then(m => m.InvoiceModule)
       },
       {
         path: 'reports',
-        loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule)
+        loadChildren: () => import('./isp/invoice/invoice.module').then(m => m.InvoiceModule)
       },
       {
         path: 'expenses',
-        loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule)
+        loadChildren: () => import('./isp/expense/expense.module').then(m => m.ExpenseModule)
       },
 
       {
         path: 'report',
-        loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule)
+        loadChildren: () => import('./isp/expense/expense.module').then(m => m.ExpenseModule)
       },
       {
         path: 'reason',
-        loadChildren: () => import('./reason/reason.module').then(m => m.ReasonModule)
+        loadChildren: () => import('./isp/reason/reason.module').then(m => m.ReasonModule)
       },
       {
         path: 'enterprise',
-        loadChildren: () => import('./enterprise/enterprise.module').then(m => m.EnterpriseModule)
+        loadChildren: () => import('./isp/enterprise/enterprise.module').then(m => m.EnterpriseModule)
+      },
+      {
+        path: 'material',
+        loadChildren: () => import('./logistic/material/material.module').then(m => m.MaterialModule)
       },
       {
         path: 'login',

@@ -4,7 +4,7 @@ import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
-import { EnterpriseService } from '../../enterprise/enterprise.service';
+import { EnterpriseService } from '../../isp/enterprise/enterprise.service';
 
 @Component({
   selector: 'app-auth',
