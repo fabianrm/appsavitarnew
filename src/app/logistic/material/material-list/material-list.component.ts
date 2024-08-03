@@ -61,7 +61,9 @@ export class MaterialListComponent implements OnInit {
     this.router.navigateByUrl('/dashboard/material/material-create'); // Navega al componente "contrato"
   }
 
-  editMaterial(id: number) { }
+  editMaterial(id: number) {
+    this.router.navigate(['/dashboard/material/material-edit/' + id]); // Navega al componente "contrato"
+   }
   
   deleteMaterial(id:number) { }
 

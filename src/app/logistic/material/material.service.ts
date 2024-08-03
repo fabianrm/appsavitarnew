@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MaterialResponse } from './models/MaterialResponse';
-import { MaterialRequest } from './models/Materialrequest';
+import { MaterialResponse, MaterialSingleResponse } from './models/MaterialResponse';
+import { MaterialRequest } from './models/MaterialRequest';
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,9 @@ export class MaterialService {
     return this.clienteHttp.get<MaterialResponse>(this.API + 'materials', { headers: this.headers })
   }
 
-
+  getMaterialById(id: number,): Observable<MaterialSingleResponse> {
+    return this.clienteHttp.get<MaterialSingleResponse>(this.API + 'materials/' +id, { headers: this.headers })
+  }
 
   addMaterial(datos: MaterialRequest): Observable<any> {
     return this.clienteHttp.post(this.API + 'materials', datos, { headers: this.headers })

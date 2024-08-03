@@ -76,6 +76,10 @@ const routes: Routes = [
         loadChildren: () => import('./logistic/material/material.module').then(m => m.MaterialModule)
       },
       {
+        path: 'entry',
+        loadChildren: () => import('./logistic/entry/entry.module').then(m => m.EntryModule)
+      },
+      {
         path: 'login',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
       }

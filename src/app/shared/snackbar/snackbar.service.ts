@@ -15,7 +15,7 @@ export class SnackbarService {
       data: { message: message, icon: 'error' },
       panelClass: ['error-snackbar'],
       horizontalPosition: 'right',
-      verticalPosition: 'top'
+      verticalPosition: 'bottom'
     });
   }
 
@@ -25,7 +25,7 @@ export class SnackbarService {
       data: { message: message, icon: 'check_circle' },
       panelClass: ['success-snackbar'],
       horizontalPosition: 'right',
-      verticalPosition: 'top'
+      verticalPosition: 'bottom'
     });
   }
 
@@ -35,7 +35,7 @@ export class SnackbarService {
       data: { message: message, icon: 'info' },
       panelClass: ['info-snackbar'],
       horizontalPosition: 'right',
-      verticalPosition: 'top'
+      verticalPosition: 'bottom'
     });
   }
 

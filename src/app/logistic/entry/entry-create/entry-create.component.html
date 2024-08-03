@@ -1,0 +1,69 @@
+<div class="container">
+  <form ngNativeValidate [formGroup]="formEntry" (ngSubmit)="enviarDatos()">
+    <div class="row">
+      <div class="col-12">
+        <mat-card>
+          <mat-card-title>Nuevo Ingreso</mat-card-title>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-12 col-md-3">
+                <mat-form-field appearance="fill" class="w-100">
+                  <mat-label>Tipo de Ingreso</mat-label>
+                  <mat-select formControlName="entry_type_id" required>
+                    <mat-option
+                      *ngFor="let entryType of entryTypes"
+                      [value]="entryType.id"
+                    >
+                      {{ entryType.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="formEntry.get('document_id')?.hasError('required')"
+                  >
+                    Documento es requerido
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-3">
+                <mat-form-field appearance="fill" class="w-100">
+                  <mat-label>Documento</mat-label>
+                  <mat-select formControlName="document_id" required>
+                    <mat-option
+                      *ngFor="let document of documents"
+                      [value]="document.id"
+                    >
+                      {{ document.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="formEntry.get('document_id')?.hasError('required')"
+                  >
+                    Documento es requerido
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-3">
+                <mat-form-field appearance="fill" class="w-100">
+                  <mat-label>Serie</mat-label>
+                  <input matInput formControlName="serial" />
+                </mat-form-field>
+              </div>
+
+              <div class="col-12 col-md-3">
+                <mat-form-field>
+                  <mat-label>Fecha de Ingreso</mat-label>
+                  <input matInput [matDatepicker]="pickerFIngreso" />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="pickerFIngreso"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #pickerFIngreso></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </form>
+</div>

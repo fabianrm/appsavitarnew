@@ -21,7 +21,6 @@ export class CityEditComponent {
   disabled = false;
 
   id?: number;
-
   dataCity?: City;
 
   coordinates: [number, number][] = [];
