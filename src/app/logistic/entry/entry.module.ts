@@ -17,13 +17,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MaterialRoutingModule } from '../material/material-routing.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MaterialSelectDialogComponent } from './material-select-dialog/material-select-dialog.component';
 
 
 
 @NgModule({
   declarations: [
     EntryListComponent,
-    EntryCreateComponent
+    EntryCreateComponent,
+    MaterialSelectDialogComponent
   ],
   imports: [
     CommonModule,

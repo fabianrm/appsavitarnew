@@ -1,69 +1,174 @@
 <div class="container">
-  <form ngNativeValidate [formGroup]="formEntry" (ngSubmit)="enviarDatos()">
-    <div class="row">
-      <div class="col-12">
-        <mat-card>
-          <mat-card-title>Nuevo Ingreso</mat-card-title>
-          <mat-card-content>
-            <div class="row">
-              <div class="col-12 col-md-3">
-                <mat-form-field appearance="fill" class="w-100">
-                  <mat-label>Tipo de Ingreso</mat-label>
-                  <mat-select formControlName="entry_type_id" required>
-                    <mat-option
-                      *ngFor="let entryType of entryTypes"
-                      [value]="entryType.id"
-                    >
-                      {{ entryType.name }}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error
-                    *ngIf="formEntry.get('document_id')?.hasError('required')"
-                  >
-                    Documento es requerido
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="col-12 col-md-3">
-                <mat-form-field appearance="fill" class="w-100">
-                  <mat-label>Documento</mat-label>
-                  <mat-select formControlName="document_id" required>
-                    <mat-option
-                      *ngFor="let document of documents"
-                      [value]="document.id"
-                    >
-                      {{ document.name }}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error
-                    *ngIf="formEntry.get('document_id')?.hasError('required')"
-                  >
-                    Documento es requerido
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="col-12 col-md-3">
-                <mat-form-field appearance="fill" class="w-100">
-                  <mat-label>Serie</mat-label>
-                  <input matInput formControlName="serial" />
-                </mat-form-field>
-              </div>
+  <form [formGroup]="entryForm" (ngSubmit)="enviarDatos()">
+    <mat-card>
+      <mat-card-title>Registro de Entrada</mat-card-title>
+      <mat-card-content>
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Número de Documento</mat-label>
+            <input matInput formControlName="document_number" />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Proveedor</mat-label>
+            <input matInput formControlName="supplier_id" />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Documento</mat-label>
+            <mat-select formControlName="document_id" required>
+              <mat-option
+                *ngFor="let document of documents"
+                [value]="document.id"
+              >
+                {{ document.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="entryForm.get('document_id')?.hasError('required')"
+            >
+              Documento es requerido
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Tipo de Ingreso</mat-label>
+            <mat-select formControlName="entry_type_id" required>
+              <mat-option
+                *ngFor="let entryType of entryTypes"
+                [value]="entryType.id"
+              >
+                {{ entryType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="entryForm.get('document_id')?.hasError('required')"
+            >
+              Documento es requerido
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Total</mat-label>
+            <input matInput formControlName="total" readonly />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
 
-              <div class="col-12 col-md-3">
-                <mat-form-field>
-                  <mat-label>Fecha de Ingreso</mat-label>
-                  <input matInput [matDatepicker]="pickerFIngreso" />
-                  <mat-datepicker-toggle
-                    matIconSuffix
-                    [for]="pickerFIngreso"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #pickerFIngreso></mat-datepicker>
-                </mat-form-field>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
+    <mat-card>
+      <mat-card-title>Detalles de la Entrada</mat-card-title>
+      <mat-card-content>
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="openMaterialDialog()"
+        >
+          Agregar Material
+        </button>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- Date Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Fecha</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.value.date | date }}
+            </td>
+          </ng-container>
+
+          <!-- Material Column -->
+          <ng-container matColumnDef="material">
+            <th mat-header-cell *matHeaderCellDef>Material</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.value.material.name }}
+            </td>
+          </ng-container>
+
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field appearance="fill">
+                <input
+                  matInput
+                  type="number"
+                  [formControl]="element.get('quantity')"
+                  (change)="updateSubtotal(i)"
+                />
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Current Stock Column -->
+          <ng-container matColumnDef="current_stock">
+            <th mat-header-cell *matHeaderCellDef>Stock Actual</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.value.current_stock }}
+            </td>
+          </ng-container>
+
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Precio</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-form-field appearance="fill">
+                <input
+                  matInput
+                  type="number"
+                  [formControl]="element.get('price')"
+                  (change)="updateSubtotal(i)"
+                />
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <!-- Subtotal Column -->
+          <ng-container matColumnDef="subtotal">
+            <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.value.subtotal }}
+            </td>
+          </ng-container>
+
+          <!-- Warehouse Column -->
+          <ng-container matColumnDef="warehouse">
+            <th mat-header-cell *matHeaderCellDef>Almacén</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.value.warehouse.name }}
+            </td>
+          </ng-container>
+
+          <!-- Location Column -->
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef>Ubicación</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.value.location }}
+            </td>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Acción</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button mat-icon-button color="warn" (click)="removeDetail(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+
+    <button mat-raised-button color="primary" type="submit">
+      Guardar Entrada
+    </button>
   </form>
 </div>
