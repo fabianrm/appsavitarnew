@@ -12,7 +12,7 @@ import { Service } from '../../contract/Models/ServiceResponse';
 })
 export class ContractsListComponent implements OnInit {
 
-  displayedColumns: string[] = ['serviceCode', 'planName', 'installationDate', 'addressInstallation', 'vlan', 'boxName', 'portNumber','status'];
+  displayedColumns: string[] = ['serviceCode', 'planName', 'installationDate', 'addressInstallation', 'vlan', 'boxName', 'portNumber', 'status'];
   public dataSource!: MatTableDataSource<Service>;
 
   public respuesta!: Service;
@@ -21,7 +21,7 @@ export class ContractsListComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public getId: number,
     private contractService: ContractService,
     private dialogRef: MatDialogRef<ContractsListComponent>) { }
-  
+
   ngOnInit() {
     console.log(this.getId);
     this.getServiceByCustomer(this.getId)
@@ -34,8 +34,8 @@ export class ContractsListComponent implements OnInit {
 
       if (respuesta.data.length > 0) {
         this.dataSource = new MatTableDataSource(respuesta.data);
-      //  this.dataSource.paginator = this.paginator;
-       // this.dataSource.sort = this.sort;
+        //  this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
       }
 
     });

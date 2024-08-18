@@ -68,6 +68,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
 
   address: string = '';
 
+  installPayment?: false;
+
   constructor(public formulario: FormBuilder,
     private customerService: CustomerService,
     private contractService: ContractService,
@@ -136,6 +138,9 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       endDate: [''],
       userPppoe: ['', Validators.required],
       passPppoe: ['', Validators.required],
+      installationPayment: [false, Validators.required],
+      installationAmount: ['',],
+      prepayment: [true, Validators.required],
       check: [false],
     }
 
@@ -157,12 +162,24 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       this.selectedEquipment = typeof value === 'object' ? value : null;
     });
 
-    //Filtrar combo equipos por serie 
+    //Filtrar combo equipos por serie
+    // this.filteredEquipos = this.formContrato.get('equipmentId')!.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => (typeof value === 'string' ? value : value?.serie)),
+    //   map(serie => (serie ? this._filter(serie) : this.equipments.slice()))
+    // );
+
+    // Filtrar combo equipos por serie o mac
     this.filteredEquipos = this.formContrato.get('equipmentId')!.valueChanges.pipe(
       startWith(''),
-      map(value => (typeof value === 'string' ? value : value?.serie)),
-      map(serie => (serie ? this._filter(serie) : this.equipments.slice()))
+      map(value => {
+        // Determinar si el valor es un string (serie o mac) o un objeto (equipo)
+        const filterValue = typeof value === 'string' ? value : value?.serie || value?.mac;
+        return filterValue;
+      }),
+      map(filterValue => (filterValue ? this._filter(filterValue) : this.equipments.slice()))
     );
+
 
     //Subscribirse a los cambios del combo box
     this.formContrato.get('boxId')!.valueChanges.subscribe(value => {
@@ -185,6 +202,12 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     //Subscribirse a los cambios del check
     this.formContrato.get('check')?.valueChanges.subscribe(checked => {
       this.onCheckboxChange(checked);
+    });
+
+
+    //Subscribirse a los cambios del check
+    this.formContrato.get('installationPayment')?.valueChanges.subscribe(checked => {
+      this.onCheckInstallationPay(checked);
     });
 
   }
@@ -228,6 +251,21 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     } else {
       this.enableControls();
     }
+  }
+
+
+  //agregar validacion al monto de instalacion
+  onCheckInstallationPay(checked: boolean) {
+    if (checked) {
+      this.formContrato.get('installationAmount')?.addValidators(Validators.required);
+
+    } else {
+      //  this.formContrato.get('installationAmount')?.clearValidators;
+      this.formContrato.controls["installationAmount"].clearValidators();
+      this.formContrato.controls['installationAmount'].updateValueAndValidity();
+
+    }
+
   }
 
   //enable controls
@@ -325,18 +363,56 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     this.equipmentService.getEquipments().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
         this.equipments = respuesta.data
+        console.log(this.equipments);
+
       }
+
     });
   }
 
+  // displayFn(equipment: Equipment): string {
+  //   return equipment ? (equipment.serie ? equipment.serie : equipment.mac) : '';
+  // }
+
   displayFn(equipment: Equipment): string {
-    return equipment && equipment.serie ? equipment.serie : '';
+    if (equipment) {
+      if (equipment.serie) {
+        return equipment.serie;
+      } else if (equipment.mac) {
+        return equipment.mac;
+      }
+    }
+    return '';
   }
+
+
+  // displayFn(equipment: Equipment): string {
+  //   return equipment && equipment.serie ? equipment.serie : '';
+  // }
+
+  // private _filter(name: string): Equipment[] {
+  //   const filterValue = name.toLowerCase();
+  //   return this.equipments.filter(option => option.serie.toLowerCase().includes(filterValue));
+  // }
 
   private _filter(name: string): Equipment[] {
     const filterValue = name.toLowerCase();
-    return this.equipments.filter(option => option.serie.toLowerCase().includes(filterValue));
+
+    // Filtrar por serie
+    let filteredEquipments = this.equipments.filter(option =>
+      option.serie.toLowerCase().includes(filterValue)
+    );
+
+    // Si no encuentra resultados, filtrar por mac
+    if (filteredEquipments.length === 0) {
+      filteredEquipments = this.equipments.filter(option =>
+        option.mac.toLowerCase().includes(filterValue)
+      );
+    }
+
+    return filteredEquipments;
   }
+
 
   // Para obtener solo el id cuando se guarda el formulario
   get equipmentIdValue(): number | null {

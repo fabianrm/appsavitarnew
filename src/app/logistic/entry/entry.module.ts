@@ -18,6 +18,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MaterialRoutingModule } from '../material/material-routing.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MaterialSelectDialogComponent } from './material-select-dialog/material-select-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -49,7 +51,10 @@ import { MaterialSelectDialogComponent } from './material-select-dialog/material
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatDialogModule,
+    MatAutocompleteModule
+
 
   ]
 })

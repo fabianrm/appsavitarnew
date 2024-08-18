@@ -25,6 +25,6 @@ export class SupplierService {
 
 
   getSuppliers(): Observable<SupplierResponse> {
-    return this.clienteHttp.get<SupplierResponse>(this.API + 'entry-types', { headers: this.headers })
+    return this.clienteHttp.get<SupplierResponse>(this.API + 'suppliers', { headers: this.headers })
   }
 }

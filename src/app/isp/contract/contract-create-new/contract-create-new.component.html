@@ -53,7 +53,9 @@
                     <div *ngIf="planSelected">
                       @for (itemPlan of planSelected; track itemPlan) {
                       <p>Precio:</p>
-                      <span class="span-title"> {{ itemPlan.price | currency : "PEN" }}</span>
+                      <span class="span-title">
+                        {{ itemPlan.price | currency : "PEN" }}</span
+                      >
                       }
                     </div>
                   </div>
@@ -88,7 +90,10 @@
               <div class="col-12 col-md-6">
                 <mat-form-field class="control-full-width" appearance="fill">
                   <mat-label>Ciudad</mat-label>
-                  <mat-select formControlName="cityId" (selectionChange)="fetchCityDetails($event.value)">
+                  <mat-select
+                    formControlName="cityId"
+                    (selectionChange)="fetchCityDetails($event.value)"
+                  >
                     @for (city of cities; track city) {
                     <mat-option [value]="city.id">{{ city.name }}</mat-option>
                     }
@@ -272,7 +277,7 @@
                       *ngFor="let option of filteredEquipos | async"
                       [value]="option"
                     >
-                      {{ option.serie }}
+                     {{ option.mac }} - {{ option.serie }}
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
@@ -324,6 +329,36 @@
         </mat-card>
       </div>
     </div>
+
+    <div class="row">
+     
+        <div class="col-12 col-md-2">
+          <mat-checkbox formControlName="prepayment"
+            >Pago por adelantado</mat-checkbox
+          >
+        </div>
+
+        <div class="col-12 col-md-2">
+          <mat-checkbox formControlName="installationPayment"
+            >Cobrar Instalación</mat-checkbox
+          >
+        </div>
+
+        <div class="col-12 col-md-2">
+          <mat-form-field *ngIf="formContrato.get('installationPayment')?.value == true " class="control-full-width" appearance="fill">
+            <mat-label>Monto</mat-label>
+            <input
+              matInput
+              type="number"
+              step="any"
+              placeholder="Monto"
+              formControlName="installationAmount"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+
     <!-- Botones -->
 
     <div class="row-buttons">

@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class EntryListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'date', 'document_number', 'supplier_id', 'entry_type_id', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'date', 'document', 'document_number', 'supplier_id', 'entry_type_id', 'total', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<Entry>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

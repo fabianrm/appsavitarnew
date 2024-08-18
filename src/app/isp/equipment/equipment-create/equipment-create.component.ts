@@ -67,6 +67,7 @@ export class EquipmentCreateComponent implements OnInit {
 
     const formControlsConfig = {
       type: [this.selectedTipo, Validators.required],
+      mac: ['', Validators.required],
       serie: ['', Validators.required],
       model: ['', Validators.required],
       brandId: [''],

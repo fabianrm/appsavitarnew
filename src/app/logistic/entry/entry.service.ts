@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EntryResponse } from './models/EntryResponse';
 import { EntryRequest } from './models/EntryRequest';
+import { EntryDetailResponse } from './models/EntryDetailResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,11 @@ export class EntryService {
       .pipe(tap(() => {
         this._refresh$.next()
       }));
+  }
+
+
+  getEntryDetails(): Observable<EntryDetailResponse> {
+    return this.clienteHttp.get<EntryDetailResponse>(this.API + 'entry-details', { headers: this.headers })
   }
 
 }

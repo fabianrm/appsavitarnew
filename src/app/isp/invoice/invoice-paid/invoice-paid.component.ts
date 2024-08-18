@@ -31,7 +31,7 @@ export class InvoicePaidComponent implements OnInit {
   initForm() {
     this.formPaid = this.fb.group({
       discount: [0],
-      receipt: ['', Validators.required],
+      receipt: [this.getData.receipt, { readonly: true }],
       note: [''],
       status: ['pagada'],
     });
@@ -103,9 +103,6 @@ export class InvoicePaidComponent implements OnInit {
 
 
   onCancel() {
-    console.log(this.formPaid.get('amount'));
-    // console.log(this.formPaid.value);
-
     this.dialogRef.close();
   }
 

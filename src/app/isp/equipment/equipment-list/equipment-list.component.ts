@@ -17,7 +17,7 @@ import { Equipment } from '../Models/EquipmentResponse';
 })
 export class EquipmentListComponent {
 
-  displayedColumns: string[] = ['id', 'type', 'serie', 'model', 'brand', 'purchaseDate', 'contractCode','status', 'acciones'];
+  displayedColumns: string[] = ['id', 'type', 'mac', 'serie', 'model', 'brand', 'purchaseDate', 'contractCode','status', 'acciones'];
 
   public dataSource!: MatTableDataSource<Equipment>
 
@@ -69,7 +69,7 @@ export class EquipmentListComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+   // dialogConfig.width = '40%';
     this.dialog.open(EquipmentCreateComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => {
@@ -87,7 +87,7 @@ export class EquipmentListComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+   // dialogConfig.width = '40%';
     dialogConfig.data = this.eqSelected;
     this.dialog.open(EquipmentEditComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })

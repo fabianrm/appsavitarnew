@@ -9,7 +9,7 @@ import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Service } from './../Models/ServiceResponse';
+import { Service } from '../Models/ServiceResponse';
 
 @Component({
   selector: 'app-contract-edit-basics',

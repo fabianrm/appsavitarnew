@@ -62,6 +62,7 @@ export class BoxEditComponent implements OnInit, OnDestroy {
       longitude: [''],
       totalPorts: [''],
       availablePorts: [''],
+      note: [''],
       status: [true],
     }
     this.formBox = this.formulario.group(formControlsConfig);
@@ -133,6 +134,7 @@ export class BoxEditComponent implements OnInit, OnDestroy {
         longitude: this.dataBox.longitude,
         totalPorts: this.dataBox.totalPorts,
         availablePorts: this.dataBox.availablePorts,
+        note: this.dataBox.note,
         status: this.dataBox.status,
       });
 

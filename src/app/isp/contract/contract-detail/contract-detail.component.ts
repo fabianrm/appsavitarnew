@@ -44,13 +44,11 @@ export class ContractDetailComponent implements OnInit {
 
   fetchContractDetails(id: number) {
     this.contractService.getServiceByID(id).subscribe((respuesta) => {
-
       if (respuesta) {
         this.contract = respuesta.data;
         this.setNewCoordinates(this.contract.latitude, this.contract.longitude);
-       // console.log(respuesta.data)
+        // console.log(respuesta.data)
       }
-
     });
   }
 
@@ -62,7 +60,7 @@ export class ContractDetailComponent implements OnInit {
   setNewCoordinates(long: number, lat: number) {
     const singleCoordinate: [number, number] = [long, lat];
     this.mapleafService.setSingleCoordinate(singleCoordinate);
-    
+
   }
 
 }

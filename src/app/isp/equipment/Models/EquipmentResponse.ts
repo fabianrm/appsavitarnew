@@ -5,6 +5,7 @@ export interface EquipmentResponse {
 export interface Equipment {
     id: number;
     type: string;
+    mac: string;
     serie: string;
     model: string;
     brand: string;

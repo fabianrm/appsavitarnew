@@ -61,8 +61,6 @@ export class EquipmentEditComponent {
 
   ngOnInit(): void {
 
-    console.log(this.getData);
-
     this.initForm();
     this.getBrands();
 
@@ -70,18 +68,17 @@ export class EquipmentEditComponent {
 
   initForm() {
 
+
     const purchaseDate = this.getData[0].purchaseDate;
-    // Formatear la fecha usando DatePipe
-    // const formattedDate = this.datePipe.transform(purchaseDate, 'yyyy-MM-dd', 'GMT-5');
-    // const formattedDate = this.datePipe.transform(purchaseDate, 'yyyy-MM-dd');
-    // console.log('format', formattedDate);
+
 
     let fechaDate = new Date(purchaseDate + ' 0:00:00');
 
     const formControlsConfig = {
       id: [this.getData[0].id, Validators.required],
       type: [this.getData[0].type, Validators.required],
-      serie: [this.getData[0].serie, Validators.required],
+      mac: [this.getData[0].mac,],
+      serie: [this.getData[0].serie,],
       model: [this.getData[0].model, Validators.required],
       brandId: [this.getData[0].brandId],
       purchaseDate: [fechaDate, Validators.required],
@@ -137,7 +134,7 @@ export class EquipmentEditComponent {
   }
 
   showSuccess() {
-    this.snackbarService.showSuccess('Equipo agregado correctamente');
+    this.snackbarService.showSuccess('Equipo editado correctamente');
   }
 
 

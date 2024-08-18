@@ -156,6 +156,12 @@
       <td data-title="Plan" mat-cell *matCellDef="let element">{{ element.planName }}</td>
     </ng-container>
 
+    <!-- Note Column -->
+    <ng-container matColumnDef="note">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nota</th>
+      <td data-title="Nota" mat-cell *matCellDef="let element">{{ element.note }}</td>
+    </ng-container>
+
     <!-- Status Column -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>

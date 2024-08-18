@@ -14,6 +14,7 @@ export interface Box {
     longitude: string;
     totalPorts: number;
     availablePorts: number;
+    note: string;
     status: number;
     coordinates: string[];
 }

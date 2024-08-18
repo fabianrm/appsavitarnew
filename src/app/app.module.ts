@@ -37,6 +37,7 @@ import { registerLocaleData } from '@angular/common';
 import { AppConfigService } from './app-config.service';
 import { ClientIdInterceptor } from './client-id.interceptor';
 
+
 registerLocaleData(localeEsPe, 'es-PE');
 
 

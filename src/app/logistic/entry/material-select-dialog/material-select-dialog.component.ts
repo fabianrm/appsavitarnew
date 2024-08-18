@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MaterialService } from '../../material/material.service';
 import { WarehouseService } from '../../warehouse/warehouse.service';
 import { Warehouse } from '../../warehouse/models/WarehouseResponse';
+import { map, Observable, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-material-select-dialog',
@@ -13,31 +14,53 @@ import { Warehouse } from '../../warehouse/models/WarehouseResponse';
 })
 export class MaterialSelectDialogComponent implements OnInit {
 
-  materialForm: FormGroup;
+  materialForm!: FormGroup;
   materials: Material[] = [];
   warehouses: Warehouse[] = [];
+
+  filteredMaterial!: Observable<Material[]>;
   
   constructor(public dialogRef: MatDialogRef<MaterialSelectDialogComponent>,
     private fb: FormBuilder, private materialService: MaterialService,
-    private warehouseService: WarehouseService,) {
-    this.materialForm = this.fb.group({
+    private warehouseService: WarehouseService,) {}
+
+  initForm() {
+    const formControlsConfig = {
       material_id: ['', Validators.required],
       quantity: ['', Validators.required],
       price: ['', Validators.required],
-      subtotal: [{ value: 0, disabled: true }],
+      subtotal: ['',],
       warehouse_id: ['', Validators.required],
       location: ['', Validators.required]
+    }
+    this.materialForm = this.fb.group(formControlsConfig);
+
+    Object.keys(formControlsConfig).forEach(key => {
+      if ( key === 'location' ) {
+        this.materialForm.get(key)?.valueChanges.subscribe(value => {
+          this.materialForm.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
+        });
+      }
     });
 
     this.materialForm.get('quantity')!.valueChanges.subscribe(() => this.updateSubtotal());
     this.materialForm.get('price')!.valueChanges.subscribe(() => this.updateSubtotal());
+
+    //Filtrar combo box por name 
+    this.filteredMaterial = this.materialForm.get('material_id')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value?.name)),
+      map(name => (name ? this._filterMaterial(name) : this.materials.slice()))
+    );
+
   }
 
+
   ngOnInit() {
+    this.initForm();
     this.getMaterials();
     this.getWarehouses();
   }
-
 
   getMaterials() {
     this.materialService.getMaterials().subscribe((respuesta) => {
@@ -66,14 +89,38 @@ export class MaterialSelectDialogComponent implements OnInit {
 
 
   onSubmit(): void {
+
+    const formData = this.materialForm.value;
+    const materialId = this.MaterialIdValue;
+
+    const dataToSend = {
+      ...formData,
+      material_id: materialId,
+    };
+
+
     if (this.materialForm.valid) {
-      this.dialogRef.close(this.materialForm.getRawValue());
-      
+      this.dialogRef.close(dataToSend);
     }
   }
 
   onCancel(): void {
     this.dialogRef.close();
+  }
+
+  displayFn(material: Material): string {
+    return material && material.name ? material.name : '';
+  }
+
+  private _filterMaterial(name: string): Material[] {
+    const filterValue = name.toLowerCase();
+    return this.materials.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+  // Para obtener solo el id cuando se guarda el formulario
+  get MaterialIdValue(): number | null {
+    const material = this.materialForm.get('material_id')!.value;
+    return material ? material.id : null;
   }
 
 

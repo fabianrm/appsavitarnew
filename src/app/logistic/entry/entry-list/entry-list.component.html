@@ -1,30 +1,32 @@
 <div class="contenedor">
   <div class="row row-filter">
-
     <div class="col-9 col-md-11">
-    <!--  Filtro -->
-    <mat-form-field>
-      <mat-label>Buscar</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ej. Router"
-        #input
-        autocomplete="off"
-      />
-    </mat-form-field>
+      <!--  Filtro -->
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Ej. Router"
+          #input
+          autocomplete="off"
+        />
+      </mat-form-field>
     </div>
 
     <div class="col-3 col-md-1">
-    <button type="button" (click)="newEntry()" mat-raised-button color="accent">
-      + Nuevo
-    </button>
+      <button
+        type="button"
+        (click)="newEntry()"
+        mat-raised-button
+        color="accent"
+      >
+        + Nuevo
+      </button>
     </div>
-
-
   </div>
 
-  <div class="table-container" >
+  <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- id Video -->
       <ng-container matColumnDef="id">
@@ -34,7 +36,7 @@
         </td>
       </ng-container>
 
-       <!-- id Video -->
+      <!-- id Video -->
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Fecha</th>
         <td data-title="Fecha" mat-cell *matCellDef="let element">
@@ -42,10 +44,19 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="document_number">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Nro. Documento</th>
-        <td data-title="Nro. Documento" mat-cell *matCellDef="let element">
+      <ng-container matColumnDef="document">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Documento</th>
+        <td data-title="Documento" mat-cell *matCellDef="let element">
           {{ element.document.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="document_number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">
+          Nro. Documento
+        </th>
+        <td data-title="Nro. Documento" mat-cell *matCellDef="let element">
+          {{ element.document_number }}
         </td>
       </ng-container>
 
@@ -53,7 +64,7 @@
       <ng-container matColumnDef="supplier_id">
         <th mat-header-cell *matHeaderCellDef>Proveedor</th>
         <td data-title="Proveedor" mat-cell *matCellDef="let element">
-          {{ element.supplier.name}}
+          {{ element.supplier.name }}
         </td>
       </ng-container>
 
@@ -61,11 +72,17 @@
       <ng-container matColumnDef="entry_type_id">
         <th mat-header-cell *matHeaderCellDef>Tipo de Entrada</th>
         <td data-title="Tipo Entrada" mat-cell *matCellDef="let element">
-          {{ element.entry_type.name  }}
+          {{ element.entry_type.name }}
         </td>
       </ng-container>
 
-
+      <!-- Longitude Column -->
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef>Total</th>
+        <td data-title="Total" mat-cell *matCellDef="let element">
+          {{ element.total }}
+        </td>
+      </ng-container>
 
       <!-- Estado Column -->
       <ng-container matColumnDef="status">
@@ -98,8 +115,6 @@
               <mat-icon matListItemIcon>visibility</mat-icon>
               Ver detalle
             </button>
-
-           
           </mat-menu>
         </td>
       </ng-container>
@@ -115,5 +130,3 @@
     </mat-paginator>
   </div>
 </div>
-
-

@@ -187,5 +187,31 @@ export class ContractListComponent implements OnInit {
     this.router.navigate(['/dashboard/contract/contract-edit-data-basic/' + id]); // Navega al componente "editar datos basicos"
   }
 
+  generateInvoices(id: number) {
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "Se van a generar las facturas para el contrato!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, generar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.contractService.generateInvoices(id).subscribe((respuesta) => {
+
+          if (respuesta.totalInvoices == 0) {
+            this.snackbarService.showInfo(`${respuesta.message}`);
+          } else {
+            this.snackbarService.showSuccess(`✅${respuesta.message}`);
+          }
+        }, error => {
+          this.snackbarService.showError(`☹️ Ocurrio un error al generar las facturas`);
+          console.log('Error al generar las facturas', error.message);
+        });
+      }
+    });
+  }
+
 
 }

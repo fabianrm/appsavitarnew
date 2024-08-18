@@ -106,7 +106,7 @@
               (click)="editDataBasic(row.id)"
             >
               <mat-icon matListItemIcon>edit</mat-icon>
-              Editar datos básicos
+              Editar Datos Básicos
             </button>
 
             <button
@@ -151,6 +151,11 @@
             <button mat-menu-item (click)="viewDetail(row.id)">
               <mat-icon matListItemIcon>info</mat-icon>
               Ver Detalle
+            </button>
+
+             <button mat-menu-item (click)="generateInvoices(row.id)">
+              <mat-icon matListItemIcon>receipt</mat-icon>
+              Generar Facturas
             </button>
 
             <button

@@ -1,8 +1,8 @@
 import { Document } from "../../document/models/DocumentResponse";
 import { EntryType } from "../../entry-type/models/EntryTypeResponse";
-import { Material } from "../../material/models/MaterialResponse";
 import { Supplier } from "../../supplier/models/SupplierResponse";
-import { Warehouse } from "../../warehouse/models/WarehouseResponse";
+
+import { EntryDetail } from "./EntryDetailResponse";
 
 export interface EntryResponse {
     data: Entry[];
@@ -24,15 +24,4 @@ export interface Entry {
     status: null;
 }
 
-export interface EntryDetail {
-    id: number;
-    date: Date;
-    material: Material;
-    quantity: number;
-    current_stock: number;
-    price: number;
-    subtotal: number;
-    warehouse: Warehouse;
-    location: string;
-}
 

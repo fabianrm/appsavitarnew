@@ -34,6 +34,14 @@
       </ng-container>
 
       <!-- Documento Column -->
+      <ng-container matColumnDef="mac">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">MAC</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.mac }}
+        </td>
+      </ng-container>
+      
+      <!-- Documento Column -->
       <ng-container matColumnDef="serie">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Serie</th>
         <td class="center" mat-cell *matCellDef="let element">

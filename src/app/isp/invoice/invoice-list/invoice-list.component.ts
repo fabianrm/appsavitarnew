@@ -18,7 +18,7 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 })
 export class InvoiceListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'status', 'acciones'];
+  displayedColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'acciones'];
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
   perPage = 0;

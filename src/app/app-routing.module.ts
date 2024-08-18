@@ -80,6 +80,10 @@ const routes: Routes = [
         loadChildren: () => import('./logistic/entry/entry.module').then(m => m.EntryModule)
       },
       {
+        path: 'output',
+        loadChildren: () => import('./logistic/output/output.module').then(m => m.OutputModule)
+      },
+      {
         path: 'login',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
       }

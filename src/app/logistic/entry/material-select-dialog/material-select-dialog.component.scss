@@ -1,15 +1,23 @@
-mat-dialog-content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+mat-dialog-title {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 20px;
 }
+
+mat-dialog-content {
+  overflow: hidden;
+}
+
+.container {
+  padding: 0 15px;
+}
+
 
 mat-form-field {
   width: 100%;
+  margin-bottom: 16px;
 }
 
-mat-dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
+button[mat-raised-button] {
+  margin: 8px;
 }

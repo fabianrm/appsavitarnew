@@ -114,4 +114,12 @@ export class ContractService {
       }));
   }
 
+  //Suspender el contrato
+  generateInvoices(id: number,): Observable<any> {
+    return this.clienteHttp.post(`${this.API}invoices/generateByService/${id}`, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
 }

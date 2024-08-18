@@ -8,9 +8,8 @@ import { Router } from '@angular/router';
 import { Document } from '../../document/models/DocumentResponse';
 import { Supplier } from '../../supplier/models/SupplierResponse';
 import { EntryType } from '../../entry-type/models/EntryTypeResponse';
-import { EntryDetail } from '../models/EntryRequest';
-import { EntryDetail as edr } from '../models/EntryResponse';
-import { MatDialog } from '@angular/material/dialog';
+import { EntryDetail as edr } from '../models/EntryDetailResponse';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MaterialSelectDialogComponent } from '../material-select-dialog/material-select-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { Material } from '../../material/models/MaterialResponse';
@@ -59,18 +58,14 @@ export class EntryCreateComponent {
       document_number: ['', Validators.required],
       supplier_id: [1, Validators.required],
       date: [this.datePipe.transform(this.date, "yyyy-MM-dd")], 
-      total: [{ value: 0, disabled: true }],
+      total: [0.00,{ value: 0, readonly: true }],
       status: [1],
       entry_details: this.fb.array([])
     });
-   // this.entryForm = this.fb.group(formControlsConfig);
     this.dataSource = new MatTableDataSource((this.entryForm.get('entry_details') as FormArray).controls);
-
-   
   }
 
   ngOnInit() {
-    this.initForm();
     this.getDocuments();
     this.getEntryTypes();
     this.getSuppliers();
@@ -79,28 +74,7 @@ export class EntryCreateComponent {
   }
 
 
-  initForm() {
-    // const formControlsConfig = {
-    //   entry_type_id: ['', Validators.required],
-    //   document_id: ['', Validators.required],
-    //   document_number: ['', Validators.required],
-    //   supplier_id: ['', Validators.required],
-    //   date: ['', Validators.required],
-    //   total: [{ value: 0, disabled: true }],
-    //   status: [1],
-    //   entry_details: this.fb.array([])
-    // }
-    // this.entryForm = this.fb.group(formControlsConfig);
-
-    // Object.keys(formControlsConfig).forEach(key => {
-    //   if (key === 'document_number' || key === 'serial' || key === 'model') {
-    //     this.entryForm.get(key)?.valueChanges.subscribe(value => {
-    //       this.entryForm.get(key)?.setValue(value.toUpperCase(), { emitEvent: false });
-    //     });
-    //   }
-    // });
-  }
-
+  
   get entryDetails(): FormArray {
     return this.entryForm.get('entry_details') as FormArray;
   }
@@ -147,7 +121,7 @@ export class EntryCreateComponent {
     this.warehouseService.getWarehouses().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
         this.warehouses = respuesta.data;
-        console.log(this.warehouses);
+      //  console.log(this.warehouses);
         
       }
     });
@@ -155,6 +129,7 @@ export class EntryCreateComponent {
 
 
   addDetail(detail: edr): void {
+   
     const existingDetail = this.entryDetails.controls.find(control => control.value.material.id === detail.material.id);
 
     if (existingDetail) {
@@ -194,10 +169,12 @@ export class EntryCreateComponent {
   }
 
   openMaterialDialog(): void {
-    const dialogRef = this.dialog.open(MaterialSelectDialogComponent);
-    dialogRef.disableClose = true;
-   // dialogRef.autoFocus = true;
 
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+  
+    const dialogRef = this.dialog.open(MaterialSelectDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.addDetail({
@@ -218,13 +195,9 @@ export class EntryCreateComponent {
     const dataToSend = {
       ...formData,
       date: currentDate,
-
     };
 
-  console.log(dataToSend);
   
-   
-
     if (this.entryForm.valid) {
       this.entryService.addEntry(dataToSend).subscribe(respuesta => {
         this.router.navigate(['/dashboard/entry/entries']);

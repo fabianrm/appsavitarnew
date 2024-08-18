@@ -16,5 +16,6 @@ export interface ReqBox {
     longitude: string;
     totalPorts: number;
     availablePorts: number;
+    note: string;
     status: number;
 }

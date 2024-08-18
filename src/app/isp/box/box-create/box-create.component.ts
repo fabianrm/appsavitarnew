@@ -77,6 +77,7 @@ export class BoxCreateComponent implements OnInit, OnDestroy {
       longitude: [''],
       totalPorts: [''],
       availablePorts: [''],
+      note: [''],
       status: [true],
     }
     this.formBox = this.formulario.group(formControlsConfig);
