@@ -13,15 +13,6 @@
   flex: 1 1 auto;
 }
 
-.active-link {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #4cf433; /* Cambia el color según tu preferencia */
-}
-
-
-.active-link span {
-  color: #4cf433; /* Cambia el color según tu preferencia */
-}
 
 
 .sidenav {
@@ -43,13 +34,7 @@
   display: none;
 }
 
-.mat-tree-node:hover,
-.mat-nested-tree-node:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #da8d22; /* Cambia el color según tu preferencia */
-  cursor: pointer;
 
-}
 
 .mat-icon-button {
   margin-right: 10px;
@@ -71,28 +56,47 @@ mat-toolbar.toolbar {
   align-items: center;
 }
 
-.menu-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
-.mat-tree-node {
-  padding-left: 30px;
-}
+mat-expansion-panel {
+  .mat-expansion-panel-header {
+    padding-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinea el contenido a la izquierda */
 
-mat-list-item {
-  font-family: Arial, Helvetica, sans-serif;
-  display: flex;
-  align-items: center;
-}
+    &.mat-expanded {
+      border-left: 4px solid green;
+    }
 
+     mat-icon {
+      margin-right: 5px; /* Separación de 5px entre el ícono y el texto */
+    }
+  }
 
-mat-list-item mat-icon {
-  margin-right: 16px;
-  color: gray;
-}
+  .active-link {
+    border-left: 4px solid green;
+    padding-left: 4px;
+  }
 
-.item {
-  height: 45px !important; //Provisional
+  a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinea el contenido a la izquierda */
+    padding-left: 8px; /* Espacio adicional para alinear mejor con el contenedor */
+
+    mat-icon {
+      margin-right: 5px; /* Separación de 5px entre el ícono y el texto */
+    }
+  }
+
+  /* Estilo para el panel title */
+  .mat-panel-title {
+    display: flex;
+    align-items: center;
+
+    mat-icon {
+      margin-right: 5px; /* Separación de 5px entre el ícono y el texto */
+    }
+  }
 }

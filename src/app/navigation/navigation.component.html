@@ -16,49 +16,30 @@
       </button>
     </mat-toolbar>
 
-    <mat-tree
-      [dataSource]="dataSource"
-      [treeControl]="treeControl"
-      class="full-height"
-    >
-      <mat-tree-node
-        *matTreeNodeDef="let node"
-        matTreeNodePadding
-        routerLinkActive="active-link"
-      >
-        <mat-list-item [routerLink]="[node.route]">
-          <mat-icon matListItemIcon>{{ node.icon }}</mat-icon>
-          <span matListItemTitle *ngIf="isExpanded">{{ node.name }}</span>
-         
-        </mat-list-item>
-      </mat-tree-node>
+    <mat-accordion>
+       <mat-expansion-panel *ngFor="let node of treeData; let i = index" [expanded]="i === 0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>{{ node.icon }}</mat-icon>
+            <span [ngClass]="{ active: isActive(node.route) }">{{
+              node.name
+            }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-        <div matTreeNodeToggle matTreeNodePadding >
-          <mat-list-item>
-            <mat-icon matListItemIcon style="margin-right: 8px;">{{treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}</mat-icon>
-            <mat-icon matListItemIcon >{{ node.icon }}</mat-icon>
-            <span matListItemTitle class="menu-text" *ngIf="isExpanded">{{  node.name }}</span>
-          </mat-list-item>
-        </div>
-
-        <div *ngIf="treeControl.isExpanded(node)">
-          <mat-tree-node
-            *ngFor="let child of node.children"
-            matTreeNodePadding
-            style="margin-left: 16px"
-            routerLinkActive="active-link"
+        <div *ngFor="let child of node.children">
+          <a
+            mat-button
+            [routerLink]="child.route"
+            (click)="setActiveRoute(child.route)"
+            [ngClass]="{ 'active-link': isActive(child.route) }"
           >
-            <mat-list-item [routerLink]="[child.route]">
-              <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
-              <span matListItemTitle class="menu-text" *ngIf="isExpanded">{{
-                child.name
-              }}</span>
-            </mat-list-item>
-          </mat-tree-node>
+            <mat-icon>{{ child.icon }}</mat-icon>
+            {{ child.name }}
+          </a>
         </div>
-      </mat-nested-tree-node>
-    </mat-tree>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -89,7 +70,9 @@
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="goCities()">Configurar Ciudades</button>
-        <button mat-menu-item (click)="detailEnterprise(this.id)">Configurar Empresa</button>
+        <button mat-menu-item (click)="detailEnterprise(this.id)">
+          Configurar Empresa
+        </button>
         <button mat-menu-item>Cambiar Clave</button>
         <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
       </mat-menu>

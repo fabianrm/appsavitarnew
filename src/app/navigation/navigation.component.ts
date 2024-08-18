@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { EnterpriseService } from '../isp/enterprise/enterprise.service';
 
 
@@ -15,8 +13,6 @@ interface MenuNode {
   route: string;
   children?: MenuNode[];
 }
-
-
 
 @Component({
   selector: 'app-navigation',
@@ -29,11 +25,11 @@ export class NavigationComponent implements OnInit {
   @HostBinding('class') class: string = '';
   isDark: boolean = false;
 
-  treeControl = new NestedTreeControl<MenuNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<MenuNode>();
 
-  treeData = [];
   isExpanded = true;
+
+  treeData: MenuNode[] = [];
+  activeRoute: string | null = null;
 
   id: number = 0;
 
@@ -44,8 +40,6 @@ export class NavigationComponent implements OnInit {
     private renderer: Renderer2) {
   }
 
-
-  hasChild = (_: number, node: MenuNode) => !!node.children && node.children.length > 0;
 
   toggleMenu() {
     this.isExpanded = !this.isExpanded;
@@ -69,6 +63,16 @@ export class NavigationComponent implements OnInit {
 
   }
 
+
+  setActiveRoute(route: string) {
+    this.activeRoute = route;
+  }
+
+  isActive(route: string): boolean {
+    return this.activeRoute === route;
+  }
+
+
   private breakpointObserver = inject(BreakpointObserver);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -81,7 +85,6 @@ export class NavigationComponent implements OnInit {
   getUserPermissions() {
     this.authService.getUserPermissions().subscribe(response => {
       this.treeData = response.data;
-      this.dataSource.data = this.treeData
     });
   }
 
@@ -123,8 +126,7 @@ export class NavigationComponent implements OnInit {
   getEnterprise(): void {
     this.enterpriseService.getEnterprise().subscribe((response) => {
       this.id = response.data.id;
-      console.log(this.id);
-      
+    //  console.log(this.id);
     })
   }
 
