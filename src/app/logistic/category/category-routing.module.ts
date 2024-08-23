@@ -7,7 +7,7 @@ import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { AuthGuard } from '../../auth/auth.guard';
 
 const routes: Routes = [
-  { path: 'categories', component: CategoryListComponent, data: { title: 'Planes' }, canActivate: [AuthGuard] },
+  { path: 'categories', component: CategoryListComponent, data: { title: 'Categorías' }, canActivate: [AuthGuard] },
   { path: 'categoryCreate', component: CategoryCreateComponent },
   { path: 'categoryEdit/:id', component: CategoryEditComponent },
 ];

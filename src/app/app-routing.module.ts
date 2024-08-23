@@ -92,6 +92,10 @@ const routes: Routes = [
         loadChildren: () => import('./logistic/category/category.module').then(m => m.CategoryModule)
       },
       {
+        path: 'presentation',
+        loadChildren: () => import('./logistic/presentation/presentation.module').then(m => m.PresentationModule)
+      },
+      {
         path: 'login',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
       }
