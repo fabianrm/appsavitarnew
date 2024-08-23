@@ -36,6 +36,7 @@ import localeEsPe from '@angular/common/locales/es-PE';
 import { registerLocaleData } from '@angular/common';
 import { AppConfigService } from './app-config.service';
 import { ClientIdInterceptor } from './client-id.interceptor';
+import { BrandModule } from './isp/brand/brand.module';
 
 
 registerLocaleData(localeEsPe, 'es-PE');
@@ -87,7 +88,8 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatCardModule,
     MatMenuModule,
     MatButtonModule,
-    SharedModule
+    SharedModule,
+    BrandModule
 
 
   ],

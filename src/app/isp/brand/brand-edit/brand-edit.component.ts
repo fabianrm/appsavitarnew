@@ -1,17 +1,16 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BrandService } from '../brand.service';
 import { ThemePalette } from '@angular/material/core';
-import { CategoryService } from '../category.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-category-edit',
-  templateUrl: './category-edit.component.html',
-  styleUrl: './category-edit.component.scss'
+  selector: 'app-brand-edit',
+  templateUrl: './brand-edit.component.html',
+  styleUrl: './brand-edit.component.scss'
 })
-export class CategoryEditComponent {
-
+export class BrandEditComponent {
   formEdit!: FormGroup;
   color: ThemePalette = 'accent';
   checked = (this.getData.status == 1) ? true : false;
@@ -19,10 +18,10 @@ export class CategoryEditComponent {
   selected = 'normal';
 
   constructor(public formulario: FormBuilder,
-    private categoryService: CategoryService,
+    private brandService: BrandService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
     private snackbarService: SnackbarService,
-    private dialogRef: MatDialogRef<CategoryEditComponent>) { }
+    private dialogRef: MatDialogRef<BrandEditComponent>) { }
 
 
   ngOnInit(): void {
@@ -39,7 +38,7 @@ export class CategoryEditComponent {
 
   enviarDatos(id: number) {
     if (this.formEdit.valid) {
-      this.categoryService.updateCategory(id, this.formEdit.value).subscribe(respuesta => {
+      this.brandService.updateBrand(id, this.formEdit.value).subscribe(respuesta => {
         this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
@@ -54,6 +53,5 @@ export class CategoryEditComponent {
   showSuccess() {
     this.snackbarService.showSuccess('Registro actualizado correctamente');
   }
-
 
 }

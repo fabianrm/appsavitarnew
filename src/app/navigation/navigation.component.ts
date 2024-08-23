@@ -30,6 +30,7 @@ export class NavigationComponent implements OnInit {
 
   treeData: MenuNode[] = [];
   activeRoute: string | null = null;
+  expandedIndex: number | null = null;
 
   id: number = 0;
 
@@ -41,12 +42,48 @@ export class NavigationComponent implements OnInit {
   }
 
 
-  toggleMenu() {
+  // toggleMenu() {
+  //   this.isExpanded = !this.isExpanded;
+  // }
+
+  toggleMenu(): void {
     this.isExpanded = !this.isExpanded;
+    if (this.isExpanded) {
+      this.setInitialExpandedNode();
+    }
+  }
+
+  expandMenu(): void {
+    this.isExpanded = true;
+    this.setInitialExpandedNode(); // Re-expande el nodo activo
+  }
+
+  collapseMenu(): void {
+    this.isExpanded = false;
+    this.expandedIndex = null; // Opcional: colapsa todo cuando el menú está contraído
+  }
+
+  // expandMenu() {
+  //   this.isExpanded = true;
+  // }
+
+  // collapseMenu() {
+  //   this.isExpanded = false;
+  // }
+
+  setInitialExpandedNode(): void {
+    if (!this.isExpanded) return;
+
+    const activeNodeIndex = this.treeData.findIndex(node =>
+      node.children?.some(child => this.isActive(child.route))
+    );
+
+    this.expandedIndex = activeNodeIndex !== -1 ? activeNodeIndex : null;
   }
 
 
   ngOnInit() {
+    this.setInitialExpandedNode();
     this.getUserPermissions()
     this.getEnterprise();
 
@@ -69,8 +106,19 @@ export class NavigationComponent implements OnInit {
   }
 
   isActive(route: string): boolean {
-    return this.activeRoute === route;
+    //return this.activeRoute === route;
+    return this.router.url === route;
   }
+
+
+
+  // isActive(route: string): boolean {
+  //   return this.router.url === route;
+  // }
+
+  // setActiveRoute(route: string): void {
+  //   this.router.navigate([route]);
+  // }
 
 
   private breakpointObserver = inject(BreakpointObserver);

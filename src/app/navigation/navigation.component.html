@@ -6,37 +6,47 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
-    [ngClass]="isExpanded ? 'sidenav' : '.sidenav.mat-drawer-closed'"
+    [ngClass]="isExpanded ? 'sidenav' : 'sidenav-collapsed'"
+    (mouseenter)="expandMenu()"
+    (mouseleave)="collapseMenu()"
   >
     <mat-toolbar class="toolbar">
       <span *ngIf="isExpanded">Savitar</span>
 
       <button mat-icon-button (click)="toggleMenu()">
-        <mat-icon>{{ isExpanded ? "close" : "menu" }}</mat-icon>
+        <mat-icon>{{ isExpanded ? 'close' : 'menu' }}</mat-icon>
       </button>
     </mat-toolbar>
 
     <mat-accordion>
-       <mat-expansion-panel *ngFor="let node of treeData; let i = index" [expanded]="i === 0">
+      <mat-expansion-panel
+        *ngFor="let node of treeData; let i = index"
+        [expanded]="isExpanded && expandedIndex === i"
+        [hideToggle]="!isExpanded"
+      >
         <mat-expansion-panel-header>
           <mat-panel-title>
             <mat-icon>{{ node.icon }}</mat-icon>
-            <span [ngClass]="{ active: isActive(node.route) }">{{
-              node.name
-            }}</span>
+            <span
+              class="menu-text"
+              [ngClass]="{ 'active': isActive(node.route) }"
+              >{{ node.name }}</span
+            >
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div *ngFor="let child of node.children">
-          <a
-            mat-button
-            [routerLink]="child.route"
-            (click)="setActiveRoute(child.route)"
-            [ngClass]="{ 'active-link': isActive(child.route) }"
-          >
-            <mat-icon>{{ child.icon }}</mat-icon>
-            {{ child.name }}
-          </a>
+        <div *ngIf="isExpanded">
+          <div *ngFor="let child of node.children">
+            <a
+              mat-button
+              [routerLink]="child.route"
+              (click)="setActiveRoute(child.route)"
+              [ngClass]="{ 'active-link': isActive(child.route) }"
+            >
+              <mat-icon>{{ child.icon }}</mat-icon>
+              <span class="menu-text">{{ child.name }}</span>
+            </a>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>

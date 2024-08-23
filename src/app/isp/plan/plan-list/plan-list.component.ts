@@ -35,8 +35,8 @@ export class PlanListComponent {
     this.subscription = this.planService.refresh$.subscribe(() => {
       this.getPlans()
     });
-
   }
+  
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

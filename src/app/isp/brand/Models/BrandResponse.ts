@@ -5,7 +5,6 @@ export interface BrandResponse {
 
 export interface BrandSingleResponse {
     data: Brand;
-    total: number;
 }
 
 export interface Brand {
