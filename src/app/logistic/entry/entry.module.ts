@@ -20,6 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MaterialSelectDialogComponent } from './material-select-dialog/material-select-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { EntryDetailsComponent } from './entry-details/entry-details.component';
 
 
 
@@ -27,7 +28,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   declarations: [
     EntryListComponent,
     EntryCreateComponent,
-    MaterialSelectDialogComponent
+    MaterialSelectDialogComponent,
+    EntryDetailsComponent
   ],
   imports: [
     CommonModule,

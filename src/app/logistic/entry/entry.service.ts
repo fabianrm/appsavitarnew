@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EntryResponse } from './models/EntryResponse';
+import { EntryResponse, EntrySingleResponse } from './models/EntryResponse';
 import { EntryRequest } from './models/EntryRequest';
-import { EntryDetailResponse } from './models/EntryDetailResponse';
+import { EntryDetail, EntryDetailResponse } from './models/EntryDetailResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,10 @@ export class EntryService {
 
   getEntries(): Observable<EntryResponse> {
     return this.clienteHttp.get<EntryResponse>(this.API + 'entries', { headers: this.headers })
+  }
+
+  getEntryByID(id:number): Observable<EntrySingleResponse> {
+    return this.clienteHttp.get<EntrySingleResponse>(this.API + 'entries/'+id, { headers: this.headers })
   }
 
 

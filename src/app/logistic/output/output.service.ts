@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { OutputResponse } from './models/OutputResponse';
+import { OutputResponse, OutputSingleResponse } from './models/OutputResponse';
 import { OutputRequest } from './models/OutputRequest';
 
 @Injectable({
@@ -27,6 +27,10 @@ export class OutputService {
 
   getOutputs(): Observable<OutputResponse> {
     return this.clienteHttp.get<OutputResponse>(this.API + 'outputs', { headers: this.headers })
+  }
+
+  getOutputByID(id: number): Observable<OutputSingleResponse> {
+    return this.clienteHttp.get<OutputSingleResponse>(this.API + 'outputs/' + id, { headers: this.headers })
   }
 
   addOutput(datos: OutputRequest): Observable<any> {

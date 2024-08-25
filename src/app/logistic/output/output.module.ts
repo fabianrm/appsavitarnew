@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MaterialRoutingModule } from '../material/material-routing.module';
 import { EntrySelectDialogComponent } from './entry-select-dialog/entry-select-dialog.component';
 import { MatSortModule } from '@angular/material/sort';
+import { OutputDetailsComponent } from './output-details/output-details.component';
 
 
 
@@ -28,7 +29,8 @@ import { MatSortModule } from '@angular/material/sort';
   declarations: [
     OutputListComponent,
     OutputCreateComponent,
-    EntrySelectDialogComponent
+    EntrySelectDialogComponent,
+    OutputDetailsComponent
   ],
   imports: [
     CommonModule,

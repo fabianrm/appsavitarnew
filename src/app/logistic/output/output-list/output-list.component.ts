@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs';
 import { OutputService } from '../output.service';
 import { Router } from '@angular/router';
 import { Output, OutputResponse } from '../models/OutputResponse';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { OutputDetailsComponent } from '../output-details/output-details.component';
 
 @Component({
   selector: 'app-output-list',
@@ -25,7 +27,7 @@ export class OutputListComponent implements OnInit {
 
   public respuesta: OutputResponse[] = [];
 
-  constructor(private ouputService: OutputService, private router: Router,) { }
+  constructor(private ouputService: OutputService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getOutputs();
@@ -63,7 +65,19 @@ export class OutputListComponent implements OnInit {
     this.router.navigateByUrl('/dashboard/output/output-create'); // Navega al componente "contrato"
   }
 
-  viewDetails(id: number): void { }
+
+  viewDetails(id: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    // dialogConfig.width = '40%';
+    dialogConfig.height = '380px';
+    dialogConfig.data = id;
+    this.dialog.open(OutputDetailsComponent, dialogConfig);
+
+    this.dialog.afterAllClosed.subscribe(() => {
+    })
+  }
 
 
 

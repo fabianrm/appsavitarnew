@@ -6,6 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { EntryService } from '../entry.service';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { EntryDetailsComponent } from '../entry-details/entry-details.component';
 
 @Component({
   selector: 'app-entry-list',
@@ -24,7 +26,7 @@ export class EntryListComponent implements OnInit {
 
   public respuesta: EntryResponse[] = [];
 
-  constructor(private entryService: EntryService, private router: Router,) { }
+  constructor(private entryService: EntryService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getEntries();
@@ -40,6 +42,8 @@ export class EntryListComponent implements OnInit {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+       // console.log(respuesta.data);
+        
       }
     });
   }
@@ -62,6 +66,17 @@ export class EntryListComponent implements OnInit {
     this.router.navigateByUrl('/dashboard/entry/entry-create'); // Navega al componente "contrato"
   }
 
-  viewDetails(id:number):void{}
+  viewDetails(id: number){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    // dialogConfig.width = '40%';
+    dialogConfig.height = '380px';
+    dialogConfig.data = id;
+    this.dialog.open(EntryDetailsComponent, dialogConfig);
+
+    this.dialog.afterAllClosed.subscribe(() => {
+    })
+  }
 
 }

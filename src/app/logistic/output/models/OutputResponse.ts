@@ -19,10 +19,10 @@ export interface Output {
     total: string;
     comment: string;
     status: number;
-    details: Detail[];
+    output_details: OutputDetail[];
 }
 
-export interface Detail {
+export interface OutputDetail {
     id: number;
     entry_detail_id: number;
     entry_detail: EntryDetail;
