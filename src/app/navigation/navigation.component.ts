@@ -161,6 +161,7 @@ export class NavigationComponent implements OnInit {
         console.log(response);
         localStorage.removeItem('token');
         localStorage.removeItem('coords');
+        localStorage.removeItem('user_name');
         this.router.navigate(['/login']);
       },
       (error) => {

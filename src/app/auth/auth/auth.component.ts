@@ -20,8 +20,7 @@ export class AuthComponent implements OnInit {
   loginForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-    private authService:
-      AuthService, private router: Router,
+    private authService: AuthService, private router: Router,
     private enterpriseService: EnterpriseService,
     private _snackBar: MatSnackBar,) { }
 
@@ -62,11 +61,12 @@ export class AuthComponent implements OnInit {
       this.authService.login(email, password).pipe(
         tap(response => {
           localStorage.setItem('token', response.token);
+          localStorage.setItem('user_name', response.user.name);
           this.setEnterprise();
         })
       ).subscribe(
         (response) => {
-         // console.log(response);
+          // console.log(response);
           this.router.navigate(['/dashboard/home/home']);
         },
         (error) => {
@@ -77,7 +77,7 @@ export class AuthComponent implements OnInit {
       );
     }
   }
-  
+
   msgSusscess(mensaje: string) {
     this._snackBar.open(mensaje, 'SAVITAR', {
       duration: 3000,
@@ -89,7 +89,7 @@ export class AuthComponent implements OnInit {
   setEnterprise() {
     this.enterpriseService.getEnterpriseByID(1).subscribe((respuesta) => {
       this.initCoords = respuesta.data.coordinates;
-      localStorage.setItem('coords', JSON.stringify(this.initCoords) );
+      localStorage.setItem('coords', JSON.stringify(this.initCoords));
     })
   }
 
