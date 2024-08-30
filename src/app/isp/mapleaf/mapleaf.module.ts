@@ -6,7 +6,6 @@ import { MapleafSingleViewComponent } from './mapleaf-single-view/mapleaf-single
 import { MapleafMultipleViewComponent } from './mapleaf-multiple-view/mapleaf-multiple-view.component';
 
 
-
 @NgModule({
   declarations: [
     MapleafViewComponent,

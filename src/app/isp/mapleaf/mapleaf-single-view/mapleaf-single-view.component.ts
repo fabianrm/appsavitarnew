@@ -4,6 +4,8 @@ import 'leaflet.gridlayer.googlemutant'; // Importa el plugin
 import { Subscription } from 'rxjs';
 import { MapleafService } from '../mapleaf.service';
 import { GeocodingService } from '../geocoding.service';
+import 'leaflet.locatecontrol';
+
 
 @Component({
   selector: 'app-mapleaf-single-view',
@@ -113,6 +115,25 @@ export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDest
       });
 
     });
+
+
+    // Agrega el control de geolocalización
+    L.control.locate({
+      position: 'bottomright', // Posición del botón en el mapa
+      setView: true, // Centrar el mapa en la ubicación
+      keepCurrentZoomLevel: true, // Mantener el nivel de zoom actual
+      flyTo: true, // Mover suavemente la vista al usuario
+      strings: {
+        title: "Dónde estoy?"
+      },
+      icon: 'fa fa-location-arrow', // Cambiar el icono si usas FontAwesome
+    }).addTo(this.map);
+
+    this.map.on('click', (e: L.LeafletMouseEvent) => {
+      const coords: [number, number] = [e.latlng.lat, e.latlng.lng];
+      this.setMarker(coords);
+    });
+
 
     // Invalida el tamaño del mapa
     this.map.invalidateSize();
