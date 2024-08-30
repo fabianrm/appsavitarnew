@@ -102,6 +102,24 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
       'Hybrid': googHybrid,
     }, {}))
 
+    // Agrega el control de geolocalización
+    L.control.locate({
+      position: 'bottomright', // Posición del botón en el mapa
+      setView: true, // Centrar el mapa en la ubicación
+      keepCurrentZoomLevel: true, // Mantener el nivel de zoom actual
+      flyTo: true, // Mover suavemente la vista al usuario
+      strings: {
+        title: "Dónde estoy?"
+      },
+      icon: 'fa fa-location-arrow', // Cambiar el icono si usas FontAwesome
+    }).addTo(this.map);
+
+    this.map.on('click', (e: L.LeafletMouseEvent) => {
+      const coords: [number, number] = [e.latlng.lat, e.latlng.lng];
+      this.moveToLocation(coords);
+    });
+    
+
     // const googleMutant = L.gridLayer.googleMutant({
     //   type: this.mapType // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
     // }).addTo(this.map);

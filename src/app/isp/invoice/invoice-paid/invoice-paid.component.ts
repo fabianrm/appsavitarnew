@@ -16,6 +16,7 @@ export class InvoicePaidComponent implements OnInit {
   formPaid!: FormGroup;
   finalPrice: number = this.getData.price;
   amount: number = 0;
+  selected = 'efectivo';
 
 
   constructor(public fb: FormBuilder,
@@ -33,6 +34,7 @@ export class InvoicePaidComponent implements OnInit {
       discount: [0],
       receipt: [this.getData.receipt, { readonly: true }],
       note: [''],
+      tipo_pago: [this.selected, Validators.required],
       status: ['pagada'],
     });
 
