@@ -93,7 +93,7 @@
               'status-active': element.status == 1,
               'status-terminated': element.status == 0
             }"
-            >{{ element.status == 0 ? "Suspendido" : "Activo" }}</span
+            >{{ element.status == 0 ? "Anulado" : "Activo" }}</span
           >
         </td>
       </ng-container>
@@ -114,6 +114,11 @@
             <button mat-menu-item (click)="viewDetails(row.id)">
               <mat-icon matListItemIcon>visibility</mat-icon>
               Ver detalle
+            </button>
+
+            <button mat-menu-item (click)="deleteEntry(row.id)">
+              <mat-icon matListItemIcon>delete</mat-icon>
+              Anular ingreso
             </button>
           </mat-menu>
         </td>

@@ -56,4 +56,8 @@ export class MaterialService {
   }
 
 
+  getStockMaterials(): Observable<any> {
+    return this.clienteHttp.get<any>(this.API + 'entries/stock', { headers: this.headers })
+  }
+
 }

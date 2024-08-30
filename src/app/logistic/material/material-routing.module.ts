@@ -4,11 +4,13 @@ import { MaterialListComponent } from './material-list/material-list.component';
 import { MaterialCreateComponent } from './material-create/material-create.component';
 import { MaterialEditComponent } from './material-edit/material-edit.component';
 import { AuthGuard } from '../../auth/auth.guard';
+import { MaterialStockComponent } from './material-stock/material-stock.component';
 
 const routes: Routes = [
   { path: 'materials', component: MaterialListComponent, data: { title: 'Materiales' }, canActivate: [AuthGuard] },
   { path: 'material-create', component: MaterialCreateComponent, data: { title: 'Registrar Material' }, canActivate: [AuthGuard] },
   { path: 'material-edit/:id', component: MaterialEditComponent, data: { title: 'Editar Material' }, canActivate: [AuthGuard] },
+  { path: 'material-stock', component: MaterialStockComponent, data: { title: 'Stock' }, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

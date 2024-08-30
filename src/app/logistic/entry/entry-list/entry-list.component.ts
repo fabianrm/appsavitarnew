@@ -8,6 +8,8 @@ import { EntryService } from '../entry.service';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EntryDetailsComponent } from '../entry-details/entry-details.component';
+import Swal from 'sweetalert2';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-entry-list',
@@ -26,7 +28,7 @@ export class EntryListComponent implements OnInit {
 
   public respuesta: EntryResponse[] = [];
 
-  constructor(private entryService: EntryService, private router: Router, public dialog: MatDialog) { }
+  constructor(private entryService: EntryService, private router: Router, public dialog: MatDialog, private snackbarService: SnackbarService,) { }
 
   ngOnInit() {
     this.getEntries();
@@ -77,6 +79,48 @@ export class EntryListComponent implements OnInit {
 
     this.dialog.afterAllClosed.subscribe(() => {
     })
+  }
+
+  deleteEntry(id: number) {
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "se procederá a eliminar el ingreso junto con sus detalles!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, eliminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.entryService.deleteEntry(id).subscribe((respuesta) => {
+          if (respuesta.status == 'true') {
+            Swal.fire(
+              'Eliminado!',
+              respuesta.message,
+              'success'
+            ).then(r => {
+              if (r) {
+                //this.dialogRef.close();
+              }
+            })
+          } else {
+            this.snackbarService.showError(`☹️ Ocurrio un error: ${respuesta.data.message}`);
+          }
+        }, error => {
+          console.log('Error al anular el ingreso', error.message);
+        });
+      }
+    });
+    
+  }
+
+
+  showError() {
+    this.snackbarService.showError('☹️ Ocurrio un error');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Registro agregado correctamente');
   }
 
 }

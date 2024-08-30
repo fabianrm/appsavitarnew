@@ -16,6 +16,7 @@ import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule, 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MaterialStockComponent } from './material-stock/material-stock.component';
 
 
 
@@ -23,7 +24,8 @@ import { MatSelectModule } from '@angular/material/select';
   declarations: [
     MaterialListComponent,
     MaterialCreateComponent,
-    MaterialEditComponent
+    MaterialEditComponent,
+    MaterialStockComponent
   ],
   imports: [
     CommonModule,
