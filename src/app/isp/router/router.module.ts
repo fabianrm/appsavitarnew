@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 
 
 
@@ -52,6 +53,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
+    MatListModule
+    
   ]
 })
 export class RouterModule { }

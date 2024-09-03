@@ -10,6 +10,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { InvoicePaidComponent } from '../invoice-paid/invoice-paid.component';
 import { saveAs } from 'file-saver';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { CancelInvoiceComponent } from '../cancel-invoice/cancel-invoice.component';
 
 @Component({
   selector: 'app-invoice-list',
@@ -18,6 +20,7 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 })
 export class InvoiceListComponent implements OnInit, AfterViewInit {
 
+  availableColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'acciones'];
   displayedColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'acciones'];
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
@@ -37,10 +40,11 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  @ViewChild(MatMenuTrigger) columnasMenuTrigger!: MatMenuTrigger;
+
 
   constructor(
     private invoiceService: InvoiceService,
-    private _snackBar: MatSnackBar,
     private snackbarService: SnackbarService,
     public dialog: MatDialog) { }
 
@@ -91,6 +95,11 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(data => (this.dataSource.data = data));
+  }
+
+
+  actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
+    this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
   }
 
   //Generar Invoices
@@ -188,7 +197,17 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   }
 
   //Anular factura
-  cancel(id: number) {
+  cancelInvoice(row: any) {
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    // dialogConfig.width = '40%';
+    // dialogConfig.height = '100vh';
+    dialogConfig.data = row;
+    this.dialog.open(CancelInvoiceComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
+
 
   }
 

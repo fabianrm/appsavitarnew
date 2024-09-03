@@ -9,9 +9,9 @@ mat-form-field {
 }
 
 .row-filter {
-   display: flex;
-   justify-content: space-between;
-   align-items:center;
+ // margin: 10px;
+  display: flex;
+  align-items: center;
 }
 
 
@@ -29,6 +29,14 @@ mat-form-field {
 
 .center {
     text-align: center;
+}
+
+.right{
+  text-align: right;
+}
+
+button{
+  width: 80%;
 }
 
 :host ::ng-deep .mat-sort-header-container {
@@ -73,4 +81,14 @@ td.mat-column-acciones {
 
 .mat-mdc-table-sticky-border-elem-left {
   border-right: 1px solid #e0e0e0;
+}
+
+
+.first-header-row th {
+  border-bottom: none;
+  color: aqua;
+}
+
+.first-footer-row {
+  font-weight: bold;
 }

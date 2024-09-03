@@ -17,13 +17,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
+import { MatListModule } from '@angular/material/list';
+import { CancelInvoiceComponent } from './cancel-invoice/cancel-invoice.component';
 
 @NgModule({
   declarations: [
     InvoiceCreateComponent,
     InvoiceListComponent,
     InvoicePaidComponent,
-    InvoiceReportComponent
+    InvoiceReportComponent,
+    CancelInvoiceComponent
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { InvoiceReportComponent } from './invoice-report/invoice-report.componen
     MatCardTitle,
     MatDatepickerModule,
     MatSelectModule,
+    MatListModule
   ]
 })
 export class InvoiceModule { }

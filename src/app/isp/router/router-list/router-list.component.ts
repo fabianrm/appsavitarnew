@@ -10,6 +10,7 @@ import { Box } from '../../box/Models/BoxResponse';
 import { RouterCreateComponent } from '../router-create/router-create.component';
 import { RouterEditComponent } from '../router-edit/router-edit.component';
 import { RouterService } from '../router.service';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-router-list',
@@ -17,11 +18,15 @@ import { RouterService } from '../router.service';
   styleUrl: './router-list.component.css'
 })
 export class RouterListComponent {
-  displayedColumns: string[] = ['id', 'ip', 'usuario', 'password', 'port', 'api_connection', 'status', 'acciones'];
+
+  availableColumns: string[] = ['id', 'ip', 'usuario', 'password', 'port', 'api_connection', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'ip', 'usuario', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<CRouter[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  @ViewChild(MatMenuTrigger) columnasMenuTrigger!: MatMenuTrigger;
 
   subscription!: Subscription
 
@@ -38,6 +43,10 @@ export class RouterListComponent {
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
+    this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
   }
 
   getBoxes() {

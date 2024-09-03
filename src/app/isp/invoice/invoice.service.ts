@@ -46,6 +46,16 @@ export class InvoiceService {
       }));
   }
 
+
+  //Anular factura
+
+  cancelInvoice(invoiceID: number, datos: any): Observable<any> {
+    return this.clienteHttp.patch<any>(`${this.API}invoices/${invoiceID}/cancel-invoice`, datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
   //Exportar facturas
 
   exportInvoices(filters: any) {

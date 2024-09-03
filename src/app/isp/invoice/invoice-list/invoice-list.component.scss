@@ -63,14 +63,18 @@ button {
   justify-content: center;
   width: 100px;
   text-align: center;
-  border-radius: 20px;
-  padding: 8px;
-  background-color: rgb(144, 144, 144);
-  color: #000000;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(82, 82, 82);
+  color: #ffffff;
 }
 
 .row-inactive {
   background-color: rgb(243, 172, 172); /* Rojo tenue */
+}
+
+.row-canceled {
+  background-color: rgb(198, 190, 190); /* Rojo tenue */
 }
 
 /* Tabla responsive con stick */
@@ -154,4 +158,20 @@ td.mat-column-acciones {
     display: flex;
     justify-content: flex-end;
   }
+}
+
+//Columns
+.columnas-menu-content {
+  padding: 8px;
+}
+
+.menu-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+
+button[mat-raised-button] {
+  margin-bottom: 16px;
 }

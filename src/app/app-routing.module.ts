@@ -96,6 +96,14 @@ const routes: Routes = [
         loadChildren: () => import('./logistic/presentation/presentation.module').then(m => m.PresentationModule)
       },
       {
+        path: 'destine',
+        loadChildren: () => import('./logistic/destination/destination.module').then(m => m.DestinationModule)
+      },
+      {
+        path: 'employee',
+        loadChildren: () => import('./logistic/employee/employee.module').then(m => m.EmployeeModule)
+      },
+      {
         path: 'login',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
       }

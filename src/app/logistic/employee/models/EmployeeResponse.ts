@@ -1,3 +1,5 @@
+import { User } from "../../../auth/Models/UserResponse";
+
 export interface EmployeeResponse {
     data: Employee[];
     total: number;
@@ -16,5 +18,6 @@ export interface Employee {
     phone: string;
     position: string;
     department: string;
+    user: User;
     status: number;
 }

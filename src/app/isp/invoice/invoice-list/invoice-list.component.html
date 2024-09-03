@@ -61,14 +61,46 @@
     </button>
   </div>
   
-  <div class="col-12 col-md-2 mb-2">
+  <div class="col-12 col-md-1 mb-2">
   <button (click)="generateInvoices()" mat-raised-button color="accent">
-    Generar facturas
+   Gen. Fact.
   </button>
 </div>
+
+  <div class="col-12 col-md-1 mb-2">
+  
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="columnasMenu">
+      <mat-icon>visibility</mat-icon>  Cols.
+      </button>
+
+      <mat-menu #columnasMenu="matMenu">
+        <div (click)="$event.stopPropagation()" class="columnas-menu-content">
+          <mat-selection-list #columnasList [multiple]="true">
+            <mat-list-option
+              *ngFor="let columna of availableColumns"
+              [value]="columna"
+              [selected]="displayedColumns.includes(columna)"
+            >
+              {{ columna | titlecase }}
+            </mat-list-option>
+          </mat-selection-list>
+          <div class="menu-actions">
+            <button
+              mat-button
+              (click)="
+                actualizarColumnasVisibles(
+                  columnasList.selectedOptions.selected
+                );
+                columnasMenuTrigger.closeMenu()
+              "
+            >
+              Aplicar
+            </button>
+          </div>
+        </div>
+      </mat-menu>
 </div>
-
-
+</div>
 
 <!-- Tabla -->
 
@@ -202,7 +234,7 @@
             Imprimir
           </button>
 
-          <button mat-menu-item (click)="cancel(row)">
+          <button mat-menu-item (click)="cancelInvoice(row)">
             <mat-icon matListItemIcon>delete</mat-icon>
             Anular
           </button>
@@ -215,7 +247,7 @@
     <tr
       mat-row
       *matRowDef="let row; columns: displayedColumns"
-      [ngClass]="{ 'row-inactive': row.status === 'vencida' }"
+      [ngClass]="{ 'row-inactive': row.status === 'vencida', 'row-canceled': row.status === 'anulada' }"
     ></tr>
   </table>
 
