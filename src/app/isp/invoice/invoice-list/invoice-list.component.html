@@ -133,6 +133,13 @@
       </td>
     </ng-container>
 
+         <!-- Periodo Name Column -->
+    <ng-container matColumnDef="periodic">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Período</th>
+      <td mat-cell *matCellDef="let element">{{ element.periodic | uppercase }}</td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
     <!-- Discount Column -->
     <ng-container matColumnDef="discount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Descuento</th>

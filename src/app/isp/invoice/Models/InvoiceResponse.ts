@@ -18,6 +18,7 @@ export interface Invoice {
     paidDated: Date | null;
     receipt: null | string;
     note: null | string;
+    periodic: string;
     status: string;
 }
 

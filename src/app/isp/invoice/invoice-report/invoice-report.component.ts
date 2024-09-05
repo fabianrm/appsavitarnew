@@ -18,7 +18,7 @@ export class InvoiceReportComponent implements OnInit {
 
 
 
-  displayedColumns: string[] = ['contractId', 'paidDated', 'customerName', 'planName', 'price', 'discount', 'amount'];
+  displayedColumns: string[] = ['contractId', 'paidDated', 'periodic', 'customerName', 'planName', 'price', 'discount', 'amount'];
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
   perPage = 0;
