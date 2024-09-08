@@ -10,6 +10,7 @@ import { Brand } from './../../../isp/brand/Models/BrandResponse';
 import { Presentation } from '../../presentation/models/PresentationResponse';
 import { Category } from '../../category/models/CategoryResponse';
 import { ThemePalette } from '@angular/material/core';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-material-create',
@@ -26,6 +27,9 @@ export class MaterialCreateComponent implements OnInit {
   color: ThemePalette = 'accent';
   checked = true;
   imagePreview: string | ArrayBuffer | null = null;
+
+  fileToUpload: File | null = null;
+  uploadMessage: string = '';
 
   constructor(
     public formulario: FormBuilder,
@@ -108,23 +112,72 @@ export class MaterialCreateComponent implements OnInit {
         this.imagePreview = reader.result;
       };
       reader.readAsDataURL(file);
+      this.fileToUpload = file;
     }
   }
-
 
 
   onSubmit(): void {
     if (this.formMaterial.valid) {
-      this.materialService.addMaterial(this.formMaterial.value).subscribe(respuesta => {
-        this.router.navigate(['/dashboard/material/materials']);
-        this.showSuccess();
-      });
+      if (this.fileToUpload) {
+        // Subimos la imagen
+        this.materialService.uploadFile(this.fileToUpload).subscribe(event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            // Monitoreamos el progreso de la carga
+            const progress = Math.round((100 * event.loaded) / event.total);
+            console.log(`Progreso de la carga: ${progress}%`);
+          } else if (event.type === HttpEventType.Response && event.body) {
+            // Cuando la respuesta ha sido recibida con éxito
+            console.log('Respuesta recibida', event.body);
+
+            // Verificamos si el servidor ha enviado la ruta de la imagen
+            if (event.body.nombre_archivo) {
+              // Insertamos la ruta de la imagen en el formulario
+              this.formMaterial.patchValue({ image: event.body.nombre_archivo });
+
+              // Ahora enviamos el formulario con la ruta de la imagen
+              this.materialService.addMaterial(this.formMaterial.value).subscribe(respuesta => {
+                this.router.navigate(['/dashboard/material/materials']);
+                this.showSuccess();
+              });
+            }
+          }
+        }, error => {
+          console.error('Error al subir la imagen:', error);
+        });
+      } else {
+        // Si no hay archivo, enviamos el formulario directamente
+        this.materialService.addMaterial(this.formMaterial.value).subscribe(respuesta => {
+          this.router.navigate(['/dashboard/material/materials']);
+          this.showSuccess();
+        });
+      }
     }
   }
+
 
   goMaterials() {
     this.router.navigate(['/dashboard/material/materials']);
   }
+
+
+  uploadFile() {
+    if (this.fileToUpload) {
+      this.materialService.uploadFile(this.fileToUpload).subscribe({
+        next: (response: any) => {
+          if (response.status === 'progress') {
+            this.uploadMessage = `Progreso: ${response.message}`;
+          } else {
+            this.uploadMessage = `Imagen cargada correctamente: ${response.nombre_archivo}`;
+          }
+        },
+        error: (err: string) => {
+          this.uploadMessage = `Error: ${err}`;
+        }
+      });
+    }
+  }
+
 
   showError() {
     this.snackbarService.showError('☹️ Ocurrio un error');

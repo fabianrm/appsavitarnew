@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { catchError, map, Observable, Subject, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { MaterialResponse, MaterialSingleResponse } from './models/MaterialResponse';
 import { MaterialRequest } from './models/MaterialRequest';
 
@@ -55,9 +55,22 @@ export class MaterialService {
       }));
   }
 
-
+  
   getStockMaterials(): Observable<any> {
     return this.clienteHttp.get<any>(this.API + 'entries/stock', { headers: this.headers })
   }
+
+
+  uploadFile(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.clienteHttp.post(this.API + 'materials/uploadfile', formData, {
+      reportProgress: true, // Activa el reporte de progreso
+      observe: 'events'     // Observa los eventos
+    });
+  }
+
+
 
 }
