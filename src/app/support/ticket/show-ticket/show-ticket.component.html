@@ -1,0 +1,121 @@
+<!-- contrato-detalle.component.html -->
+<div class="container my-4">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <button mat-icon-button [routerLink]="['/support/tickets/list-tickets']">
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        Detalles del Ticket</mat-card-title
+      >
+      <mat-card-subtitle style="margin-left: 55px;">{{ dataTicket?.code }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <strong>Asunto:</strong> {{ dataTicket?.subject }}
+          </div>
+          <div class="mb-3">
+            <strong>Descripción:</strong>
+            {{ dataTicket?.description }}
+          </div>
+          <div class="mb-3">
+            <strong>Categoría:</strong> {{ dataTicket?.category?.name }}
+          </div>
+          <div class="mb-3">
+            <strong>Cliente:</strong>
+            {{ dataTicket?.customer?.customerName }}
+          </div>
+
+          <div class="mb-3">
+            <strong>Técnico:</strong> {{ dataTicket?.technician?.name }}
+          </div>
+          <div class="mb-3">
+            <strong>Asignado por:</strong> {{ dataTicket?.admin?.name }}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <strong>Asignado el:</strong> {{ dataTicket?.assigned_at }}
+          </div>
+          <div class="mb-3">
+            <strong>Resuelto:</strong> {{ dataTicket?.resolved_at }}
+          </div>
+          <div class="mb-3">
+            <strong>Cerrado:</strong>
+            {{ dataTicket?.closed_at | date }}
+          </div>
+
+          <!-- <div class="mb-3">
+            <strong>Número de Contratos:</strong>
+            {{
+              dataTicket?.totalContracts
+                ? dataTicket?.totalContracts
+                : "N/A"
+            }}
+          </div>
+          <div class="mb-3 estado">
+            <strong>Estado:</strong>
+            <span
+              [ngClass]="{
+                'status-active': dataTicket?.status == true,
+                'status-inactive': dataTicket?.status == false
+              }"
+              >{{
+                dataTicket?.status == false ? "Suspendido" : "Activo"
+              }}</span
+            >
+          </div> -->
+        </div>
+      </div>
+      <!-- Contratos -->
+      <!-- <div class="mt-2">
+        <h4><strong>Contratos:</strong></h4>
+        <table
+          *ngIf="(dataTicket?.service)!.length > 0; else noContracts"
+          class="table table-striped"
+        >
+          <thead>
+            <tr>
+              <th>Cod. Contrato</th>
+              <th>Plan</th>
+              <th>Dir. de Instalación</th>
+              <th>Fec. Instalación</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let contract of dataTicket?.service">
+              <td>{{ contract.serviceCode }}</td>
+              <td>{{ contract.planName }}</td>
+              <td>{{ contract.addressInstallation }}</td>
+              <td>{{ contract.installationDate | date }}</td>
+              <td>{{ contract.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noContracts>
+          <div class="alert alert-info" role="alert">Sin contratos</div>
+        </ng-template>
+      </div> -->
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Mapa -->
+  <!-- <mat-card class="container-map">
+    <mat-card-content class="center-content">
+      <app-mapleaf-loading
+        *ngIf="!locationReady; else mapReady"
+        class="full-size"
+      ></app-mapleaf-loading>
+
+      <ng-template #mapReady>
+        <div class="mapa">
+          <app-mapleaf-single-view></app-mapleaf-single-view>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card> -->
+</div>
+

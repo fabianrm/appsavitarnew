@@ -50,6 +50,8 @@ export class OutputCreateComponent implements OnInit {
   }
 
 
+  //TODO: Cambiar el id de employee
+
   initForm() {
     this.outputForm = this.fb.group({
       destination_id: ['', Validators.required],

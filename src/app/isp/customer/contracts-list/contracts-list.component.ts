@@ -25,8 +25,6 @@ export class ContractsListComponent implements OnInit {
   ngOnInit() {
     console.log(this.getId);
     this.getServiceByCustomer(this.getId)
-
-
   }
 
   getServiceByCustomer(id: number) {

@@ -109,7 +109,20 @@ const routes: Routes = [
       }
 
     ]
-  }
+  },
+
+  {
+    path: 'support', component: NavigationComponent, children: [
+      {
+        path: 'categories',
+        loadChildren: () => import('./support/category-ticket/category-ticket.module').then(m => m.CategoryTicketModule)
+      },
+      {
+        path: 'tickets',
+        loadChildren: () => import('./support/ticket/ticket.module').then(m => m.TicketModule)
+      },
+    ]
+    }
 ];
 
 @NgModule({

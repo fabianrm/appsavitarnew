@@ -1,0 +1,41 @@
+<form ngNativeValidate [formGroup]="formAssign" (ngSubmit)="enviarDatos()">
+  <mat-card>
+    <mat-card-header class="header-form">
+      <mat-card-title> Asignar Técnico </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row">
+        <mat-form-field class="control-full-width" appearance="fill">
+          <mat-label>Técnico</mat-label>
+          <mat-select formControlName="technician_id">
+            @for (user of users; track user) {
+            <mat-option [value]="user.id">{{ user.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="row-buttons">
+        <button
+          [disabled]="formAssign.invalid"
+          color="primary"
+          mat-raised-button
+          style="margin-right: 5px"
+        >
+          Guardar
+        </button>
+        <button
+          (click)="onCancel()"
+          type="button"
+          mat-dialog-close=""
+          color="accent"
+          mat-raised-button
+        >
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

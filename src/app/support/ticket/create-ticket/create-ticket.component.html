@@ -1,0 +1,114 @@
+<form ngNativeValidate [formGroup]="formTicket" (submit)="enviarDatos()">
+  <div class="container my-4">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <button
+            type="button"
+            mat-icon-button
+              (click)="goTickets()"
+          >
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          Nuevo Ticket</mat-card-title
+        >
+        <mat-card-subtitle style="margin-left: 55px">
+          Datos del Ticket
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <div class="mb-2">
+              <mat-form-field class="control-full-width" appearance="fill">
+                <mat-label>Categoría</mat-label>
+                <mat-select formControlName="category_ticket_id">
+                  @for (category of categoryTickets; track category) {
+                  <mat-option [value]="category.id">{{
+                    category.name
+                  }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="mb-2">
+              <mat-form-field class="control-full-width my-form-field">
+                <mat-label>CLiente</mat-label>
+                <mat-icon matSuffix>search</mat-icon>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="customer_id"
+                  [matAutocomplete]="auto"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  [displayWith]="displayFn"
+                >
+                  <mat-option
+                    *ngFor="let option of filteredCustomer | async"
+                    [value]="option"
+                  >
+                    {{ option.customerName }}
+                  </mat-option>
+                </mat-autocomplete>
+                <!-- {{customerIdValue}} -->
+              </mat-form-field>
+            </div>
+
+            <div class="mb-2">
+              <mat-form-field appearance="fill">
+                <mat-label>Asunto:</mat-label>
+                <input
+                  matInput
+                  placeholder="Asunto"
+                  formControlName="subject"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="mb-2">
+              <mat-form-field>
+                <mat-label>Nota</mat-label>
+                <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="3"
+                  cdkAutosizeMaxRows="5"
+                  formControlName="description"
+                ></textarea>
+              </mat-form-field>
+            </div>
+            <div class="mb-2">
+              <strong>Adjuntos:</strong>
+              descripción
+            </div>
+          </div>
+        </div>
+        <!-- Contratos -->
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Botones -->
+    <div class="row-buttons">
+      <button
+        [disabled]="formTicket.invalid"
+        color="primary"
+        mat-raised-button
+        style="margin-right: 5px"
+      >
+        Guardar
+      </button>
+      <button
+        type="button"
+        (click)="goTickets()"
+        color="accent"
+        mat-raised-button
+      >
+        Cancelar
+      </button>
+    </div>
+  </div>
+</form>

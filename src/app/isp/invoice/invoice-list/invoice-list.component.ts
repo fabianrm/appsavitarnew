@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { InvoiceService } from '../invoice.service';
 import { Invoice } from '../Models/InvoiceResponse';
 import { merge, startWith, switchMap, map, catchError, of, Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { InvoicePaidComponent } from '../invoice-paid/invoice-paid.component';
 import { saveAs } from 'file-saver';
@@ -21,7 +20,8 @@ import { CancelInvoiceComponent } from '../cancel-invoice/cancel-invoice.compone
 export class InvoiceListComponent implements OnInit, AfterViewInit {
 
   availableColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'periodic', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'acciones'];
-  displayedColumns: string[] = ['contractId', 'customerName', 'planName', 'periodic', 'price',  'discount', 'amount',  'dueDate', 'paidDated', 'status', 'acciones'];
+  displayedColumns: string[] = ['contractId', 'customerName', 'planName', 'periodic', 'price', 'discount', 'amount', 'dueDate', 'paidDated', 'status', 'acciones'];
+  
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
   perPage = 0;
@@ -181,8 +181,6 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '40%';
-    // dialogConfig.height = '100vh';
     dialogConfig.data = row;
     this.dialog.open(InvoicePaidComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });

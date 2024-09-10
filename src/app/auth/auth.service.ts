@@ -44,4 +44,8 @@ export class AuthService {
     return this.http.get<any>(this.API + 'user/permissions', { headers: this.headers });
   }
 
+  getUsers() {
+    return this.http.get<any>(this.API + 'users', { headers: this.headers });
+  }
+
 }
