@@ -14,19 +14,20 @@
       </mat-form-field>
     </div>
 
-     <div class="col-12 col-md-2">
+    <div class="col-12 col-md-2">
       <button (click)="exportToExcel()" mat-raised-button color="accent">
         Exportar
       </button>
     </div>
 
     <div class="col-12 col-md-2">
-      <button (click)="newTicket()" mat-raised-button color="accent">
+      <button
+       [hidden]=" Role === '3'"
+      (click)="newTicket()" mat-raised-button color="accent">
         + Nuevo
       </button>
     </div>
- 
-    
+
     <div class="col-12 col-md-1">
       <button
         mat-raised-button
@@ -93,7 +94,6 @@
         </td>
       </ng-container>
 
-
       <!-- Periodo Name Column -->
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
@@ -103,8 +103,7 @@
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-
- <!-- Periodo Name Column -->
+      <!-- Periodo Name Column -->
       <ng-container matColumnDef="category">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoría</th>
         <td data-title="Categoría" mat-cell *matCellDef="let element">
@@ -113,7 +112,7 @@
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-     <!-- Periodo Name Column -->
+      <!-- Periodo Name Column -->
       <ng-container matColumnDef="customer">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
         <td data-title="Cliente" mat-cell *matCellDef="let element">
@@ -122,7 +121,7 @@
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-       <!-- Periodo Name Column -->
+      <!-- Periodo Name Column -->
       <ng-container matColumnDef="technician">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Técnico</th>
         <td data-title="Técnico" mat-cell *matCellDef="let element">
@@ -131,7 +130,7 @@
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-       <!-- Periodo Name Column -->
+      <!-- Periodo Name Column -->
       <ng-container matColumnDef="admin">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Creado por</th>
         <td data-title="Creado por" mat-cell *matCellDef="let element">
@@ -140,17 +139,16 @@
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-           <!-- Periodo Name Column -->
+      <!-- Periodo Name Column -->
       <ng-container matColumnDef="created_at">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Registrado</th>
         <td data-title="Registrado" mat-cell *matCellDef="let element">
-          {{ element.created_at  | date:'dd/MM/yy h:mm a'  }}
+          {{ element.created_at | date : "dd/MM/yy h:mm a" }}
         </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-
-          <!-- Periodo Name Column -->
+      <!-- Periodo Name Column -->
       <ng-container matColumnDef="assigned_at">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Asignado</th>
         <td data-title="Asignado" mat-cell *matCellDef="let element">
@@ -159,7 +157,7 @@
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
-          <!-- Periodo Name Column -->
+      <!-- Periodo Name Column -->
       <ng-container matColumnDef="resolved_at">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Resuelto</th>
         <td data-title="Resuelto" mat-cell *matCellDef="let element">
@@ -203,41 +201,39 @@
           <mat-menu #menu="matMenu">
             <button
               mat-menu-item
-              [disabled]="row.status === 'Cerrado'"
-               (click)="assign(row)"
+              [hidden]="row.status === 'Cerrado' || Role === '3'"
+              (click)="assign(row)"
             >
               <mat-icon matListItemIcon>person_add</mat-icon>
               Asignar
             </button>
 
-             <button
-              mat-menu-item
-              [disabled]="row.status !== 'En Validación'"
-             
-            >
+            <button mat-menu-item [hidden]="row.status !== 'En Validación'">
               <mat-icon matListItemIcon>task_alt</mat-icon>
               Validar
             </button>
 
-              <button
-              mat-menu-item
-              [disabled]="row.status === 'pagada'"
-              (click)="showTicket(row.id)"
-            >
+            <button mat-menu-item (click)="showTicket(row.id)">
               <mat-icon matListItemIcon>info</mat-icon>
               Ver Detalle
             </button>
 
-             <button
+            <button
               mat-menu-item
-              [disabled]="row.status === 'Cerrado'"
+              [hidden]="
+                row.status === 'Cerrado' ||
+                row.status === 'Solucionado' ||
+                Role === '3'
+              "
             >
               <mat-icon matListItemIcon>edit</mat-icon>
               Editar
             </button>
 
-            
-
+            <button mat-menu-item>
+              <mat-icon matListItemIcon>post_add</mat-icon>
+              Registrar Evento
+            </button>
 
           </mat-menu>
         </td>
@@ -255,7 +251,7 @@
       ></tr>
     </table>
 
-     <mat-paginator
+    <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"
       pageSize="10"
       showFirstLastButtons
@@ -263,4 +259,3 @@
     </mat-paginator>
   </div>
 </div>
-

@@ -3,16 +3,21 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        <button mat-icon-button [routerLink]="['/support/tickets/list-tickets']">
+        <button
+          mat-icon-button
+          [routerLink]="['/support/tickets/list-tickets']"
+        >
           <mat-icon>arrow_back_ios</mat-icon>
         </button>
-        Detalles del Ticket</mat-card-title
+        {{ dataTicket?.code }} - {{ dataTicket?.subject }}</mat-card-title
       >
-      <mat-card-subtitle style="margin-left: 55px;">{{ dataTicket?.code }}</mat-card-subtitle>
+      <mat-card-subtitle style="margin-left: 55px">{{
+        dataTicket?.category?.name
+      }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
           <div class="mb-3">
             <strong>Asunto:</strong> {{ dataTicket?.subject }}
           </div>
@@ -23,21 +28,21 @@
           <div class="mb-3">
             <strong>Categoría:</strong> {{ dataTicket?.category?.name }}
           </div>
-          <div class="mb-3">
-            <strong>Cliente:</strong>
-            {{ dataTicket?.customer?.customerName }}
-          </div>
 
           <div class="mb-3">
             <strong>Técnico:</strong> {{ dataTicket?.technician?.name }}
           </div>
+          
           <div class="mb-3">
             <strong>Asignado por:</strong> {{ dataTicket?.admin?.name }}
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="mb-3">
-            <strong>Asignado el:</strong> {{ dataTicket?.assigned_at }}
+            <strong>Creado:</strong> {{ dataTicket?.created_at | date:'dd/MM/yy h:mm a' }}
+          </div>
+          <div class="mb-3">
+            <strong>Asignado:</strong> {{ dataTicket?.assigned_at | date:'dd/MM/yy h:mm a' }}
           </div>
           <div class="mb-3">
             <strong>Resuelto:</strong> {{ dataTicket?.resolved_at }}
@@ -47,63 +52,72 @@
             {{ dataTicket?.closed_at | date }}
           </div>
 
-          <!-- <div class="mb-3">
-            <strong>Número de Contratos:</strong>
-            {{
-              dataTicket?.totalContracts
-                ? dataTicket?.totalContracts
-                : "N/A"
-            }}
-          </div>
           <div class="mb-3 estado">
             <strong>Estado:</strong>
             <span
               [ngClass]="{
-                'status-active': dataTicket?.status == true,
-                'status-inactive': dataTicket?.status == false
+                'status-pending': dataTicket?.status == 'Pendiente',
+                'status-atention': dataTicket?.status == 'En atención',
+                'status-resolved': dataTicket?.status == 'Solucionado',
+                'status-validation': dataTicket?.status == 'En validación',
+                'status-await': dataTicket?.status == 'Espera pase',
               }"
-              >{{
-                dataTicket?.status == false ? "Suspendido" : "Activo"
-              }}</span
+              >{{ dataTicket?.status }}</span
             >
-          </div> -->
+          </div>
         </div>
       </div>
-      <!-- Contratos -->
-      <!-- <div class="mt-2">
-        <h4><strong>Contratos:</strong></h4>
+      <!-- Cliente -->
+      <div class="col col-md-6">
+        <div class="mb-3">
+          <strong>Cliente:</strong>
+          {{ dataTicket?.customer?.customerName }}
+        </div>
+         <div class="mb-3">
+          <strong>Celular:</strong>
+          {{ dataTicket?.customer?.phoneNumber }}
+        </div>
+         <div class="mb-3">
+          <strong>Dirección:</strong>
+          {{ dataTicket?.customer?.address }}
+        </div>
+      </div>
+
+      <!-- Fin cliente -->
+
+      <!-- Historial -->
+      <div class="mt-2">
+        <h4><strong>Historial:</strong></h4>
         <table
-          *ngIf="(dataTicket?.service)!.length > 0; else noContracts"
+          *ngIf="(dataTicket?.history)!.length > 0; else noHistory"
           class="table table-striped"
         >
           <thead>
             <tr>
-              <th>Cod. Contrato</th>
-              <th>Plan</th>
-              <th>Dir. de Instalación</th>
-              <th>Fec. Instalación</th>
+              <th>Cambiado por</th>
+              <th>Actualización</th>
+              <th>Comentario</th>
               <th>Estado</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let contract of dataTicket?.service">
-              <td>{{ contract.serviceCode }}</td>
-              <td>{{ contract.planName }}</td>
-              <td>{{ contract.addressInstallation }}</td>
-              <td>{{ contract.installationDate | date }}</td>
-              <td>{{ contract.status }}</td>
+            <tr *ngFor="let history of dataTicket?.history">
+              <td>{{ history.changed_by?.name }}</td>
+              <td>{{ history.updated_at | date:'dd/MM/yy h:mm a' }}</td>
+              <td>{{ history.comment }}</td>
+              <td>{{ history.status }}</td>
             </tr>
           </tbody>
         </table>
-        <ng-template #noContracts>
-          <div class="alert alert-info" role="alert">Sin contratos</div>
+        <ng-template #noHistory>
+          <div class="alert alert-info" role="alert">Sin historial</div>
         </ng-template>
-      </div> -->
+      </div>
     </mat-card-content>
   </mat-card>
 
   <!-- Mapa -->
-  <!-- <mat-card class="container-map">
+  <mat-card class="container-map">
     <mat-card-content class="center-content">
       <app-mapleaf-loading
         *ngIf="!locationReady; else mapReady"
@@ -116,6 +130,5 @@
         </div>
       </ng-template>
     </mat-card-content>
-  </mat-card> -->
+  </mat-card>
 </div>
-

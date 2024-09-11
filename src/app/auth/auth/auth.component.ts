@@ -61,8 +61,9 @@ export class AuthComponent implements OnInit {
       this.authService.login(email, password).pipe(
         tap(response => {
           localStorage.setItem('token', response.token);
-          localStorage.setItem('id_user', response.user.id);
+          localStorage.setItem('id_user', response.user.id.toString());
           localStorage.setItem('user_name', response.user.name);
+          localStorage.setItem('role', response.user.role[0].id.toString());
           this.setEnterprise();
         })
       ).subscribe(

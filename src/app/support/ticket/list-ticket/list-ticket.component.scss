@@ -21,7 +21,7 @@ button {
 
 
 
-.status-paid {
+.status-resolved {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,8 +29,8 @@ button {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-  background-color: lightgreen;
-  color: #000000;
+  background-color: rgb(42, 99, 42);
+  color: #ffff;
 }
 
 .status-pending {
@@ -45,7 +45,7 @@ button {
   color: #ffff;
 }
 
-.status-overdue {
+.status-atention {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,11 +53,11 @@ button {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-  background-color: rgb(189, 89, 89);
-  color: #ffffff;
+  background-color: rgb(255, 68, 0);
+  color: #ffff;
 }
 
-.status-canceled {
+.status-validation {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,9 +65,22 @@ button {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-  background-color: rgb(82, 82, 82);
-  color: #ffffff;
+  background-color: rgb(249, 241, 8);
+  color: #0000;
 }
+
+.status-await {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(12, 134, 199);
+  color: #ffff;
+}
+
 
 .row-inactive {
   background-color: rgb(243, 172, 172); /* Rojo tenue */

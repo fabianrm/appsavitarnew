@@ -22,6 +22,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AssignTicketComponent } from './assign-ticket/assign-ticket.component';
 import { ShowTicketComponent } from './show-ticket/show-ticket.component';
+import { MapleafModule } from '../../isp/mapleaf/mapleaf.module';
 
 
 
@@ -59,6 +60,7 @@ import { ShowTicketComponent } from './show-ticket/show-ticket.component';
     MatOptionModule,
     MatSlideToggleModule,
     MatAutocompleteModule,
+    MapleafModule
 
   ]
 })

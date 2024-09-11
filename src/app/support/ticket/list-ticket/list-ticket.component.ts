@@ -35,6 +35,7 @@ export class ListTicketComponent implements OnInit {
 
   public respuesta!: Ticket[];
 
+ 
 
 
   constructor(
@@ -99,6 +100,12 @@ export class ListTicketComponent implements OnInit {
 
   showTicket(id: number) {
     this.router.navigate(['/support/tickets/detail-ticket/' + id]); // Navega al componente "customer edit"
+  }
+
+
+  //Usuario
+  get Role() {
+    return localStorage.getItem('role');
   }
 
 }

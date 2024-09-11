@@ -28,4 +28,15 @@ export interface Ticket {
     status: string;
     created_at: Date;
     updated_at: Date;
+    history: History[];
+}
+
+
+export interface History {
+    id: number;
+    ticket_id: number;
+    changed_by?: User;
+    comment?: string;
+    updated_at: Date;
+    status: string;
 }

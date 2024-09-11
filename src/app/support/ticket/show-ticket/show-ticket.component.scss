@@ -1,6 +1,6 @@
 /* contrato-detalle.component.css */
 .container {
-  max-width: 800px;
+  max-width: 900px;
 }
 
 mat-card {
@@ -98,4 +98,66 @@ tbody tr:nth-child(even) {
 .estado {
   display: flex;
   align-items: center;
+}
+
+
+//Estados
+.status-resolved {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(42, 99, 42);
+  color: #ffff;
+}
+
+.status-pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #e91919;
+  color: #ffff;
+}
+
+.status-atention {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(255, 68, 0);
+  color: #ffff;
+}
+
+.status-validation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(249, 241, 8);
+  color: #0000;
+}
+
+.status-await {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(12, 134, 199);
+  color: #ffff;
 }
