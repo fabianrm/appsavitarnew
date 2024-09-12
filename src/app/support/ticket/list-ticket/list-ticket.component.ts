@@ -102,6 +102,10 @@ export class ListTicketComponent implements OnInit {
     this.router.navigate(['/support/tickets/detail-ticket/' + id]); // Navega al componente "customer edit"
   }
 
+  attendTicket(id: number) {
+    this.router.navigate(['/support/tickets/attend-ticket/' + id]); // Navega al componente "customer edit"
+  }
+
 
   //Usuario
   get Role() {

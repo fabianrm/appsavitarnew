@@ -3,10 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TicketService } from '../ticket.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Ticket } from '../Models/TicketResponse';
 import { AuthService } from '../../../auth/auth.service';
 import { User } from '../../../auth/Models/UserResponse';
+import { now } from 'moment';
 
 @Component({
   selector: 'app-assign-ticket',
@@ -17,12 +19,15 @@ export class AssignTicketComponent {
 
   formAssign!: FormGroup;
   technician_id!: number;
-  users : User[] = [];
+  users: User[] = [];
+  date = new Date(now() + ' 0:00:00');
+  
 
   constructor(public fb: FormBuilder,
     private ticketService: TicketService,
     private userService: AuthService,
     private snackbarService: SnackbarService,
+    private datePipe: DatePipe,
     @Inject(MAT_DIALOG_DATA) public getData: Ticket,
     private dialogRef: MatDialogRef<AssignTicketComponent>,) { }
 
@@ -35,6 +40,7 @@ export class AssignTicketComponent {
     this.formAssign = this.fb.group({
       admin_id: [this.UserID],
       technician_id: ['', Validators.required],
+      expiration: [this.datePipe.transform(this.date, "yyyy-MM-dd")],
     });
 
   }
@@ -47,9 +53,11 @@ export class AssignTicketComponent {
 
   enviarDatos() {
     const formData = this.formAssign.value;
+    const expirationDate = new Date(formData.expiration).toISOString().split('T')[0];
 
     const dataToSend = {
       ...formData,
+      expiration: expirationDate,
     };
 
     if (this.formAssign.valid) {

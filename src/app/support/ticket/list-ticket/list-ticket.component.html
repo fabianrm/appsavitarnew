@@ -22,8 +22,11 @@
 
     <div class="col-12 col-md-2">
       <button
-       [hidden]=" Role === '3'"
-      (click)="newTicket()" mat-raised-button color="accent">
+        [hidden]="Role === '3'"
+        (click)="newTicket()"
+        mat-raised-button
+        color="accent"
+      >
         + Nuevo
       </button>
     </div>
@@ -180,10 +183,12 @@
         <td data-title="Estado" mat-cell *matCellDef="let element">
           <span
             [ngClass]="{
-              'status-pending': element.status === 'Pendiente',
-              'status-paid': element.status === 'pagada',
-              'status-overdue': element.status === 'vencida',
-              'status-canceled': element.status === 'anulada'
+              'status-registered': element.status === 'registrado',
+              'status-pending': element.status === 'pendiente',
+              'status-atention': element.status === 'atencion',
+              'status-await': element.status === 'espera_pase',
+              'status-validation': element.status === 'validacion',
+              'status-resolved': element.status === 'solucionado',
             }"
           >
             {{ element.status | titlecase }}</span
@@ -213,6 +218,11 @@
               Validar
             </button>
 
+            <button mat-menu-item [hidden]="row.status === 'En atención'">
+              <mat-icon matListItemIcon>priority_high</mat-icon>
+              Atender
+            </button>
+
             <button mat-menu-item (click)="showTicket(row.id)">
               <mat-icon matListItemIcon>info</mat-icon>
               Ver Detalle
@@ -230,11 +240,10 @@
               Editar
             </button>
 
-            <button mat-menu-item>
+            <button mat-menu-item (click)="attendTicket(row.id)">
               <mat-icon matListItemIcon>post_add</mat-icon>
               Registrar Evento
             </button>
-
           </mat-menu>
         </td>
       </ng-container>

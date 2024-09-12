@@ -20,6 +20,19 @@ button {
 }
 
 
+.status-registered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(16, 148, 224);
+  color: #ffff;
+}
+
+
 
 .status-resolved {
   display: flex;
@@ -77,7 +90,7 @@ button {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-  background-color: rgb(12, 134, 199);
+  background-color: rgb(162, 12, 199);
   color: #ffff;
 }
 

@@ -6,6 +6,22 @@
 
     <mat-card-content>
       <div class="row">
+        <mat-form-field>
+          <mat-label>Fecha de Vencimiento</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerDesde"
+            formControlName="expiration"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerDesde"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerDesde></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
         <mat-form-field class="control-full-width" appearance="fill">
           <mat-label>Técnico</mat-label>
           <mat-select formControlName="technician_id">

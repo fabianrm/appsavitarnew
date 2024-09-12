@@ -23,6 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AssignTicketComponent } from './assign-ticket/assign-ticket.component';
 import { ShowTicketComponent } from './show-ticket/show-ticket.component';
 import { MapleafModule } from '../../isp/mapleaf/mapleaf.module';
+import { AttendTicketComponent } from './attend-ticket/attend-ticket.component';
 
 
 
@@ -32,7 +33,8 @@ import { MapleafModule } from '../../isp/mapleaf/mapleaf.module';
     EditTicketComponent,
     ListTicketComponent,
     AssignTicketComponent,
-    ShowTicketComponent
+    ShowTicketComponent,
+    AttendTicketComponent
   ],
   imports: [
     CommonModule,
