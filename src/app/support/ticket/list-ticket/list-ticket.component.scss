@@ -34,6 +34,7 @@ button {
 
 
 
+//Estados
 .status-resolved {
   display: flex;
   align-items: center;
@@ -42,7 +43,7 @@ button {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-  background-color: rgb(42, 99, 42);
+  background-color: rgb(58, 164, 58);
   color: #ffff;
 }
 
@@ -54,7 +55,7 @@ button {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-  background-color: #e91919;
+  background-color: red;
   color: #ffff;
 }
 
@@ -66,7 +67,7 @@ button {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-  background-color: rgb(255, 68, 0);
+  background-color: orange;
   color: #ffff;
 }
 
@@ -79,7 +80,7 @@ button {
   border-radius: 5px;
   padding: 5px;
   background-color: rgb(249, 241, 8);
-  color: #0000;
+  color: #000000;
 }
 
 .status-await {
@@ -90,7 +91,7 @@ button {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-  background-color: rgb(162, 12, 199);
+  background-color: rgb(199, 12, 196);
   color: #ffff;
 }
 

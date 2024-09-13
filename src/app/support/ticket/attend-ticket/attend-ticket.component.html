@@ -42,13 +42,13 @@
             <strong>Estado:</strong>
             <span
               [ngClass]="{
-                'status-pending': dataTicket?.status == 'Pendiente',
-                'status-atention': dataTicket?.status == 'En atención',
-                'status-resolved': dataTicket?.status == 'Solucionado',
-                'status-validation': dataTicket?.status == 'En validación',
-                'status-await': dataTicket?.status == 'Espera pase',
+                'status-pending': dataTicket?.status == 'pendiente',
+                'status-atention': dataTicket?.status == 'atencion',
+                'status-resolved': dataTicket?.status == 'solucionado',
+                'status-validation': dataTicket?.status == 'validación',
+                'status-await': dataTicket?.status == 'espera_pase',
               }"
-              >{{ dataTicket?.status }}</span
+              >{{ dataTicket?.status | titlecase }}</span
             >
           </div>
         </div>
@@ -72,14 +72,14 @@
            </div>
 
            <div class="col col-md-4">
-              <mat-form-field class="select-estado">
+              <mat-form-field >
                 <mat-label>Estado</mat-label>
-                <mat-select class="select-estado"  formControlName="status">
-                  <mat-option value="En atención">En Atención</mat-option>
-                  <mat-option value="Espera pase">Espera Pase</mat-option>
-                  <mat-option value="En validación">En Validación</mat-option>
-                  <mat-option value="Solucionado">Solucionado</mat-option>
-                  <mat-option value="Cerrado">Cerrado</mat-option>
+                <mat-select formControlName="status">
+                  <mat-option value="atencion">En Atención</mat-option>
+                  <mat-option value="espera_pase">Espera Pase</mat-option>
+                  <mat-option value="validacion">En Validación</mat-option>
+                  <mat-option value="solucionado">Solucionado</mat-option>
+                  <mat-option value="cerrado">Cerrado</mat-option>
                 </mat-select>
               </mat-form-field>
            </div>
@@ -89,15 +89,16 @@
       <!-- Nota -->
        <div class="row">
         <div class="col col-md-12">
-             <mat-form-field>
+             <mat-form-field >
                 <mat-label>Nota</mat-label>
                 <textarea
+                formControlName="comment"
                   matInput
                   cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize"
                   cdkAutosizeMinRows="5"
                   cdkAutosizeMaxRows="5"
-                  formControlName="description"
+                 
                 ></textarea>
               </mat-form-field>
         </div>

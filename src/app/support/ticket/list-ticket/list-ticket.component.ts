@@ -12,6 +12,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { CategoryTicketService } from '../../category-ticket/categoryTicket.service';
 import { CategoryTicket } from '../../category-ticket/Models/CategoryTicketResponse';
 import { AssignTicketComponent } from '../assign-ticket/assign-ticket.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list-ticket',
@@ -22,7 +23,7 @@ export class ListTicketComponent implements OnInit {
 
   availableColumns: string[] = ['id', 'code', 'subject', 'description', 'category', 'customer', 'technician', 'admin', 'assigned_at', 'resolved_at', 'closed_at', 'created_at', 'status',  'acciones'];
 
-  displayedColumns: string[] = ['code', 'created_at', 'subject', 'description', 'customer', 'technician', 'status', 'acciones'];
+  displayedColumns: string[] = ['code', 'created_at', 'subject', 'customer', 'technician', 'status', 'acciones'];
 
   public dataSource!: MatTableDataSource<Ticket>;
 
@@ -34,24 +35,38 @@ export class ListTicketComponent implements OnInit {
   subscription!: Subscription
 
   public respuesta!: Ticket[];
+  formTicket!: FormGroup;
 
  
 
 
   constructor(
+    public formulario: FormBuilder,
     private ticketService: TicketService,
-   
     public dialog: MatDialog, private router: Router,
     private snackbarService: SnackbarService,) { }
 
 
   ngOnInit(): void {
+    this.initForm();
     this.getTickets();
 
     this.subscription = this.ticketService.refresh$.subscribe(() => {
       this.getTickets();
     });
   }
+
+
+  initForm() {
+    const formControlsConfig = {
+      changed_by: this.UserID,
+      status: ['atencion'],
+    }
+    this.formTicket = this.formulario.group(formControlsConfig);
+
+  }
+
+
 
   actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
     this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
@@ -99,11 +114,45 @@ export class ListTicketComponent implements OnInit {
   }
 
   showTicket(id: number) {
-    this.router.navigate(['/support/tickets/detail-ticket/' + id]); // Navega al componente "customer edit"
+    this.router.navigate(['/support/tickets/detail-ticket/' + id]); // Navega al componente "detail ticket"
   }
 
+  //Guardar
   attendTicket(id: number) {
-    this.router.navigate(['/support/tickets/attend-ticket/' + id]); // Navega al componente "customer edit"
+    const formData = this.formTicket.value;
+    const dataToSend = {
+      ...formData,
+    };
+
+    if (this.formTicket.valid) {
+      this.ticketService.updateStatus(id, dataToSend).subscribe(respuesta => {
+       // console.log(respuesta);
+        this.showSuccess();
+        this.router.navigate(['/support/tickets/attend-ticket/' + id]); // Navega al componente "attend"
+      });
+    }
+   
+  }
+
+
+  registerEvent(id: number) {
+    this.router.navigate(['/support/tickets/attend-ticket/' + id]); // Navega al componente "attend"
+  }
+
+
+
+  //Usuario
+  get UserID() {
+    return localStorage.getItem('id_user');
+  }
+
+
+  showError() {
+    this.snackbarService.showError('Ocurrio un error al actualizar los datos...');
+  }
+
+  showSuccess() {
+    this.snackbarService.showSuccess('Los datos se actualizarón correctamente');
   }
 
 

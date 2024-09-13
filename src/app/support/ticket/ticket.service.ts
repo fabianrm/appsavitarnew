@@ -49,4 +49,12 @@ export class TicketService {
   }
 
 
+  updateStatus(ticketID: number, datos: TicketRequest): Observable<any> {
+    return this.clienteHttp.patch<TicketRequest>(`${this.API}tickets/${ticketID}/update-status`, datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
 }

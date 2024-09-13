@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
 import { Ticket } from '../Models/TicketResponse';
 import { AuthService } from '../../../auth/auth.service';
 import { User } from '../../../auth/Models/UserResponse';
-import { now } from 'moment';
 
 @Component({
   selector: 'app-assign-ticket',
@@ -20,8 +19,10 @@ export class AssignTicketComponent {
   formAssign!: FormGroup;
   technician_id!: number;
   users: User[] = [];
-  date = new Date(now() + ' 0:00:00');
-  
+  date = new Date();
+  fechaDate1 = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate());
+  fechaDate : Date;
+
 
   constructor(public fb: FormBuilder,
     private ticketService: TicketService,
@@ -29,21 +30,36 @@ export class AssignTicketComponent {
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
     @Inject(MAT_DIALOG_DATA) public getData: Ticket,
-    private dialogRef: MatDialogRef<AssignTicketComponent>,) { }
+    private dialogRef: MatDialogRef<AssignTicketComponent>,) { 
+    
+    // Ajusta la hora a 0 para evitar desfase
+    this.fechaDate = new Date(this.date.setHours(0, 0, 0, 0));
+
+    // Inicializa el formulario
+    this.initForm();
+    console.log('Fecha asignada:', this.fechaDate);
+    }
 
   ngOnInit() {
     this.getUsers();
-    this.initForm();
+   // this.initForm();
   }
 
   initForm() {
     this.formAssign = this.fb.group({
       admin_id: [this.UserID],
       technician_id: ['', Validators.required],
-      expiration: [this.datePipe.transform(this.date, "yyyy-MM-dd")],
+      expiration: [this.fechaDate1], 
+      //expiration: [this.getLocalDate(this.fechaDate)],
     });
 
   }
+
+  getLocalDate(date: Date): Date {
+    const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+    return localDate;
+  }
+
 
 
   //Usuario

@@ -32,9 +32,9 @@ export class AttendTicketComponent {
 
   initForm() {
     const formControlsConfig = {
-      description: ['', Validators.required],
-      admin_id: [this.UserID,],
-      status: ['Pendiente'],
+      comment: ['', Validators.required],
+      changed_by: [this.UserID,],
+      status: ['', Validators.required],
 
     }
     this.formTicket = this.formulario.group(formControlsConfig);
@@ -69,7 +69,20 @@ export class AttendTicketComponent {
     return localStorage.getItem('id_user');
   }
 
-  enviarDatos(){}
+  enviarDatos() {
+    const formData = this.formTicket.value;
+    const dataToSend = {
+      ...formData,
+    };
+
+    if (this.formTicket.valid) {
+      this.ticketService.updateStatus(this.id, dataToSend).subscribe(respuesta => {
+        // console.log(respuesta);
+        this.showSuccess();
+        this.router.navigate(['/support/tickets/list-tickets']); // Navega al componente "attend"
+      });
+    }
+  }
 
   //Cancelar
   goTickets() {
