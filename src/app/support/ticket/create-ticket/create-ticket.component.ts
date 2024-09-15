@@ -34,7 +34,8 @@ export class CreateTicketComponent implements OnInit {
   
   filteredCustomer!: Observable<Customer[]>;
   selectedCustomer!: Customer | null;
-
+  selectedFile: File | null = null;
+  filename: string = '';
 
   formTicket!: FormGroup;
 
@@ -89,6 +90,28 @@ export class CreateTicketComponent implements OnInit {
   get customerIdValue(): number | null {
     const customer = this.formTicket.get('customer_id')!.value;
     return customer ? customer.id : null;
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.selectedFile = file;
+      this.filename = file.name;
+    }
+  }
+
+  uploadAttachment(ticketId: number) {
+    if (this.selectedFile) {
+      this.ticketService.addAttachment(ticketId, this.selectedFile, this.filename).subscribe(
+        (response) => {
+          console.log('Attachment uploaded successfully', response);
+        },
+        (error) => {
+          console.error('Error uploading attachment', error);
+        }
+      );
+    }
   }
  
 

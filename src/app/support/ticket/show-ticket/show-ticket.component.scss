@@ -175,3 +175,25 @@ tbody tr:nth-child(even) {
   background-color: rgb(199, 12, 196);
   color: #ffff;
 }
+
+
+.list-attach {
+  list-style: none; /* Elimina los círculos */
+  padding: 0;
+  margin: 0;
+  display: flex; /* Flexbox para alinear los elementos en fila */
+  flex-wrap: wrap;
+  align-content: end;
+  gap: 10px; /* Espacio entre los elementos */
+}
+
+.list-attach li {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.list-attach a {
+  text-decoration: none; /* Quita el subrayado de los enlaces */
+  color: #000; /* Color del texto */
+}

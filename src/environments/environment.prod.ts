@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  servidor: 'https://savitarperu.com/apisavitar/api/v1/'
+  servidor: 'https://savitarperu.com/apisavitar/api/v1/',
+  servidor_img: 'https://savitarperu.com'
 };
 
 

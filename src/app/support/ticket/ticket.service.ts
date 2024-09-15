@@ -57,4 +57,23 @@ export class TicketService {
   }
 
 
+  addAttachment(ticketId: number, file: File, filename: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('filename', filename); 
+
+    return this.clienteHttp.post(`${this.API}tickets/${ticketId}/attachments`, formData, {
+      reportProgress: true, // Activa el reporte de progreso
+      observe: 'events'     // Observa los eventos
+    }).pipe(tap(() => {
+      this._refresh$.next()
+    }));;
+  }
+
+
+  getAttachments(ticketId: number): Observable<any> {
+    return this.clienteHttp.get(`${this.API}tickets/${ticketId}/attachments`);
+  }
+
+
 }

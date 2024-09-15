@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TicketService } from '../ticket.service';
 import { PlacesService } from '../../../isp/mapleaf/places.service';
 import { MapleafService } from '../../../isp/mapleaf/mapleaf.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-show-ticket',
@@ -14,6 +15,7 @@ export class ShowTicketComponent {
 
   id!: number;
   dataTicket?: Ticket;
+  SRVIMG: string = environment.servidor_img;
 
   constructor(
     private route: ActivatedRoute,

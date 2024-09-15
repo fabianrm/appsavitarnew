@@ -29,6 +29,7 @@ export interface Ticket {
     created_at: Date;
     updated_at: Date;
     history: History[];
+    attachments: Attachment[];
 }
 
 
@@ -39,4 +40,12 @@ export interface History {
     comment?: string;
     updated_at: Date;
     status: string;
+}
+
+export interface Attachment {
+    id: number;
+    ticket_id: number;
+    file_path: string;
+    created_at: Date;
+    updated_at: Date;
 }

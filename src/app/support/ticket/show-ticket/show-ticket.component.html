@@ -113,6 +113,31 @@
           <div class="alert alert-info" role="alert">Sin historial</div>
         </ng-template>
       </div>
+
+              <!-- Adjuntos -->
+        <div class="row">
+          <div class="col col-md-12">
+
+            <div class="mb-3">
+             <h4><strong>Adjuntos:</strong></h4>
+            </div>
+            
+
+            <div class="mb-3">
+              <ul class="list-attach">
+                <li *ngFor="let attach of dataTicket?.attachments">
+                  <a
+                    href="{{SRVIMG}}/storage/{{attach.file_path}}"
+                    download
+                  >
+                    {{ attach.file_path.replace("attachments/", "") }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
     </mat-card-content>
   </mat-card>
 
