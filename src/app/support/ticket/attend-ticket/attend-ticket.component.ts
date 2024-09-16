@@ -33,8 +33,8 @@ export class AttendTicketComponent {
 
   ngOnInit(): void {
     this.initForm();
-    this.getTicketByID();
 
+    this.getTicketByID();
     this.subscription = this.ticketService.refresh$.subscribe(() => {
       this.getTicketByID();
     });

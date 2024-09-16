@@ -41,6 +41,15 @@ export class TicketService {
   }
 
 
+  updateTicket(id: number, datos: TicketRequest): Observable<any> {
+    return this.clienteHttp.patch(this.API + 'support/' + id, datos, { headers: this.headers })
+      // .pipe(tap(() => {
+      //   this._refresh$.next()
+      // }));
+  }
+
+
+
   assignTicket(ticketID: number ,datos: TicketRequest): Observable<any> {
     return this.clienteHttp.patch<TicketRequest>(`${this.API}tickets/${ticketID}/assign-technician`, datos, { headers: this.headers })
       .pipe(tap(() => {

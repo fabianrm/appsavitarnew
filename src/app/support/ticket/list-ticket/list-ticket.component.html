@@ -235,6 +235,7 @@
 
               <button
                 mat-menu-item
+                (click)="editTicket(row.id)"
                 [hidden]="
                   row.status === 'cerrado' ||
                   row.status === 'solucionado' ||

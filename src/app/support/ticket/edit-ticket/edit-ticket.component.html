@@ -1,1 +1,160 @@
-<p>edit-ticket works!</p>
+<form ngNativeValidate [formGroup]="formTicket" (ngSubmit)="enviarDatos()" >
+  <div class="container my-4">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <button type="button" mat-icon-button (click)="goTickets()">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          Editar Ticket</mat-card-title
+        >
+        <mat-card-subtitle style="margin-left: 55px">
+          Ticket: {{ dataTicket?.code }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Proyecto</mat-label>
+              <mat-select formControlName="destination_id" required>
+                <mat-option
+                  *ngFor="let destination of destinations"
+                  [value]="destination.id"
+                >
+                  {{ destination.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="formTicket.get('destination_id')?.hasError('required')"
+              >
+                Destino es requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-md-6">
+            <mat-form-field class="control-full-width" appearance="fill">
+              <mat-label>Categoría</mat-label>
+              <mat-select formControlName="category_ticket_id">
+                @for (category of categoryTickets; track category) {
+                <mat-option [value]="category.id">{{
+                  category.name
+                }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col col-md-6">
+            <mat-form-field>
+              <mat-label>Prioridad</mat-label>
+              <mat-select formControlName="priority">
+                <mat-option value="baja">Baja</mat-option>
+                <mat-option value="normal">Normal</mat-option>
+                <mat-option value="alta">Alta</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <div class="mb-2">
+              <mat-form-field class="control-full-width my-form-field">
+                <mat-label>CLiente</mat-label>
+                <mat-icon matSuffix>search</mat-icon>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="customer_id"
+                  [matAutocomplete]="auto"
+                  value="{{ dataTicket?.customer?.customerName }}"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  [displayWith]="displayFn"
+                >
+                  <mat-option
+                    *ngFor="let option of filteredCustomer | async"
+                    [value]="option"
+                  >
+                    {{ option.customerName }}
+                  </mat-option>
+                </mat-autocomplete>
+                <!-- {{customerIdValue}} -->
+              </mat-form-field>
+            </div>
+
+            <div class="mb-2">
+              <mat-form-field appearance="fill">
+                <mat-label>Asunto:</mat-label>
+                <input
+                  matInput
+                  placeholder="Asunto"
+                  formControlName="subject"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="mb-2">
+              <mat-form-field>
+                <mat-label>Nota</mat-label>
+                <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="3"
+                  cdkAutosizeMaxRows="5"
+                  formControlName="description"
+                ></textarea>
+              </mat-form-field>
+            </div>
+            <!-- Adjuntos -->
+            <div class="row">
+              <div class="col col-md-12">
+                <div class="mb-3">
+                  <input type="file" (change)="onFileSelected($event)" />
+                </div>
+                <div class="mb-3">
+                  <ul class="list-attach">
+                    <li *ngFor="let attach of dataTicket?.attachments">
+                      <a
+                        href="{{ SRVIMG }}/storage/{{ attach.file_path }}"
+                        download
+                      >
+                        {{ attach.file_path.replace("attachments/", "") }}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Contratos -->
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Botones -->
+    <div class="row-buttons">
+      <button
+        [disabled]="formTicket.invalid"
+        type="submit"
+        color="primary"
+        mat-raised-button
+        style="margin-right: 5px"
+      >
+        Guardar
+      </button>
+      <button
+        type="button"
+        (click)="goTickets()"
+        color="accent"
+        mat-raised-button
+      >
+        Cancelar
+      </button>
+    </div>
+  </div>
+</form>

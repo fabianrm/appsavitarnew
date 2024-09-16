@@ -26,12 +26,12 @@ export class CreateTicketComponent implements OnInit {
     private destinationService: DestinationService,
     private router: Router,
     private snackbarService: SnackbarService
-  ) { } 
+  ) { }
 
   categoryTickets: CategoryTicket[] = [];
   customers: Customer[] = [];
   destinations: Destination[] = []
-  
+
   filteredCustomer!: Observable<Customer[]>;
   selectedCustomer!: Customer | null;
   selectedFile: File | null = null;
@@ -81,7 +81,7 @@ export class CreateTicketComponent implements OnInit {
     return this.customers.filter(option => option.customerName.toLowerCase().includes(filterValue));
   }
 
-//Datos a mostrar en el combo
+  //Datos a mostrar en el combo
   displayFn(customer: Customer): string {
     return customer && customer.customerName ? customer.customerName : '';
   }
@@ -92,28 +92,8 @@ export class CreateTicketComponent implements OnInit {
     return customer ? customer.id : null;
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      this.selectedFile = file;
-      this.filename = file.name;
-    }
-  }
 
-  uploadAttachment(ticketId: number) {
-    if (this.selectedFile) {
-      this.ticketService.addAttachment(ticketId, this.selectedFile, this.filename).subscribe(
-        (response) => {
-          console.log('Attachment uploaded successfully', response);
-        },
-        (error) => {
-          console.error('Error uploading attachment', error);
-        }
-      );
-    }
-  }
- 
+
 
   //cargar categorías
   getCategories() {
@@ -150,6 +130,11 @@ export class CreateTicketComponent implements OnInit {
     this.router.navigate(['/support/tickets/list-tickets']);
   }
 
+  //Ir al Ticket
+  showTicket(id: number) {
+    this.router.navigate(['/support/tickets/edit-ticket/' + id]); // Navega al componente "detail ticket"
+  }
+
   //Usuario
   get UserID() {
     return localStorage.getItem('id_user');
@@ -167,9 +152,10 @@ export class CreateTicketComponent implements OnInit {
 
     if (this.formTicket.valid) {
       this.ticketService.addTicket(dataToSend).subscribe(respuesta => {
-        console.log(respuesta);
+       // console.log(respuesta);
         this.showSuccess();
-        this.goTickets();
+        this.showTicket(respuesta.id);
+        //this.goTickets();
       });
     }
 

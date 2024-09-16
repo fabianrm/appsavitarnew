@@ -1,5 +1,6 @@
 import { User } from "../../../auth/Models/UserResponse";
 import { Customer } from "../../../isp/customer/Models/CustomerResponseU";
+import { Destination } from "../../../logistic/destination/models/DestinationResponse";
 
 import { CategoryTicket } from "../../category-ticket/Models/CategoryTicketResponse";
 
@@ -26,9 +27,12 @@ export interface Ticket {
     resolved_at: null;
     closed_at: null;
     status: string;
+    priority: string;
+    expiration: string;
     created_at: Date;
     updated_at: Date;
     history: History[];
+    project: Destination;
     attachments: Attachment[];
 }
 

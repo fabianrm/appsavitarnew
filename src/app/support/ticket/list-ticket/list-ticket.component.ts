@@ -76,7 +76,7 @@ export class ListTicketComponent implements OnInit {
   //Cargar tickets
   getTickets() {
     this.ticketService.getTickets().subscribe((respuesta) => {
-      console.log(respuesta.data)
+     // console.log(respuesta.data)
       if (respuesta.data.length > 0) {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
@@ -115,6 +115,10 @@ export class ListTicketComponent implements OnInit {
 
   showTicket(id: number) {
     this.router.navigate(['/support/tickets/detail-ticket/' + id]); // Navega al componente "detail ticket"
+  }
+
+  editTicket(id: number) {
+    this.router.navigate(['/support/tickets/edit-ticket/' + id]); // Navega al componente "edit ticket"
   }
 
   //Guardar

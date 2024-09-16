@@ -4,7 +4,7 @@ export interface TicketRequest {
     subject: string;
     description: string;
     customer_id: number;
-    priority_id: string;
+    priority: string;
     expiration: null;
     technician_id: null;
     admin_id: number;
