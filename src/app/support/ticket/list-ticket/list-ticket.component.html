@@ -204,7 +204,11 @@
 
         <!-- Acciones -->
         <ng-container matColumnDef="acciones" stickyEnd>
-          <th mat-header-cell *matHeaderCellDef></th>
+          <th mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button (click)="getTickets()">
+              <mat-icon>update</mat-icon>
+            </button>
+          </th>
           <td mat-cell *matCellDef="let row" style="text-align: center">
             <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>more_vert</mat-icon>
@@ -212,7 +216,11 @@
             <mat-menu #menu="matMenu">
               <button
                 mat-menu-item
-                [hidden]="row.status === 'cerrado' || row.status === 'solucionado' || Role === '3'"
+                [hidden]="
+                  row.status === 'cerrado' ||
+                  row.status === 'solucionado' ||
+                  Role === '3'
+                "
                 (click)="assign(row)"
               >
                 <mat-icon matListItemIcon>person_add</mat-icon>
@@ -248,7 +256,11 @@
 
               <button
                 mat-menu-item
-                [hidden]="row.status === 'pendiente' || row.status === 'registrado' || row.status === 'solucionado'   "
+                [hidden]="
+                  row.status === 'pendiente' ||
+                  row.status === 'registrado' ||
+                  row.status === 'solucionado'
+                "
                 (click)="registerEvent(row.id)"
               >
                 <mat-icon matListItemIcon>post_add</mat-icon>
