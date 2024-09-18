@@ -8,6 +8,8 @@ import { EmployeeService } from '../employee.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EmployeeCreateComponent } from '../employee-create/employee-create.component';
 import { EmployeeEditComponent } from '../employee-edit/employee-edit.component';
+import { AuthService } from '../../../auth/auth.service';
+import { AddRoleComponent } from '../add-role/add-role.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -16,7 +18,7 @@ import { EmployeeEditComponent } from '../employee-edit/employee-edit.component'
 })
 export class EmployeeListComponent {
 
-  displayedColumns: string[] = ['id', 'code', 'name', 'address', 'phone', 'position', 'department', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'dni', 'name',  'email', 'role', 'address', 'phone', 'position', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<Employee>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -26,7 +28,7 @@ export class EmployeeListComponent {
 
   public respuesta?: EmployeeResponse;
 
-  constructor(private employeeService: EmployeeService, public dialog: MatDialog) { }
+  constructor(private employeeService: AuthService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getEmployees();
@@ -46,8 +48,8 @@ export class EmployeeListComponent {
 
 
   getEmployees() {
-    this.employeeService.getEmployees().subscribe((respuesta) => {
-      // console.log(respuesta.data);
+    this.employeeService.getUsers().subscribe((respuesta) => {
+       console.log(respuesta.data);
       if (respuesta.data.length > 0) {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
@@ -73,7 +75,7 @@ export class EmployeeListComponent {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     // dialogConfig.width = '40%';
-    dialogConfig.height = '450px';
+    dialogConfig.height = '600px';
     this.dialog.open(EmployeeCreateComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => {
@@ -82,9 +84,8 @@ export class EmployeeListComponent {
 
   openEditDialog(id: number) {
 
-    this.employeeService.getEmployeeByID(id).subscribe(respuesta => {
-      //console.log(respuesta.data);
-
+    this.employeeService.getUserByID(id).subscribe(respuesta => {
+     
       this.respuesta = respuesta.data;
 
       if (respuesta.data) {
@@ -100,6 +101,22 @@ export class EmployeeListComponent {
         this.dialog.afterAllClosed.subscribe(() => { })
       }
     });
+  }
+
+
+  addRoleDialog(id: any) {
+
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        // dialogConfig.width = '40%';
+        dialogConfig.height = '320px';
+        dialogConfig.data = id;
+
+        this.dialog.open(AddRoleComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
+      
   }
 
 

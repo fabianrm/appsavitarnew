@@ -20,39 +20,55 @@
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- id Video -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">ID</th>
+        <th mat-header-cell *matHeaderCellDef >ID</th>
         <td class="center" mat-cell *matCellDef="let element">
           {{ element.id }}
         </td>
       </ng-container>
 
       <!-- Code Column -->
-      <ng-container matColumnDef="code">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Código</th>
-        <td class="center" mat-cell *matCellDef="let element">
-          {{ element.code }}
+      <ng-container matColumnDef="dni">
+        <th mat-header-cell *matHeaderCellDef >DNI</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.dni }}
         </td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Name</th>
-        <td class="center" mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element">
           {{ element.name }}
+        </td>
+      </ng-container>
+
+           <!-- Adress Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Email</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.email }}
+        </td>
+      </ng-container>
+
+            <!-- Rol Column -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Rol</th>
+        <td  mat-cell *matCellDef="let element">
+          {{ element.role[0]?.name }}
         </td>
       </ng-container>
 
       <!-- Adress Column -->
       <ng-container matColumnDef="address">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Dirección</th>
-        <td class="center" mat-cell *matCellDef="let element">
+        <th mat-header-cell *matHeaderCellDef >Dirección</th>
+        <td mat-cell *matCellDef="let element">
           {{ element.address }}
         </td>
       </ng-container>
 
       <!-- Phone Column -->
       <ng-container matColumnDef="phone">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Teléfono</th>
+        <th mat-header-cell *matHeaderCellDef >Teléfono</th>
         <td class="center" mat-cell *matCellDef="let element">
           {{ element.phone }}
         </td>
@@ -60,23 +76,16 @@
 
         <!-- Position Column -->
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Cargo</th>
-        <td class="center" mat-cell *matCellDef="let element">
+        <th mat-header-cell *matHeaderCellDef >Cargo</th>
+        <td mat-cell *matCellDef="let element">
           {{ element.position }}
         </td>
       </ng-container>
 
-        <!-- Position Column -->
-      <ng-container matColumnDef="department">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Departamento</th>
-        <td class="center" mat-cell *matCellDef="let element">
-          {{ element.department }}
-        </td>
-      </ng-container>
 
       <!-- Estado Column -->
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Estado</th>
+        <th mat-header-cell *matHeaderCellDef >Estado</th>
         <td mat-cell *matCellDef="let element">
           <span
             [ngClass]="{
@@ -101,14 +110,9 @@
               Editar Empleado
             </button>
 
-             <button mat-menu-item>
-              <mat-icon matListItemIcon>person_add</mat-icon>
-              Agregar Usuario
-            </button>
-
-             <button mat-menu-item>
+             <button mat-menu-item (click)="addRoleDialog(row.id)">
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              Configurar Permisos
+              Asignar Rol
             </button>
             
             <button mat-menu-item (click)="deleteBrand(row.id)">

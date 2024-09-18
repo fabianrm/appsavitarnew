@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { Ticket } from '../Models/TicketResponse';
 import { AuthService } from '../../../auth/auth.service';
 import { User } from '../../../auth/Models/UserResponse';
+import { Employee } from '../../../logistic/employee/models/EmployeeResponse';
 
 @Component({
   selector: 'app-assign-ticket',
@@ -18,7 +19,7 @@ export class AssignTicketComponent {
 
   formAssign!: FormGroup;
   technician_id!: number;
-  users: User[] = [];
+  users: Employee[] = [];
   date = new Date();
   fechaDate1 = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate());
   fechaDate : Date;

@@ -98,9 +98,9 @@ export class CreateTicketComponent implements OnInit {
   //cargar categorías
   getCategories() {
     this.categoryTicket.getCategoryTickets().subscribe((respuesta) => {
-      //  console.log(respuesta.data)
+       // console.log(respuesta.data)
       if (respuesta.data.length > 0) {
-        this.categoryTickets = respuesta.data;
+        this.categoryTickets = respuesta.data.filter(x => x.status === 1);
       }
     });
   }

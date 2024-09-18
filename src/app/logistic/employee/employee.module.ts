@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { EmployeeRoutingModule } from './employee-routing.module';
+import { AddRoleComponent } from './add-role/add-role.component';
 
 
 
@@ -26,7 +27,8 @@ import { EmployeeRoutingModule } from './employee-routing.module';
   declarations: [
     EmployeeListComponent,
     EmployeeCreateComponent,
-    EmployeeEditComponent
+    EmployeeEditComponent,
+    AddRoleComponent
   ],
   imports: [
     CommonModule,

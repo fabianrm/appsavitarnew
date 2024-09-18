@@ -6,14 +6,14 @@
 
     <mat-card-content>
       <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Código</mat-label>
-            <input matInput placeholder="Código" formControlName="code" />
+            <input matInput placeholder="Código" formControlName="dni" />
           </mat-form-field>
         </div>
 
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Nombre</mat-label>
             <input matInput placeholder="Nombre" formControlName="name" />
@@ -22,13 +22,13 @@
       </div>
 
       <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Dirección</mat-label>
             <input matInput placeholder="Dirección" formControlName="address" />
           </mat-form-field>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Teléfono</mat-label>
             <input matInput placeholder="Teléfono" formControlName="phone" />
@@ -37,22 +37,16 @@
       </div>
 
       <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <mat-form-field>
             <mat-label>Cargo</mat-label>
             <input matInput placeholder="Cargo" formControlName="position" />
           </mat-form-field>
         </div>
-        <div class="col-6">
-          <mat-form-field>
-            <mat-label>Área</mat-label>
-            <input matInput placeholder="Área" formControlName="department" />
-          </mat-form-field>
-        </div>
       </div>
 
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-md-6">
           <mat-slide-toggle
             [color]="color"
             [checked]="checked"
@@ -78,4 +72,3 @@
     </button>
   </div>
 </form>
-

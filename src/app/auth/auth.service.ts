@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginResponse } from './Models/LoginResponse';
+import { UserRequest } from './Models/UserRequest';
+import { EmployeeResponse } from '../logistic/employee/models/EmployeeResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +46,34 @@ export class AuthService {
     return this.http.get<any>(this.API + 'user/permissions', { headers: this.headers });
   }
 
-  getUsers() {
-    return this.http.get<any>(this.API + 'users', { headers: this.headers });
+  getUsers(): Observable<EmployeeResponse> {
+    return this.http.get<EmployeeResponse>(this.API + 'users', { headers: this.headers });
+  }
+
+
+  getUserByID(id: number): Observable<any> {
+    return this.http.get(this.API + 'users/' + id, { headers: this.headers });
+  }
+
+  addUser(datos: UserRequest): Observable<any> {
+    return this.http.post(this.API + 'users', datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+  addRole(datos: any): Observable<any> {
+    return this.http.post(this.API + 'role-user', datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+  updateUser(id: number, datos: UserRequest): Observable<any> {
+    return this.http.put(this.API + 'users/' + id, datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
   }
 
 }

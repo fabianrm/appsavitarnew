@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { EmployeeService } from '../employee.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-employee-create',
@@ -17,9 +17,10 @@ export class EmployeeCreateComponent {
   checked = true;
   disabled = false;
   selected = 'normal';
+  passwordMismatch: boolean = false;
 
   constructor(public formulario: FormBuilder,
-    private employeService: EmployeeService,
+    private employeService: AuthService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
     private snackbarService: SnackbarService,
     private dialogRef: MatDialogRef<EmployeeCreateComponent>) { }
@@ -31,27 +32,42 @@ export class EmployeeCreateComponent {
 
   initForm() {
     this.formCreate = this.formulario.group({
-      code: ['', Validators.required],
+      dni: ['', Validators.required],
       name: ['', Validators.required],
-      user_id: [null],
       address: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      password_confirmation: ['', Validators.required],
       phone: ['', Validators.required],
       position: ['', Validators.required],
-      department: ['', Validators.required],
-      status: 1,
-    });
+      status: [this.checked],
+    }, { validator: this.passwordMatchValidator });
   }
 
 
   enviarDatos() {
     if (this.formCreate.valid) {
-      this.employeService.addEmployee(this.formCreate.value).subscribe(respuesta => {
+      this.employeService.addUser(this.formCreate.value).subscribe(respuesta => {
         this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
       });
+    } else {
+      console.log('El formulario tiene errores.');
     }
   }
+
+  // Validador personalizado
+   passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password');
+    const confirmPassword = form.get('password_confirmation');
+
+    return password && confirmPassword && password.value === confirmPassword.value
+      ? null
+      : { passwordMismatch: true };
+  }
+
+
 
   showError() {
     this.snackbarService.showError('☹️ Ocurrio un error');

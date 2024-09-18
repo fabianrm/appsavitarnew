@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Invoice } from '../Models/InvoiceResponse';
 import { InvoiceService } from '../invoice.service';
@@ -31,7 +31,7 @@ export class CancelInvoiceComponent implements OnInit {
 
   initForm() {
     this.formPaid = this.fb.group({
-      note: [''],
+      note: ['', Validators.required],
     });
   }
 

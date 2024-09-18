@@ -9,6 +9,7 @@ export interface LoginResponse {
     message: string;
     token: string;
     user: User;
+    errors: string;
 }
 
 export interface User {

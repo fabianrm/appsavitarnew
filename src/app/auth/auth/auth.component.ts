@@ -36,30 +36,16 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  // onSubmit(): void {
-  //   if (this.loginForm.valid) {
-  //     const { email, password } = this.loginForm.value;
-  //     this.authService.login(email, password).subscribe(
-  //       (response) => {
-  //         console.log(response);
-  //         localStorage.setItem('token', response.token);
-  //         this.router.navigate(['/dashboard/customer/customers']);
-  //       },
-  //       (error) => {
-  //         this.msgSusscess('Credenciales incorrectas')
-  //         console.error(error);
-  //         //alert('Credenciales incorrectas.');
-  //       }
-  //     );
-  //   }
-  // }
-
 
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).pipe(
+        
+        
         tap(response => {
+          console.log(response);
+         
           localStorage.setItem('token', response.token);
           localStorage.setItem('id_user', response.user.id.toString());
           localStorage.setItem('user_name', response.user.name);
@@ -68,13 +54,10 @@ export class AuthComponent implements OnInit {
         })
       ).subscribe(
         (response) => {
-          // console.log(response);
           this.router.navigate(['/dashboard/home/home']);
         },
         (error) => {
-          this.msgSusscess('Credenciales incorrectas');
-          console.error(error);
-          // alert('Credenciales incorrectas.');
+          this.msgSusscess("Credenciales incorrectas o su cuenta ha sido desactivada");
         }
       );
     }

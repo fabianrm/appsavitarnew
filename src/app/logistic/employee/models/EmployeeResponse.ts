@@ -1,4 +1,4 @@
-import { User } from "../../../auth/Models/UserResponse";
+import { Role } from "../../../auth/role/Models/RoleResponse";
 
 export interface EmployeeResponse {
     data: Employee[];
@@ -12,12 +12,11 @@ export interface EmployeeSingleResponse {
 
 export interface Employee {
     id: number;
-    code: string;
+    dni: string;
     name: string;
     address: string;
     phone: string;
     position: string;
-    department: string;
-    user: User;
+    role: Role[];
     status: number;
 }

@@ -317,7 +317,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   getPlans() {
     this.planService.getPlans().subscribe((respuesta: ResponsePlan) => {
       if (respuesta.data.length > 0) {
-        this.planes = respuesta.data;
+        this.planes = respuesta.data.filter(x => x.status === 1);
         this.getPlanbyID(this.planInicial);
       }
     });

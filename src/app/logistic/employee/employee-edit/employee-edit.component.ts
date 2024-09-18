@@ -5,6 +5,7 @@ import { EmployeeService } from '../employee.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Employee } from '../models/EmployeeResponse';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-employee-edit',
@@ -22,7 +23,7 @@ export class EmployeeEditComponent {
   id_employee!: number;
 
   constructor(public formulario: FormBuilder,
-    private employeService: EmployeeService,
+    private employeService: AuthService,
     @Inject(MAT_DIALOG_DATA) public getData: Employee,
     private snackbarService: SnackbarService,
     private dialogRef: MatDialogRef<EmployeeEditComponent>) { }
@@ -35,13 +36,12 @@ export class EmployeeEditComponent {
 
   initForm() {
     this.formCreate = this.formulario.group({
-      code: [this.getData.code, Validators.required],
+      dni: [this.getData.dni, Validators.required],
       name: [this.getData.name, Validators.required],
-      user_id: [null],
       address: [ this.getData.address , Validators.required],
       phone: [this.getData.phone, Validators.required],
       position: [this.getData.position, Validators.required],
-      department: [this.getData.department, Validators.required],
+  
       status: this.getData.status,
     });
   }
@@ -49,7 +49,7 @@ export class EmployeeEditComponent {
 
   enviarDatos() {
     if (this.formCreate.valid) {
-      this.employeService.updateEmployee(this.id_employee!, this.formCreate.value).subscribe(respuesta => {
+      this.employeService.updateUser(this.id_employee!, this.formCreate.value).subscribe(respuesta => {
         this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
