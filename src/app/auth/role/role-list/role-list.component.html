@@ -1,1 +1,76 @@
-<p>role-list works!</p>
+<div class="contenedor">
+  <div class="row-filter">
+    <!--  Filtro -->
+    <mat-form-field>
+      <mat-label>Buscar</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Ej. Administrador"
+        #input
+        autocomplete="off"
+      />
+    </mat-form-field>
+    <button (click)="newRole()" mat-raised-button color="accent">+ Nuevo</button>
+  </div>
+
+  <div class="table-container" >
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- id Video -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">ID</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Nombre</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.name }}
+        </td>
+      </ng-container>
+
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef>Accciones</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          class="menu-actions"
+          style="text-align: right"
+        >
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editRole(row)">
+              <mat-icon matListItemIcon>edit</mat-icon>
+              Editar
+            </button>
+
+            <button mat-menu-item (click)="deleteRole(row.id)">
+              <mat-icon matListItemIcon>delete</mat-icon>
+              Eliminar
+            </button>
+
+                 <button mat-menu-item (click)="addPermisions(row.id)">
+              <mat-icon matListItemIcon>delete</mat-icon>
+              Asignar Permisos
+            </button>
+
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      pageSize="10"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+</div>

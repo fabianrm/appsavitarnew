@@ -6,20 +6,20 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-role-create',
-  templateUrl: './role-create.component.html',
-  styleUrl: './role-create.component.scss'
+  selector: 'app-role-edit',
+  templateUrl: './role-edit.component.html',
+  styleUrl: './role-edit.component.scss'
 })
-export class RoleCreateComponent {
-
+export class RoleEditComponent {
   formRole!: FormGroup;
   color: ThemePalette = 'accent';
+  id = this.getData.id;
 
   constructor(public formulario: FormBuilder,
     private roleService: RoleService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
     private snackbarService: SnackbarService,
-    private dialogRef: MatDialogRef<RoleCreateComponent>
+    private dialogRef: MatDialogRef<RoleEditComponent>
   ) { }
 
 
@@ -29,8 +29,8 @@ export class RoleCreateComponent {
 
   initForm() {
     this.formRole = this.formulario.group({
-      name: ['', Validators.required],
-  
+      name: [this.getData.name, Validators.required],
+
 
     });
   }
@@ -38,7 +38,7 @@ export class RoleCreateComponent {
 
   enviarDatos() {
     if (this.formRole.valid) {
-      this.roleService.addRole(this.formRole.value).subscribe(respuesta => {
+      this.roleService.updateRole(this.id,this.formRole.value).subscribe(respuesta => {
         this.showSuccess();
         this.dialogRef.close();
       });
@@ -50,7 +50,7 @@ export class RoleCreateComponent {
   }
 
   showSuccess() {
-    this.snackbarService.showSuccess('Registro agregado correctamente');
+    this.snackbarService.showSuccess('Registro editado correctamente');
   }
 
 }

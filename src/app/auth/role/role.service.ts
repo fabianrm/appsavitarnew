@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { catchError, Observable, of, Subject, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RoleResponse } from './Models/RoleResponse';
@@ -41,6 +41,23 @@ export class RoleService {
       .pipe(tap(() => {
         this._refresh$.next()
       }));
+  }
+
+
+  deleteRole(id: number,): Observable<any> {
+    return this.clienteHttp.delete(this.API + 'roles/' + id, { headers: this.headers })
+      .pipe(
+        catchError(error => {
+          return of({
+            data: {
+              status: false,
+              message: 'Error desconocido al eliminar el Rol'
+            }
+          });
+        }), tap(() => {
+          this._refresh$.next()
+        })
+      );
   }
 
   getRoleByID(id: number): Observable<any> {
