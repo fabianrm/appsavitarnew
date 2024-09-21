@@ -8,6 +8,7 @@ export interface Invoice {
     invoiceId: number;
     contractId: string;
     customerName: string;
+    address: string;
     planName: string;
     price: number;
     discount: number;

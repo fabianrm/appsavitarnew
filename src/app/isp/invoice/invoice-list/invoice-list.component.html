@@ -133,6 +133,14 @@
         </td>
       </ng-container>
 
+       <!-- Address Name Column -->
+      <ng-container matColumnDef="address" sticky>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Dirección</th>
+        <td data-title="Dirección" mat-cell *matCellDef="let element">
+          {{ element.address }}
+        </td>
+      </ng-container>
+
       <!-- Price Column -->
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>

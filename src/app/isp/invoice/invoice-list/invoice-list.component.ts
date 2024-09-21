@@ -19,8 +19,8 @@ import { CancelInvoiceComponent } from '../cancel-invoice/cancel-invoice.compone
 })
 export class InvoiceListComponent implements OnInit, AfterViewInit {
 
-  availableColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'planName', 'periodic', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'acciones'];
-  displayedColumns: string[] = ['contractId', 'customerName', 'planName', 'periodic', 'price', 'discount', 'amount', 'dueDate', 'paidDated', 'status', 'acciones'];
+  availableColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'address', 'planName', 'periodic', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'acciones'];
+  displayedColumns: string[] = ['contractId', 'customerName', 'planName', 'address', 'periodic', 'price', 'discount', 'amount', 'dueDate', 'paidDated', 'status', 'acciones'];
   
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
