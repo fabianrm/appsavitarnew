@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { RoleCreateComponent } from '../role-create/role-create.component';
 import { RoleEditComponent } from '../role-edit/role-edit.component';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { PermissionListComponent } from '../../permission/permission-list/permission-list.component';
 
 @Component({
   selector: 'app-role-list',
@@ -98,7 +99,16 @@ export class RoleListComponent {
 
 
   addPermisions(id: number) {
-    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    //dialogConfig.width = '40%';
+    dialogConfig.height = '600px';
+    dialogConfig.data = id;
+    this.dialog.open(PermissionListComponent, dialogConfig);
+
+    this.dialog.afterAllClosed.subscribe(() => {
+    })
   }
 
 

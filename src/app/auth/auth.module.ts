@@ -7,11 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing.module';
 import { MatButtonModule } from '@angular/material/button';
+import { PermissionListComponent } from './permission/permission-list/permission-list.component';
 
 
 @NgModule({
   declarations: [
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     CommonModule,

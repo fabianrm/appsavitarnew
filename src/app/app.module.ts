@@ -37,6 +37,8 @@ import { registerLocaleData } from '@angular/common';
 import { AppConfigService } from './app-config.service';
 import { ClientIdInterceptor } from './client-id.interceptor';
 import { BrandModule } from './isp/brand/brand.module';
+import { PermissionModule } from './auth/permission/permission.module';
+
 
 
 
@@ -90,8 +92,9 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatMenuModule,
     MatButtonModule,
     SharedModule,
-    BrandModule
-
+    BrandModule,
+    PermissionModule
+ 
 
   ],
   providers: [

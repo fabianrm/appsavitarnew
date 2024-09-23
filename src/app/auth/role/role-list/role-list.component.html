@@ -11,10 +11,12 @@
         autocomplete="off"
       />
     </mat-form-field>
-    <button (click)="newRole()" mat-raised-button color="accent">+ Nuevo</button>
+    <button (click)="newRole()" mat-raised-button color="accent">
+      + Nuevo
+    </button>
   </div>
 
-  <div class="table-container" >
+  <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- id Video -->
       <ng-container matColumnDef="id">
@@ -54,11 +56,10 @@
               Eliminar
             </button>
 
-                 <button mat-menu-item (click)="addPermisions(row.id)">
-              <mat-icon matListItemIcon>delete</mat-icon>
+            <button mat-menu-item (click)="addPermisions(row.id)">
+              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
               Asignar Permisos
             </button>
-
           </mat-menu>
         </td>
       </ng-container>
