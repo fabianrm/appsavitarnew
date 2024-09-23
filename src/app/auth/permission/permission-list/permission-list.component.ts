@@ -25,7 +25,7 @@ export class PermissionListComponent implements OnInit {
 
   constructor
     (public formulario: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public getData: number,
+      @Inject(MAT_DIALOG_DATA) public getData: number,
       private permissionService: PermissionService,
       private snackbarService: SnackbarService,
       private dialogRef: MatDialogRef<PermissionListComponent>) {
@@ -41,10 +41,8 @@ export class PermissionListComponent implements OnInit {
   initForm() {
     const formControlsConfig = {
       permissions: ['', Validators.required],
-
     }
     this.formPermissions = this.formulario.group(formControlsConfig);
-
   }
 
 
@@ -58,27 +56,38 @@ export class PermissionListComponent implements OnInit {
     });
   }
 
-  // getPermissionsByID() {
-  //   this.permissionService.getPermissionsByID(this.getData).subscribe((respuesta) => {
-  //     if (respuesta.data.length > 0) {
-  //       this.permissionsRole = respuesta.data;
-  //       console.log('Obteniendo permisos', this.permissionsRole);
-  //      // this.permissionTree = buildPermissionTree(this.permissions);
-  //     }
-  //   });
-  // }
 
   getPermissionsByID() {
     this.permissionService.getPermissionsByID(this.getData).subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
         this.permissionsRole = respuesta.data;
-        // Mapear solo los IDs
-        const permissionIds = this.permissionsRole.map((permission: any) => permission.id);
-        console.log('IDs de permisos:', permissionIds);
+        // Filtrar los permisos con parent_id !== null y mapear solo los IDs
+        const permissionIds = this.permissionsRole
+          .filter((permission: any) => permission.parent_id !== null)
+          .map((permission: any) => permission.id);
+        // Construir el árbol de permisos y luego seleccionar los permisos
+        this.permissionTree = buildPermissionTree(this.permissions);
+        this.selectPermissions(permissionIds);
       }
     });
   }
 
+
+  selectPermissions(permissionIds: number[]) {
+    this.selectPermissionsRecursive(this.permissionTree, permissionIds);
+    this.updateSelectedPermissions();
+  }
+
+  selectPermissionsRecursive(nodes: Permission[], permissionIds: number[]) {
+    for (const node of nodes) {
+      if (permissionIds.includes(node.id)) {
+        this.onCheckboxChange(node, true);
+      }
+      if (node.children!.length > 0) {
+        this.selectPermissionsRecursive(node.children!, permissionIds);
+      }
+    }
+  }
 
 
   onCheckboxChange(node: Permission, checked: boolean) {

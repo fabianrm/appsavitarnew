@@ -20,6 +20,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { AddRoleComponent } from './add-role/add-role.component';
+import { EditRoleComponent } from './edit-role/edit-role.component';
 
 
 
@@ -28,7 +29,8 @@ import { AddRoleComponent } from './add-role/add-role.component';
     EmployeeListComponent,
     EmployeeCreateComponent,
     EmployeeEditComponent,
-    AddRoleComponent
+    AddRoleComponent,
+    EditRoleComponent
   ],
   imports: [
     CommonModule,

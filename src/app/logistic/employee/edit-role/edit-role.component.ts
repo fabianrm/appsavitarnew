@@ -1,20 +1,20 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RoleService } from '../../../auth/role/role.service';
 import { Role } from '../../../auth/role/Models/RoleResponse';
 import { AuthService } from '../../../auth/auth.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
-import { RoleService } from '../../../auth/role/role.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-add-role',
-  templateUrl: './add-role.component.html',
-  styleUrl: './add-role.component.scss'
+  selector: 'app-edit-role',
+  templateUrl: './edit-role.component.html',
+  styleUrl: './edit-role.component.scss'
 })
-export class AddRoleComponent {
-
+export class EditRoleComponent {
   formRole!: FormGroup;
   roles: Role[] = [];
+  
 
 
   constructor(public fb: FormBuilder,
@@ -22,26 +22,28 @@ export class AddRoleComponent {
     private userService: AuthService,
     private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
-    private dialogRef: MatDialogRef<AddRoleComponent>,) {}
+    private dialogRef: MatDialogRef<EditRoleComponent>,) { }
 
   ngOnInit() {
+    console.log(this.getData);
+
+
     this.initForm();
     this.getRoles();
   }
 
   initForm() {
     this.formRole = this.fb.group({
-      role_id: ['', Validators.required],
-      user_id: [this.getData,],
+      role_id: [this.getData.role_id, Validators.required],
+      user_id: [this.getData.user_id,],
 
     });
 
   }
 
-
   enviarDatos() {
     if (this.formRole.valid) {
-      this.userService.addRole(this.formRole.value).subscribe(respuesta => {
+      this.userService.updateRole(this.getData.user_id, this.formRole.value).subscribe(respuesta => {
         this.showSuccess();
         this.dialogRef.close();
         // console.log(respuesta);
@@ -49,7 +51,6 @@ export class AddRoleComponent {
     }
   }
 
-  
 
   getRoles() {
     this.roleService.getRoles().subscribe((respuesta) => {
@@ -65,7 +66,7 @@ export class AddRoleComponent {
   }
 
   showSuccess() {
-    this.snackbarService.showSuccess('Registro agregado correctamente');
+    this.snackbarService.showSuccess('Registro actualizado correctamente');
   }
 
 

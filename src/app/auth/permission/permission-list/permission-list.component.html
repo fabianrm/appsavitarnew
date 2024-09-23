@@ -5,10 +5,10 @@
     *ngTemplateOutlet="treeNode; context: { nodes: permissionTree }"
   ></ng-container>
 
-  <div class="selected-permissions">
+  <!-- <div class="selected-permissions">
     <h3>Permisos Seleccionados:</h3>
     <p>{{ selectedPermissions.join(", ") }}</p>
-  </div>
+  </div> -->
 </div>
 
 <ng-template #treeNode let-nodes="nodes">
@@ -19,7 +19,7 @@
         [indeterminate]="someChildrenChecked(node) && !allChildrenChecked(node)"
         (change)="onCheckboxChange(node, $event.checked)"
       >
-        {{ node.name }} (ID: {{ node.id }})
+        {{ node.name }}
       </mat-checkbox>
       <ng-container *ngIf="node.children.length > 0">
         <ng-container

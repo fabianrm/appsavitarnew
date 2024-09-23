@@ -62,12 +62,6 @@ export class AuthService {
       }));
   }
 
-  addRole(datos: any): Observable<any> {
-    return this.http.post(this.API + 'role-user', datos, { headers: this.headers })
-      .pipe(tap(() => {
-        this._refresh$.next()
-      }));
-  }
 
   updateUser(id: number, datos: UserRequest): Observable<any> {
     return this.http.put(this.API + 'users/' + id, datos, { headers: this.headers })
@@ -75,5 +69,28 @@ export class AuthService {
         this._refresh$.next()
       }));
   }
+
+  addRole(datos: any): Observable<any> {
+    return this.http.post(this.API + 'role-user', datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+  updateRole(id: number, datos: any): Observable<any> {
+    return this.http.put(this.API + 'role-user/' + id, datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
+  getRoleByID(id: number): Observable<any> {
+    return this.http.get(this.API + 'role-user/' + id, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
 
 }

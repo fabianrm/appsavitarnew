@@ -10,6 +10,7 @@ import { EmployeeCreateComponent } from '../employee-create/employee-create.comp
 import { EmployeeEditComponent } from '../employee-edit/employee-edit.component';
 import { AuthService } from '../../../auth/auth.service';
 import { AddRoleComponent } from '../add-role/add-role.component';
+import { EditRoleComponent } from '../edit-role/edit-role.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -18,7 +19,7 @@ import { AddRoleComponent } from '../add-role/add-role.component';
 })
 export class EmployeeListComponent {
 
-  displayedColumns: string[] = ['id', 'dni', 'name',  'email', 'role', 'address', 'phone', 'position', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'dni', 'name', 'email', 'role', 'address', 'phone', 'position', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<Employee>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -49,7 +50,7 @@ export class EmployeeListComponent {
 
   getEmployees() {
     this.employeeService.getUsers().subscribe((respuesta) => {
-       console.log(respuesta.data);
+      // console.log(respuesta.data);
       if (respuesta.data.length > 0) {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
@@ -85,7 +86,7 @@ export class EmployeeListComponent {
   openEditDialog(id: number) {
 
     this.employeeService.getUserByID(id).subscribe(respuesta => {
-     
+
       this.respuesta = respuesta.data;
 
       if (respuesta.data) {
@@ -106,18 +107,43 @@ export class EmployeeListComponent {
 
   addRoleDialog(id: any) {
 
-        const dialogConfig = new MatDialogConfig();
+    const dialogConfig = new MatDialogConfig();
 
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        // dialogConfig.width = '40%';
-        dialogConfig.height = '320px';
-        dialogConfig.data = id;
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    // dialogConfig.width = '40%';
+    dialogConfig.height = '320px';
+    dialogConfig.data = id;
 
-        this.dialog.open(AddRoleComponent, dialogConfig);
+    this.dialog.open(AddRoleComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
-      
+
   }
+
+
+  editRoleDialog(id: any) {
+
+    this.employeeService.getRoleByID(id).subscribe(respuesta => {
+
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      // dialogConfig.width = '40%';
+      dialogConfig.height = '320px';
+      dialogConfig.data = respuesta.data
+
+      this.dialog.open(EditRoleComponent, dialogConfig);
+      this.dialog.afterAllClosed.subscribe(() => { });
+      
+    });
+
+   
+
+  }
+
+
+
 
 
   ngOnDestroy() {
