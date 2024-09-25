@@ -5,22 +5,22 @@
         <div class="container">
           <div class="row">
             <div class="col-md-3">
-            <mat-form-field appearance="fill" class="w-100">
-                  <mat-label>Tipo de Ingreso</mat-label>
-                  <mat-select formControlName="entry_type_id" required>
-                    <mat-option
-                      *ngFor="let entryType of entryTypes"
-                      [value]="entryType.id"
-                    >
-                      {{ entryType.name }}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error
-                    *ngIf="entryForm.get('document_id')?.hasError('required')"
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Tipo de Ingreso</mat-label>
+                <mat-select formControlName="entry_type_id" required>
+                  <mat-option
+                    *ngFor="let entryType of entryTypes"
+                    [value]="entryType.id"
                   >
-                    Documento es requerido
-                  </mat-error>
-                </mat-form-field>
+                    {{ entryType.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="entryForm.get('document_id')?.hasError('required')"
+                >
+                  Documento es requerido
+                </mat-error>
+              </mat-form-field>
             </div>
             <div class="col-md-3">
               <mat-form-field appearance="fill">
@@ -38,22 +38,22 @@
               </mat-form-field>
             </div>
             <div class="col-md-3">
-                <mat-form-field appearance="fill" class="w-100">
-                  <mat-label>Documento</mat-label>
-                  <mat-select formControlName="document_id" required>
-                    <mat-option
-                      *ngFor="let document of documents"
-                      [value]="document.id"
-                    >
-                      {{ document.name }}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error
-                    *ngIf="entryForm.get('document_id')?.hasError('required')"
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Documento</mat-label>
+                <mat-select formControlName="document_id" required>
+                  <mat-option
+                    *ngFor="let document of documents"
+                    [value]="document.id"
                   >
-                    Documento es requerido
-                  </mat-error>
-                </mat-form-field>
+                    {{ document.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="entryForm.get('document_id')?.hasError('required')"
+                >
+                  Documento es requerido
+                </mat-error>
+              </mat-form-field>
             </div>
             <div class="col-md-3">
               <mat-form-field appearance="fill">
@@ -64,33 +64,34 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-                             <mat-form-field appearance="fill" class="w-100">
-                  <mat-label>Proveedor</mat-label>
-                  <mat-select formControlName="supplier_id" required>
-                    <mat-option
-                      *ngFor="let supplier of suppliers"
-                      [value]="supplier.id"
-                    >
-                      {{ supplier.name }}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error
-                    *ngIf="entryForm.get('document_id')?.hasError('required')"
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Proveedor</mat-label>
+                <mat-select formControlName="supplier_id" required>
+                  <mat-option
+                    *ngFor="let supplier of suppliers"
+                    [value]="supplier.id"
                   >
-                    Documento es requerido
-                  </mat-error>
-                </mat-form-field>
+                    {{ supplier.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="entryForm.get('document_id')?.hasError('required')"
+                >
+                  Documento es requerido
+                </mat-error>
+              </mat-form-field>
             </div>
           </div>
         </div>
       </mat-card-content>
     </mat-card>
 
+    <!-- Detalle de Material -->
     <mat-card>
       <mat-card-content>
         <div class="action-buttons">
           <button
-          type="button"
+            type="button"
             mat-raised-button
             color="primary"
             (click)="openMaterialDialog()"
@@ -106,6 +107,7 @@
             <td mat-cell *matCellDef="let element">
               {{ element.value.material.name }}
             </td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
 
           <!-- Quantity Column -->
@@ -121,6 +123,15 @@
                 />
               </mat-form-field>
             </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="brand">
+            <th mat-header-cell *matHeaderCellDef>Marca</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.value.material.brand.name }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
 
           <!-- Price Column -->
@@ -136,29 +147,21 @@
                 />
               </mat-form-field>
             </td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
 
           <!-- Subtotal Column -->
           <ng-container matColumnDef="subtotal">
             <th mat-header-cell *matHeaderCellDef>Subtotal</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.value.subtotal }}
-            </td>
-          </ng-container>
 
-          <!-- Warehouse Column -->
-          <ng-container matColumnDef="warehouse">
-            <th mat-header-cell *matHeaderCellDef>Almacén</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.value.warehouse.name }}
+              {{
+                element.value.subtotal
+                  | currency : "PEN" : "symbol" : "1.2-2" : "es-PE"
+              }}
             </td>
-          </ng-container>
-
-          <!-- Location Column -->
-          <ng-container matColumnDef="location">
-            <th mat-header-cell *matHeaderCellDef>Ubicación</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.value.location }}
+            <td style="font-weight: bold" mat-footer-cell *matFooterCellDef>
+              {{ total | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
             </td>
           </ng-container>
 
@@ -170,50 +173,21 @@
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
 
-          <tr class="mb-2"
-            mat-header-row
-            *matHeaderRowDef="[
-              'material',
-              'quantity',
-              'price',
-              'subtotal',
-              'warehouse',
-              'location',
-              'action'
-            ]"
-          ></tr>
-          <tr
-            mat-row
-            *matRowDef="
-              let row;
-              columns: [
-                'material',
-                'quantity',
-                'price',
-                'subtotal',
-                'warehouse',
-                'location',
-                'action'
-              ]
-            "
-          ></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
         </table>
-        <div class="total-section">
-          <mat-form-field appearance="fill">
-            <mat-label>Total</mat-label>
-            <input   matInput formControlName="total" readonly />
-          </mat-form-field>
-        </div>
       </mat-card-content>
     </mat-card>
 
     <div class="action-buttons">
-      <button class="mr mr-2" mat-raised-button color="primary">
+      <button type="submit" mat-raised-button color="primary">
         Guardar Entrada
       </button>
-      <button mat-raised-button color="warn" type="button">Cancelar</button>
+      <button mat-raised-button color="warn" type="button" (click)="goEntries()">Cancelar</button>
     </div>
   </form>
 </div>

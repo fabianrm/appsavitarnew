@@ -27,17 +27,18 @@ import { DatePipe } from '@angular/common';
 export class EntryCreateComponent {
 
   entryForm!: FormGroup;
-  documents: Document[] =[]
-  suppliers: Supplier[] =[]
+  documents: Document[] = []
+  suppliers: Supplier[] = []
   entryTypes: EntryType[] = []
-  
+
   dataSource!: MatTableDataSource<any>;
   materials: Material[] = [];
   warehouses: Warehouse[] = [];
 
-  date = new Date();
+  date = new Date().toLocaleString('en-GB')
+  total: number = 0;
 
-  displayedColumns: string[] = ['material', 'quantity', 'price', 'subtotal', 'warehouse', 'location', 'action'];
+  displayedColumns: string[] = ['material', 'brand', 'quantity', 'price', 'subtotal', 'action'];
 
   constructor(
     public fb: FormBuilder,
@@ -51,14 +52,14 @@ export class EntryCreateComponent {
     private datePipe: DatePipe,
     private router: Router,
     private dialog: MatDialog
-  ) { 
+  ) {
     this.entryForm = this.fb.group({
       entry_type_id: ['', Validators.required],
       document_id: ['', Validators.required],
       document_number: ['', Validators.required],
-      supplier_id: [1, Validators.required],
-      date: [this.datePipe.transform(this.date, "yyyy-MM-dd")], 
-      total: [0.00,{ value: 0, readonly: true }],
+      supplier_id: ['', Validators.required],
+      date: ['', Validators.required],
+      total: [0.00, { value: 0, readonly: true }],
       status: [1],
       entry_details: this.fb.array([])
     });
@@ -74,7 +75,7 @@ export class EntryCreateComponent {
   }
 
 
-  
+
   get entryDetails(): FormArray {
     return this.entryForm.get('entry_details') as FormArray;
   }
@@ -121,15 +122,15 @@ export class EntryCreateComponent {
     this.warehouseService.getWarehouses().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
         this.warehouses = respuesta.data;
-      //  console.log(this.warehouses);
-        
+        //  console.log(this.warehouses);
+
       }
     });
   }
 
 
   addDetail(detail: edr): void {
-   
+
     const existingDetail = this.entryDetails.controls.find(control => control.value.material.id === detail.material.id);
 
     if (existingDetail) {
@@ -165,7 +166,8 @@ export class EntryCreateComponent {
     const total = this.entryDetails.controls.reduce((acc, control) => {
       return acc + control.get('subtotal')!.value;
     }, 0);
-    this.entryForm.get('total')!.setValue(total);
+    // this.entryForm.get('total')!.setValue(total);
+    this.total = total;
   }
 
   openMaterialDialog(): void {
@@ -173,39 +175,58 @@ export class EntryCreateComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-  
+
     const dialogRef = this.dialog.open(MaterialSelectDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+
+    dialogRef.componentInstance.addMaterial.subscribe((selectedMaterial: any) => {
+     // console.log(selectedMaterial);
+      if (selectedMaterial) {
         this.addDetail({
-          ...result,
-          material: this.materials.find(m => m.id === result.material_id),
-          warehouse: this.warehouses.find(w => w.id === result.warehouse_id)
+          ...selectedMaterial,
+          material: this.materials.find(m => m.id === selectedMaterial.material_id),
+          warehouse: this.warehouses.find(w => w.id === selectedMaterial.warehouse_id)
         });
       }
     });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //console.log(result);
+    //   if (result) {
+    //     this.addDetail({
+    //       ...result,
+    //       material: this.materials.find(m => m.id === result.material_id),
+    //       warehouse: this.warehouses.find(w => w.id === result.warehouse_id)
+    //     });
+    //   }
+    // });
+
   }
-  
+
 
   enviarDatos(): void {
 
     const formData = this.entryForm.value;
-    const currentDate = new Date().toISOString().split('T')[0]; // Formato 'year-month-day'
+    const currentDate = new Date(formData.date).toISOString().split('T')[0];
 
     const dataToSend = {
       ...formData,
       date: currentDate,
+      total: this.total
     };
 
-  
     if (this.entryForm.valid) {
       this.entryService.addEntry(dataToSend).subscribe(respuesta => {
         this.router.navigate(['/dashboard/entry/entries']);
         this.showSuccess();
       });
     }
-    
+
   }
+
+  goEntries() {
+    this.router.navigate(['/dashboard/entry/entries']);
+  }
+
 
 
   showError() {

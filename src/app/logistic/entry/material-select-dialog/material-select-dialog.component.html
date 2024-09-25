@@ -17,7 +17,7 @@
                 *ngFor="let option of filteredMaterial | async"
                 [value]="option"
               >
-                {{ option.name }} - {{ option.presentation.name }}
+                {{ option.name }} - {{ option.brand.name }} - {{ option.presentation.name }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>

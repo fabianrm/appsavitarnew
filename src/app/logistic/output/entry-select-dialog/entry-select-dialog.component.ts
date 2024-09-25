@@ -74,7 +74,7 @@ export class EntrySelectDialogComponent {
   }
 
   close() {
-
+   // this.dialogRef.close();
   }
 
 

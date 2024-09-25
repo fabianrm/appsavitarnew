@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Material, MaterialResponse } from '../../material/models/MaterialResponse';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -6,6 +6,7 @@ import { MaterialService } from '../../material/material.service';
 import { WarehouseService } from '../../warehouse/warehouse.service';
 import { Warehouse } from '../../warehouse/models/WarehouseResponse';
 import { map, Observable, startWith } from 'rxjs';
+import { EntryDetail } from '../models/EntryDetailResponse';
 
 @Component({
   selector: 'app-material-select-dialog',
@@ -17,6 +18,8 @@ export class MaterialSelectDialogComponent implements OnInit {
   materialForm!: FormGroup;
   materials: Material[] = [];
   warehouses: Warehouse[] = [];
+
+  @Output() addMaterial = new EventEmitter<any>();
 
   filteredMaterial!: Observable<Material[]>;
   
@@ -100,7 +103,9 @@ export class MaterialSelectDialogComponent implements OnInit {
 
 
     if (this.materialForm.valid) {
-      this.dialogRef.close(dataToSend);
+      this.addMaterial.emit(dataToSend);
+      this.materialForm.reset();
+     // this.dialogRef.close(dataToSend);
     }
   }
 
@@ -122,7 +127,6 @@ export class MaterialSelectDialogComponent implements OnInit {
     const material = this.materialForm.get('material_id')!.value;
     return material ? material.id : null;
   }
-
 
 
 }

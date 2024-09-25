@@ -16,8 +16,6 @@ export interface Material {
     name: string;
     category: Category;
     presentation: Presentation;
-    serie: string;
-    model: string;
     brand: Brand;
     min: number;
     type: string;

@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class MaterialListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'code', 'name', 'category_id', 'presentation_id', 'brand_id', 'serial', 'model', 'min', 'type', 'image', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'code', 'name', 'category_id', 'presentation_id', 'brand_id', 'min', 'type', 'image', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<Material>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

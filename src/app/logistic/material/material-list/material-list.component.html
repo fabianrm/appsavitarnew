@@ -69,26 +69,9 @@
       <ng-container matColumnDef="brand_id">
         <th mat-header-cell *matHeaderCellDef>Marca</th>
         <td data-title="Marca" mat-cell *matCellDef="let element">
-          {{ element.brand.name  }}
+          {{ element.brand?.name  }}
         </td>
       </ng-container>
-
-        <!-- Longitude Column -->
-      <ng-container matColumnDef="serial">
-        <th mat-header-cell *matHeaderCellDef>Serie</th>
-        <td data-title="Serie" mat-cell *matCellDef="let element">
-          {{ element.serie  }}
-        </td>
-      </ng-container>
-
-            <!-- Longitude Column -->
-      <ng-container matColumnDef="model">
-        <th mat-header-cell *matHeaderCellDef>Modelo</th>
-        <td data-title="Modelo" mat-cell *matCellDef="let element">
-          {{ element.model  }}
-        </td>
-      </ng-container>
-
             <!-- Longitude Column -->
       <ng-container matColumnDef="min">
         <th mat-header-cell *matHeaderCellDef>Mínimo</th>

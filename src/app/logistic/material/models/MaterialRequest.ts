@@ -4,8 +4,6 @@ export interface MaterialRequest {
     category_id: number;
     presentation_id: number;
     brand_id: number;
-    serial: string;
-    model: string;
     min: number;
     type: string;
     image: string;

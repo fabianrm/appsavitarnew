@@ -58,8 +58,6 @@ export class MaterialCreateComponent implements OnInit {
       category_id: ['', Validators.required],
       presentation_id: ['', Validators.required],
       brand_id: ['', Validators.required],
-      serial: [''],
-      model: [''],
       min: [''],
       type: ['', Validators.required],
       image: [''],
