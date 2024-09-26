@@ -25,7 +25,7 @@ export class OutputListComponent implements OnInit {
 
   subscription!: Subscription
 
-  public respuesta: OutputResponse[] = [];
+  public respuesta: Output[] = [];
 
   constructor(private ouputService: OutputService, private router: Router, public dialog: MatDialog) { }
 
@@ -39,7 +39,10 @@ export class OutputListComponent implements OnInit {
 
   getOutputs() {
     this.ouputService.getOutputs().subscribe((respuesta) => {
+    
+      
       if (respuesta.data.length > 0) {
+        this.respuesta = respuesta.data;
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -66,13 +69,13 @@ export class OutputListComponent implements OnInit {
   }
 
 
-  viewDetails(id: number) {
+  viewDetails(row: Output) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     // dialogConfig.width = '40%';
     dialogConfig.height = '380px';
-    dialogConfig.data = id;
+    dialogConfig.data = row.output_details;
     this.dialog.open(OutputDetailsComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => {

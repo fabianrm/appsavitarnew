@@ -35,7 +35,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   subscription!: Subscription
-  public respuesta?: Customer[];
+
 
 
   constructor(

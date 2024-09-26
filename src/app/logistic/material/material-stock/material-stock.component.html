@@ -1,38 +1,51 @@
 <div class="contenedor">
   <div class="row row-filter">
-
     <div class="col-9 col-md-11">
-    <!--  Filtro -->
-    <mat-form-field>
-      <mat-label>Buscar</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ej. Router"
-        #input
-        autocomplete="off"
-      />
-    </mat-form-field>
+      <!--  Filtro -->
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Ej. Router"
+          #input
+          autocomplete="off"
+        />
+      </mat-form-field>
     </div>
-
   </div>
 
-  <div class="table-container" >
+  <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
-
-
-       <!-- id Video -->
+      <!-- id Video -->
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Código</th>
         <td data-title="Código" mat-cell *matCellDef="let element">
-          {{ element.material.code }}
+          {{ element.code }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Nombre</th>
         <td data-title="Nombre" mat-cell *matCellDef="let element">
-          {{ element.material.name }}
+          {{ element.name }}
+        </td>
+      </ng-container>
+
+      <!-- Marca -->
+      <ng-container matColumnDef="brand">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Marca</th>
+        <td data-title="Marca" mat-cell *matCellDef="let element">
+          {{ element.brand }}
+        </td>
+      </ng-container>
+
+      <!-- unidad -->
+        
+      <ng-container matColumnDef="unit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Un.</th>
+        <td data-title="Unidad" mat-cell *matCellDef="let element">
+          {{ element.unit }}
         </td>
       </ng-container>
 
@@ -40,7 +53,7 @@
       <ng-container matColumnDef="total_stock">
         <th mat-header-cell *matHeaderCellDef>Stock</th>
         <td data-title="Stock" mat-cell *matCellDef="let element">
-          {{ element.total_stock}}
+          {{ element.total_stock }}
         </td>
       </ng-container>
 
@@ -61,8 +74,6 @@
               <mat-icon matListItemIcon>info</mat-icon>
               Ver detalle
             </button>
-
-           
           </mat-menu>
         </td>
       </ng-container>
@@ -78,5 +89,3 @@
     </mat-paginator>
   </div>
 </div>
-
-

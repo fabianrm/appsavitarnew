@@ -23,4 +23,11 @@ export interface Material {
     status: number;
 }
 
-
+export interface MaterialStock {
+    id: number;
+    code: string;
+    name: string;
+    brand: string;
+    unit: string;
+   
+}

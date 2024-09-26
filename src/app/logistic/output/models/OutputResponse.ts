@@ -1,6 +1,6 @@
 import { Destination } from "../../destination/models/DestinationResponse";
 import { Employee } from "../../employee/models/EmployeeResponse";
-import { EntryDetail } from "../../entry/models/EntryDetailResponse";
+import { Material } from "../../material/models/MaterialResponse";
 
 export interface OutputResponse {
     data: Output[];
@@ -24,8 +24,7 @@ export interface Output {
 
 export interface OutputDetail {
     id: number;
-    entry_detail_id: number;
-    entry_detail: EntryDetail;
+    material: Material;
     quantity: number;
     subtotal: string;
 }

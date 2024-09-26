@@ -22,7 +22,6 @@ export class MaterialListComponent implements OnInit {
 
   subscription!: Subscription
 
-  public respuesta: MaterialResponse[] = [];
 
   constructor(private materialService: MaterialService, private router: Router,) { }
   

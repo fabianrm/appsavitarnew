@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class MaterialStockComponent {
 
-  displayedColumns: string[] = ['code', 'name', 'total_stock',  'acciones'];
+  displayedColumns: string[] = ['code', 'name', 'brand', 'unit', 'total_stock',  'acciones'];
   public dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -35,6 +35,7 @@ export class MaterialStockComponent {
 
   getMaterials() {
     this.materialService.getStockMaterials().subscribe((respuesta) => {
+   
       if (respuesta.data.length > 0) {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;

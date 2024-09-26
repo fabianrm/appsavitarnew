@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EntryDetail } from '../../entry/models/EntryDetailResponse';
 import { EntryService } from '../../entry/entry.service';
+import { MaterialService } from '../../material/material.service';
+import { MaterialStock } from '../../material/models/MaterialResponse';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-entry-select-dialog',
@@ -25,36 +28,39 @@ export class EntrySelectDialogComponent {
 
   @Output() addMaterial = new EventEmitter<any>();
 
-  constructor(private entryService: EntryService, private router: Router,) { }
+  constructor(private entryService: EntryService,
+    private router: Router,
+    private materialService: MaterialService,
+    public dialogRef: MatDialogRef<EntrySelectDialogComponent>) { }
 
   ngOnInit() {
-    this.getEntryDetails();
+    this.getMaterials();
     this.subscription = this.entryService.refresh$.subscribe(() => {
-      this.getEntryDetails()
+      this.getMaterials()
     });
 
   }
 
 
-  getEntryDetails() {
-    this.entryService.getEntryDetails().subscribe((respuesta) => {
-      if (respuesta.data.length > 0) {
-        this.dataSource = new MatTableDataSource(respuesta.data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+  // getEntryDetails() {
+  //   this.entryService.getEntryDetails().subscribe((respuesta) => {
+  //     if (respuesta.data.length > 0) {
+  //       this.dataSource = new MatTableDataSource(respuesta.data);
+  //       this.dataSource.paginator = this.paginator;
+  //       this.dataSource.sort = this.sort;
 
-        // Configuración del filtro personalizado
-        this.dataSource.filterPredicate = (data: EntryDetail, filter: string) => {
-          const transformedFilter = filter.trim().toLowerCase();
+  //       // Configuración del filtro personalizado
+  //       this.dataSource.filterPredicate = (data: EntryDetail, filter: string) => {
+  //         const transformedFilter = filter.trim().toLowerCase();
 
-          // Aquí puedes definir las propiedades que deseas que se incluyan en la búsqueda
-          return data.material.name.toLowerCase().includes(transformedFilter)
-            || data.material.code.toLowerCase().includes(transformedFilter)
-            || data.material.presentation.name.toLowerCase().includes(transformedFilter);
-        };
-      }
-    });
-  }
+  //         // Aquí puedes definir las propiedades que deseas que se incluyan en la búsqueda
+  //         return data.material.name.toLowerCase().includes(transformedFilter)
+  //           || data.material.code.toLowerCase().includes(transformedFilter)
+  //           || data.material.presentation.name.toLowerCase().includes(transformedFilter);
+  //       };
+  //     }
+  //   });
+  // }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -69,12 +75,27 @@ export class EntrySelectDialogComponent {
     this.subscription.unsubscribe();
   }
 
-  addMaterialToParent(row: EntryDetail): void {
+  addMaterialToParent(row: MaterialStock): void {
     this.addMaterial.emit(row);
+   // console.log(row);
+    
   }
 
+
+  getMaterials() {
+    this.materialService.getStockMaterials().subscribe((respuesta) => {
+
+      if (respuesta.data.length > 0) {
+        this.dataSource = new MatTableDataSource(respuesta.data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    });
+  }
+
+
   close() {
-   // this.dialogRef.close();
+    this.dialogRef.close();
   }
 
 

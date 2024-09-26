@@ -96,6 +96,8 @@ export class OutputCreateComponent implements OnInit {
     const dialogRef = this.dialog.open(EntrySelectDialogComponent, dialogConfig);
 
     dialogRef.componentInstance.addMaterial.subscribe((selectedMaterial: any) => {
+      console.log(selectedMaterial);
+      
       this.addMaterialToTable(selectedMaterial);
     });
 
@@ -135,8 +137,8 @@ export class OutputCreateComponent implements OnInit {
 
     this.outputDetails.push(this.fb.group({
       ...detail,
-      material: detail.material,
-      presentation: detail.material.presentation.name,
+      material: detail.name,
+      presentation: detail.unit,
       quantity: 1
     }));
 
@@ -160,7 +162,7 @@ export class OutputCreateComponent implements OnInit {
     // Transforma el FormArray en el formato esperado para output_details
     const outputDetails: OutputDetail[] = formValue.output_details.map((detail: any) => {
       return {
-        entry_detail_id: detail.id,
+        material_id: detail.id,
         quantity: detail.quantity
       };
     });

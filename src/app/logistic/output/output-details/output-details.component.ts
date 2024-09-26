@@ -14,7 +14,7 @@ import { OutputDetail } from '../models/OutputResponse';
 })
 export class OutputDetailsComponent {
 
-  displayedColumns: string[] = ['code', 'material', 'presentation', 'quantity', 'price', 'subtotal'];
+  displayedColumns: string[] = ['code', 'material', 'brand', 'presentation', 'quantity'];
   public dataSource!: MatTableDataSource<OutputDetail>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -23,23 +23,21 @@ export class OutputDetailsComponent {
   public respuesta!: OutputDetail;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public getId: number,
-    private outputService: OutputService,
-    private dialogRef: MatDialogRef<OutputDetailsComponent>) { }
+    @Inject(MAT_DIALOG_DATA) public getData: any) { }
 
   ngOnInit() {
-    this.getEntryDetails(this.getId)
+    this.getEntryDetails()
   }
 
-  getEntryDetails(id: number) {
-    this.outputService.getOutputByID(id).subscribe((respuesta) => {
-      if (respuesta) {
-        this.dataSource = new MatTableDataSource(respuesta.data.output_details);
-        //console.log(respuesta.data.output_details);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
-    });
+  getEntryDetails() {
+    if (this.getData) {
+    //  console.log(this.getData);
+      this.dataSource = new MatTableDataSource(this.getData);
+      //console.log(respuesta.data.output_details);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
 
   }
 
