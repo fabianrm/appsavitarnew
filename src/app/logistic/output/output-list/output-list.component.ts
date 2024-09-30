@@ -16,7 +16,7 @@ import { OutputDetailsComponent } from '../output-details/output-details.compone
   styleUrl: './output-list.component.scss'
 })
 export class OutputListComponent implements OnInit {
- 
+
   displayedColumns: string[] = ['id', 'date', 'number', 'destination', 'employee', 'total', 'comment', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<Output>;
 
@@ -39,9 +39,8 @@ export class OutputListComponent implements OnInit {
 
   getOutputs() {
     this.ouputService.getOutputs().subscribe((respuesta) => {
-    
-      
       if (respuesta.data.length > 0) {
+        //console.log(respuesta.data);      
         this.respuesta = respuesta.data;
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;

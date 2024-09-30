@@ -9,6 +9,7 @@ import { EntryService } from '../../entry/entry.service';
 import { MaterialService } from '../../material/material.service';
 import { MaterialStock } from '../../material/models/MaterialResponse';
 import { MatDialogRef } from '@angular/material/dialog';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-entry-select-dialog',
@@ -17,7 +18,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class EntrySelectDialogComponent {
 
-  displayedColumns: string[] = ['id', 'code', 'material', 'prefix', 'current_stock', 'acciones'];
+  displayedColumns: string[] = ['id', 'code', 'material', 'prefix', 'total_stock', 'acciones'];
   public dataSource!: MatTableDataSource<EntryDetail>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -75,9 +76,11 @@ export class EntrySelectDialogComponent {
     this.subscription.unsubscribe();
   }
 
-  addMaterialToParent(row: MaterialStock): void {
+  addMaterialToParent(row: EntryDetail): void {
+   
     this.addMaterial.emit(row);
-   // console.log(row);
+    row.total_stock = row.total_stock - 1
+    this.dataSource._updateChangeSubscription();
     
   }
 
@@ -86,7 +89,8 @@ export class EntrySelectDialogComponent {
     this.materialService.getStockMaterials().subscribe((respuesta) => {
 
       if (respuesta.data.length > 0) {
-        this.dataSource = new MatTableDataSource(respuesta.data);
+        this.dataSource = new MatTableDataSource(respuesta.data.filter((x: { total_stock: number; })=> x.total_stock > 0));
+
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }

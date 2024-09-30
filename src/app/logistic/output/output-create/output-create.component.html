@@ -159,10 +159,12 @@
     </mat-card>
 
     <div class="action-buttons">
-      <button class="mr mr-2" mat-raised-button color="primary">
+      <button type="submit" class="mr mr-2" mat-raised-button color="primary">
         Guardar Entrada
       </button>
-      <button mat-raised-button color="warn" type="button" class="ms-2">Cancelar</button>
+      <button
+      (click)="goOutputs()"
+      mat-raised-button color="warn" type="button" class="ms-2">Cancelar</button>
     </div>
   </form>
 </div>

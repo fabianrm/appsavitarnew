@@ -4,7 +4,6 @@ import { Destination } from '../../destination/models/DestinationResponse';
 import { Employee } from '../../employee/models/EmployeeResponse';
 import { MatTableDataSource } from '@angular/material/table';
 import { DestinationService } from '../../destination/destination.service';
-import { EmployeeService } from '../../employee/employee.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -12,6 +11,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EntrySelectDialogComponent } from '../entry-select-dialog/entry-select-dialog.component';
 import { OutputService } from './../output.service';
 import { OutputDetail, OutputRequest } from '../models/OutputRequest';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-output-create',
@@ -32,7 +32,7 @@ export class OutputCreateComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     private destinationService: DestinationService,
-    private employeeService: EmployeeService,
+    private employeeService: AuthService,
     private outputService: OutputService,
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
@@ -49,13 +49,10 @@ export class OutputCreateComponent implements OnInit {
 
   }
 
-
-  //TODO: Cambiar el id de employee
-
   initForm() {
     this.outputForm = this.fb.group({
       destination_id: ['', Validators.required],
-      employee_id: [1, Validators.required],
+      employee_id: ['', Validators.required],
       date: [this.datePipe.transform(this.date, "yyyy-MM-dd")],
       total: [0.00, { value: 0, readonly: true }],
       comment: [''],
@@ -63,7 +60,6 @@ export class OutputCreateComponent implements OnInit {
       output_details: this.fb.array([])
     });
     this.dataSource = new MatTableDataSource((this.outputForm.get('output_details') as FormArray).controls);
-
   }
 
   get outputDetails(): FormArray {
@@ -80,9 +76,9 @@ export class OutputCreateComponent implements OnInit {
   }
 
   getEmployees() {
-    this.employeeService.getEmployees().subscribe((respuesta) => {
+    this.employeeService.getUsers().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
-        this.employees = respuesta.data
+        this.employees = respuesta.data.filter((x: { status: number; })=>x.status==1)
       }
     });
   }
@@ -96,13 +92,9 @@ export class OutputCreateComponent implements OnInit {
     const dialogRef = this.dialog.open(EntrySelectDialogComponent, dialogConfig);
 
     dialogRef.componentInstance.addMaterial.subscribe((selectedMaterial: any) => {
-      console.log(selectedMaterial);
-      
       this.addMaterialToTable(selectedMaterial);
     });
-
   }
-
 
   removeDetail(index: number): void {
     this.outputDetails.removeAt(index);
@@ -110,40 +102,22 @@ export class OutputCreateComponent implements OnInit {
   }
 
 
-  // addMaterialToTable(ed: any): void {
-
-  //   const existingMaterialIndex = this.dataSource.data.findIndex(
-  //     (item: any) => item.value.id === ed.id
-  //   );
-
-  //   if (existingMaterialIndex >= 0) {
-  // Si el material ya existe, incrementar la cantidad
-  //     this.dataSource.data[existingMaterialIndex].quantity += 1;
-  //   } else {
-  // Si no existe, agregarlo a la tabla
-  //     const newDetail = {
-  //       value: ed,
-  //       quantity: 1,  // Inicia con cantidad 1 o según lo necesites
-  //     };
-  //     this.dataSource.data.push(newDetail);
-  //   }
-
-  // Refrescar la tabla
-  //   this.dataSource._updateChangeSubscription();
-  // }
-
-
   addMaterialToTable(detail: any): void {
-
-    this.outputDetails.push(this.fb.group({
-      ...detail,
-      material: detail.name,
-      presentation: detail.unit,
-      quantity: 1
-    }));
-
+    const existingDetail = this.outputDetails.controls.find(control => control.value.id === detail.id);
+    if (existingDetail) {
+      const newQuantity = existingDetail.get('quantity')!.value + 1;
+      existingDetail.get('quantity')!.setValue(newQuantity);
+    //  existingDetail.get('subtotal')!.setValue(newQuantity * existingDetail.get('price')!.value);
+    } else {
+      this.outputDetails.push(this.fb.group({
+        ...detail,
+        material: detail.name,
+        presentation: detail.unit,
+        quantity: 1
+      }));
+    }
+   // this.updateTotal();
     this.dataSource.data = this.outputDetails.controls;
-    // Refrescar la tabla
     this.dataSource._updateChangeSubscription();
   }
 
@@ -154,11 +128,8 @@ export class OutputCreateComponent implements OnInit {
       this.outputForm.markAllAsTouched();
       return;
     }
-
     // Prepara los datos del formulario
     const formValue = this.outputForm.value;
-    const currentDate = new Date().toISOString().split('T')[0]; // Formato 'year-month-day'
-   
     // Transforma el FormArray en el formato esperado para output_details
     const outputDetails: OutputDetail[] = formValue.output_details.map((detail: any) => {
       return {
@@ -178,8 +149,6 @@ export class OutputCreateComponent implements OnInit {
       output_details: outputDetails
     };
 
-   // console.log(dataToSend);
-    
     //Envía los datos mediante el servicio
     this.outputService.addOutput(dataToSend).subscribe(
       (respuesta) => {
@@ -193,7 +162,6 @@ export class OutputCreateComponent implements OnInit {
         this.showError();
       }
     );
-
   }
 
   showError() {
@@ -205,5 +173,8 @@ export class OutputCreateComponent implements OnInit {
   }
 
 
+  goOutputs() {
+    this.router.navigate(['/dashboard/output/outputs']);
+  }
 
 }

@@ -54,7 +54,7 @@
       </ng-container>
 
       <!-- Longitude Column -->
-      <ng-container matColumnDef="current_stock">
+      <ng-container matColumnDef="total_stock">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
         <td data-title="Stock" mat-cell *matCellDef="let element">
           {{ element.total_stock }}
@@ -70,7 +70,9 @@
           class="menu-actions"
           style="text-align: right"
         >
-          <button mat-icon-button (click)="addMaterialToParent(row)">
+          <button 
+          [disabled]="row.total_stock=== 0"
+          mat-icon-button (click)="addMaterialToParent(row)">
             <mat-icon>add</mat-icon>
           </button>
         </td>

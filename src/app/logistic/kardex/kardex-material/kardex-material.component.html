@@ -1,0 +1,83 @@
+<!-- contrato-detalle.component.html -->
+<div class="container my-4">
+  <mat-card *ngIf="dataKardex?.length">
+    <mat-card-header>
+      <mat-card-title>
+        <button
+          mat-icon-button
+          [routerLink]="['/dashboard/material/material-stock']"
+        >
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        Movimiento del Material</mat-card-title
+      >
+      <mat-card-subtitle style="margin-left: 55px">{{ dataKardex[0].material.name }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content >
+     
+        <div class="row" >
+          <div class="col-md-6">
+            <div class="mb-3" >
+              <strong>Código de Material:</strong> {{ dataKardex[0].material.code }}
+            </div>
+            <div class="mb-3" >
+              <strong>Categoría:</strong>
+              {{ dataKardex[0].material.category.name }}
+            </div>
+            <div class="mb-3" >
+              <strong>Presentación:</strong>
+              {{ dataKardex[0].material.presentation.name }}
+            </div>
+            <div class="mb-3">
+              <strong>Marca:</strong>
+              {{ dataKardex[0].material.brand.name }}
+            </div>
+
+            <div class="mb-3">
+              <strong>Tipo:</strong> {{ dataKardex[0].material.type === 'M' ? "MATERIAL" : "HERRAMIENTA" }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <strong>Ultima actualización:</strong>
+              {{ dataKardex[0].updated_at | date }}
+            </div>
+          </div>
+        </div>
+      
+
+      <!-- Contratos -->
+      <div class="mt-2">
+        <h4><strong>Movimientos:</strong></h4>
+        <table
+          *ngIf="dataKardex.length > 0; else noContracts"
+          class="table table-striped"
+        >
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Había</th>
+              <th>Operación</th>
+              <th>Cantidad</th>
+              <th>Stock</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let kardex of dataKardex">
+              <td>{{ kardex.date | date }}</td>
+              <td>{{ kardex.has }}</td>
+              <td>{{ kardex.operation == 'entry' ? "Entrada" : "Salida" }}</td>
+              <td>{{ kardex.quantity }}</td>
+              <td>{{ kardex.stock }}</td>
+              <td>{{ kardex.comment }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noContracts>
+          <div class="alert alert-info" role="alert">Sin contratos</div>
+        </ng-template>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

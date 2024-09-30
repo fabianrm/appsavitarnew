@@ -100,6 +100,10 @@ const routes: Routes = [
         loadChildren: () => import('./logistic/destination/destination.module').then(m => m.DestinationModule)
       },
       {
+        path: 'kardex',
+        loadChildren: () => import('./logistic/kardex/kardex.module').then(m => m.KardexModule)
+      },
+      {
         path: 'employee',
         loadChildren: () => import('./logistic/employee/employee.module').then(m => m.EmployeeModule)
       },

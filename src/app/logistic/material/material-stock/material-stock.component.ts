@@ -59,7 +59,9 @@ export class MaterialStockComponent {
 
 
   viewDetails(id:number) {
-    
+    this.router.navigate(['/dashboard/kardex/kardex/' +id]);
   }
+
+
 
 }

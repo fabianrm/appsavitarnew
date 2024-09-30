@@ -16,6 +16,7 @@ export interface EntryDetail {
     material: Material;
     quantity: number;
     current_stock: number;
+    total_stock: number;
     price: number;
     subtotal: number;
     warehouse: Warehouse;
