@@ -63,13 +63,6 @@ export class NavigationComponent implements OnInit {
     this.expandedIndex = null; // Opcional: colapsa todo cuando el menú está contraído
   }
 
-  // expandMenu() {
-  //   this.isExpanded = true;
-  // }
-
-  // collapseMenu() {
-  //   this.isExpanded = false;
-  // }
 
   setInitialExpandedNode(): void {
     if (!this.isExpanded) return;
@@ -111,16 +104,6 @@ export class NavigationComponent implements OnInit {
   }
 
 
-
-  // isActive(route: string): boolean {
-  //   return this.router.url === route;
-  // }
-
-  // setActiveRoute(route: string): void {
-  //   this.router.navigate([route]);
-  // }
-
-
   private breakpointObserver = inject(BreakpointObserver);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -133,6 +116,8 @@ export class NavigationComponent implements OnInit {
   getUserPermissions() {
     this.authService.getUserPermissions().subscribe(response => {
       this.treeData = response.data;
+      // Ordenar los permisos por el campo 'order'
+      this.treeData.sort((a: any, b: any) => a.order - b.order);
     });
   }
 

@@ -7,4 +7,8 @@ export interface Summary {
     activePlans: number;
     pendingInvoices: number;
     overdueInvoices: number;
+    totalPaidDay: number;
+    paidDaySum: number;
+    paidMonthSum: number;
+    overduePaidSum: number;
 }
