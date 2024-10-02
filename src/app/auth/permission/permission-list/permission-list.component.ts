@@ -67,7 +67,9 @@ export class PermissionListComponent implements OnInit {
           .map((permission: any) => permission.id);
         // Construir el árbol de permisos y luego seleccionar los permisos
         this.permissionTree = buildPermissionTree(this.permissions);
-        this.selectPermissions(permissionIds);
+        setTimeout(() => {
+          this.selectPermissions(permissionIds);
+        }, 1000);
       }
     });
   }

@@ -73,7 +73,7 @@ export class EntryListComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     // dialogConfig.width = '40%';
-    dialogConfig.height = '380px';
+    //dialogConfig.height = '380px';
     dialogConfig.data = id;
     this.dialog.open(EntryDetailsComponent, dialogConfig);
 

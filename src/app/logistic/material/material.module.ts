@@ -17,6 +17,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MaterialStockComponent } from './material-stock/material-stock.component';
+import { MaterialLocationComponent } from './material-location/material-location.component';
 
 
 
@@ -25,7 +26,8 @@ import { MaterialStockComponent } from './material-stock/material-stock.componen
     MaterialListComponent,
     MaterialCreateComponent,
     MaterialEditComponent,
-    MaterialStockComponent
+    MaterialStockComponent,
+    MaterialLocationComponent
   ],
   imports: [
     CommonModule,

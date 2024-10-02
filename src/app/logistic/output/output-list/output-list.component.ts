@@ -73,7 +73,7 @@ export class OutputListComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     // dialogConfig.width = '40%';
-    dialogConfig.height = '380px';
+    //dialogConfig.height = '380px';
     dialogConfig.data = row.output_details;
     this.dialog.open(OutputDetailsComponent, dialogConfig);
 

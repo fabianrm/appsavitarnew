@@ -1,0 +1,36 @@
+<div class="contenedor">
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- id Video -->
+      <ng-container matColumnDef="warehouse">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Almacén</th>
+        <td data-title="Almacén" mat-cell *matCellDef="let element">
+          {{ element.warehouse.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Ubicación</th>
+        <td data-title="Ubicación" mat-cell *matCellDef="let element">
+          {{ element.location }}
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      pageSize="10"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+    <div class="row-acciones">
+    <button type="button"
+    (click)="close()"
+    mat-dialog-close="" color="accent" mat-raised-button>Cerrar</button>
+  </div>
+</div>

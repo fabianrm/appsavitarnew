@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { MaterialService } from '../material.service';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MaterialLocationComponent } from '../material-location/material-location.component';
 
 @Component({
   selector: 'app-material-stock',
@@ -13,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class MaterialStockComponent {
 
-  displayedColumns: string[] = ['code', 'name', 'brand', 'unit', 'total_stock',  'acciones'];
+  displayedColumns: string[] = ['code', 'name', 'brand', 'unit', 'total_stock', 'acciones'];
   public dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -23,7 +25,7 @@ export class MaterialStockComponent {
 
   public respuesta: any[] = [];
 
-  constructor(private materialService: MaterialService, private router: Router,) { }
+  constructor(private materialService: MaterialService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getMaterials();
@@ -35,7 +37,7 @@ export class MaterialStockComponent {
 
   getMaterials() {
     this.materialService.getStockMaterials().subscribe((respuesta) => {
-   
+
       if (respuesta.data.length > 0) {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
@@ -58,10 +60,33 @@ export class MaterialStockComponent {
   }
 
 
-  viewDetails(id:number) {
-    this.router.navigate(['/dashboard/kardex/kardex/' +id]);
+  viewDetails(id: number) {
+    this.router.navigate(['/dashboard/kardex/kardex/' + id]);
   }
 
+ 
+  //Aciones
+  viewLocations(id: number) {
 
+    this.materialService.getMaterialsLocation(id).subscribe((respuesta) => {
+   //   console.log(respuesta);
+      if (respuesta.data) {
+       // console.log('Enviando datos...');
+      
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = '600px';
+        dialogConfig.data = respuesta.data;
+        this.dialog.open(MaterialLocationComponent, dialogConfig);
+        this.dialog.afterAllClosed.subscribe(() => { });
+
+      }
+
+    });
+
+
+   
+  }
 
 }

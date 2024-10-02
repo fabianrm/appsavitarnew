@@ -60,6 +60,11 @@ export class MaterialService {
     return this.clienteHttp.get<any>(this.API + 'materials/stock', { headers: this.headers })
   }
 
+  getMaterialsLocation(id:number): Observable<any> {
+    return this.clienteHttp.get<any>(this.API + 'materials/locations/' + id, { headers: this.headers })
+  }
+  
+
 
   uploadFile(file: File): Observable<any> {
     const formData = new FormData();

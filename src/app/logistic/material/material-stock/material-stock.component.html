@@ -74,6 +74,11 @@
               <mat-icon matListItemIcon>info</mat-icon>
               Ver Kárdex
             </button>
+              <button mat-menu-item (click)="viewLocations(row.id)">
+              <mat-icon matListItemIcon>home_pin</mat-icon>
+              Ubicaciones
+            </button>
+
           </mat-menu>
         </td>
       </ng-container>
