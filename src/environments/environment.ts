@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   servidor: 'http://localhost:8000/api/v1/',
-  servidor_img: 'http://localhost:8000'
+  servidor_img: 'http://localhost:8000/'
   // servidor: 'http://localhost:8000/api/v1/'
 };
 

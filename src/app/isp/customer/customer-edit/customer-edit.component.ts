@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from '../Models/CustomerResponseU';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap, tap } from 'rxjs';
 
 
 interface Tipo {
@@ -70,7 +70,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.getCustomerById();
+    this.fetchCustomerDetails();
     this.getCities();
 
   }
@@ -109,42 +109,75 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
 
 
   //Obtener customer por id
-  getCustomerById() {
-    this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
-      if (idParam !== null) {
-        this.id = +idParam; // Usa el símbolo "+" para convertir a número
-        this.fetchCustomerDetails(this.id); // Llama a la función para obtener los detalles del cliente
-      } else {
-        // Manejar el caso cuando idParam es null, asignando un valor por defecto o manejando el error
-        console.error('ID parameter is null');
-      }
-    });
-  }
+  // getCustomerById() {
+  //   this.route.paramMap.subscribe(params => {
+  //     const idParam = params.get('id');
+  //     if (idParam !== null) {
+  //       this.id = +idParam; // Usa el símbolo "+" para convertir a número
+  //       this.fetchCustomerDetails(this.id); // Llama a la función para obtener los detalles del cliente
+  //     } else {
+  //       // Manejar el caso cuando idParam es null, asignando un valor por defecto o manejando el error
+  //       console.error('ID parameter is null');
+  //     }
+  //   });
+  // }
 
 
-  fetchCustomerDetails(id: number) {
-    this.customerService.getCustomerById(id).subscribe((respuesta) => {
-      this.dataCustomer = respuesta.data;
-      this.mapleafService.changeMoveToCoordinate(respuesta.data.coordinates);
-      // console.log(this.dataCustomer);
+  fetchCustomerDetails() {
 
-      //Llenamos el formEdit
-      this.formCliente.patchValue({
-        type: this.dataCustomer.type,
-        documentNumber: this.dataCustomer.documentNumber,
-        name: this.dataCustomer.customerName,
-        cityId: this.dataCustomer.cityId,
-        address: this.dataCustomer.address,
-        reference: this.dataCustomer.reference,
-        latitude: this.dataCustomer.latitude,
-        longitude: this.dataCustomer.longitude,
-        phoneNumber: this.dataCustomer.phoneNumber,
-        email: this.dataCustomer.email,
-        status: this.dataCustomer.status,
+    this.route.params
+      .pipe(
+        tap(({id}) => this.id = id ),
+        switchMap(({ id }) => this.customerService.getCustomerById(id))
+      ).subscribe(customer => {
+        if (!customer) return console.log('No hay cliente');
+        this.dataCustomer = customer.data;
+
+        this.mapleafService.changeMoveToCoordinate(customer.data.coordinates);
+
+        //Llenamos el formEdit
+        this.formCliente.patchValue({
+          type: this.dataCustomer.type,
+          documentNumber: this.dataCustomer.documentNumber,
+          name: this.dataCustomer.customerName,
+          cityId: this.dataCustomer.cityId,
+          address: this.dataCustomer.address,
+          reference: this.dataCustomer.reference,
+          latitude: this.dataCustomer.latitude,
+          longitude: this.dataCustomer.longitude,
+          phoneNumber: this.dataCustomer.phoneNumber,
+          email: this.dataCustomer.email,
+          status: this.dataCustomer.status,
+        });
+        this.setNewCoordinates(this.dataCustomer.latitude, this.dataCustomer.longitude);
+
       });
-      this.setNewCoordinates(this.dataCustomer.latitude, this.dataCustomer.longitude);
-    });
+    
+  
+
+    // this.customerService.getCustomerById(id).subscribe((respuesta) => {
+    //   this.dataCustomer = respuesta.data;
+    //   this.mapleafService.changeMoveToCoordinate(respuesta.data.coordinates);
+    //   // console.log(this.dataCustomer);
+
+    //   //Llenamos el formEdit
+    //   this.formCliente.patchValue({
+    //     type: this.dataCustomer.type,
+    //     documentNumber: this.dataCustomer.documentNumber,
+    //     name: this.dataCustomer.customerName,
+    //     cityId: this.dataCustomer.cityId,
+    //     address: this.dataCustomer.address,
+    //     reference: this.dataCustomer.reference,
+    //     latitude: this.dataCustomer.latitude,
+    //     longitude: this.dataCustomer.longitude,
+    //     phoneNumber: this.dataCustomer.phoneNumber,
+    //     email: this.dataCustomer.email,
+    //     status: this.dataCustomer.status,
+    //   });
+    //   this.setNewCoordinates(this.dataCustomer.latitude, this.dataCustomer.longitude);
+    // });
+
+
   }
 
   //Setear coordenadas (edit)

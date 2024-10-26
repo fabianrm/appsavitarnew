@@ -1,30 +1,32 @@
 <div class="contenedor">
   <div class="row row-filter">
-
     <div class="col-9 col-md-11">
-    <!--  Filtro -->
-    <mat-form-field>
-      <mat-label>Buscar</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ej. Router"
-        #input
-        autocomplete="off"
-      />
-    </mat-form-field>
+      <!--  Filtro -->
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Ej. Router"
+          #input
+          autocomplete="off"
+        />
+      </mat-form-field>
     </div>
 
     <div class="col-3 col-md-1">
-    <button type="button" (click)="newMaterial()" mat-raised-button color="accent">
-      + Nuevo
-    </button>
+      <button
+        type="button"
+        (click)="newMaterial()"
+        mat-raised-button
+        color="accent"
+      >
+        + Nuevo
+      </button>
     </div>
-
-
   </div>
 
-  <div class="table-container" >
+  <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- id Video -->
       <ng-container matColumnDef="id">
@@ -34,7 +36,7 @@
         </td>
       </ng-container>
 
-       <!-- id Video -->
+      <!-- id Video -->
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Código</th>
         <td data-title="Código" mat-cell *matCellDef="let element">
@@ -53,7 +55,7 @@
       <ng-container matColumnDef="category_id">
         <th mat-header-cell *matHeaderCellDef>Categoría</th>
         <td data-title="Categoría" mat-cell *matCellDef="let element">
-          {{ element.category.name}}
+          {{ element.category.name }}
         </td>
       </ng-container>
 
@@ -61,38 +63,42 @@
       <ng-container matColumnDef="presentation_id">
         <th mat-header-cell *matHeaderCellDef>Presentación</th>
         <td data-title="Presentación" mat-cell *matCellDef="let element">
-          {{ element.presentation.name  }}
+          {{ element.presentation.name }}
         </td>
       </ng-container>
 
-       <!-- Longitude Column -->
+      <!-- Longitude Column -->
       <ng-container matColumnDef="brand_id">
         <th mat-header-cell *matHeaderCellDef>Marca</th>
         <td data-title="Marca" mat-cell *matCellDef="let element">
-          {{ element.brand?.name  }}
+          {{ element.brand?.name }}
         </td>
       </ng-container>
-            <!-- Longitude Column -->
+      <!-- Longitude Column -->
       <ng-container matColumnDef="min">
         <th mat-header-cell *matHeaderCellDef>Mínimo</th>
         <td data-title="Mínimo" mat-cell *matCellDef="let element">
-          {{ element.min  }}
+          {{ element.min }}
         </td>
       </ng-container>
 
-             <!-- Longitude Column -->
+      <!-- Longitude Column -->
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef>Tipo</th>
         <td data-title="Tipo" mat-cell *matCellDef="let element">
-          {{ element.type  }}
+          {{ element.type }}
         </td>
       </ng-container>
 
-              <!-- Longitude Column -->
+      <!-- Longitude Column -->
       <ng-container matColumnDef="image">
         <th mat-header-cell *matHeaderCellDef>Imagen</th>
         <td data-title="Imagen" mat-cell *matCellDef="let element">
-          {{ element.image  }}
+          <ng-container *ngIf="element.image">
+            <a href="{{ API_IMG + element.image }}" target="_blank">
+              <mat-icon>visibility</mat-icon>
+            </a>
+          </ng-container>
         </td>
       </ng-container>
 
@@ -132,7 +138,6 @@
               <mat-icon matListItemIcon>delete</mat-icon>
               Eliminar
             </button>
-           
           </mat-menu>
         </td>
       </ng-container>
@@ -148,4 +153,3 @@
     </mat-paginator>
   </div>
 </div>
-

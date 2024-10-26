@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MaterialService } from '../material.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { Material, MaterialResponse } from '../models/MaterialResponse';
+import { Material } from '../models/MaterialResponse';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-material-list',
@@ -22,6 +23,7 @@ export class MaterialListComponent implements OnInit {
 
   subscription!: Subscription
 
+  API_IMG: string = environment.servidor_img;
 
   constructor(private materialService: MaterialService, private router: Router,) { }
   
@@ -36,6 +38,8 @@ export class MaterialListComponent implements OnInit {
   getMaterials() {
     this.materialService.getMaterials().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
+        console.log(respuesta.data);
+       
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -62,7 +66,11 @@ export class MaterialListComponent implements OnInit {
 
   editMaterial(id: number) {
     this.router.navigate(['/dashboard/material/material-edit/' + id]); // Navega al componente "contrato"
-   }
+  }
+  
+  viewImage(row: Material) {
+    this.router.navigateByUrl(this.API_IMG + row.image)
+  }
   
   deleteMaterial(id:number) { }
 
