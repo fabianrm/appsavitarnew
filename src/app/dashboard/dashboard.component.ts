@@ -25,10 +25,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSummary();
-   
   }
-
-
 
   get User() {
     return localStorage.getItem('user_name');
@@ -49,8 +46,6 @@ export class DashboardComponent implements OnInit {
       ];
     });
   }
-
-
 
 
   // getSummary() {

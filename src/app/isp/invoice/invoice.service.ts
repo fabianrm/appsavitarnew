@@ -39,8 +39,15 @@ export class InvoiceService {
   }
 
 
+  // paidInvoice(invoiceID: number, datos: RequestPaid): Observable<RequestPaid> {
+  //   return this.clienteHttp.patch<RequestPaid>(`${this.API}invoices/${invoiceID}`, datos, { headers: this.headers })
+  //     .pipe(tap(() => {
+  //       this._refresh$.next()
+  //     }));
+  // }
+
   paidInvoice(invoiceID: number, datos: RequestPaid): Observable<RequestPaid> {
-    return this.clienteHttp.patch<RequestPaid>(`${this.API}invoices/${invoiceID}`, datos, { headers: this.headers })
+    return this.clienteHttp.patch<RequestPaid>(`${this.API}invoices/${invoiceID}/paid-invoice`, datos, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }));

@@ -57,11 +57,11 @@ export class InvoicePaidComponent implements OnInit {
 
   enviarDatos() {
     const formData = this.formPaid.value;
-    const currentDate = new Date().toISOString().split('T')[0]; // Formato 'year-month-day'
+    //const currentDate = new Date().toISOString().split('T')[0]; // Formato 'year-month-day'
 
     const dataToSend = {
       ...formData,
-      paid_dated: currentDate,
+      //paid_dated: currentDate,
       amount: this.finalPrice
     };
 
