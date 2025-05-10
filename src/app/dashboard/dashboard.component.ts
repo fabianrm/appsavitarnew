@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { Summary } from './Models/SummaryResponse';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -40,19 +41,18 @@ export class DashboardComponent implements OnInit {
         { icon: 'wifi', number: this.summary.activePlans, label: 'Planes Activos' },
         { icon: 'attach_money', number: this.summary.pendingInvoices, label: 'Facturas Pendientes' },
         { icon: 'report_problem', number: this.summary.overdueInvoices, label: 'Facturas Vencidas' },
-        { icon: 'local_atm', number: this.summary.paidDaySum, label: 'Hoy ' + this.summary.totalPaidDay + ' Pagos' },
-        { icon: 'payments', number: this.summary.paidMonthSum, label: 'Pagos del Mes' },
-        { icon: 'event_busy', number: this.summary.overduePaidSum, label: 'Pagos Vencidos' },
+        { icon: 'local_atm', number: this.formatCurrency(this.summary.paidDaySum), label: 'Hoy ' + this.summary.totalPaidDay + ' Pagos' },
+        { icon: 'payments', number: this.formatCurrency(this.summary.paidMonthSum), label: 'Pagos del Mes' },
+        { icon: 'event_busy', number: this.formatCurrency(this.summary.overduePaidSum), label: 'Pagos Vencidos' },
       ];
     });
   }
 
-
-  // getSummary() {
-  //   this.dashboardService.getSummary().subscribe(respuesta => {
-  //     this.summary = respuesta.data;
-  //     console.log(respuesta);
-  //   });
-  // }
+  formatCurrency(value: number): string {
+    return new Intl.NumberFormat('es-PE', {
+      style: 'currency',
+      currency: 'PEN'
+    }).format(value);
+  }
 
 }
