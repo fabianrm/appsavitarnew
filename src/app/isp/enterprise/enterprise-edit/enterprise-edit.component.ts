@@ -64,8 +64,6 @@ export class EnterpriseEditComponent implements OnInit {
     });
   }
 
-
-
   //Initform
   initForm() {
 
@@ -109,8 +107,8 @@ export class EnterpriseEditComponent implements OnInit {
 
   fetchEnterpriseDetails(id: number) {
     this.enterpriseService.getEnterpriseByID(id).subscribe((respuesta) => {
-      this.dataEnterprise = respuesta.data;
-      this.mapleafService.changeMoveToCoordinate(respuesta.data.coordinates);
+      this.dataEnterprise = respuesta;
+      this.mapleafService.changeMoveToCoordinate(respuesta.coordinates);
 
       this.formEnterprise.patchValue({
 
@@ -132,7 +130,6 @@ export class EnterpriseEditComponent implements OnInit {
       this.mapleafService.changeMoveToCoordinate(this.initCoords);
     });
   }
-
 
 
   //Localizacion del equipo

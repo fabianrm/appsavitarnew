@@ -35,6 +35,38 @@
                       <div class="form-outline mb-4">
                         <div class="row">
                           <div class="col-sm-12">
+                            <div class="field p-mb-4">
+                              <mat-form-field
+                                appearance="outline"
+                                class="w-full"
+                              >
+                                <mat-label>Tienda</mat-label>
+                                <mat-select
+                                  formControlName="enterprise_id"
+                                  required
+                                >
+                                  <mat-option
+                                    *ngFor="let store of enterprises"
+                                    [value]="store.id"
+                                  >
+                                    {{ store.name }}
+                                  </mat-option>
+                                </mat-select>
+                                <mat-icon matPrefix class="mr-2"
+                                  >store</mat-icon
+                                >
+                                <mat-error
+                                  *ngIf="
+                                    loginForm
+                                      .get('enterprise_id')
+                                      ?.hasError('required')
+                                  "
+                                >
+                                  Por favor selecciona una Empresa
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+
                             <mat-form-field appearance="fill">
                               <mat-label>Email</mat-label>
                               <input
@@ -73,10 +105,12 @@
                       </div>
 
                       <div class="pt-1 mb-4">
-                        <button color="primary"
-                        mat-raised-button
-                         [disabled]="loginForm.invalid">
-                         Login
+                        <button
+                          color="primary"
+                          mat-raised-button
+                          [disabled]="loginForm.invalid"
+                        >
+                          Login
                         </button>
                       </div>
 

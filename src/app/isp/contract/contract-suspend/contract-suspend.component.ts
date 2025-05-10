@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { Service } from '../Models/ServiceResponse';
 import { ContractService } from '../contract.service';
+import { SuspensionService } from '../../suspension/suspension.service';
 
 @Component({
   selector: 'app-contract-suspend',
@@ -16,33 +17,58 @@ export class ContractSuspendComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
     private snackbarService: SnackbarService,
-    private contractService: ContractService,
+    private suspensionService: SuspensionService,
     @Inject(MAT_DIALOG_DATA) public getData: Service,
     private dialogRef: MatDialogRef<ContractSuspendComponent>) { }
+
+  motivos = [
+    { "value": "viaje", "name": "Viaje" },
+    { "value": "economico", "name": "Económico" },
+    { "value": "cambio_domicilio", "name": "Cambio de domicilio" },
+    { "value": "otro", "name": "Otro" },
+  ]
+
 
 
   ngOnInit(): void {
     // console.log('Contrato', this.getData.id);
     this.initForm();
+
   }
 
 
   initForm() {
     this.formContrato = this.fb.group({
-      observation: ['', Validators.required],
+      id: ['',],
+      enterprise_id: [this.enterprise, Validators.required],
+      service_id: [this.getData.id, Validators.required],
+      start_date: ['', Validators.required],
+      end_date: ['', Validators.required],
+      reason: ['', Validators.required],
+      observation: ['',],
+      status: [true, Validators.required],
     });
+  }
+
+  get enterprise() {
+    return Number(localStorage.getItem('enterprise_id'));
   }
 
 
   enviarDatos(): any {
+
     if (this.formContrato.valid) {
-      //console.log('agregar....')
-      this.contractService.suspendContract(this.getData.id, this.formContrato.value).subscribe(respuesta => {
-        console.log('Contrato suspendido', respuesta);
-        this.showSuccess();
-        this.dialogRef.close();
+      this.suspensionService.addSuspension(this.formContrato.value).subscribe({
+        next: (resp) => {
+          this.dialogRef.close();
+          this.snackbarService.showSuccess(resp.message);
+        },
+        error: (err) => {
+          this.snackbarService.showError(err);
+        }
       });
     }
+
   }
 
   showError() {

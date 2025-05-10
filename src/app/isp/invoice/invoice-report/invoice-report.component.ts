@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription, map } from 'rxjs';
 import { Invoice } from '../Models/InvoiceResponse';
 import { InvoiceService } from '../invoice.service';
+import { saveAs } from 'file-saver';
 
 
 @Component({
@@ -72,8 +73,36 @@ export class InvoiceReportComponent implements OnInit {
   }
 
 
-  exportInvoices() {
-    throw new Error('Method not implemented.');
-  }
+
+    //Export
+    exportInvoices() {
+  
+      if (this.qDesde === undefined || this.qDesde == null) {
+        this.qf1 = ''
+      } else {
+        this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
+      }
+  
+      if (this.qHasta === undefined || this.qDesde == null) {
+        this.qf2 = ''
+      } else {
+        this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
+      }
+  
+      const filters = {
+      
+        start_date: this.qf1,
+        end_date: this.qf2,
+      
+      };
+      // console.log(filters);
+  
+      this.invoiceService.exportInvoicesResumen(filters).subscribe((blob: Blob) => {
+        saveAs(blob, 'invoices.xlsx');
+      });
+    }
+
+
+
 
 }

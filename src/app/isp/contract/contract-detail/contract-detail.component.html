@@ -2,13 +2,18 @@
 <div class="container my-4">
   <mat-card>
     <mat-card-header>
-       <mat-card-title>
-        <button mat-icon-button [routerLink]="['/dashboard/contract/contracts']">
+      <mat-card-title>
+        <button
+          mat-icon-button
+          [routerLink]="['/dashboard/contract/contracts']"
+        >
           <mat-icon>arrow_back_ios</mat-icon>
         </button>
         Detalles del Contrato</mat-card-title
       >
-      <mat-card-subtitle style="margin-left: 55px;">{{ contract?.customerName }}</mat-card-subtitle>
+      <mat-card-subtitle style="margin-left: 55px">{{
+        contract?.customerName
+      }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
@@ -39,8 +44,14 @@
           <div class="mb-3">
             <strong>Longitud:</strong> {{ contract?.longitude }}
           </div>
-           <div class="mb-3">
-            <strong>Pago Adelantado:</strong> {{ contract?.prepayment ? "Si" : 'No' }}
+          <div class="mb-3">
+            <strong>Pago Adelantado:</strong>
+            {{ contract?.prepayment ? "Si" : "No" }}
+          </div>
+
+          <div class="mb-3">
+            <strong>IPTV:</strong>
+            {{ contract?.iptv ? "Si" : "No" }}
           </div>
         </div>
         <div class="col-md-6">
@@ -61,15 +72,19 @@
           <div class="mb-3">
             <strong>MAC:</strong> {{ contract?.equipmentMac }}
           </div>
-            <div class="mb-3">
+          <div class="mb-3">
             <strong>Serie:</strong> {{ contract?.equipmentSerie }}
           </div>
           <div class="mb-3">
-            <strong>Usuario PPPoE:</strong> {{ contract?.userPppoe }} /  <strong>Clave:</strong> {{ contract?.passPppoe }}
+            <strong>Usuario PPPoE:</strong> {{ contract?.userPppoe }} /
+            <strong>Clave:</strong> {{ contract?.passPppoe }}
           </div>
-        
-         
-          <div class="mb-3 estado" >
+          <div *ngIf="contract?.iptv" class="mb-3">
+            <strong>Usuario Iptv:</strong> {{ contract?.userIptv }} /
+            <strong>Clave Iptv:</strong> {{ contract?.passIptv }}
+          </div>
+
+          <div class="mb-3 estado">
             <strong>Estado:</strong>
             <span
               [ngClass]="{

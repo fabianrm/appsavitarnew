@@ -30,6 +30,8 @@ import { ContractSuspendComponent } from './contract-suspend/contract-suspend.co
 import { ChangeEquipmentComponent } from './change-equipment/change-equipment.component';
 import { ContractDetailComponent } from './contract-detail/contract-detail.component';
 import { ContractEditBasicsComponent } from './contract-edit-basics/contract-edit-basics.component';
+import { ChangeVlanComponent } from './change-vlan/change-vlan.component';
+import { ChangeUserComponent } from './change-user/change-user.component';
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import { ContractEditBasicsComponent } from './contract-edit-basics/contract-edi
     ChangeEquipmentComponent,
     ContractDetailComponent,
     ContractEditBasicsComponent,
+    ChangeVlanComponent,
+    ChangeUserComponent,
   ],
   imports: [
     CommonModule,

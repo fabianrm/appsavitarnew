@@ -15,6 +15,7 @@ export interface Customer {
     latitude: string;
     longitude: string;
     phoneNumber: string;
+    whatsapp: string;
     email: string;
     status: boolean;
     createdAt: Date;

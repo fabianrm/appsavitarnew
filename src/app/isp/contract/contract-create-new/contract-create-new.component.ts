@@ -138,6 +138,9 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       endDate: [''],
       userPppoe: ['', Validators.required],
       passPppoe: ['', Validators.required],
+      iptv: [false, Validators.required],
+      userIptv: ['',],
+      passIptv: ['',],
       installationPayment: [false, Validators.required],
       installationAmount: ['',],
       prepayment: [true, Validators.required],
@@ -211,7 +214,6 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     });
 
   }
-
 
   //Obtener customer por id
   getCustomerById() {
@@ -360,11 +362,10 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
 
   //Busqueda incremental de equipos
   getEquipments() {
-    this.equipmentService.getEquipments().subscribe((respuesta) => {
+    this.equipmentService.getEquipmentsAvailable().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
         this.equipments = respuesta.data
-        console.log(this.equipments);
-
+        // console.log(this.equipments);
       }
 
     });

@@ -81,10 +81,27 @@ export class ContractService {
       }));
   }
 
+  //Cambiar puerto de Cliente
+  updateVlanCustomer(id: number, data: any,): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}services/${id}/update-vlan`, data, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
 
   //Cambiar equipo de Cliente
   updateEquipment(id: number, data: any,): Observable<any> {
     return this.clienteHttp.patch(`${this.API}services/${id}/update-equipment`, data, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
+  //Cambiar equipo de Cliente
+  updateUser(id: number, data: any,): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}services/${id}/update-user`, data, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }));
@@ -121,5 +138,6 @@ export class ContractService {
         this._refresh$.next()
       }));
   }
+
 
 }

@@ -6,10 +6,6 @@
 
     <mat-card-content>
       <div class="row">
-        <div class="col-12 col-sm-6"></div>
-      </div>
-
-      <div class="row">
         <div class="col-12 col-sm-8">
           <span>Cliente:</span>
           <h3>{{ getData.customerName }}</h3>
@@ -19,18 +15,63 @@
           <h3>{{ getData.planName }}</h3>
         </div>
       </div>
-      <div class="row">
+      <div class="row grid mt-2">
         <div class="col-12">
-            <mat-form-field class="control-full-width" appearance="fill">
-                  <input
-                  type="text"
-                    matInput
-                    placeholder="Observación"
-                    formControlName="observation"
-                  />
-                </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Seleccione un Motivo</mat-label>
+            <mat-select formControlName="reason">
+              <mat-option *ngFor="let motivo of motivos" [value]="motivo.value">
+                {{ motivo.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Fecha de inicio</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="start_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Fecha de fin</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerEnd"
+              formControlName="end_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="pickerEnd"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
 
+      <div class="row mt-2">
+        <div class="col-12 md:col-6">
+          <mat-label>Observación</mat-label>
+          <mat-form-field class="control-full-width" appearance="outline">
+            <input
+              type="text"
+              matInput
+              placeholder="Observación"
+              formControlName="observation"
+            />
+          </mat-form-field>
+        </div>
       </div>
     </mat-card-content>
     <mat-card-actions>
@@ -50,4 +91,3 @@
     </mat-card-actions>
   </mat-card>
 </form>
-

@@ -78,6 +78,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
 
   initForm() {
     const formControlsConfig = {
+      enterprise_id: [this.enterprise],
       type: [this.selected, Validators.required],
       documentNumber: ['', Validators.required],
       name: ['', Validators.required],
@@ -87,6 +88,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
       latitude: [''],
       longitude: [''],
       phoneNumber: [''],
+      whatsapp: ['', [Validators.required, Validators.pattern('^[5,1]{2}[0-9]{9}$')]],
       email: [''],
       status: [true],
     }
@@ -101,6 +103,10 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+
+  get enterprise() {
+    return localStorage.getItem('enterprise_id');
   }
 
   get locationReady() {
@@ -127,7 +133,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
 
     this.route.params
       .pipe(
-        tap(({id}) => this.id = id ),
+        tap(({ id }) => this.id = id),
         switchMap(({ id }) => this.customerService.getCustomerById(id))
       ).subscribe(customer => {
         if (!customer) return console.log('No hay cliente');
@@ -146,14 +152,15 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
           latitude: this.dataCustomer.latitude,
           longitude: this.dataCustomer.longitude,
           phoneNumber: this.dataCustomer.phoneNumber,
+          whatsapp: this.dataCustomer.whatsapp,
           email: this.dataCustomer.email,
           status: this.dataCustomer.status,
         });
         this.setNewCoordinates(this.dataCustomer.latitude, this.dataCustomer.longitude);
 
       });
-    
-  
+
+
 
     // this.customerService.getCustomerById(id).subscribe((respuesta) => {
     //   this.dataCustomer = respuesta.data;

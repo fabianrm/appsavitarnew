@@ -18,7 +18,7 @@
       <!-- id Video -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">ID</th>
-        <td data-title="ID"  mat-cell *matCellDef="let element">
+        <td data-title="ID" mat-cell *matCellDef="let element">
           {{ element.id }}
         </td>
       </ng-container>
@@ -26,13 +26,15 @@
       <!-- Direccion Column -->
       <ng-container matColumnDef="serviceCode">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Código</th>
-        <td data-title="Código" mat-cell *matCellDef="let element">{{ element.serviceCode }}</td>
+        <td data-title="Código" mat-cell *matCellDef="let element">
+          {{ element.serviceCode }}
+        </td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="customerName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Cliente</th>
-        <td data-title="Cliente"  mat-cell *matCellDef="let element">
+        <td data-title="Cliente" mat-cell *matCellDef="let element">
           {{ element.customerName | uppercase }}
         </td>
       </ng-container>
@@ -40,7 +42,9 @@
       <!-- Direccion Column -->
       <ng-container matColumnDef="planName">
         <th mat-header-cell *matHeaderCellDef>Plan</th>
-        <td data-title="Plan" mat-cell *matCellDef="let element">{{ element.planName }}</td>
+        <td data-title="Plan" mat-cell *matCellDef="let element">
+          {{ element.planName }}
+        </td>
       </ng-container>
 
       <!--Phone Column -->
@@ -80,11 +84,16 @@
       <!-- Estado Column -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Estado</th>
-        <td data-title="Estado" mat-cell *matCellDef="let element" class="estado">
+        <td
+          data-title="Estado"
+          mat-cell
+          *matCellDef="let element"
+          class="estado"
+        >
           <span
             [ngClass]="{
               'status-active': element.status === 'activo',
-              'status-inactive': element.status === 'inactivo',
+              'status-inactive': element.status === 'suspendido',
               'status-terminated': element.status === 'terminado'
             }"
             >{{ element.status | titlecase }}</span
@@ -117,6 +126,16 @@
               <mat-icon matListItemIcon>cast_connected</mat-icon>
               Cambiar Plan
             </button>
+
+            <button
+              [disabled]="row.status === 'terminado'"
+              mat-menu-item
+              (click)="changeVLAN(row.id)"
+            >
+              <mat-icon matListItemIcon>inbox</mat-icon>
+              Cambiar VLAN
+            </button>
+
             <button
               [disabled]="row.status === 'terminado'"
               mat-menu-item
@@ -125,6 +144,7 @@
               <mat-icon matListItemIcon>inbox</mat-icon>
               Cambiar Puerto
             </button>
+
             <button
               [disabled]="row.status === 'terminado'"
               mat-menu-item
@@ -133,14 +153,36 @@
               <mat-icon matListItemIcon>router</mat-icon>
               Cambiar Equipo
             </button>
+
             <button
               [disabled]="row.status === 'terminado'"
+              mat-menu-item
+              (click)="changeUser(row.id)"
+            >
+              <mat-icon matListItemIcon>manage_accounts</mat-icon>
+              Cambiar Usuario
+            </button>
+
+            <button
+              [disabled]="
+                row.status === 'terminado' || row.status === 'suspendido'
+              "
               mat-menu-item
               (click)="inactiveService(row)"
             >
               <mat-icon matListItemIcon>wifi_off</mat-icon>
               Suspender
             </button>
+
+            <button
+              [disabled]="row.status !== 'suspendido'"
+              mat-menu-item
+              (click)="reactiveService(row.id)"
+            >
+              <mat-icon matListItemIcon>wifi_on</mat-icon>
+              Reactivar
+            </button>
+
             <button
               mat-menu-item
               (click)="viewMap(row.latitude, row.longitude)"
@@ -153,9 +195,22 @@
               Ver Detalle
             </button>
 
-             <button mat-menu-item (click)="generateInvoices(row.id)">
+            <button
+              [disabled]="row.status !== 'activo'"
+              mat-menu-item
+              (click)="generateInvoices(row.id)"
+            >
               <mat-icon matListItemIcon>receipt</mat-icon>
               Generar Facturas
+            </button>
+
+            <button
+              [disabled]="row.status === 'terminado'"
+              mat-menu-item
+              (click)="finishService(row.id)"
+            >
+              <mat-icon matListItemIcon>sports_score</mat-icon>
+              Terminar Contrato
             </button>
 
             <button

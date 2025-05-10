@@ -37,7 +37,7 @@ export class NavigationComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private enterpriseService : EnterpriseService,
+    private enterpriseService: EnterpriseService,
     private renderer: Renderer2) {
   }
 
@@ -149,6 +149,7 @@ export class NavigationComponent implements OnInit {
         localStorage.removeItem('user_name');
         localStorage.removeItem('id_user');
         localStorage.removeItem('role');
+        localStorage.removeItem('enterprise_id');
         this.router.navigate(['/login']);
       },
       (error) => {
@@ -160,10 +161,7 @@ export class NavigationComponent implements OnInit {
 
 
   getEnterprise(): void {
-    this.enterpriseService.getEnterprise().subscribe((response) => {
-      this.id = response.data.id;
-    //  console.log(this.id);
-    })
+    this.id = Number(localStorage.getItem('enterprise_id'));
   }
 
 

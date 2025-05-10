@@ -1,6 +1,7 @@
 export interface EnterpriseResponse {
-    data: Enterprise;
+    data: Enterprise[];
 }
+
 
 export interface Enterprise {
     id: number;

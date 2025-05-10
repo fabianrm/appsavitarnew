@@ -1,0 +1,46 @@
+name: Deploy to Google Cloud
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build -- --configuration production --base-href=/
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Google Cloud
+        run: |
+          # Asegúrate de que el directorio de destino exista
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'mkdir -p /var/www/appsavitar'
+          # Setea el usuario para cambios
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'sudo chown -R ${{ secrets.SERVER_USER }}:${{ secrets.SERVER_USER }} /var/www/appsavitar'
+          # Sincroniza los archivos
+          rsync -avz --delete dist/iserviceapp/browser/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/appsavitar
+          # Cambia los permisos para www-data
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'sudo chown -R www-data:www-data /var/www/appsavitar'
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'sudo chmod -R 755 /var/www/appsavitar'

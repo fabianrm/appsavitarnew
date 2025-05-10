@@ -25,8 +25,8 @@ export class AuthService {
     "Content-Type": "application/json"
   });
 
-  login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.API + 'login', { email, password }, { headers: this.headers });
+  login(email: string, password: string, enterprise_id: number): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.API + 'login', { email, password, enterprise_id }, { headers: this.headers });
   }
 
   register(data: any): Observable<any> {

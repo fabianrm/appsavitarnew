@@ -37,4 +37,7 @@ export interface Service {
     endDate: null;
     userPppoe: string;
     passPppoe: string;
+    iptv: boolean;
+    userIptv: string;
+    passIptv: string;
 }

@@ -8,6 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { PermissionListComponent } from './permission/permission-list/permission-list.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import { PermissionListComponent } from './permission/permission-list/permission
     FormsModule,
     ReactiveFormsModule,
     AuthRoutingModule,
-    MatButtonModule
+    MatButtonModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatIconModule
   ]
 })
 export class AuthModule { }

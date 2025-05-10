@@ -38,8 +38,6 @@ export class ListTicketComponent implements OnInit {
   formTicket!: FormGroup;
 
  
-
-
   constructor(
     public formulario: FormBuilder,
     private ticketService: TicketService,
@@ -63,7 +61,6 @@ export class ListTicketComponent implements OnInit {
       status: ['atencion'],
     }
     this.formTicket = this.formulario.group(formControlsConfig);
-
   }
 
 

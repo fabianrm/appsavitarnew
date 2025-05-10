@@ -16,6 +16,7 @@ export interface Customer {
     longitude: number;
     coordinates: [number, number];
     phoneNumber: string;
+    whatsapp: string;
     email: string;
     status: boolean;
     updated_at: Date;
@@ -25,6 +26,7 @@ export interface Customer {
 
 export interface Service {
     id: number;
+    enterprise_id: number;
     serviceCode: string;
     customerName: string;
     planName: string;

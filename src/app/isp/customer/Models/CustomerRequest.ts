@@ -8,6 +8,7 @@ export interface CustomerRequest {
     latitude: string;
     longitude: string;
     phoneNumber: string;
+    whatsapp: string;
     email: string;
     status: boolean;
 }

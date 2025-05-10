@@ -9,6 +9,7 @@ export interface LoginResponse {
     message: string;
     token: string;
     user: User;
+    enterprise: Enterprise;
     errors: string;
 }
 
@@ -20,6 +21,11 @@ export interface User {
 }
 
 export interface Role {
+    id: number;
+    name: string;
+}
+
+export interface Enterprise {
     id: number;
     name: string;
 }

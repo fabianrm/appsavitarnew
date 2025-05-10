@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
 import { EnterpriseService } from '../../isp/enterprise/enterprise.service';
+import { Enterprise } from '../../isp/enterprise/Models/EnterpriseResponse';
 
 @Component({
   selector: 'app-auth',
@@ -16,6 +17,7 @@ export class AuthComponent implements OnInit {
   password: string = '';
 
   initCoords: [number, number] = [0, 0];
+  enterprises: Enterprise[] = [];
 
   loginForm!: FormGroup;
 
@@ -26,31 +28,31 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.getEnterprises();
   }
 
 
   initForm() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      enterprise_id: ['',],
     });
   }
 
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      this.authService.login(email, password).pipe(
-        
-        
+      const { email, password, enterprise_id } = this.loginForm.value;
+      this.authService.login(email, password, enterprise_id).pipe(
+
         tap(response => {
-          console.log(response);
-         
           localStorage.setItem('token', response.token);
           localStorage.setItem('id_user', response.user.id.toString());
           localStorage.setItem('user_name', response.user.name);
           localStorage.setItem('role', response.user.role[0].id.toString());
-          this.setEnterprise();
+          localStorage.setItem('enterprise_id', response.enterprise.id.toString());
+          this.setEnterprise(response.enterprise.id);
         })
       ).subscribe(
         (response) => {
@@ -71,10 +73,19 @@ export class AuthComponent implements OnInit {
     })
   }
 
-  setEnterprise() {
-    this.enterpriseService.getEnterpriseByID(1).subscribe((respuesta) => {
-      this.initCoords = respuesta.data.coordinates;
+  setEnterprise(id: number) {
+    this.enterpriseService.getEnterpriseByID(id).subscribe((respuesta) => {
+      this.initCoords = respuesta?.coordinates
       localStorage.setItem('coords', JSON.stringify(this.initCoords));
+    })
+  }
+
+
+  getEnterprises() {
+    this.enterpriseService.getEnterprises().subscribe(stores => {
+      if (stores.data.length > 0) {
+        this.enterprises = stores.data;
+      }
     })
   }
 

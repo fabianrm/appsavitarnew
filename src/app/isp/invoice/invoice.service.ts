@@ -87,6 +87,23 @@ export class InvoiceService {
   }
 
 
+  //Export facturas resumen
+  exportInvoicesResumen(filters: any) {
+    let params = new HttpParams();
+ 
+    if (filters.start_date) {
+      params = params.append('start_date', filters.start_date);
+    }
+    if (filters.end_date) {
+      params = params.append('end_date', filters.end_date);
+    }
+
+    return this.clienteHttp.get(`${this.API}invoices/export-resumen`, {
+      params,
+      responseType: 'blob'
+    });
+  }
+
   //Ingresos
   getPaidInvoicesReport(startDate: string, endDate: string): Observable<any> {
     let params = new HttpParams()

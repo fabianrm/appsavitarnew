@@ -104,6 +104,7 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
       latitude: [''],
       longitude: [''],
       phoneNumber: [''],
+      whatsapp: ['', [Validators.required, Validators.pattern('^[5,1]{2}[0-9]{9}$')]],
       email: [''],
       status: [true],
     }
@@ -119,6 +120,7 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
     });
 
   }
+
 
   fetchCityDetails(id: number) {
     this.cityService.getCityByID(id).subscribe((respuesta) => {

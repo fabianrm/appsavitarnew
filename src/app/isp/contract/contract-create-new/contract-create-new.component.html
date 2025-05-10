@@ -277,7 +277,7 @@
                       *ngFor="let option of filteredEquipos | async"
                       [value]="option"
                     >
-                     {{ option.mac }} - {{ option.serie }}
+                      {{ option.mac }} - {{ option.serie }}
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
@@ -331,36 +331,88 @@
     </div>
 
     <div class="row">
-     
-        <div class="col-12 col-md-2">
-          <mat-checkbox formControlName="prepayment"
-            >Pago por adelantado</mat-checkbox
-          >
-        </div>
+      <div class="col-12 col-md-6">
+        <mat-card>
+          <mat-card-header class="header">
+            <mat-card-title> Datos de IPTV </mat-card-title>
+          </mat-card-header>
 
-        <div class="col-12 col-md-2">
-          <mat-checkbox formControlName="installationPayment"
-            >Cobrar Instalación</mat-checkbox
-          >
-        </div>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-12 col-md-3">
+                <mat-checkbox formControlName="iptv">IPTV</mat-checkbox>
+              </div>
 
-        <div class="col-12 col-md-2">
-          <mat-form-field *ngIf="formContrato.get('installationPayment')?.value == true " class="control-full-width" appearance="fill">
-            <mat-label>Monto</mat-label>
-            <input
-              matInput
-              type="number"
-              step="any"
-              placeholder="Monto"
-              formControlName="installationAmount"
-            />
-          </mat-form-field>
+              <div class="col-12 col-md-4">
+                <mat-form-field
+                  *ngIf="formContrato.get('iptv')?.value == true"
+                  class="control-full-width"
+                  appearance="fill"
+                >
+                  <mat-label>Usuario IPTV</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Usuario IPTV"
+                    formControlName="userIptv"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <mat-form-field
+                  *ngIf="formContrato.get('iptv')?.value == true"
+                  class="control-full-width"
+                  appearance="fill"
+                >
+                  <mat-label>Clave IPTV</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Clave IPTV"
+                    formControlName="passIptv"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-12 col-md-6 d-grid">
+        <div class="row">
+          <div class="col-12 col-md-3">
+            <mat-checkbox formControlName="prepayment"
+              >Pago por adelantado</mat-checkbox
+            >
+          </div>
+
+          <div class="col-12 col-md-3">
+            <mat-checkbox formControlName="installationPayment"
+              >Cobrar Instalación</mat-checkbox
+            >
+          </div>
+
+          <div class="col-12 col-md-4">
+            <mat-form-field
+              *ngIf="formContrato.get('installationPayment')?.value == true"
+              class="control-full-width"
+              appearance="fill"
+            >
+              <mat-label>Monto</mat-label>
+              <input
+                matInput
+                type="number"
+                step="any"
+                placeholder="Monto"
+                formControlName="installationAmount"
+              />
+            </mat-form-field>
+          </div>
         </div>
       </div>
-
+    </div>
 
     <!-- Botones -->
-
     <div class="row-buttons">
       <button
         [disabled]="formContrato.invalid"

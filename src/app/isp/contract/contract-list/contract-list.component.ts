@@ -13,6 +13,9 @@ import { ChangeEquipmentComponent } from '../change-equipment/change-equipment.c
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { ChangeVlanComponent } from '../change-vlan/change-vlan.component';
+import { ChangeUserComponent } from '../change-user/change-user.component';
+import { SuspensionService } from '../../suspension/suspension.service';
 
 
 @Component({
@@ -36,6 +39,7 @@ export class ContractListComponent implements OnInit {
 
   constructor(
     private contractService: ContractService,
+    private suspensionService: SuspensionService,
     public dialog: MatDialog, private router: Router,
     private snackbarService: SnackbarService) { }
 
@@ -94,6 +98,36 @@ export class ContractListComponent implements OnInit {
   }
 
 
+  changeVLAN(id: number) {
+
+    //filtrar la caja del contrato
+    this.contrato = this.respuesta.filter(contrato => contrato.id === id)
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    //dialogConfig.width = '40%';
+    dialogConfig.data = this.contrato;
+    this.dialog.open(ChangeVlanComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
+
+  }
+
+
+  changeUser(id: number) {
+    //filtrar la caja del contrato
+    this.contrato = this.respuesta.filter(contrato => contrato.id === id)
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    //dialogConfig.width = '40%';
+    dialogConfig.data = this.contrato;
+    this.dialog.open(ChangeUserComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
+  }
+
+
   changeBilling(_t114: any) {
     throw new Error('Method not implemented.');
   }
@@ -102,10 +136,12 @@ export class ContractListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    //dialogConfig.width = '40%';
+    dialogConfig.width = '600px';
     dialogConfig.data = row;
     this.dialog.open(ContractSuspendComponent, dialogConfig);
-    this.dialog.afterAllClosed.subscribe(() => { });
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.getContracts();
+    });
   }
 
 
@@ -133,6 +169,33 @@ export class ContractListComponent implements OnInit {
         });
       }
     });
+  }
+
+  finishService(id: number) {
+    Swal.fire({
+      title: "Terminar Contrato?",
+      text: "Se va a liberar la caja, puerto y equipo!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, terminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.suspensionService.finishService(id).
+          subscribe({
+            next: (respuesta) => {
+              this.snackbarService.showInfo(`${respuesta.message}`);
+              this.getContracts();
+            },
+            error: (err) => {
+              this.snackbarService.showError(err);
+            }
+          })
+      }
+    });
+
+
   }
 
 
@@ -185,6 +248,33 @@ export class ContractListComponent implements OnInit {
 
   editDataBasic(id: number) {
     this.router.navigate(['/dashboard/contract/contract-edit-data-basic/' + id]); // Navega al componente "editar datos basicos"
+  }
+
+  //Reactivar contrato
+  reactiveService(id: number) {
+
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "Se va a reactivar el Servicio!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, reactivar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.suspensionService.reactiveService(id).
+          subscribe({
+            next: (respuesta) => {
+              this.snackbarService.showInfo(`${respuesta.message}`);
+              this.getContracts();
+            },
+            error: (err) => {
+              this.snackbarService.showError(err);
+            }
+          })
+      }
+    });
   }
 
   generateInvoices(id: number) {

@@ -4,8 +4,6 @@ import { EnterpriseService } from '../enterprise.service';
 import { PlacesService } from '../../mapleaf/places.service';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { Enterprise } from '../Models/EnterpriseResponse';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { EnterpriseEditComponent } from '../enterprise-edit/enterprise-edit.component';
 
 @Component({
   selector: 'app-enterprise-details',
@@ -22,7 +20,7 @@ export class EnterpriseDetailsComponent {
     private locationService: PlacesService,
     private mapleafService: MapleafService,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getEnterpriseById();
@@ -50,9 +48,9 @@ export class EnterpriseDetailsComponent {
 
   fetchEnterpriseDetails(id: number) {
     this.enterpriseService.getEnterpriseByID(id).subscribe((respuesta) => {
-      this.dataEnterprise = respuesta.data;
+      this.dataEnterprise = respuesta;
       console.log(this.dataEnterprise.id);
-      
+
       this.setNewCoordinates(this.dataEnterprise.coordinates[0], this.dataEnterprise.coordinates[1]);
     });
   }
@@ -66,10 +64,10 @@ export class EnterpriseDetailsComponent {
   editEnterprise() {
     this.router.navigate(['/dashboard/enterprise/enterpriseEdit/' + this.dataEnterprise?.id]); // Navega al componente "contrato"
   }
-     
-  }
- 
+
+}
 
 
-  
+
+
 

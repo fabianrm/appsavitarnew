@@ -5,11 +5,7 @@
     </mat-card-header>
 
     <mat-card-content>
-      <div class="row">
-        <div class="col-sm-6"></div>
-      </div>
-
-      <div class="row">
+      <div class="grid form-grid">
         <div class="col-sm-6">
           <span>Cliente: </span>
           <h3>{{ getData.customerName }}</h3>
@@ -19,6 +15,8 @@
           <h3>{{ getData.planName }}</h3>
         </div>
       </div>
+
+      <div class="row"></div>
       <div class="row">
         <div class="col-sm-6">
           <mat-form-field>

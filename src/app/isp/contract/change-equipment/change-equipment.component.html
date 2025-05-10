@@ -29,7 +29,7 @@
                 *ngFor="let option of filteredEquipos | async"
                 [value]="option"
               >
-                {{ option.serie }}
+                {{ option.mac }} - {{ option.serie }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>

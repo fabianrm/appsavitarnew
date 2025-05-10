@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { EquipmentService } from '../../equipment/equipment.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { RouterService } from '../../router/router.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { Service } from '../Models/ServiceResponse';
 import { ContractService } from '../contract.service';
@@ -69,20 +68,49 @@ export class ChangeEquipmentComponent {
 
   //Busqueda incremental de equipos
   getEquipments() {
-    this.equipmentService.getEquipments().subscribe((respuesta) => {
+    this.equipmentService.getEquipmentsAvailable().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
         this.equipments = respuesta.data
       }
     });
   }
 
+  // displayFn(equipment: Equipment): string {
+  //   return equipment && equipment.serie ? equipment.serie : '';
+  // }
+
   displayFn(equipment: Equipment): string {
-    return equipment && equipment.serie ? equipment.serie : '';
+    if (equipment) {
+      if (equipment.serie) {
+        return equipment.serie;
+      } else if (equipment.mac) {
+        return equipment.mac;
+      }
+    }
+    return '';
   }
+
+  // private _filter(name: string): Equipment[] {
+  //   const filterValue = name.toLowerCase();
+  //   return this.equipments.filter(option => option.serie.toLowerCase().includes(filterValue));
+  // }
 
   private _filter(name: string): Equipment[] {
     const filterValue = name.toLowerCase();
-    return this.equipments.filter(option => option.serie.toLowerCase().includes(filterValue));
+
+    // Filtrar por serie
+    let filteredEquipments = this.equipments.filter(option =>
+      option.serie.toLowerCase().includes(filterValue)
+    );
+
+    // Si no encuentra resultados, filtrar por mac
+    if (filteredEquipments.length === 0) {
+      filteredEquipments = this.equipments.filter(option =>
+        option.mac.toLowerCase().includes(filterValue)
+      );
+    }
+
+    return filteredEquipments;
   }
 
   // Para obtener solo el id cuando se guarda el formulario
