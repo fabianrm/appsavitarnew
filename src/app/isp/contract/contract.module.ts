@@ -32,6 +32,7 @@ import { ContractDetailComponent } from './contract-detail/contract-detail.compo
 import { ContractEditBasicsComponent } from './contract-edit-basics/contract-edit-basics.component';
 import { ChangeVlanComponent } from './change-vlan/change-vlan.component';
 import { ChangeUserComponent } from './change-user/change-user.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -77,8 +78,9 @@ import { ChangeUserComponent } from './change-user/change-user.component';
     MatMenuModule,
     MatAutocompleteModule,
     MatCheckboxModule,
-    MapleafModule
-  
+    MapleafModule,
+    MatTooltipModule
+
   ],
   providers: [
     {
