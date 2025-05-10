@@ -40,7 +40,7 @@ jobs:
           # Setea el usuario para cambios
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'sudo chown -R ${{ secrets.SERVER_USER }}:${{ secrets.SERVER_USER }} /var/www/appsavitar'
           # Sincroniza los archivos
-          rsync -avz --delete dist/appsavitarnew/appsavitar/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/appsavitar
+          rsync -avz --delete dist/appsavitarnew/browser/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/appsavitar
           # Cambia los permisos para www-data
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'sudo chown -R www-data:www-data /var/www/appsavitar'
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'sudo chmod -R 755 /var/www/appsavitar'
