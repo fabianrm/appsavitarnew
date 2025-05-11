@@ -171,18 +171,19 @@ export class ContractListComponent implements OnInit {
     });
   }
 
-  finishService(id: number) {
+  finishService(row: any) {
     Swal.fire({
-      title: "Terminar Contrato?",
-      text: "Se va a liberar la caja, puerto y equipo!",
+      title: "Terminar Contrato",
+      text: `Se va a liberar la caja, puerto y equipo del Contrato ${row.serviceCode}`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#43a047",
       cancelButtonColor: "#e91e63",
+      cancelButtonText: "Cancelar",
       confirmButtonText: "Si, terminar"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.suspensionService.finishService(id).
+        this.suspensionService.finishService(row.id).
           subscribe({
             next: (respuesta) => {
               this.snackbarService.showInfo(`${respuesta.message}`);
@@ -277,29 +278,34 @@ export class ContractListComponent implements OnInit {
     });
   }
 
-  generateInvoices(id: number) {
+  generateInvoices(row: any) {
     Swal.fire({
-      title: "Esta seguro?",
-      text: "Se van a generar las facturas para el contrato!",
+      title: "Generar Facturas",
+      text: `Se van a generar las facturas para el contrato! ${row.serviceCode}`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#43a047",
       cancelButtonColor: "#e91e63",
+      cancelButtonText: "Cancelar",
       confirmButtonText: "Si, generar"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.contractService.generateInvoices(id).subscribe((respuesta) => {
 
-          if (respuesta.totalInvoices == 0) {
-            this.snackbarService.showInfo(`${respuesta.message}`);
-          } else {
-            this.snackbarService.showSuccess(`✅${respuesta.message}`);
-          }
-        }, error => {
-          this.snackbarService.showError(`☹️ Ocurrio un error al generar las facturas`);
-          console.log('Error al generar las facturas', error.message);
-        });
+        this.contractService.generateInvoices(row.id).
+          subscribe({
+            next: (respuesta) => {
+              if (respuesta.totalInvoices == 0) {
+                this.snackbarService.showInfo(`${respuesta.message}`);
+              } else {
+                this.snackbarService.showSuccess(`✅${respuesta.message}`);
+              }
+            },
+            error: (err) => {
+              this.snackbarService.showError(err);
+            }
+          })
       }
+
     });
   }
 

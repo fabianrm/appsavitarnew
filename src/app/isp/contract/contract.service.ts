@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, Observable, tap } from 'rxjs';
+import { Subject, Observable, tap, catchError, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { RequestService } from './Models/RequestService';
 import { Service, ServiceResponse, ServiceSingleResponse } from './Models/ServiceResponse';
@@ -70,7 +70,8 @@ export class ContractService {
     return this.clienteHttp.patch(`${this.API}services/${contractId}/update-plan`, { plan_id: planId }, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
-      }));
+      })
+      );
   }
 
   //Cambiar puerto de Cliente
@@ -132,11 +133,15 @@ export class ContractService {
   }
 
   //Suspender el contrato
-  generateInvoices(id: number,): Observable<any> {
-    return this.clienteHttp.post(`${this.API}invoices/generateByService/${id}`, { headers: this.headers })
+  generateInvoices(service_id: number,): Observable<any> {
+    return this.clienteHttp.post(`${this.API}invoices/generate`, { service_id }, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
-      }));
+      }),
+        catchError(err => {
+          return throwError(() => err.error.message);
+        }),
+      );
   }
 
 

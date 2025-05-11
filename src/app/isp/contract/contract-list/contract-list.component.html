@@ -208,7 +208,7 @@
             <button
               [disabled]="row.status !== 'activo'"
               mat-menu-item
-              (click)="generateInvoices(row.id)"
+              (click)="generateInvoices(row)"
             >
               <mat-icon matListItemIcon>receipt</mat-icon>
               Generar Facturas
@@ -217,7 +217,7 @@
             <button
               [disabled]="row.status === 'terminado'"
               mat-menu-item
-              (click)="finishService(row.id)"
+              (click)="finishService(row)"
             >
               <mat-icon matListItemIcon>sports_score</mat-icon>
               Terminar Contrato
