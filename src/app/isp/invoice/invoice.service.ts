@@ -27,10 +27,11 @@ export class InvoiceService {
   });
 
 
-  getInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string, page: number = 1, pageSize: number = 10): Observable<InvoiceResponse> {
+  //TODO:Agregar parametro de ciudad
+  getInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string, qCity?: string, page: number = 1, pageSize: number = 10): Observable<InvoiceResponse> {
 
     return this.clienteHttp.get<InvoiceResponse>(
-      `${this.API}invoices/search?status=${status}&start_date=${qDesde}&end_date=${qHasta}&customer_name=${qCustomer}&page=${page}&perPage=${pageSize}`, { headers: this.headers });
+      `${this.API}invoices/search?status=${status}&start_date=${qDesde}&end_date=${qHasta}&customer_name=${qCustomer}&city_id=${qCity}&page=${page}&perPage=${pageSize}`, { headers: this.headers });
   }
 
 
@@ -79,7 +80,9 @@ export class InvoiceService {
     if (filters.customer_name) {
       params = params.append('customer_name', filters.customer_name);
     }
-
+    if (filters.city_id) {
+      params = params.append('city_id', filters.city_id);
+    }
     return this.clienteHttp.get(`${this.API}invoices/export`, {
       params,
       responseType: 'blob'
@@ -90,7 +93,7 @@ export class InvoiceService {
   //Export facturas resumen
   exportInvoicesResumen(filters: any) {
     let params = new HttpParams();
- 
+
     if (filters.start_date) {
       params = params.append('start_date', filters.start_date);
     }

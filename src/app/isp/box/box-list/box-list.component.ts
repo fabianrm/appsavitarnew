@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { BoxService } from '../box.service';
 import { ReqBox } from '../Models/RequestBox';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 
 @Component({
@@ -30,7 +32,8 @@ export class BoxListComponent {
 
   constructor(private boxService: BoxService,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackbarService: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -78,5 +81,33 @@ export class BoxListComponent {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  deleteBox(row: any) {
+    Swal.fire({
+      title: "Eliminar Caja",
+      text: `Está seguro de eliminar la caja: ${row.name}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Si, terminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.boxService.deleteBox(row.id).
+          subscribe({
+            next: (respuesta) => {
+              this.snackbarService.showInfo(`${respuesta.data.message}`);
+              //this.getContracts();
+            },
+            error: (err) => {
+              this.snackbarService.showError(err);
+            }
+          })
+      }
+    });
+  }
+
+
 
 }

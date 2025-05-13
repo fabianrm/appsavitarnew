@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RequestBox, RequestBoxUnique } from './Models/RequestBox';
@@ -52,6 +52,17 @@ export class BoxService {
     return this.clienteHttp.get(this.API + 'ports/' + id, { headers: this.headers })
   }
 
+  deleteBox(id: number,): Observable<any> {
+    return this.clienteHttp.delete(`${this.API}boxs/${id}`, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }),
+        catchError(err => {
+          console.log(err);
 
+          return throwError(() => err.error.data.message);
+        }),
+      );
+  }
 
 }

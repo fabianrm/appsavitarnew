@@ -58,6 +58,14 @@
       </ng-container>
 
       <!--Email Column -->
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>Ciudad</th>
+        <td data-title="Ciudad" mat-cell *matCellDef="let element">
+          {{ element.city | uppercase }}
+        </td>
+      </ng-container>
+
+      <!--Email Column -->
       <ng-container matColumnDef="addressInstallation">
         <th mat-header-cell *matHeaderCellDef>Dirección de instalación</th>
         <td data-title="Dirección" mat-cell *matCellDef="let element">

@@ -26,7 +26,7 @@ import { SuspensionService } from '../../suspension/suspension.service';
 export class ContractListComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['id', 'serviceCode', 'customerName', 'planName', 'installationDate', 'addressInstallation', 'latitude', 'longitude', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'serviceCode', 'customerName', 'planName', 'installationDate', 'city', 'addressInstallation', 'latitude', 'longitude', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<Service>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -56,9 +56,7 @@ export class ContractListComponent implements OnInit {
 
   getContracts() {
     this.contractService.getservices().subscribe((respuesta) => {
-
       // console.log(respuesta.data.services)
-
       if (respuesta.data.length > 0) {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
@@ -195,8 +193,6 @@ export class ContractListComponent implements OnInit {
           })
       }
     });
-
-
   }
 
 

@@ -36,7 +36,7 @@
       </mat-form-field>
     </div>
 
-    <div class="col-12 col-md-2">
+    <div class="col-12 col-md-1">
       <mat-form-field>
         <mat-label>Seleccione un estado</mat-label>
         <mat-select [(value)]="status">
@@ -45,6 +45,20 @@
           <mat-option value="pagada">Pagada</mat-option>
           <mat-option value="vencida">Vencida</mat-option>
           <mat-option value="anulada">Anulada</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-2">
+      <mat-form-field class="control-full-width" appearance="fill">
+        <mat-label>Ciudad</mat-label>
+        <mat-select
+          [(ngModel)]="qCity"
+          (selectionChange)="getCityId($event.value)"
+        >
+          @for (city of cities; track city) {
+          <mat-option [value]="city.id">{{ city.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
@@ -68,14 +82,6 @@
     </div>
 
     <div class="col-12 col-md-1 mb-2">
-      <button
-        mat-raised-button
-        color="primary"
-        [matMenuTriggerFor]="columnasMenu"
-      >
-        <mat-icon>visibility</mat-icon> Cols.
-      </button>
-
       <mat-menu #columnasMenu="matMenu">
         <div (click)="$event.stopPropagation()" class="columnas-menu-content">
           <mat-selection-list #columnasList [multiple]="true">
@@ -126,7 +132,7 @@
       </ng-container>
 
       <!-- Customer Name Column -->
-      <ng-container matColumnDef="customerName" sticky>
+      <ng-container matColumnDef="customerName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
         <td data-title="Cliente" mat-cell *matCellDef="let element">
           {{ element.customerName }}
@@ -134,7 +140,7 @@
       </ng-container>
 
       <!-- Address Name Column -->
-      <ng-container matColumnDef="address" sticky>
+      <ng-container matColumnDef="address">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Dirección</th>
         <td data-title="Dirección" mat-cell *matCellDef="let element">
           {{ element.address }}
@@ -250,6 +256,13 @@
             (click)="getInvoices()"
           >
             <mat-icon>update</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            matTooltip="Selector de columnas"
+            [matMenuTriggerFor]="columnasMenu"
+          >
+            <mat-icon>visibility</mat-icon>
           </button>
         </th>
 

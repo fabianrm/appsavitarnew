@@ -11,6 +11,8 @@ import { saveAs } from 'file-saver';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { CancelInvoiceComponent } from '../cancel-invoice/cancel-invoice.component';
+import { City } from '../../city/Models/CityResponse';
+import { CityService } from '../../city/city.service';
 
 @Component({
   selector: 'app-invoice-list',
@@ -21,7 +23,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
   availableColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'address', 'planName', 'periodic', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'acciones'];
   displayedColumns: string[] = ['contractId', 'customerName', 'planName', 'address', 'periodic', 'price', 'discount', 'amount', 'dueDate', 'paidDated', 'status', 'acciones'];
-  
+
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
   perPage = 0;
@@ -32,9 +34,13 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   qCustomer?: string = '';
   qDesde?: Date | null;
   qHasta?: Date | null;
+  qCity?: string | '';
 
   qf1?: string = '';
   qf2?: string = '';
+
+  cities: City[] = [];
+  citySelected: any;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -46,9 +52,12 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   constructor(
     private invoiceService: InvoiceService,
     private snackbarService: SnackbarService,
+    private cityService: CityService,
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
+
+    this.getCities();
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -68,7 +77,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   }
 
   getInvoices() {
-    this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2);
+    this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2, this.qCity,);
     merge(this.paginator.page, this.sort.sortChange)
       .pipe(
         startWith({}),
@@ -79,6 +88,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
             this.qCustomer,
             this.qf1,
             this.qf2,
+            this.qCity,
             this.paginator.pageIndex + 1,
             this.paginator.pageSize
           );
@@ -115,9 +125,9 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   }
 
   //Cargar Invoices
-  loadInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string) {
+  loadInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string, qCity?: string,) {
     this.isLoadingResults = true;
-    this.invoiceService.getInvoices(status, qCustomer, qDesde, qHasta, this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(response => {
+    this.invoiceService.getInvoices(status, qCustomer, qDesde, qHasta, qCity, this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(response => {
 
       this.isLoadingResults = false;
       this.totalInvoices = response.meta.total;
@@ -143,6 +153,12 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
       this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
     }
 
+    if (this.qCity === undefined || this.qCity == null) {
+      this.qCity = ''
+    } else {
+      this.qCity = this.citySelected;
+    }
+
     this.getInvoices()
   }
 
@@ -162,11 +178,19 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
       this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
     }
 
+    if (this.qCity === undefined || this.qCity == null) {
+      this.qCity = ''
+    } else {
+      this.qCity = this.citySelected;
+    }
+
     const filters = {
       status: this.status, // example filter
       start_date: this.qf1,
       end_date: this.qf2,
-      customer_name: this.qCustomer
+      customer_name: this.qCustomer,
+      city_id: this.qCity
+
     };
     // console.log(filters);
 
@@ -206,6 +230,28 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     this.dialog.open(CancelInvoiceComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
 
+
+  }
+
+  getCities() {
+    this.cityService.getCities().subscribe((respuesta) => {
+      if (respuesta.data.length > 0) {
+        this.cities = respuesta.data
+      }
+    });
+  }
+
+  // getCityId(id: number) {
+  //   if (this.cities.length > 0) {
+  //     this.citySelected = this.cities.filter(city => city.id == id);
+  //   }
+  //   console.log(this.citySelected[0].id);
+  // }
+
+  //Obtener el id del Selected
+  getCityId($event: any) {
+    this.citySelected = $event;
+    console.log(this.citySelected);
 
   }
 
