@@ -34,13 +34,13 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   qCustomer?: string = '';
   qDesde?: Date | null;
   qHasta?: Date | null;
-  qCity?: string | '';
+  qCity?: string = '';
 
   qf1?: string = '';
   qf2?: string = '';
 
   cities: City[] = [];
-  citySelected: any;
+  citySelected?: string = '';
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -72,12 +72,11 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
-    this.getInvoices()
+    // this.getInvoices()
   }
 
   getInvoices() {
-    this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2, this.qCity,);
+    this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2, this.citySelected,);
     merge(this.paginator.page, this.sort.sortChange)
       .pipe(
         startWith({}),
@@ -88,7 +87,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
             this.qCustomer,
             this.qf1,
             this.qf2,
-            this.qCity,
+            this.citySelected,
             this.paginator.pageIndex + 1,
             this.paginator.pageSize
           );
@@ -153,11 +152,11 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
       this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
     }
 
-    if (this.qCity === undefined || this.qCity == null) {
-      this.qCity = ''
-    } else {
-      this.qCity = this.citySelected;
-    }
+    // if (this.qCity === undefined || this.qCity == null) {
+    //   this.qCity = ''
+    // } else {
+    //   this.qCity = this.citySelected;
+    // }
 
     this.getInvoices()
   }
@@ -178,18 +177,18 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
       this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
     }
 
-    if (this.qCity === undefined || this.qCity == null) {
-      this.qCity = ''
-    } else {
-      this.qCity = this.citySelected;
-    }
+    // if (this.qCity === undefined || this.qCity == null) {
+    //   this.qCity = ''
+    // } else {
+    //   this.qCity = this.citySelected;
+    // }
 
     const filters = {
       status: this.status, // example filter
       start_date: this.qf1,
       end_date: this.qf2,
       customer_name: this.qCustomer,
-      city_id: this.qCity
+      city_id: this.citySelected
 
     };
     // console.log(filters);
@@ -251,11 +250,9 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   //Obtener el id del Selected
   getCityId($event: any) {
     this.citySelected = $event;
-    console.log(this.citySelected);
+    // console.log(this.citySelected);
 
   }
-
-
 
   showError() {
     this.snackbarService.showError('☹️ Cliente ya se encuentra registrado');

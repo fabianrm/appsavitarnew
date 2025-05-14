@@ -53,9 +53,10 @@
       <mat-form-field class="control-full-width" appearance="fill">
         <mat-label>Ciudad</mat-label>
         <mat-select
-          [(ngModel)]="qCity"
+          [(ngModel)]="citySelected"
           (selectionChange)="getCityId($event.value)"
         >
+          <mat-option value="">Seleccione</mat-option>
           @for (city of cities; track city) {
           <mat-option [value]="city.id">{{ city.name }}</mat-option>
           }
