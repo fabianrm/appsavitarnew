@@ -36,8 +36,6 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription
 
-
-
   constructor(
     private customerService: CustomerService,
     public dialog: MatDialog,

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Suspension } from '../models/SuspensionResponse';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { SuspensionService } from '../suspension.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SuspensionService } from '../suspension.service';
+import { Suspension } from '../models/SuspensionResponse';
 
 @Component({
   selector: 'app-list-suspension',
@@ -14,8 +14,17 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ListSuspensionComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'codigo_contrato', 'cliente', 'plan', 'fecha_inicio', 'fecha_fin', 'motivo', 'observacion', 'status', 'acciones'];
-  public dataSource!: MatTableDataSource<Suspension[]>;
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  displayedColumns: string[] = ['id', 'codigo_contrato', 'cliente', 'plan', 'fecha_inicio', 'fecha_fin', 'motivo', 'observacion', 'status'];
+  public dataSource!: MatTableDataSource<Suspension>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -30,10 +39,19 @@ export class ListSuspensionComponent implements OnInit {
     this.getSuspensions();
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   getSuspensions() {
-    this.suspensionService.getSuspensions().subscribe(data => {
-      console.log(data);
+    this.suspensionService.getSuspensions().subscribe(respuesta => {
+      if (respuesta.data.length > 0) {
+        this.dataSource = new MatTableDataSource(respuesta.data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+
+      // console.log(respuesta.data);
     })
   }
 

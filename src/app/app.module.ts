@@ -38,6 +38,7 @@ import { AppConfigService } from './app-config.service';
 import { ClientIdInterceptor } from './client-id.interceptor';
 import { BrandModule } from './isp/brand/brand.module';
 import { PermissionModule } from './auth/permission/permission.module';
+import { SuspensionModule } from './isp/suspension/suspension.module';
 
 
 
@@ -79,6 +80,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     NgbModule,
     NavigationModule,
     CustomerModule,
+    SuspensionModule,
     AuthModule,
     RouterModule,
     PlanModule,
@@ -94,7 +96,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     SharedModule,
     BrandModule,
     PermissionModule
- 
+
 
   ],
   providers: [

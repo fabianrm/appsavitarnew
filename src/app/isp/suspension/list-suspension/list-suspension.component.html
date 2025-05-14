@@ -1,1 +1,111 @@
-<p>list-suspension works!</p>
+<div class="contenedor">
+  <div class="row row-filter">
+    <div class="col-12 col-md-8">
+      <!--  Filtro -->
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Ej. Fernando Nizama"
+          #input
+          autocomplete="off"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- id Video -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">ID</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <!-- Code Column -->
+      <ng-container matColumnDef="codigo_contrato">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Código</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.service.serviceCode }}
+        </td>
+      </ng-container>
+
+      <!-- Cliente Column -->
+      <ng-container matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Cliente</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.service.customerName | uppercase }}
+        </td>
+      </ng-container>
+
+      <!-- Plan Column -->
+      <ng-container matColumnDef="plan">
+        <th mat-header-cell *matHeaderCellDef>Plan</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.service.planName | uppercase }}
+        </td>
+      </ng-container>
+
+      <!-- Fecha Inicio Column -->
+      <ng-container matColumnDef="fecha_inicio">
+        <th mat-header-cell *matHeaderCellDef>Desde</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.start_date }}
+        </td>
+      </ng-container>
+
+      <!-- Fecha Fin Column -->
+      <ng-container matColumnDef="fecha_fin">
+        <th mat-header-cell *matHeaderCellDef>Hasta</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.end_date }}
+        </td>
+      </ng-container>
+
+      <!-- Motivo Column -->
+      <ng-container matColumnDef="motivo">
+        <th mat-header-cell *matHeaderCellDef>Motivo</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.reason | uppercase }}
+        </td>
+      </ng-container>
+
+      <!--Observacion Column -->
+      <ng-container matColumnDef="observacion">
+        <th mat-header-cell *matHeaderCellDef>Observación</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.observation | uppercase }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Estado</th>
+        <td mat-cell *matCellDef="let element">
+          <span
+            [ngClass]="{
+              'status-activo': element.status == 1,
+              'status-inactive': element.status == 0
+            }"
+            >{{ element.status == 0 ? "Inactivo" : "Activo" }}</span
+          >
+        </td>
+      </ng-container>
+
+      <!-- Acciones -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      pageSize="10"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+</div>
