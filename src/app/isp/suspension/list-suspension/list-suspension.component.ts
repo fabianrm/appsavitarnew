@@ -23,7 +23,7 @@ export class ListSuspensionComponent implements OnInit {
     }
   }
 
-  displayedColumns: string[] = ['id', 'codigo_contrato', 'cliente', 'plan', 'fecha_inicio', 'fecha_fin', 'motivo', 'observacion', 'status'];
+  displayedColumns: string[] = ['id', 'codigo_contrato', 'cliente', 'plan', 'fecha_inicio', 'fecha_fin', 'motivo', 'observacion', 'reactivacion', 'status'];
   public dataSource!: MatTableDataSource<Suspension>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
