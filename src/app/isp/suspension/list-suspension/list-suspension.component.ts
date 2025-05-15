@@ -49,6 +49,25 @@ export class ListSuspensionComponent implements OnInit {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+
+        this.dataSource.filterPredicate = (data: Suspension, filter: string) => {
+          const lowerCaseFilter = filter.toLowerCase();
+          const customerName = data.service.customerName.toLowerCase();
+          const motivo = data.reason.toLowerCase();
+          const plan = data.service.planName.toLowerCase();
+          const estado = data.status.toLowerCase();
+
+          return (
+            customerName.includes(lowerCaseFilter)
+            || customerName.includes(lowerCaseFilter)
+            || motivo.includes(lowerCaseFilter)
+            || plan.includes(lowerCaseFilter)
+            || estado.includes(lowerCaseFilter)
+          );
+        };
+
+
+
       }
 
       // console.log(respuesta.data);

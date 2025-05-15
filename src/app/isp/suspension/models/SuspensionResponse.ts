@@ -18,6 +18,7 @@ export interface Suspension {
     end_date: Date;
     reason: string;
     observation: string;
+    status: string;
     created_by: number;
     updated_by: number;
     updated_at: Date;

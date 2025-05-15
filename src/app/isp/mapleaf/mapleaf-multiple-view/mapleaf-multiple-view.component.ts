@@ -16,7 +16,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
   @Input() filterByRadius: boolean = false;
   @Input() dataPoints: DataPoint[] = [];
-  @Input() initCoords: [number, number] = [0,0];
+  @Input() initCoords: [number, number] = [0, 0];
   @Input() showAllMarkers = true;
 
   // Crear un icono personalizado
@@ -34,12 +34,12 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   dataPointSubscription!: Subscription;
   typeMap: 'openstreetmap' | 'roadmap' | 'satellite' | 'terrain' | 'hybrid' = 'openstreetmap'; // propiedad entrada
 
-  constructor(private coordinateService: MapleafService, ) { }
+  constructor(private coordinateService: MapleafService,) { }
 
   ngOnInit(): void {
-  
-    this.initCoords  = JSON.parse( localStorage.getItem("coords")!) 
-    
+
+    this.initCoords = JSON.parse(localStorage.getItem("coords")!)
+
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
       this.setMarkers(dataPoints);
       setTimeout(() => {
@@ -118,7 +118,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
       const coords: [number, number] = [e.latlng.lat, e.latlng.lng];
       this.moveToLocation(coords);
     });
-    
+
 
     // const googleMutant = L.gridLayer.googleMutant({
     //   type: this.mapType // Puedes usar 'roadmap', 'satellite', 'terrain', 'hybrid'
@@ -137,6 +137,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
             id: Date.now(),
             name: "Nuevo Marcador",
             availablePorts: 0,
+            note: '',
             status: 1,
             coordinates
           };
@@ -150,7 +151,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
       this.centerMarker = L.marker(coordinates, { icon: this.customIcon }).addTo(this.map)
         .bindPopup(`<b>Cliente</b><br>Lat: ${coordinates[0]}<br>Lng: ${coordinates[1]}`);
-  
+
       // Obtener el nombre de la calle y actualizar el popup
       // this.geocodingService.getAddress(coordinates[0], coordinates[1]).subscribe(result => {
       //   if (result && result.address) {
@@ -188,7 +189,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     dataPoints.forEach(dataPoint => {
       const marker = L.marker([dataPoint.coordinates[0], dataPoint.coordinates[1]])
         .addTo(this.map)
-        .bindPopup(`<b>${dataPoint.name}</b><br>Puertos disponibles: ${dataPoint.availablePorts}`);
+        .bindPopup(`<b>${dataPoint.name}</b><br>Puertos disponibles: ${dataPoint.availablePorts}<br>Nota: ${dataPoint.note}`);
       this.markers.push(marker);
     });
   }

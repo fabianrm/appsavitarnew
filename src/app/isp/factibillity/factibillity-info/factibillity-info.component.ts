@@ -42,6 +42,7 @@ export class FactibillityInfoComponent implements OnInit {
         id: item.id,
         name: item.name,
         availablePorts: item.availablePorts,
+        note: item.note,
         status: item.status,
         coordinates: [parseFloat(item.coordinates[0]), parseFloat(item.coordinates[1])]
       }));

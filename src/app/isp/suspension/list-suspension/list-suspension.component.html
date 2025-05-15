@@ -1,6 +1,6 @@
 <div class="contenedor">
   <div class="row row-filter">
-    <div class="col-12 col-md-8">
+    <div class="col-12">
       <!--  Filtro -->
       <mat-form-field>
         <mat-label>Buscar</mat-label>
@@ -96,10 +96,10 @@
         <td mat-cell *matCellDef="let element">
           <span
             [ngClass]="{
-              'status-active': element.status == 0,
-              'status-inactive': element.status == 1
+              'status-active': element.status == 'Reactivado',
+              'status-inactive': element.status == 'Suspendido'
             }"
-            >{{ element.status == 1 ? "Suspendido" : "Reactivado" }}</span
+            >{{ element.status }}</span
           >
         </td>
       </ng-container>
