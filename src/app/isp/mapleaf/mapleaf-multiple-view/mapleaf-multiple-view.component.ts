@@ -116,7 +116,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
     this.map.on('click', (e: L.LeafletMouseEvent) => {
       const coords: [number, number] = [e.latlng.lat, e.latlng.lng];
-      this.moveToLocation(coords);
+      // this.moveToLocation(coords); //Mueve y centra el mapa
     });
 
 
