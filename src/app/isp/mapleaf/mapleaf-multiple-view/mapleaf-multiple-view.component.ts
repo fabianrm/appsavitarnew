@@ -42,18 +42,18 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
     this.dataPointSubscription = this.coordinateService.currentDataPoints.subscribe(dataPoints => {
       this.setMarkers(dataPoints);
-      setTimeout(() => {
-        this.moveToLocation(this.initCoords);
-      }, 50);
+      // setTimeout(() => {
+      //   this.moveToLocation(this.initCoords);
+      // }, 50);
     });
 
-    this.coordinateService.moveToCoordinate.subscribe(coordinate => {
-      if (coordinate) {
-        setTimeout(() => {
-          this.moveToLocation(coordinate);
-        }, 50);
-      }
-    });
+    // this.coordinateService.moveToCoordinate.subscribe(coordinate => {
+    //   if (coordinate) {
+    //     setTimeout(() => {
+    //       this.moveToLocation(coordinate);
+    //     }, 50);
+    //   }
+    // });
 
     (L.Icon.Default as any).imagePath = 'assets/';
   }
