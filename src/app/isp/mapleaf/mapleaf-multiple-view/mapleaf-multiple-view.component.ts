@@ -47,13 +47,13 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
       // }, 50);
     });
 
-    // this.coordinateService.moveToCoordinate.subscribe(coordinate => {
-    //   if (coordinate) {
-    //     setTimeout(() => {
-    //       this.moveToLocation(coordinate);
-    //     }, 50);
-    //   }
-    // });
+    this.coordinateService.moveToCoordinate.subscribe(coordinate => {
+      if (coordinate) {
+        setTimeout(() => {
+          this.moveToLocation(coordinate);
+        }, 50);
+      }
+    });
 
     (L.Icon.Default as any).imagePath = 'assets/';
   }
