@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col-md-10">
+      <mat-form-field class="w-100">
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Promo verano"
+          #input
+          autocomplete="off"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-2">
+      <button (click)="newPromotion()" mat-raised-button color="accent">
+        + Nueva Promoción
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- id Video -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">ID</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Nombre</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.name }}
+        </td>
+      </ng-container>
+
+      <!-- Documento Column -->
+      <ng-container matColumnDef="fecha_inicio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Desde</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.start_date | date }}
+        </td>
+      </ng-container>
+
+      <!-- Column Fecha Final -->
+      <ng-container matColumnDef="fecha_fin">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Hasta</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.end_date | date }}
+        </td>
+      </ng-container>
+
+      <!-- Precio Column -->
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.price | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
+        </td>
+      </ng-container>
+
+      <!-- Duraction Column -->
+      <ng-container matColumnDef="duracion">
+        <th mat-header-cell *matHeaderCellDef>Tiempo(meses)</th>
+        <td class="text-center" mat-cell *matCellDef="let element">
+          {{ element.duration_months }}
+        </td>
+      </ng-container>
+
+      <!-- Estado Column -->
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Estado</th>
+        <td mat-cell *matCellDef="let element">
+          <span
+            [ngClass]="{
+              'status-active': element.status == 'Activa',
+              'status-terminated': element.status == 'Finalizada'
+            }"
+            >{{ element.status }}</span
+          >
+        </td>
+      </ng-container>
+
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef>Accciones</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          class="menu-actions"
+          style="text-align: center"
+        >
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editPromotion(row.id)">
+              <mat-icon matListItemIcon>edit</mat-icon>
+              Editar
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      pageSize="10"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+</div>

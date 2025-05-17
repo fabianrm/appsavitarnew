@@ -108,6 +108,10 @@ const routes: Routes = [
         loadChildren: () => import('./logistic/supplier/supplier.module').then(m => m.SupplierModule)
       },
       {
+        path: 'promotion',
+        loadChildren: () => import('./isp/promotion/promotion.module').then(m => m.PromotionModule)
+      },
+      {
         path: 'employee',
         loadChildren: () => import('./logistic/employee/employee.module').then(m => m.EmployeeModule)
       },
@@ -134,7 +138,7 @@ const routes: Routes = [
         loadChildren: () => import('./support/ticket/ticket.module').then(m => m.TicketModule)
       },
     ]
-    }
+  }
 ];
 
 @NgModule({

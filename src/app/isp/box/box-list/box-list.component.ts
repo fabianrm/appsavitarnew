@@ -41,9 +41,8 @@ export class BoxListComponent {
     this.subscription = this.boxService.refresh$.subscribe(() => {
       this.getBoxes()
     });
-
-
   }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

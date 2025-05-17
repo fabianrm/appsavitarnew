@@ -30,7 +30,6 @@ export class SuspensionService {
   }
 
   addSuspension(datos: SuspensionRequest): Observable<SuspensionSingleResponse> {
-
     const formattedEntry = {
       ...datos,
       start_date: datos.start_date instanceof Date
@@ -49,8 +48,6 @@ export class SuspensionService {
           return throwError(() => err.error.message);
         }),);
   }
-
-
 
   //reactivar el contrato
   reactiveService(id: number,): Observable<any> {

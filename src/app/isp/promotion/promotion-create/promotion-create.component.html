@@ -1,0 +1,106 @@
+<div class="container">
+  <mat-card class="p-4 mt-5">
+    <form [formGroup]="promotionForm" novalidate (ngSubmit)="enviarDatos()">
+      <div class="row mb-3">
+        <div class="col-12">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Nombre de la promoción</mat-label>
+            <input
+              matInput
+              formControlName="name"
+              placeholder="Ingrese el nombre"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Fecha de inicio</mat-label>
+            <input
+              matInput
+              [matDatepicker]="startPicker"
+              formControlName="start_date"
+              placeholder="Inicio"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="startPicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Fecha de fin</mat-label>
+            <input
+              matInput
+              [matDatepicker]="endPicker"
+              formControlName="end_date"
+              placeholder="Fin"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="endPicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Precio</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="price"
+              placeholder="0.00"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Duración (meses)</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="duration_months"
+              placeholder="0"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 d-flex align-items-center">
+          <mat-slide-toggle formControlName="status">
+            {{
+              promotionForm.get("status")?.value === true
+                ? "Activa"
+                : "Finalizada"
+            }}
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="promotionForm.invalid"
+        >
+          Guardar promoción
+        </button>
+        <button
+          type="button"
+          (click)="goPromotions()"
+          color="accent"
+          mat-raised-button
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
