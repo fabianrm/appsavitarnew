@@ -1,4 +1,4 @@
-<div class="container">
+<div class="contenedor">
   <form ngNativeValidate [formGroup]="formContrato" (ngSubmit)="enviarDatos()">
     <!-- Datos plan cliente -->
     <div class="row">
@@ -392,7 +392,7 @@
             >
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-2">
             <mat-form-field
               *ngIf="formContrato.get('installationPayment')?.value == true"
               class="control-full-width"
@@ -406,6 +406,19 @@
                 placeholder="Monto"
                 formControlName="installationAmount"
               />
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <mat-form-field class="control-full-width" appearance="fill">
+              <mat-label>Promoción</mat-label>
+              <mat-select formControlName="promotionId">
+                @for (promotion of promotions; track promotion) {
+                <mat-option [value]="promotion.id">{{
+                  promotion.name
+                }}</mat-option>
+                }
+              </mat-select>
             </mat-form-field>
           </div>
         </div>

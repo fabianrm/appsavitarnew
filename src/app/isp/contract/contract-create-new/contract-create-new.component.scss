@@ -1,4 +1,3 @@
-
 mat-form-field {
   width: 100%;
 }
@@ -34,8 +33,12 @@ mat-card-title {
   font-size: 1.3rem;
 }
 
-.container {
+.contenedor {
   margin-top: 30px;
+  //width: 98%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
   /* margin-bottom: 20px; */
 }
 
@@ -83,7 +86,6 @@ mat-card-title {
 .span-title {
   font-size: 1.5rem;
   font-weight: 500;
-
 }
 
 /* Media Query para dispositivos móviles */
@@ -93,11 +95,11 @@ mat-card-title {
     height: 300px; /* Ajusta esta altura según tus necesidades */
   }
 
-  mat-card{
+  mat-card {
     margin-top: 2px;
   }
 
-  mat-form-field{
+  mat-form-field {
     margin-top: 5px;
   }
 }

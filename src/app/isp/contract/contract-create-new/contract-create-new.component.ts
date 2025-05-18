@@ -22,6 +22,8 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { Customer } from '../../customer/Models/CustomerResponseU';
+import { PromotionService } from './../../promotion/promotion.service';
+import { Promotion, PromotionResponse } from '../../promotion/models';
 
 
 @Component({
@@ -54,6 +56,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   filteredEquipos!: Observable<Equipment[]>;
   selectedEquipment!: Equipment | null;
 
+  promotions: Promotion[] = [];
+
   filteredBox!: Observable<Box[]>;
   selectedBox!: Box | null;
 
@@ -77,6 +81,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     private routerService: RouterService,
     private boxService: BoxService,
     private cityService: CityService,
+    private promotionService: PromotionService,
     private equipmentService: EquipmentService,
     private locationService: PlacesService,
     private mapleafService: MapleafService,
@@ -102,6 +107,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     this.getRouters();
     this.getBoxs();
     this.getEquipments();
+    this.getPromotions();
 
     //Obtener la direccion
     this.mapleafService.currentAddress.subscribe(address => {
@@ -141,6 +147,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       iptv: [false, Validators.required],
       userIptv: ['',],
       passIptv: ['',],
+      promotionId: [''],
       installationPayment: [false, Validators.required],
       installationAmount: ['',],
       prepayment: [true, Validators.required],
@@ -260,14 +267,11 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   onCheckInstallationPay(checked: boolean) {
     if (checked) {
       this.formContrato.get('installationAmount')?.addValidators(Validators.required);
-
     } else {
       //  this.formContrato.get('installationAmount')?.clearValidators;
       this.formContrato.controls["installationAmount"].clearValidators();
       this.formContrato.controls['installationAmount'].updateValueAndValidity();
-
     }
-
   }
 
   //enable controls
@@ -321,6 +325,15 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       if (respuesta.data.length > 0) {
         this.planes = respuesta.data.filter(x => x.status === 1);
         this.getPlanbyID(this.planInicial);
+      }
+    });
+  }
+
+  //Promociones
+  getPromotions() {
+    this.promotionService.getPromotions().subscribe((respuesta: PromotionResponse) => {
+      if (respuesta.data.length > 0) {
+        this.promotions = respuesta.data.filter(x => x.status === 'Activa');
       }
     });
   }
