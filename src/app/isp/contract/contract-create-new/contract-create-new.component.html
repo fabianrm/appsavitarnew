@@ -1,94 +1,105 @@
-<div class="contenedor">
-  <form ngNativeValidate [formGroup]="formContrato" (ngSubmit)="enviarDatos()">
-    <!-- Datos plan cliente -->
-    <div class="row">
-      <!-- Columna Datos del Cliente -->
-      <div class="col-md-12">
-        <mat-card>
-          <mat-card-header class="header">
-            <mat-card-title> Datos del Cliente </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="row">
-              <div class="col-12 col-md-6">
-                <div class="col-md-12">
-                  <p class="span-title">{{ customer?.customerName }}</p>
-                  <span>Código: {{ customer?.customerCode }}</span>
-                </div>
+<div class="container py-4">
+  <form
+    [formGroup]="formContrato"
+    (ngSubmit)="enviarDatos()"
+    class="needs-validation"
+    novalidate
+  >
+    <ul class="nav nav-tabs mb-3" id="tabContent">
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#plan"
+          >Datos del Plan</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#instalacion"
+          >Datos de Instalación</a
+        >
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- TAB PLAN -->
+      <div class="tab-pane fade show active" id="plan">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header fw-bold fs-4">
+            Cliente : {{ customer?.customerCode }} |
+            {{ customer?.customerName }}
+          </div>
+          <div class="card-body">
+            <div class="row g-3 align-items-center">
+              <div class="col-md-3">
+                <label class="form-label">Seleccione un plan</label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select
+                    formControlName="planId"
+                    (selectionChange)="getPlanbyID($event.value)"
+                  >
+                    <mat-option *ngFor="let plan of planes" [value]="plan.id">{{
+                      plan.name
+                    }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
 
-              <div class="col-12 col-md-6">
-                <div class="row">
-                  <div class="col-12 col-md-6">
-                    <mat-form-field>
-                      <mat-label>Seleccione un plan</mat-label>
-                      <mat-select
-                        formControlName="planId"
-                        (selectionChange)="getPlanbyID($event.value)"
-                      >
-                        <mat-option
-                          *ngFor="let plan of planes"
-                          [value]="plan.id"
-                        >
-                          {{ plan.name }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
+              <div class="col-md-3">
+                <label class="form-label">Seleccione una promoción</label>
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select formControlName="promotionId">
+                    <mat-option [value]="0">Sin promoción</mat-option>
+                    @for (promotion of promotions; track promotion) {
+                    <mat-option [value]="promotion.id">{{
+                      promotion.name
+                    }}</mat-option>
 
-                  <div class="col-6 col-md-3">
-                    <div *ngIf="planSelected">
-                      @for (itemPlan of planSelected; track itemPlan) {
-                      <p>Plan de Servicio: {{ itemPlan.name }}</p>
-                      <mat-icon class="valign-center">upload</mat-icon>
-                      <span> {{ itemPlan.download }}</span>
-                      <mat-icon class="valign-center">download</mat-icon>
-                      <span>{{ itemPlan.upload }}</span>
-                      }
-                      <!-- Otros datos del plan -->
+                    }
+                  </mat-select>
+                  <button
+                    *ngIf="formContrato.get('promotionId')?.value !== 0"
+                    type="button"
+                    mat-icon-button
+                    class="text-primary"
+                    matSuffix
+                    (click)="$event.stopPropagation()"
+                    matTooltip="{{ selectedPromotion?.description }}"
+                  >
+                    <mat-icon>info</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+
+              <div
+                class="col-md-6 d-flex justify-content-center"
+                *ngIf="planSelected"
+              >
+                <ng-container *ngFor="let itemPlan of planSelected">
+                  <div class="col-md-6 align-items-center">
+                    <p class="fs-2">
+                      Precio:<strong>
+                        {{ itemPlan.price | currency : "PEN" }}</strong
+                      >
+                    </p>
+
+                    <div class="d-flex">
+                      <mat-icon>upload</mat-icon> {{ itemPlan.download }} Mbps /
+                      <mat-icon>download</mat-icon> {{ itemPlan.upload }} Mbps
                     </div>
                   </div>
-
-                  <div class="col-6 col-md-3">
-                    <div *ngIf="planSelected">
-                      @for (itemPlan of planSelected; track itemPlan) {
-                      <p>Precio:</p>
-                      <span class="span-title">
-                        {{ itemPlan.price | currency : "PEN" }}</span
-                      >
-                      }
-                    </div>
-                  </div>
-                </div>
+                </ng-container>
               </div>
             </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
+          </div>
+        </div>
 
-      <!-- Columna Datos del Plan -->
-    </div>
-
-    <!-- Direccion de instalacion -->
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <mat-card>
-          <mat-card-header class="header">
-            <mat-card-title> Dirección de instalación </mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div class="row">
-              <div class="col-12 col-md-6">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header fw-bold">Dirección de Instalación</div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
                 <mat-checkbox formControlName="check"
                   >Usar dirección del cliente</mat-checkbox
                 >
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-12 col-md-6">
-                <mat-form-field class="control-full-width" appearance="fill">
+                <mat-form-field appearance="fill" class="w-100 mt-3">
                   <mat-label>Ciudad</mat-label>
                   <mat-select
                     formControlName="cityId"
@@ -99,10 +110,7 @@
                     }
                   </mat-select>
                 </mat-form-field>
-              </div>
-
-              <div class="col-12 col-md-6">
-                <mat-form-field>
+                <mat-form-field appearance="fill" class="w-100 mt-3">
                   <mat-label>Fecha de Instalación</mat-label>
                   <input
                     matInput
@@ -115,90 +123,75 @@
                   ></mat-datepicker-toggle>
                   <mat-datepicker #pickerDesde></mat-datepicker>
                 </mat-form-field>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-12 col-md-6">
-                <mat-form-field class="control-full-width" appearance="fill">
+                <mat-form-field appearance="fill" class="w-100 mt-3">
                   <input
                     matInput
                     placeholder="Dirección de instalación"
                     formControlName="addressInstallation"
                   />
                 </mat-form-field>
-              </div>
-
-              <div class="col-12 col-md-6">
-                <mat-form-field class="control-full-width" appearance="fill">
+                <mat-form-field appearance="fill" class="w-100 mt-3">
                   <input
                     matInput
                     placeholder="Referencia"
                     formControlName="reference"
                   />
                 </mat-form-field>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <mat-form-field appearance="fill" class="w-100 mt-3">
+                      <input
+                        matInput
+                        type="number"
+                        placeholder="Latitud"
+                        formControlName="latitude"
+                        step="any"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-6">
+                    <mat-form-field appearance="fill" class="w-100 mt-3">
+                      <input
+                        matInput
+                        type="number"
+                        placeholder="Longitud"
+                        formControlName="longitude"
+                        step="any"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div
+                  class="h-100 d-flex align-items-center justify-content-center"
+                >
+                  <div class="w-100">
+                    <app-mapleaf-loading
+                      *ngIf="!locationReady; else mapReady"
+                      class="w-100 h-100"
+                    ></app-mapleaf-loading>
+                    <ng-template #mapReady>
+                      <div class="border rounded p-2" style="height: 300px">
+                        <app-mapleaf-single-view></app-mapleaf-single-view>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div class="row">
-              <div class="col-sm-6">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <input
-                    matInput
-                    placeholder="Latitud"
-                    formControlName="latitude"
-                    type="number"
-                    step="any"
-                  />
-                </mat-form-field>
-              </div>
-              <div class="col-sm-6">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <input
-                    matInput
-                    placeholder="Longitud"
-                    formControlName="longitude"
-                    type="number"
-                    step="any"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
+          </div>
+        </div>
       </div>
 
-      <!-- Mapa -->
-      <div class="col-12 col-md-6">
-        <mat-card class="container-map">
-          <mat-card-content class="center-content">
-            <app-mapleaf-loading
-              *ngIf="!locationReady; else mapReady"
-              class="full-size"
-            ></app-mapleaf-loading>
-
-            <ng-template #mapReady>
-              <div class="mapa">
-                <app-mapleaf-single-view></app-mapleaf-single-view>
-              </div>
-            </ng-template>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-
-    <!-- Datos de instalacion -->
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <mat-card>
-          <mat-card-header class="header">
-            <mat-card-title> Datos de Instalación </mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div class="row">
-              <div class="col-sm-4">
-                <mat-form-field class="control-full-width" appearance="fill">
+      <!-- TAB INSTALACION -->
+      <div class="tab-pane fade" id="instalacion">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header fw-bold">Datos de Instalación</div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="w-100">
                   <mat-label>VLAN</mat-label>
                   <mat-select formControlName="routerId">
                     @for (router of routers; track router) {
@@ -209,17 +202,13 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
-              <div class="col-sm-4">
-                <mat-form-field class="control-full-width">
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="w-100">
                   <mat-label>Caja</mat-label>
                   <input
-                    type="text"
                     matInput
                     formControlName="boxId"
                     [matAutocomplete]="autoB"
-                    #codeBox
-                    (input)="codeBox.value = codeBox.value.toUpperCase()"
                   />
                   <mat-autocomplete
                     #autoB="matAutocomplete"
@@ -234,9 +223,8 @@
                   </mat-autocomplete>
                 </mat-form-field>
               </div>
-
-              <div class="col-sm-4">
-                <mat-form-field class="control-full-width" appearance="fill">
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="w-100">
                   <mat-label>Puerto</mat-label>
                   <mat-select formControlName="portNumber">
                     @for (port of ports; track port) {
@@ -248,23 +236,17 @@
                 </mat-form-field>
               </div>
             </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <!-- Datos del equipo -->
-      <div class="col-12 col-md-6">
-        <mat-card>
-          <mat-card-header class="header">
-            <mat-card-title> Datos del Equipo </mat-card-title>
-          </mat-card-header>
+          </div>
+        </div>
 
-          <mat-card-content>
-            <div class="row">
-              <div class="col-12 col-md-6 row-items">
-                <mat-form-field class="control-full-width my-form-field">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header fw-bold">Datos del Equipo</div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <mat-form-field appearance="fill" class="w-100">
                   <mat-label>Serie</mat-label>
                   <input
-                    type="text"
                     matInput
                     formControlName="equipmentId"
                     [matAutocomplete]="auto"
@@ -281,166 +263,101 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
-                <div class="col-sm-12 row-items-2">
-                  <div>
-                    <p *ngIf="selectedEquipment">
-                      Tipo: {{ selectedEquipment.type | uppercase }}
-                    </p>
-                  </div>
-                  <div>
-                    <p *ngIf="selectedEquipment">
-                      Marca: {{ selectedEquipment.brand | uppercase }}
-                    </p>
-                  </div>
-                  <div>
-                    <p *ngIf="selectedEquipment">
-                      Modelo: {{ selectedEquipment.model | uppercase }}
-                    </p>
-                  </div>
-                  <div>
-                    <p *ngIf="selectedEquipment">
-                      Estado: {{ selectedEquipment.status | uppercase }}
-                    </p>
-                  </div>
+                <div
+                  ngClass="d-flex"
+                  *ngIf="selectedEquipment"
+                  class="mt-2 gap-3"
+                >
+                  <p><strong>Tipo:</strong> {{ selectedEquipment.type }}</p>
+                  <p><strong>Marca:</strong> {{ selectedEquipment.brand }}</p>
+                  <p><strong>Modelo:</strong> {{ selectedEquipment.model }}</p>
+                  <p><strong>Estado:</strong> {{ selectedEquipment.status }}</p>
                 </div>
               </div>
-              <div class="col-6 col-md-3">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <mat-label>Usuario pppoe</mat-label>
-                  <input
-                    matInput
-                    placeholder="Usuario pppoe"
-                    formControlName="userPppoe"
-                  />
+              <div class="col-md-3">
+                <mat-form-field appearance="fill" class="w-100">
+                  <mat-label>Usuario PPPoE</mat-label>
+                  <input matInput formControlName="userPppoe" />
                 </mat-form-field>
               </div>
-              <div class="col-6 col-md-3">
-                <mat-form-field class="control-full-width" appearance="fill">
-                  <mat-label>Clave pppoe</mat-label>
-                  <input
-                    matInput
-                    placeholder="Clave pppoe"
-                    formControlName="passPppoe"
-                  />
+              <div class="col-md-3">
+                <mat-form-field appearance="fill" class="w-100">
+                  <mat-label>Clave PPPoE</mat-label>
+                  <input matInput formControlName="passPppoe" />
                 </mat-form-field>
               </div>
             </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <mat-card>
-          <mat-card-header class="header">
-            <mat-card-title> Datos de IPTV </mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div class="row">
-              <div class="col-12 col-md-3">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header fw-bold">IPTV</div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-3">
                 <mat-checkbox formControlName="iptv">IPTV</mat-checkbox>
               </div>
-
-              <div class="col-12 col-md-4">
-                <mat-form-field
-                  *ngIf="formContrato.get('iptv')?.value == true"
-                  class="control-full-width"
-                  appearance="fill"
-                >
+              <div
+                class="col-md-4"
+                *ngIf="formContrato.get('iptv')?.value == true"
+              >
+                <mat-form-field appearance="fill" class="w-100">
                   <mat-label>Usuario IPTV</mat-label>
-                  <input
-                    matInput
-                    type="text"
-                    placeholder="Usuario IPTV"
-                    formControlName="userIptv"
-                  />
+                  <input matInput formControlName="userIptv" />
                 </mat-form-field>
               </div>
-
-              <div class="col-12 col-md-4">
-                <mat-form-field
-                  *ngIf="formContrato.get('iptv')?.value == true"
-                  class="control-full-width"
-                  appearance="fill"
-                >
+              <div
+                class="col-md-4"
+                *ngIf="formContrato.get('iptv')?.value == true"
+              >
+                <mat-form-field appearance="fill" class="w-100">
                   <mat-label>Clave IPTV</mat-label>
+                  <input matInput formControlName="passIptv" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-checkbox formControlName="prepayment"
+                  >Pago adelantado</mat-checkbox
+                >
+              </div>
+              <div class="col-md-3">
+                <mat-checkbox formControlName="installationPayment"
+                  >Cobrar Instalación</mat-checkbox
+                >
+              </div>
+              <div
+                class="col-md-3"
+                *ngIf="formContrato.get('installationPayment')?.value == true"
+              >
+                <mat-form-field appearance="fill" class="w-100">
+                  <mat-label>Monto</mat-label>
                   <input
                     matInput
-                    type="text"
-                    placeholder="Clave IPTV"
-                    formControlName="passIptv"
+                    type="number"
+                    formControlName="installationAmount"
+                    step="any"
                   />
                 </mat-form-field>
               </div>
             </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="col-12 col-md-6 d-grid">
-        <div class="row">
-          <div class="col-12 col-md-3">
-            <mat-checkbox formControlName="prepayment"
-              >Pago por adelantado</mat-checkbox
-            >
-          </div>
-
-          <div class="col-12 col-md-3">
-            <mat-checkbox formControlName="installationPayment"
-              >Cobrar Instalación</mat-checkbox
-            >
-          </div>
-
-          <div class="col-12 col-md-2">
-            <mat-form-field
-              *ngIf="formContrato.get('installationPayment')?.value == true"
-              class="control-full-width"
-              appearance="fill"
-            >
-              <mat-label>Monto</mat-label>
-              <input
-                matInput
-                type="number"
-                step="any"
-                placeholder="Monto"
-                formControlName="installationAmount"
-              />
-            </mat-form-field>
-          </div>
-
-          <div class="col-12 col-md-4">
-            <mat-form-field class="control-full-width" appearance="fill">
-              <mat-label>Promoción</mat-label>
-              <mat-select formControlName="promotionId">
-                @for (promotion of promotions; track promotion) {
-                <mat-option [value]="promotion.id">{{
-                  promotion.name
-                }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Botones -->
-    <div class="row-buttons">
+    <div class="d-flex justify-content-end gap-2 mt-3">
       <button
-        [disabled]="formContrato.invalid"
-        color="primary"
+        type="submit"
         mat-raised-button
-        style="margin-right: 5px"
+        color="primary"
+        [disabled]="formContrato.invalid"
       >
         Guardar
       </button>
-
-      <button type="button" (click)="cancel()" color="accent" mat-raised-button>
+      <button type="button" mat-raised-button color="accent" (click)="cancel()">
         Cancelar
       </button>
     </div>
-
-    <!-- Texts bootstrap -->
   </form>
 </div>

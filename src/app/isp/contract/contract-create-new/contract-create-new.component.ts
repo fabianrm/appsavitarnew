@@ -56,6 +56,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   filteredEquipos!: Observable<Equipment[]>;
   selectedEquipment!: Equipment | null;
 
+  allPromotions: Promotion[] = [];
   promotions: Promotion[] = [];
 
   filteredBox!: Observable<Box[]>;
@@ -86,7 +87,6 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     private locationService: PlacesService,
     private mapleafService: MapleafService,
 
-
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
     private router: Router,
@@ -99,6 +99,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     // console.log(this.locationService.location);
     this.initForm();
     this.clearCoordinates();
+    this.getPromotions();
     this.getLocations();
     this.getCustomerById();
 
@@ -107,7 +108,6 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     this.getRouters();
     this.getBoxs();
     this.getEquipments();
-    this.getPromotions();
 
     //Obtener la direccion
     this.mapleafService.currentAddress.subscribe(address => {
@@ -117,13 +117,11 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       });
     });
 
-
   }
 
 
   //Initform
   initForm() {
-
     const formControlsConfig = {
       customerId: [''],
       planId: [this.planInicial, Validators.required],
@@ -154,7 +152,6 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       check: [false],
     }
 
-
     this.formContrato = this.formulario.group(formControlsConfig);
 
     //Convertir a mayusculas
@@ -166,18 +163,11 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       }
     });
 
-
     //Subscribirse a los cambios del combo equipo
     this.formContrato.get('equipmentId')!.valueChanges.subscribe(value => {
       this.selectedEquipment = typeof value === 'object' ? value : null;
     });
 
-    //Filtrar combo equipos por serie
-    // this.filteredEquipos = this.formContrato.get('equipmentId')!.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => (typeof value === 'string' ? value : value?.serie)),
-    //   map(serie => (serie ? this._filter(serie) : this.equipments.slice()))
-    // );
 
     // Filtrar combo equipos por serie o mac
     this.filteredEquipos = this.formContrato.get('equipmentId')!.valueChanges.pipe(
@@ -251,7 +241,6 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   }
 
 
-
   //Setear direccion de cliente
   onCheckboxChange(checked: boolean) {
     if (checked) {
@@ -261,7 +250,6 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       this.enableControls();
     }
   }
-
 
   //agregar validacion al monto de instalacion
   onCheckInstallationPay(checked: boolean) {
@@ -333,15 +321,25 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   getPromotions() {
     this.promotionService.getPromotions().subscribe((respuesta: PromotionResponse) => {
       if (respuesta.data.length > 0) {
-        this.promotions = respuesta.data.filter(x => x.status === 'Activa');
+        this.allPromotions = respuesta.data.filter(x => x.status === 'Activa');
       }
     });
+  }
+
+  //Obtener la promo seleccionada
+  get selectedPromotion(): Promotion | undefined {
+    const selectedId = this.formContrato.get('promotionId')?.value;
+    return this.promotions.find(p => p.id === selectedId);
   }
 
   //Obtener plan por id
   getPlanbyID(id: number) {
     if (this.planes.length > 0) {
       this.planSelected = this.planes.filter(plan => plan.id == id);
+      // Filtrar promociones activas en memoria según plan
+      this.promotions = this.allPromotions.filter(x => x.plan.id === id);
+      // Resetear promoción seleccionada
+      this.formContrato.get('promotionId')?.setValue(0);
     }
   }
 
@@ -380,7 +378,6 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
         this.equipments = respuesta.data
         // console.log(this.equipments);
       }
-
     });
   }
 
@@ -507,6 +504,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     const installDate = new Date(formData.installationDate).toISOString().split('T')[0];
     const equipmentId = this.equipmentIdValue;
     const boxId = this.boxIdValue;
+    const promotionID = this.formContrato.get('promotionId')?.value === 0 ? null : this.formContrato.get('promotionId')?.value;
 
     const dataToSend = {
       ...formData,
@@ -514,6 +512,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       installationDate: installDate,
       equipmentId: equipmentId,
       boxId: boxId,
+      promotionId: promotionID
     };
 
     if (this.formContrato.valid) {

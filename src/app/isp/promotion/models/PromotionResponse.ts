@@ -10,7 +10,9 @@ export interface PromotionSingleResponse {
 export interface Promotion {
     id: number;
     enterprise: string;
+    plan: Plan;
     name: string;
+    description: string;
     start_date: string;
     end_date: string;
     price: string;
@@ -18,4 +20,9 @@ export interface Promotion {
     status: string;
     created_at: Date;
     created_by: string;
+}
+
+interface Plan {
+    id: number;
+    name: string;
 }

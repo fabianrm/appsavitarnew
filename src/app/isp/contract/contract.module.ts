@@ -79,7 +79,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatAutocompleteModule,
     MatCheckboxModule,
     MapleafModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTabsModule,
 
   ],
   providers: [

@@ -15,7 +15,7 @@ import { PromotionService } from '../promotion.service';
 })
 export class PromotionListComponent {
 
-  displayedColumns: string[] = ['id', 'nombre', 'fecha_inicio', 'fecha_fin', 'precio', 'duracion', 'estado', 'acciones'];
+  displayedColumns: string[] = ['id', 'nombre', 'plan', 'fecha_inicio', 'fecha_fin', 'precio', 'duracion', 'estado', 'acciones'];
   public dataSource!: MatTableDataSource<Promotion>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

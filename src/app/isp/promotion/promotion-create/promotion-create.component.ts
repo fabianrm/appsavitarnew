@@ -6,6 +6,8 @@ import { PromotionService } from '../promotion.service';
 import { switchMap } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { Promotion } from '../models';
+import { PlanService } from '../../plan/plan.service';
+import { ReqPlan } from '../../plan/Models/ResponsePlan';
 
 
 @Component({
@@ -21,10 +23,14 @@ export class PromotionCreateComponent implements OnInit {
   private activateRoute = inject(ActivatedRoute);
   private snackbarService = inject(SnackbarService);
   private promotionService = inject(PromotionService);
+  private planService = inject(PlanService);
+
+  plans: ReqPlan[] = [];
 
 
   ngOnInit(): void {
     this.initForm();
+    this.getPlans();
 
     if (!this.router.url.includes('edit')) return;
 
@@ -38,7 +44,8 @@ export class PromotionCreateComponent implements OnInit {
           ...promotion,
           start_date: new Date(promotion.start_date + ' 0:00:00'),
           end_date: new Date(promotion.end_date + ' 0:00:00'),
-          status: promotion.status == 'Activa' ? true : false
+          plan_id: promotion.plan.id,
+          status: promotion.status == 'Activa' ? true : false,
         });
 
         return;
@@ -49,7 +56,9 @@ export class PromotionCreateComponent implements OnInit {
   private initForm() {
     this.promotionForm = this.fb.group({
       id: [''],
+      plan_id: ['', Validators.required],
       name: ['', Validators.required],
+      description: [''],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       price: ['', Validators.required],
@@ -63,10 +72,17 @@ export class PromotionCreateComponent implements OnInit {
     return promotion;
   }
 
-
-
   goPromotions() {
     this.router.navigate(['/dashboard/promotion/promotions']);
+  }
+
+
+  getPlans() {
+    this.planService.getPlans().subscribe((respuesta) => {
+      if (respuesta.data.length > 0) {
+        this.plans = respuesta.data
+      }
+    });
   }
 
   enviarDatos() {

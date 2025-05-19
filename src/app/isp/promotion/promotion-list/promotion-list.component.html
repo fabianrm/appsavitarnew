@@ -37,6 +37,14 @@
         </td>
       </ng-container>
 
+      <!-- Plan -->
+      <ng-container matColumnDef="plan">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Plan</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.plan.name }}
+        </td>
+      </ng-container>
+
       <!-- Documento Column -->
       <ng-container matColumnDef="fecha_inicio">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Desde</th>

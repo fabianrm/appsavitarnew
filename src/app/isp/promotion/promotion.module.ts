@@ -17,6 +17,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatSortModule,
     MatTableModule,
     MatTableModule,
+    MatOptionModule,
+    MatSelectModule,
     ReactiveFormsModule,
   ]
 })
