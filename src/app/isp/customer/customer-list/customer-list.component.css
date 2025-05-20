@@ -24,10 +24,6 @@ mat-form-field {
   width: 100%;
 }
 
-button {
-  width: 100%;
-}
-
 .row-filter {
   margin: 5px;
   display: flex;

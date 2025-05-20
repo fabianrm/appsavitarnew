@@ -1,20 +1,10 @@
-<mat-sidenav-container class="sidenav-container" autosize>
-  <mat-sidenav
-    #drawer
-    fixedInViewport
-    class="dark-theme"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-    [ngClass]="isExpanded ? 'sidenav' : 'sidenav-collapsed'"
-    (mouseenter)="expandMenu()"
-    (mouseleave)="collapseMenu()"
-  >
-    <mat-toolbar class="toolbar">
-      <span *ngIf="isExpanded">Savitar</span>
-
-      <button mat-icon-button (click)="toggleMenu()">
-        <mat-icon>{{ isExpanded ? 'close' : 'menu' }}</mat-icon>
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '270px' }">
+    <mat-toolbar color="primary">
+      <span>Savitar</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
       </button>
     </mat-toolbar>
 
@@ -29,7 +19,7 @@
             <mat-icon>{{ node.icon }}</mat-icon>
             <span
               class="menu-text"
-              [ngClass]="{ 'active': isActive(node.route) }"
+              [ngClass]="{ active: isActive(node.route) }"
               >{{ node.name }}</span
             >
           </mat-panel-title>
@@ -52,41 +42,45 @@
     </mat-accordion>
   </mat-sidenav>
 
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        *ngIf="isHandset$ | async"
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-      >
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <!-- Agregamos el título con una clase para mejor control -->
+    <span class="text-lg title-bar">
       <span>{{ currentTitle }}</span>
+    </span>
+    <span class="spacer"></span>
+    <!-- Este div se ocultará en dispositivos móviles -->
+    <div class="welcome-info title-bar hide-on-mobile">
+      <span class="text-base">Bienvenido:Fabian</span>
+      <span class="text-sm">Nombre tienda</span>
+    </div>
 
-      <div class="divider"></div>
+    <mat-slide-toggle
+      color="accent"
+      [checked]="isDark"
+      (change)="setTheme($event.checked)"
+    >
+      Dark Mode
+    </mat-slide-toggle>
 
-      <mat-slide-toggle
-        color="accent"
-        [checked]="isDark"
-        (change)="setTheme($event.checked)"
-      >
-        Dark Mode
-      </mat-slide-toggle>
-
-      <button mat-icon-button [mat-menu-trigger-for]="menu">
-        <mat-icon>account_circle</mat-icon>
+    <button mat-icon-button [mat-menu-trigger-for]="menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="goCities()">Configurar Ciudades</button>
+      <button mat-menu-item (click)="detailEnterprise(this.id)">
+        Configurar Empresa
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="goCities()">Configurar Ciudades</button>
-        <button mat-menu-item (click)="detailEnterprise(this.id)">
-          Configurar Empresa
-        </button>
-        <button mat-menu-item>Cambiar Clave</button>
-        <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
-      </mat-menu>
-    </mat-toolbar>
+      <button mat-menu-item>Cambiar Clave</button>
+      <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <div class="container">
     <router-outlet></router-outlet>
-  </mat-sidenav-content>
+  </div>
 </mat-sidenav-container>
+
+<h5>Footer</h5>
