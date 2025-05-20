@@ -3,7 +3,6 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { SpinnerInterceptor } from './shared/spinner/spinner.interceptor';
@@ -25,7 +24,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { ExpenseModule } from './isp/expense/expense.module';
-import { RetryInterceptor } from './auth/retry.interceptor';
 import { ReasonModule } from './isp/reason/reason.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -39,8 +37,8 @@ import { ClientIdInterceptor } from './client-id.interceptor';
 import { BrandModule } from './isp/brand/brand.module';
 import { PermissionModule } from './auth/permission/permission.module';
 import { SuspensionModule } from './isp/suspension/suspension.module';
-
-
+import { MapleafModule } from './isp/mapleaf/mapleaf.module';
+import { FactibillityModule } from './isp/factibillity/factibillity.module';
 
 
 registerLocaleData(localeEsPe, 'es-PE');
@@ -77,7 +75,6 @@ export const MY_DATE_FORMATS: MatDateFormats = {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule,
     NavigationModule,
     CustomerModule,
     SuspensionModule,
@@ -93,21 +90,21 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatCardModule,
     MatMenuModule,
     MatButtonModule,
-    SharedModule,
     BrandModule,
-    PermissionModule
+    PermissionModule,
+    FactibillityModule
 
 
   ],
   providers: [
 
-    AppConfigService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      deps: [AppConfigService],
-      multi: true
-    },
+    // AppConfigService,
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initializeApp,
+    //   deps: [AppConfigService],
+    //   multi: true
+    // },
 
     provideClientHydration(),
     provideAnimationsAsync(),

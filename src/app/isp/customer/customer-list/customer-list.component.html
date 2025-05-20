@@ -1,4 +1,4 @@
-<div class="contenedor">
+<div class="container">
   <div class="row row-filter">
     <div class="col-12 col-md-8">
       <!--  Filtro -->
@@ -120,15 +120,9 @@
       </ng-container>
 
       <!-- Acciones -->
-      <ng-container matColumnDef="acciones" stickyEnd  >
+      <ng-container matColumnDef="acciones" stickyEnd>
         <th mat-header-cell *matHeaderCellDef>Accciones</th>
-        <td
-          mat-cell
-          *matCellDef="let row"
-          class=""
-          style="text-align: center"
-        >
-  
+        <td mat-cell *matCellDef="let row" class="" style="text-align: center">
           <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
           </button>
@@ -143,7 +137,7 @@
             </button>
             <button mat-menu-item (click)="openListContracts(row.id)">
               <mat-icon matListItemIcon>cable</mat-icon>
-             Contratos: {{row.totalContracts}}
+              Contratos: {{ row.totalContracts }}
             </button>
             <button
               mat-menu-item

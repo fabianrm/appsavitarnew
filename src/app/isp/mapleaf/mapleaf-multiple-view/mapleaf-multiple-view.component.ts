@@ -8,10 +8,10 @@ import { DataPoint } from '../Models/DataPoint';
 
 
 @Component({
-    selector: 'app-mapleaf-multiple-view',
-    templateUrl: './mapleaf-multiple-view.component.html',
-    styleUrls: ['./mapleaf-multiple-view.component.scss'],
-    standalone: false
+  selector: 'app-mapleaf-multiple-view',
+  templateUrl: './mapleaf-multiple-view.component.html',
+  styleUrls: ['./mapleaf-multiple-view.component.scss'],
+  standalone: false
 })
 export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;
@@ -103,6 +103,8 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
       'Hybrid': googHybrid,
     }, {}))
 
+
+
     // Agrega el control de geolocalización
     L.control.locate({
       position: 'bottomright', // Posición del botón en el mapa
@@ -112,7 +114,7 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
       strings: {
         title: "Dónde estoy?"
       },
-      icon: 'fa fa-location-arrow', // Cambiar el icono si usas FontAwesome
+      icon: undefined, // Cambiar el icono si usas FontAwesome
     }).addTo(this.map);
 
     this.map.on('click', (e: L.LeafletMouseEvent) => {

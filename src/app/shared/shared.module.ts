@@ -4,18 +4,16 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { MatIconModule } from '@angular/material/icon';
 
 
-
-
 @NgModule({
   declarations: [
-    SnackbarComponent
+    SnackbarComponent,
   ],
   imports: [
     CommonModule,
     MatIconModule
   ],
   exports: [
-    SnackbarComponent
+    SnackbarComponent,
   ]
 })
 export class SharedModule { }

@@ -3,8 +3,8 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
-  margin: 0;
-  padding: 0;
+  // margin: 0;
+  // padding: 0;
 }
 
 .map-container {
@@ -23,20 +23,16 @@
   bottom: 0;
 }
 
-
 .filter-section {
-  background-color: rgba(179, 245, 179, 0.861);
-  position: sticky;
+  position: absolute;
+  right: 0;
+  right: 30;
   height: 65px;
-  z-index: 90;
+  z-index: 1000;
   display: flex;
-  justify-content: flex-end;
-  align-content: center;
-  align-items:  center;
-  padding-right: 30px;
-  height: 60px;
+  margin-right: 100px;
+  align-items: center;
 }
-
 
 /* city-dropdown.component.css */
 .dropdown-menu {
@@ -46,4 +42,10 @@
 
 .dropdown-item {
   cursor: pointer;
+}
+
+.mapa {
+  height: 93dvh;
+  width: 94dvw;
+  //position: relative;
 }

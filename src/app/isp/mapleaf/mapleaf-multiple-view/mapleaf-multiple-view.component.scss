@@ -7,5 +7,11 @@
 .map-container {
   height: 100%;
   width: 100%;
-  z-index: 3;
+  //z-index: 3;
+}
+
+.locate-icon {
+  background-image: url("/src/assets/location-on.svg"); // O cualquier ícono
+  background-size: contain;
+  background-repeat: no-repeat;
 }

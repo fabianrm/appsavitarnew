@@ -21,7 +21,6 @@ import { ResumeComponent } from './resume/resume.component';
     MatCardModule,
     MatMenuModule,
     DashboardRoutingModule,
-   
   ]
 })
 export class DashboardModule { }

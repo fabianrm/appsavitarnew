@@ -6,7 +6,7 @@ import { FactibillityInfoComponent } from './factibillity-info/factibillity-info
 
 const routes: Routes = [
   { path: 'factibillity-info', component: FactibillityInfoComponent, data: { title: 'Factibilidad Técnica' }, canActivate: [AuthGuard] },
-  
+
 ];
 
 @NgModule({
