@@ -14,7 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -24,37 +24,30 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
-@NgModule({
-  declarations: [
-    ReasonListComponent,
-    ReasonCreateComponent,
-    ReasonEditComponent
-  ],
-  imports: [
-    CommonModule,
-    ReasonRoutingModule,
-    HttpClientModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatCard,
-    MatCardActions,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
-    MatSelectModule,
-    MatOptionModule,
-    MatSlideToggleModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatTooltipModule
-
-  ]
-})
+@NgModule({ declarations: [
+        ReasonListComponent,
+        ReasonCreateComponent,
+        ReasonEditComponent
+    ], imports: [CommonModule,
+        ReasonRoutingModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatSnackBarModule,
+        MatCard,
+        MatCardActions,
+        MatCardContent,
+        MatCardHeader,
+        MatCardTitle,
+        MatSelectModule,
+        MatOptionModule,
+        MatSlideToggleModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatTooltipModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class ReasonModule { }

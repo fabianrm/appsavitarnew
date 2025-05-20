@@ -1,6 +1,6 @@
 import {  NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -26,43 +26,36 @@ import { MapleafModule } from '../mapleaf/mapleaf.module';
 import { CustomerSuspendComponent } from './customer-suspend/customer-suspend.component';
 
 
-@NgModule({
-  declarations: [
-    CustomerCreateComponent,
-    CustomerListComponent,
-    CustomerDetailsComponent,
-    CustomerEditComponent,
-    ContractsListComponent,
-    CustomerSuspendComponent
-  ],
-  imports: [
-    CommonModule,
-    CustomerRoutingModule,
-    HttpClientModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatCard,
-    MatCardActions,
-    MatMenu,
-    MatMenuModule,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardSubtitle,
-    MatSelectModule,
-    MatOptionModule,
-    MatSlideToggleModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatTooltipModule,
-    MapleafModule
-
-  ]
-})
+@NgModule({ declarations: [
+        CustomerCreateComponent,
+        CustomerListComponent,
+        CustomerDetailsComponent,
+        CustomerEditComponent,
+        ContractsListComponent,
+        CustomerSuspendComponent
+    ], imports: [CommonModule,
+        CustomerRoutingModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatCard,
+        MatCardActions,
+        MatMenu,
+        MatMenuModule,
+        MatCardContent,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardSubtitle,
+        MatSelectModule,
+        MatOptionModule,
+        MatSlideToggleModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatTooltipModule,
+        MapleafModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class CustomerModule { }

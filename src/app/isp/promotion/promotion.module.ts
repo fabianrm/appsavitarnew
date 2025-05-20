@@ -16,38 +16,32 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 
 
-@NgModule({
-  declarations: [
-    PromotionListComponent,
-    PromotionCreateComponent
-  ],
-  imports: [
-    CommonModule,
-    PromotionRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatPaginatorModule,
-    MatSlideToggleModule,
-    MatSortModule,
-    MatSortModule,
-    MatTableModule,
-    MatTableModule,
-    MatOptionModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-  ]
-})
+@NgModule({ declarations: [
+        PromotionListComponent,
+        PromotionCreateComponent
+    ], imports: [CommonModule,
+        PromotionRoutingModule,
+        FormsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule,
+        MatPaginatorModule,
+        MatPaginatorModule,
+        MatSlideToggleModule,
+        MatSortModule,
+        MatSortModule,
+        MatTableModule,
+        MatTableModule,
+        MatOptionModule,
+        MatSelectModule,
+        ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class PromotionModule { }

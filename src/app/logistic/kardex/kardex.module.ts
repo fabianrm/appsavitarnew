@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KardexRoutingModule } from './kardex-routing.module';
 import { KardexMaterialComponent } from './kardex-material/kardex-material.component';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle, MatCardSubtitle } from '@angular/material/card';
