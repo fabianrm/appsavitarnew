@@ -11,9 +11,10 @@ import { ReasonEditComponent } from '../reason-edit/reason-edit.component';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-reason-list',
-  templateUrl: './reason-list.component.html',
-  styleUrl: './reason-list.component.scss'
+    selector: 'app-reason-list',
+    templateUrl: './reason-list.component.html',
+    styleUrl: './reason-list.component.scss',
+    standalone: false
 })
 export class ReasonListComponent {
 

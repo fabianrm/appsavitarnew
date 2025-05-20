@@ -6,9 +6,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-role-create',
-  templateUrl: './role-create.component.html',
-  styleUrl: './role-create.component.scss'
+    selector: 'app-role-create',
+    templateUrl: './role-create.component.html',
+    styleUrl: './role-create.component.scss',
+    standalone: false
 })
 export class RoleCreateComponent {
 

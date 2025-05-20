@@ -13,9 +13,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EnterpriseService } from '../enterprise.service';
 
 @Component({
-  selector: 'app-enterprise-edit',
-  templateUrl: './enterprise-edit.component.html',
-  styleUrl: './enterprise-edit.component.scss'
+    selector: 'app-enterprise-edit',
+    templateUrl: './enterprise-edit.component.html',
+    styleUrl: './enterprise-edit.component.scss',
+    standalone: false
 })
 export class EnterpriseEditComponent implements OnInit {
 

@@ -7,9 +7,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-router-create',
-  templateUrl: './router-create.component.html',
-  styleUrl: './router-create.component.css'
+    selector: 'app-router-create',
+    templateUrl: './router-create.component.html',
+    styleUrl: './router-create.component.css',
+    standalone: false
 })
 export class RouterCreateComponent {
   formRouter!: FormGroup;

@@ -9,9 +9,10 @@ import { MatSort } from '@angular/material/sort';
 
 
 @Component({
-  selector: 'app-entry-details',
-  templateUrl: './entry-details.component.html',
-  styleUrl: './entry-details.component.scss'
+    selector: 'app-entry-details',
+    templateUrl: './entry-details.component.html',
+    styleUrl: './entry-details.component.scss',
+    standalone: false
 })
 export class EntryDetailsComponent {
 

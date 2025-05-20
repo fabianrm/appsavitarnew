@@ -6,9 +6,10 @@ import { PlanService } from '../plan.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-plan-create',
-  templateUrl: './plan-create.component.html',
-  styleUrl: './plan-create.component.css'
+    selector: 'app-plan-create',
+    templateUrl: './plan-create.component.html',
+    styleUrl: './plan-create.component.css',
+    standalone: false
 })
 export class PlanCreateComponent {
   formCreate!: FormGroup;

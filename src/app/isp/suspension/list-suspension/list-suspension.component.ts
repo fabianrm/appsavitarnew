@@ -8,9 +8,10 @@ import { SuspensionService } from '../suspension.service';
 import { Suspension } from '../models/SuspensionResponse';
 
 @Component({
-  selector: 'app-list-suspension',
-  templateUrl: './list-suspension.component.html',
-  styleUrl: './list-suspension.component.scss'
+    selector: 'app-list-suspension',
+    templateUrl: './list-suspension.component.html',
+    styleUrl: './list-suspension.component.scss',
+    standalone: false
 })
 export class ListSuspensionComponent implements OnInit {
 

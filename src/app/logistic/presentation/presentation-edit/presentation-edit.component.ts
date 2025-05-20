@@ -7,9 +7,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { Presentation } from './../models/PresentationResponse';
 
 @Component({
-  selector: 'app-presentation-edit',
-  templateUrl: './presentation-edit.component.html',
-  styleUrl: './presentation-edit.component.scss'
+    selector: 'app-presentation-edit',
+    templateUrl: './presentation-edit.component.html',
+    styleUrl: './presentation-edit.component.scss',
+    standalone: false
 })
 export class PresentationEditComponent {
   formEdit!: FormGroup;

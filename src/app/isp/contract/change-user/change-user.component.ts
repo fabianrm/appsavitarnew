@@ -6,9 +6,10 @@ import { ContractService } from '../contract.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-change-user',
-  templateUrl: './change-user.component.html',
-  styleUrl: './change-user.component.scss'
+    selector: 'app-change-user',
+    templateUrl: './change-user.component.html',
+    styleUrl: './change-user.component.scss',
+    standalone: false
 })
 export class ChangeUserComponent {
 

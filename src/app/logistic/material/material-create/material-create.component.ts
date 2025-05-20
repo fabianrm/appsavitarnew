@@ -13,9 +13,10 @@ import { ThemePalette } from '@angular/material/core';
 import { HttpEventType } from '@angular/common/http';
 
 @Component({
-  selector: 'app-material-create',
-  templateUrl: './material-create.component.html',
-  styleUrl: './material-create.component.scss'
+    selector: 'app-material-create',
+    templateUrl: './material-create.component.html',
+    styleUrl: './material-create.component.scss',
+    standalone: false
 })
 export class MaterialCreateComponent implements OnInit {
 

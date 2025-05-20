@@ -8,9 +8,10 @@ import { ContractService } from '../contract.service';
 import { ReqRouter, ResponseRouter } from '../../router/Models/ResponseRouter';
 
 @Component({
-  selector: 'app-change-vlan',
-  templateUrl: './change-vlan.component.html',
-  styleUrl: './change-vlan.component.scss'
+    selector: 'app-change-vlan',
+    templateUrl: './change-vlan.component.html',
+    styleUrl: './change-vlan.component.scss',
+    standalone: false
 })
 export class ChangeVlanComponent {
 

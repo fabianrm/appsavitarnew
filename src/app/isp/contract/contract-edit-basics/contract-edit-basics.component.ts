@@ -12,9 +12,10 @@ import { Subscription } from 'rxjs';
 import { Service } from '../Models/ServiceResponse';
 
 @Component({
-  selector: 'app-contract-edit-basics',
-  templateUrl: './contract-edit-basics.component.html',
-  styleUrl: './contract-edit-basics.component.scss'
+    selector: 'app-contract-edit-basics',
+    templateUrl: './contract-edit-basics.component.html',
+    styleUrl: './contract-edit-basics.component.scss',
+    standalone: false
 })
 export class ContractEditBasicsComponent implements OnInit {
 

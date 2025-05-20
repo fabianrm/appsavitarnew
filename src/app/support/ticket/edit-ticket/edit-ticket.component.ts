@@ -15,9 +15,10 @@ import { Ticket } from '../Models/TicketResponse';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-edit-ticket',
-  templateUrl: './edit-ticket.component.html',
-  styleUrl: './edit-ticket.component.scss'
+    selector: 'app-edit-ticket',
+    templateUrl: './edit-ticket.component.html',
+    styleUrl: './edit-ticket.component.scss',
+    standalone: false
 })
 export class EditTicketComponent implements OnInit {
 

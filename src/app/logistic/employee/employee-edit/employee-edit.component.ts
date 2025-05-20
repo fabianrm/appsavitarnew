@@ -8,9 +8,10 @@ import { Employee } from '../models/EmployeeResponse';
 import { AuthService } from '../../../auth/auth.service';
 
 @Component({
-  selector: 'app-employee-edit',
-  templateUrl: './employee-edit.component.html',
-  styleUrl: './employee-edit.component.scss'
+    selector: 'app-employee-edit',
+    templateUrl: './employee-edit.component.html',
+    styleUrl: './employee-edit.component.scss',
+    standalone: false
 })
 export class EmployeeEditComponent {
 

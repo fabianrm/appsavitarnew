@@ -6,9 +6,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-role-edit',
-  templateUrl: './role-edit.component.html',
-  styleUrl: './role-edit.component.scss'
+    selector: 'app-role-edit',
+    templateUrl: './role-edit.component.html',
+    styleUrl: './role-edit.component.scss',
+    standalone: false
 })
 export class RoleEditComponent {
   formRole!: FormGroup;

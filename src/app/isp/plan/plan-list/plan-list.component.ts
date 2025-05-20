@@ -13,9 +13,10 @@ import { PlanService } from '../plan.service';
 
 
 @Component({
-  selector: 'app-plan-list',
-  templateUrl: './plan-list.component.html',
-  styleUrl: './plan-list.component.css'
+    selector: 'app-plan-list',
+    templateUrl: './plan-list.component.html',
+    styleUrl: './plan-list.component.css',
+    standalone: false
 })
 export class PlanListComponent {
   displayedColumns: string[] = ['id', 'name', 'download', 'upload', 'price', 'guaranteed_speed', 'priority', 'burst_limit', 'burst_threshold','burst_time', 'status', 'acciones'];

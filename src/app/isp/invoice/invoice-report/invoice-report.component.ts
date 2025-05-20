@@ -10,9 +10,10 @@ import { saveAs } from 'file-saver';
 
 
 @Component({
-  selector: 'app-invoice-report',
-  templateUrl: './invoice-report.component.html',
-  styleUrl: './invoice-report.component.scss'
+    selector: 'app-invoice-report',
+    templateUrl: './invoice-report.component.html',
+    styleUrl: './invoice-report.component.scss',
+    standalone: false
 })
 export class InvoiceReportComponent implements OnInit {
 

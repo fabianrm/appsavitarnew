@@ -9,9 +9,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { PromotionService } from '../promotion.service';
 
 @Component({
-  selector: 'app-promotion-list',
-  templateUrl: './promotion-list.component.html',
-  styleUrl: './promotion-list.component.scss'
+    selector: 'app-promotion-list',
+    templateUrl: './promotion-list.component.html',
+    styleUrl: './promotion-list.component.scss',
+    standalone: false
 })
 export class PromotionListComponent {
 

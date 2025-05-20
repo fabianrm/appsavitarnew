@@ -6,9 +6,10 @@ import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-material-location',
-  templateUrl: './material-location.component.html',
-  styleUrl: './material-location.component.scss'
+    selector: 'app-material-location',
+    templateUrl: './material-location.component.html',
+    styleUrl: './material-location.component.scss',
+    standalone: false
 })
 export class MaterialLocationComponent {
   displayedColumns: string[] = ['warehouse', 'location'];

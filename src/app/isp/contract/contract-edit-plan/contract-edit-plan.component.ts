@@ -8,9 +8,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { Service } from '../Models/ServiceResponse';
 
 @Component({
-  selector: 'app-contract-edit-plan',
-  templateUrl: './contract-edit-plan.component.html',
-  styleUrl: './contract-edit-plan.component.scss'
+    selector: 'app-contract-edit-plan',
+    templateUrl: './contract-edit-plan.component.html',
+    styleUrl: './contract-edit-plan.component.scss',
+    standalone: false
 })
 export class ContractEditPlanComponent implements OnInit {
 

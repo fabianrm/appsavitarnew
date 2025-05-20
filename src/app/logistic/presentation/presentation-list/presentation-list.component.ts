@@ -10,9 +10,10 @@ import { PresentationCreateComponent } from '../presentation-create/presentation
 import { PresentationEditComponent } from '../presentation-edit/presentation-edit.component';
 
 @Component({
-  selector: 'app-presentation-list',
-  templateUrl: './presentation-list.component.html',
-  styleUrl: './presentation-list.component.scss'
+    selector: 'app-presentation-list',
+    templateUrl: './presentation-list.component.html',
+    styleUrl: './presentation-list.component.scss',
+    standalone: false
 })
 export class PresentationListComponent {
 

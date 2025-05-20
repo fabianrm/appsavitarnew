@@ -6,9 +6,10 @@ import { Service } from '../../contract/Models/ServiceResponse';
 
 
 @Component({
-  selector: 'app-contracts-list',
-  templateUrl: './contracts-list.component.html',
-  styleUrl: './contracts-list.component.scss'
+    selector: 'app-contracts-list',
+    templateUrl: './contracts-list.component.html',
+    styleUrl: './contracts-list.component.scss',
+    standalone: false
 })
 export class ContractsListComponent implements OnInit {
 

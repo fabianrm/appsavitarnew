@@ -11,9 +11,10 @@ import { ReqPlan } from '../../plan/Models/ResponsePlan';
 
 
 @Component({
-  selector: 'app-promotion-create',
-  templateUrl: './promotion-create.component.html',
-  styleUrl: './promotion-create.component.scss'
+    selector: 'app-promotion-create',
+    templateUrl: './promotion-create.component.html',
+    styleUrl: './promotion-create.component.scss',
+    standalone: false
 })
 export class PromotionCreateComponent implements OnInit {
 

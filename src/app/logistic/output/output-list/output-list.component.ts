@@ -11,9 +11,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OutputDetailsComponent } from '../output-details/output-details.component';
 
 @Component({
-  selector: 'app-output-list',
-  templateUrl: './output-list.component.html',
-  styleUrl: './output-list.component.scss'
+    selector: 'app-output-list',
+    templateUrl: './output-list.component.html',
+    styleUrl: './output-list.component.scss',
+    standalone: false
 })
 export class OutputListComponent implements OnInit {
 

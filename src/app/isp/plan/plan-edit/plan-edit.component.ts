@@ -7,9 +7,10 @@ import { PlanService } from '../plan.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-plan-edit',
-  templateUrl: './plan-edit.component.html',
-  styleUrl: './plan-edit.component.css'
+    selector: 'app-plan-edit',
+    templateUrl: './plan-edit.component.html',
+    styleUrl: './plan-edit.component.css',
+    standalone: false
 })
 export class PlanEditComponent {
   formEditPlan!: FormGroup;

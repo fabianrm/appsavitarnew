@@ -7,9 +7,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OutputDetail } from '../models/OutputResponse';
 
 @Component({
-  selector: 'app-output-details',
-  templateUrl: './output-details.component.html',
-  styleUrl: './output-details.component.scss'
+    selector: 'app-output-details',
+    templateUrl: './output-details.component.html',
+    styleUrl: './output-details.component.scss',
+    standalone: false
 })
 export class OutputDetailsComponent {
 

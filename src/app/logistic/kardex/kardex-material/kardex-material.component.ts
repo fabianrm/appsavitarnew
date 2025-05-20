@@ -4,9 +4,10 @@ import { KardexService } from '../kardex.service';
 import { Kardex } from '../models/KardexResponse';
 
 @Component({
-  selector: 'app-kardex-material',
-  templateUrl: './kardex-material.component.html',
-  styleUrl: './kardex-material.component.scss'
+    selector: 'app-kardex-material',
+    templateUrl: './kardex-material.component.html',
+    styleUrl: './kardex-material.component.scss',
+    standalone: false
 })
 export class KardexMaterialComponent implements OnInit {
 

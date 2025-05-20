@@ -8,9 +8,10 @@ import { EnterpriseService } from '../../isp/enterprise/enterprise.service';
 import { Enterprise } from '../../isp/enterprise/Models/EnterpriseResponse';
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css'
+    selector: 'app-auth',
+    templateUrl: './auth.component.html',
+    styleUrl: './auth.component.css',
+    standalone: false
 })
 export class AuthComponent implements OnInit {
   email: string = '';

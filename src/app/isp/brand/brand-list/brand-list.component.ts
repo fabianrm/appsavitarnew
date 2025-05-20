@@ -10,9 +10,10 @@ import { BrandCreateComponent } from '../brand-create/brand-create.component';
 import { BrandEditComponent } from '../brand-edit/brand-edit.component';
 
 @Component({
-  selector: 'app-brand-list',
-  templateUrl: './brand-list.component.html',
-  styleUrl: './brand-list.component.scss'
+    selector: 'app-brand-list',
+    templateUrl: './brand-list.component.html',
+    styleUrl: './brand-list.component.scss',
+    standalone: false
 })
 export class BrandListComponent {
 

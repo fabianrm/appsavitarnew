@@ -20,9 +20,10 @@ interface Estado {
 
 
 @Component({
-  selector: 'app-equipment-create',
-  templateUrl: './equipment-create.component.html',
-  styleUrl: './equipment-create.component.scss'
+    selector: 'app-equipment-create',
+    templateUrl: './equipment-create.component.html',
+    styleUrl: './equipment-create.component.scss',
+    standalone: false
 })
 export class EquipmentCreateComponent implements OnInit {
 

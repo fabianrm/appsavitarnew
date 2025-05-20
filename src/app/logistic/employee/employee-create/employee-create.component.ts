@@ -6,9 +6,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { AuthService } from '../../../auth/auth.service';
 
 @Component({
-  selector: 'app-employee-create',
-  templateUrl: './employee-create.component.html',
-  styleUrl: './employee-create.component.scss'
+    selector: 'app-employee-create',
+    templateUrl: './employee-create.component.html',
+    styleUrl: './employee-create.component.scss',
+    standalone: false
 })
 export class EmployeeCreateComponent {
 

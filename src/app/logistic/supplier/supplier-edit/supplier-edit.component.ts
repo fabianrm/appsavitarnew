@@ -7,9 +7,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { SupplierRequest } from '../models/SupplierRequest';
 
 @Component({
-  selector: 'app-supplier-edit',
-  templateUrl: './supplier-edit.component.html',
-  styleUrl: './supplier-edit.component.scss'
+    selector: 'app-supplier-edit',
+    templateUrl: './supplier-edit.component.html',
+    styleUrl: './supplier-edit.component.scss',
+    standalone: false
 })
 export class SupplierEditComponent {
 

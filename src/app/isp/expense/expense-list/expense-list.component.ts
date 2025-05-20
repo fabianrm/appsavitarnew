@@ -15,9 +15,10 @@ import { ExpensePaidComponent } from '../expense-paid/expense-paid.component';
 
 
 @Component({
-  selector: 'app-expense-list',
-  templateUrl: './expense-list.component.html',
-  styleUrl: './expense-list.component.scss'
+    selector: 'app-expense-list',
+    templateUrl: './expense-list.component.html',
+    styleUrl: './expense-list.component.scss',
+    standalone: false
 })
 export class ExpenseListComponent implements OnInit, OnDestroy {
 

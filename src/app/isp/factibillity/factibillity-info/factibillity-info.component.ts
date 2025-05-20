@@ -6,9 +6,10 @@ import { CityService } from '../../city/city.service';
 import { City } from '../../city/Models/CityResponse';
 
 @Component({
-  selector: 'app-factibillity-info',
-  templateUrl: './factibillity-info.component.html',
-  styleUrl: './factibillity-info.component.scss'
+    selector: 'app-factibillity-info',
+    templateUrl: './factibillity-info.component.html',
+    styleUrl: './factibillity-info.component.scss',
+    standalone: false
 })
 export class FactibillityInfoComponent implements OnInit {
 

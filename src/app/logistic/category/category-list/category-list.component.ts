@@ -10,9 +10,10 @@ import { CategoryCreateComponent } from '../category-create/category-create.comp
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
 
 @Component({
-  selector: 'app-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.scss'
+    selector: 'app-category-list',
+    templateUrl: './category-list.component.html',
+    styleUrl: './category-list.component.scss',
+    standalone: false
 })
 export class CategoryListComponent {
 

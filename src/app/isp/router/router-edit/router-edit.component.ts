@@ -8,9 +8,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 
 @Component({
-  selector: 'app-router-edit',
-  templateUrl: './router-edit.component.html',
-  styleUrl: './router-edit.component.css'
+    selector: 'app-router-edit',
+    templateUrl: './router-edit.component.html',
+    styleUrl: './router-edit.component.css',
+    standalone: false
 })
 export class RouterEditComponent {
   formEditRouter!: FormGroup;

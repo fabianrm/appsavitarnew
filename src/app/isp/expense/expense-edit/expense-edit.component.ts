@@ -11,9 +11,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 
 @Component({
-  selector: 'app-expense-edit',
-  templateUrl: './expense-edit.component.html',
-  styleUrl: './expense-edit.component.scss'
+    selector: 'app-expense-edit',
+    templateUrl: './expense-edit.component.html',
+    styleUrl: './expense-edit.component.scss',
+    standalone: false
 })
 export class ExpenseEditComponent {
 

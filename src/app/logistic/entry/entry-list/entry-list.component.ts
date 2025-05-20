@@ -12,9 +12,10 @@ import Swal from 'sweetalert2';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-entry-list',
-  templateUrl: './entry-list.component.html',
-  styleUrl: './entry-list.component.scss'
+    selector: 'app-entry-list',
+    templateUrl: './entry-list.component.html',
+    styleUrl: './entry-list.component.scss',
+    standalone: false
 })
 export class EntryListComponent implements OnInit {
 

@@ -12,9 +12,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-entry-select-dialog',
-  templateUrl: './entry-select-dialog.component.html',
-  styleUrl: './entry-select-dialog.component.scss'
+    selector: 'app-entry-select-dialog',
+    templateUrl: './entry-select-dialog.component.html',
+    styleUrl: './entry-select-dialog.component.scss',
+    standalone: false
 })
 export class EntrySelectDialogComponent {
 

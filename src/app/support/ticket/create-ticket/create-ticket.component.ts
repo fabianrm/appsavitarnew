@@ -12,9 +12,10 @@ import { DestinationService } from '../../../logistic/destination/destination.se
 import { Destination } from '../../../logistic/destination/models/DestinationResponse';
 
 @Component({
-  selector: 'app-create-ticket',
-  templateUrl: './create-ticket.component.html',
-  styleUrl: './create-ticket.component.scss'
+    selector: 'app-create-ticket',
+    templateUrl: './create-ticket.component.html',
+    styleUrl: './create-ticket.component.scss',
+    standalone: false
 })
 export class CreateTicketComponent implements OnInit {
 

@@ -7,9 +7,10 @@ import { RoleService } from '../../../auth/role/role.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-add-role',
-  templateUrl: './add-role.component.html',
-  styleUrl: './add-role.component.scss'
+    selector: 'app-add-role',
+    templateUrl: './add-role.component.html',
+    styleUrl: './add-role.component.scss',
+    standalone: false
 })
 export class AddRoleComponent {
 

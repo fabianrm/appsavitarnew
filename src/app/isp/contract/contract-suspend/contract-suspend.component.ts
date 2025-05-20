@@ -7,9 +7,10 @@ import { ContractService } from '../contract.service';
 import { SuspensionService } from '../../suspension/suspension.service';
 
 @Component({
-  selector: 'app-contract-suspend',
-  templateUrl: './contract-suspend.component.html',
-  styleUrl: './contract-suspend.component.scss'
+    selector: 'app-contract-suspend',
+    templateUrl: './contract-suspend.component.html',
+    styleUrl: './contract-suspend.component.scss',
+    standalone: false
 })
 export class ContractSuspendComponent implements OnInit {
 

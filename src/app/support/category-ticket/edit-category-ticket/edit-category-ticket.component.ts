@@ -8,9 +8,10 @@ import { ThemePalette } from '@angular/material/core';
 import { CategoryTicket } from '../Models/CategoryTicketResponse';
 
 @Component({
-  selector: 'app-edit-category-ticket',
-  templateUrl: './edit-category-ticket.component.html',
-  styleUrl: './edit-category-ticket.component.scss'
+    selector: 'app-edit-category-ticket',
+    templateUrl: './edit-category-ticket.component.html',
+    styleUrl: './edit-category-ticket.component.scss',
+    standalone: false
 })
 export class EditCategoryTicketComponent {
 

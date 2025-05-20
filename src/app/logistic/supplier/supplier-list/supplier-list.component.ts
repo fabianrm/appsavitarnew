@@ -11,9 +11,10 @@ import { SupplierCreateComponent } from '../supplier-create/supplier-create.comp
 import { SupplierEditComponent } from '../supplier-edit/supplier-edit.component';
 
 @Component({
-  selector: 'app-supplier-list',
-  templateUrl: './supplier-list.component.html',
-  styleUrl: './supplier-list.component.scss'
+    selector: 'app-supplier-list',
+    templateUrl: './supplier-list.component.html',
+    styleUrl: './supplier-list.component.scss',
+    standalone: false
 })
 export class SupplierListComponent {
 

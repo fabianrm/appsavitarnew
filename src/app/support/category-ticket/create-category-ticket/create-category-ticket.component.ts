@@ -6,9 +6,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-create-category-ticket',
-  templateUrl: './create-category-ticket.component.html',
-  styleUrl: './create-category-ticket.component.scss'
+    selector: 'app-create-category-ticket',
+    templateUrl: './create-category-ticket.component.html',
+    styleUrl: './create-category-ticket.component.scss',
+    standalone: false
 })
 export class CreateCategoryTicketComponent {
 

@@ -23,9 +23,10 @@ interface Estado {
 
 
 @Component({
-  selector: 'app-equipment-edit',
-  templateUrl: './equipment-edit.component.html',
-  styleUrl: './equipment-edit.component.scss'
+    selector: 'app-equipment-edit',
+    templateUrl: './equipment-edit.component.html',
+    styleUrl: './equipment-edit.component.scss',
+    standalone: false
 })
 export class EquipmentEditComponent {
 

@@ -9,9 +9,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MaterialLocationComponent } from '../material-location/material-location.component';
 
 @Component({
-  selector: 'app-material-stock',
-  templateUrl: './material-stock.component.html',
-  styleUrl: './material-stock.component.scss'
+    selector: 'app-material-stock',
+    templateUrl: './material-stock.component.html',
+    styleUrl: './material-stock.component.scss',
+    standalone: false
 })
 export class MaterialStockComponent {
 

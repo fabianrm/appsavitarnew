@@ -20,9 +20,10 @@ import { EntryService } from '../entry.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-entry-create',
-  templateUrl: './entry-create.component.html',
-  styleUrl: './entry-create.component.scss'
+    selector: 'app-entry-create',
+    templateUrl: './entry-create.component.html',
+    styleUrl: './entry-create.component.scss',
+    standalone: false
 })
 export class EntryCreateComponent {
 

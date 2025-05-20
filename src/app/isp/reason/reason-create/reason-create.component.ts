@@ -12,9 +12,10 @@ interface Tipo {
 
 
 @Component({
-  selector: 'app-reason-create',
-  templateUrl: './reason-create.component.html',
-  styleUrl: './reason-create.component.scss'
+    selector: 'app-reason-create',
+    templateUrl: './reason-create.component.html',
+    styleUrl: './reason-create.component.scss',
+    standalone: false
 })
 export class ReasonCreateComponent implements OnInit {
 

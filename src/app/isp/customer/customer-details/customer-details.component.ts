@@ -8,9 +8,10 @@ import { Customer } from '../Models/CustomerResponseU';
 
 
 @Component({
-  selector: 'app-customer-details',
-  templateUrl: './customer-details.component.html',
-  styleUrls: ['./customer-details.component.scss']
+    selector: 'app-customer-details',
+    templateUrl: './customer-details.component.html',
+    styleUrls: ['./customer-details.component.scss'],
+    standalone: false
 })
 export class CustomerDetailsComponent implements OnInit {
 

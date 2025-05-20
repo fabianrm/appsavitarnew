@@ -19,9 +19,10 @@ import { SuspensionService } from '../../suspension/suspension.service';
 
 
 @Component({
-  selector: 'app-contract-list',
-  templateUrl: './contract-list.component.html',
-  styleUrl: './contract-list.component.scss'
+    selector: 'app-contract-list',
+    templateUrl: './contract-list.component.html',
+    styleUrl: './contract-list.component.scss',
+    standalone: false
 })
 export class ContractListComponent implements OnInit {
 

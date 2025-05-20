@@ -6,9 +6,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-brand-edit',
-  templateUrl: './brand-edit.component.html',
-  styleUrl: './brand-edit.component.scss'
+    selector: 'app-brand-edit',
+    templateUrl: './brand-edit.component.html',
+    styleUrl: './brand-edit.component.scss',
+    standalone: false
 })
 export class BrandEditComponent {
   formEdit!: FormGroup;

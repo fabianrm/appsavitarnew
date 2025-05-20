@@ -6,9 +6,10 @@ import { PlacesService } from '../../mapleaf/places.service';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 
 @Component({
-  selector: 'app-contract-detail',
-  templateUrl: './contract-detail.component.html',
-  styleUrl: './contract-detail.component.scss'
+    selector: 'app-contract-detail',
+    templateUrl: './contract-detail.component.html',
+    styleUrl: './contract-detail.component.scss',
+    standalone: false
 })
 export class ContractDetailComponent implements OnInit {
   id!: number;

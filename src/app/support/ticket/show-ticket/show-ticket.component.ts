@@ -7,9 +7,10 @@ import { MapleafService } from '../../../isp/mapleaf/mapleaf.service';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-show-ticket',
-  templateUrl: './show-ticket.component.html',
-  styleUrl: './show-ticket.component.scss'
+    selector: 'app-show-ticket',
+    templateUrl: './show-ticket.component.html',
+    styleUrl: './show-ticket.component.scss',
+    standalone: false
 })
 export class ShowTicketComponent {
 

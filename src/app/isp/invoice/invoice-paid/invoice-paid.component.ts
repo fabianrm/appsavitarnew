@@ -7,9 +7,10 @@ import Swal from "sweetalert2";
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-invoice-paid',
-  templateUrl: './invoice-paid.component.html',
-  styleUrl: './invoice-paid.component.scss'
+    selector: 'app-invoice-paid',
+    templateUrl: './invoice-paid.component.html',
+    styleUrl: './invoice-paid.component.scss',
+    standalone: false
 })
 export class InvoicePaidComponent implements OnInit {
 

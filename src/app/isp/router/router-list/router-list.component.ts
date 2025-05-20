@@ -13,9 +13,10 @@ import { RouterService } from '../router.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
-  selector: 'app-router-list',
-  templateUrl: './router-list.component.html',
-  styleUrl: './router-list.component.css'
+    selector: 'app-router-list',
+    templateUrl: './router-list.component.html',
+    styleUrl: './router-list.component.css',
+    standalone: false
 })
 export class RouterListComponent {
 

@@ -8,9 +8,10 @@ import { Subscription } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-attend-ticket',
-  templateUrl: './attend-ticket.component.html',
-  styleUrl: './attend-ticket.component.scss'
+    selector: 'app-attend-ticket',
+    templateUrl: './attend-ticket.component.html',
+    styleUrl: './attend-ticket.component.scss',
+    standalone: false
 })
 export class AttendTicketComponent {
 

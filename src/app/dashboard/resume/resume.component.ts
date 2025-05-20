@@ -6,9 +6,10 @@ import Chart from 'chart.js/auto';
 
 
 @Component({
-  selector: 'app-resume',
-  templateUrl: './resume.component.html',
-  styleUrl: './resume.component.scss'
+    selector: 'app-resume',
+    templateUrl: './resume.component.html',
+    styleUrl: './resume.component.scss',
+    standalone: false
 })
 export class ResumeComponent implements OnInit {
 

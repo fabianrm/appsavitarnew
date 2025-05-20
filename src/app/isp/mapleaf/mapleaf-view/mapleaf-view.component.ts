@@ -20,9 +20,10 @@ import { MapleafService } from '../mapleaf.service';
 
 
 @Component({
-  selector: 'app-mapleaf-view',
-  templateUrl: './mapleaf-view.component.html',
-  styleUrl: './mapleaf-view.component.scss'
+    selector: 'app-mapleaf-view',
+    templateUrl: './mapleaf-view.component.html',
+    styleUrl: './mapleaf-view.component.scss',
+    standalone: false
 })
 export class MapleafViewComponent implements OnInit, AfterViewInit, OnDestroy  {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;

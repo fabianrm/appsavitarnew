@@ -8,9 +8,10 @@ import { DestinationService } from '../destination.service';
 import { Destination } from '../models/DestinationResponse';
 
 @Component({
-  selector: 'app-use-materials',
-  templateUrl: './use-materials.component.html',
-  styleUrl: './use-materials.component.scss'
+    selector: 'app-use-materials',
+    templateUrl: './use-materials.component.html',
+    styleUrl: './use-materials.component.scss',
+    standalone: false
 })
 export class UseMaterialsComponent implements OnInit {
 

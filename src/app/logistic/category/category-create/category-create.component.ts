@@ -6,9 +6,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { CategoryService } from '../category.service';
 
 @Component({
-  selector: 'app-category-create',
-  templateUrl: './category-create.component.html',
-  styleUrl: './category-create.component.scss'
+    selector: 'app-category-create',
+    templateUrl: './category-create.component.html',
+    styleUrl: './category-create.component.scss',
+    standalone: false
 })
 export class CategoryCreateComponent {
 

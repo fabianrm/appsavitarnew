@@ -6,9 +6,10 @@ import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { Enterprise } from '../Models/EnterpriseResponse';
 
 @Component({
-  selector: 'app-enterprise-details',
-  templateUrl: './enterprise-details.component.html',
-  styleUrl: './enterprise-details.component.scss'
+    selector: 'app-enterprise-details',
+    templateUrl: './enterprise-details.component.html',
+    styleUrl: './enterprise-details.component.scss',
+    standalone: false
 })
 export class EnterpriseDetailsComponent {
   id!: number;

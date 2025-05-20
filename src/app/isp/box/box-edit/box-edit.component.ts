@@ -12,9 +12,10 @@ import { Subscription } from 'rxjs';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
 
 @Component({
-  selector: 'app-box-edit',
-  templateUrl: './box-edit.component.html',
-  styleUrl: './box-edit.component.css'
+    selector: 'app-box-edit',
+    templateUrl: './box-edit.component.html',
+    styleUrl: './box-edit.component.css',
+    standalone: false
 })
 export class BoxEditComponent implements OnInit, OnDestroy {
   formBox!: FormGroup;

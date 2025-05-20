@@ -6,9 +6,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-destination-create',
-  templateUrl: './destination-create.component.html',
-  styleUrl: './destination-create.component.scss'
+    selector: 'app-destination-create',
+    templateUrl: './destination-create.component.html',
+    styleUrl: './destination-create.component.scss',
+    standalone: false
 })
 export class DestinationCreateComponent {
 

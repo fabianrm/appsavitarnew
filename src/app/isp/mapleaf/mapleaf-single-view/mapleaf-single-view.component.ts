@@ -8,9 +8,10 @@ import 'leaflet.locatecontrol';
 
 
 @Component({
-  selector: 'app-mapleaf-single-view',
-  templateUrl: './mapleaf-single-view.component.html',
-  styleUrl: './mapleaf-single-view.component.scss'
+    selector: 'app-mapleaf-single-view',
+    templateUrl: './mapleaf-single-view.component.html',
+    styleUrl: './mapleaf-single-view.component.scss',
+    standalone: false
 })
 export class MapleafSingleViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;

@@ -12,9 +12,10 @@ import { ContractService } from '../contract.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-change-port',
-  templateUrl: './change-port.component.html',
-  styleUrl: './change-port.component.scss'
+    selector: 'app-change-port',
+    templateUrl: './change-port.component.html',
+    styleUrl: './change-port.component.scss',
+    standalone: false
 })
 export class ChangePortComponent implements OnInit {
 

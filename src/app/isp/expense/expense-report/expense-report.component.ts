@@ -11,9 +11,10 @@ import { ExpenseService } from '../expense.service';
 // registerLocaleData(localeEsPe, 'es-PE');
 
 @Component({
-  selector: 'app-expense-report',
-  templateUrl: './expense-report.component.html',
-  styleUrl: './expense-report.component.scss'
+    selector: 'app-expense-report',
+    templateUrl: './expense-report.component.html',
+    styleUrl: './expense-report.component.scss',
+    standalone: false
 })
 export class ExpenseReportComponent {
   displayedColumns: string[] = ['datePaid','type', 'reason', 'description', 'amount'];

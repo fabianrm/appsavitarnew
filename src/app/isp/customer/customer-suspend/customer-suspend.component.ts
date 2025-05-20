@@ -8,9 +8,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { Customer } from '../Models/CustomerResponseU_bak';
 
 @Component({
-  selector: 'app-customer-suspend',
-  templateUrl: './customer-suspend.component.html',
-  styleUrl: './customer-suspend.component.scss'
+    selector: 'app-customer-suspend',
+    templateUrl: './customer-suspend.component.html',
+    styleUrl: './customer-suspend.component.scss',
+    standalone: false
 })
 export class CustomerSuspendComponent {
   formContrato!: FormGroup;

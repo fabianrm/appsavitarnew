@@ -18,9 +18,10 @@ interface Tipo {
 }
 
 @Component({
-  selector: 'app-customer-edit',
-  templateUrl: './customer-edit.component.html',
-  styleUrl: './customer-edit.component.css'
+    selector: 'app-customer-edit',
+    templateUrl: './customer-edit.component.html',
+    styleUrl: './customer-edit.component.css',
+    standalone: false
 })
 export class CustomerEditComponent implements OnInit, OnDestroy {
 

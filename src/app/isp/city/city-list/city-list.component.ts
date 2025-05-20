@@ -11,9 +11,10 @@ import Swal from 'sweetalert2';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-city-list',
-  templateUrl: './city-list.component.html',
-  styleUrl: './city-list.component.scss'
+    selector: 'app-city-list',
+    templateUrl: './city-list.component.html',
+    styleUrl: './city-list.component.scss',
+    standalone: false
 })
 export class CityListComponent implements OnInit {
 

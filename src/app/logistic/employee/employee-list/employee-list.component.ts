@@ -13,9 +13,10 @@ import { AddRoleComponent } from '../add-role/add-role.component';
 import { EditRoleComponent } from '../edit-role/edit-role.component';
 
 @Component({
-  selector: 'app-employee-list',
-  templateUrl: './employee-list.component.html',
-  styleUrl: './employee-list.component.scss'
+    selector: 'app-employee-list',
+    templateUrl: './employee-list.component.html',
+    styleUrl: './employee-list.component.scss',
+    standalone: false
 })
 export class EmployeeListComponent {
 

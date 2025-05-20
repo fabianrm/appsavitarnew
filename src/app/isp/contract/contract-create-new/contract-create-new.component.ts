@@ -27,9 +27,10 @@ import { Promotion, PromotionResponse } from '../../promotion/models';
 
 
 @Component({
-  selector: 'app-contract-create-new',
-  templateUrl: './contract-create-new.component.html',
-  styleUrl: './contract-create-new.component.scss',
+    selector: 'app-contract-create-new',
+    templateUrl: './contract-create-new.component.html',
+    styleUrl: './contract-create-new.component.scss',
+    standalone: false
 })
 export class ContractCreateNewComponent implements OnInit, OnDestroy {
 

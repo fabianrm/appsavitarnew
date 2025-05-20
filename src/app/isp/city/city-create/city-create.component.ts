@@ -9,9 +9,10 @@ import { Router } from '@angular/router';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-city-create',
-  templateUrl: './city-create.component.html',
-  styleUrl: './city-create.component.scss'
+    selector: 'app-city-create',
+    templateUrl: './city-create.component.html',
+    styleUrl: './city-create.component.scss',
+    standalone: false
 })
 export class CityCreateComponent {
   formCity!: FormGroup;

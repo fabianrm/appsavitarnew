@@ -11,9 +11,10 @@ import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-box-create',
-  templateUrl: './box-create.component.html',
-  styleUrl: './box-create.component.css'
+    selector: 'app-box-create',
+    templateUrl: './box-create.component.html',
+    styleUrl: './box-create.component.css',
+    standalone: false
 })
 export class BoxCreateComponent implements OnInit, OnDestroy {
 

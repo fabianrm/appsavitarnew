@@ -7,9 +7,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PermissionRole } from '../Models/PermissionRoleResponse';
 
 @Component({
-  selector: 'app-permission-list',
-  templateUrl: './permission-list.component.html',
-  styleUrl: './permission-list.component.scss'
+    selector: 'app-permission-list',
+    templateUrl: './permission-list.component.html',
+    styleUrl: './permission-list.component.scss',
+    standalone: false
 })
 export class PermissionListComponent implements OnInit {
 

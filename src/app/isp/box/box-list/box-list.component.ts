@@ -13,9 +13,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 
 @Component({
-  selector: 'app-box-list',
-  templateUrl: './box-list.component.html',
-  styleUrl: './box-list.component.css'
+    selector: 'app-box-list',
+    templateUrl: './box-list.component.html',
+    styleUrl: './box-list.component.css',
+    standalone: false
 })
 export class BoxListComponent {
 

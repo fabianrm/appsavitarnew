@@ -10,9 +10,10 @@ import { DestinationCreateComponent } from '../destination-create/destination-cr
 import { DestinationEditComponent } from '../destination-edit/destination-edit.component';
 
 @Component({
-  selector: 'app-destination-list',
-  templateUrl: './destination-list.component.html',
-  styleUrl: './destination-list.component.scss'
+    selector: 'app-destination-list',
+    templateUrl: './destination-list.component.html',
+    styleUrl: './destination-list.component.scss',
+    standalone: false
 })
 export class DestinationListComponent {
 

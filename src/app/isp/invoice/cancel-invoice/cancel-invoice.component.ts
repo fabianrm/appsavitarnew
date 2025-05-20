@@ -7,9 +7,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-cancel-invoice',
-  templateUrl: './cancel-invoice.component.html',
-  styleUrl: './cancel-invoice.component.scss'
+    selector: 'app-cancel-invoice',
+    templateUrl: './cancel-invoice.component.html',
+    styleUrl: './cancel-invoice.component.scss',
+    standalone: false
 })
 export class CancelInvoiceComponent implements OnInit {
 

@@ -9,9 +9,10 @@ import { map, Observable, startWith } from 'rxjs';
 import { EntryDetail } from '../models/EntryDetailResponse';
 
 @Component({
-  selector: 'app-material-select-dialog',
-  templateUrl: './material-select-dialog.component.html',
-  styleUrl: './material-select-dialog.component.scss'
+    selector: 'app-material-select-dialog',
+    templateUrl: './material-select-dialog.component.html',
+    styleUrl: './material-select-dialog.component.scss',
+    standalone: false
 })
 export class MaterialSelectDialogComponent implements OnInit {
 

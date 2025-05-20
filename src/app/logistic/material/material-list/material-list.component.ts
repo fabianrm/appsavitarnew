@@ -9,9 +9,10 @@ import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-material-list',
-  templateUrl: './material-list.component.html',
-  styleUrl: './material-list.component.scss'
+    selector: 'app-material-list',
+    templateUrl: './material-list.component.html',
+    styleUrl: './material-list.component.scss',
+    standalone: false
 })
 export class MaterialListComponent implements OnInit {
 

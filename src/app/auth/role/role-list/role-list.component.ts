@@ -13,9 +13,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { PermissionListComponent } from '../../permission/permission-list/permission-list.component';
 
 @Component({
-  selector: 'app-role-list',
-  templateUrl: './role-list.component.html',
-  styleUrl: './role-list.component.scss'
+    selector: 'app-role-list',
+    templateUrl: './role-list.component.html',
+    styleUrl: './role-list.component.scss',
+    standalone: false
 })
 export class RoleListComponent {
 

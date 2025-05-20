@@ -11,9 +11,10 @@ import { User } from '../../../auth/Models/UserResponse';
 import { Employee } from '../../../logistic/employee/models/EmployeeResponse';
 
 @Component({
-  selector: 'app-assign-ticket',
-  templateUrl: './assign-ticket.component.html',
-  styleUrl: './assign-ticket.component.scss'
+    selector: 'app-assign-ticket',
+    templateUrl: './assign-ticket.component.html',
+    styleUrl: './assign-ticket.component.scss',
+    standalone: false
 })
 export class AssignTicketComponent {
 

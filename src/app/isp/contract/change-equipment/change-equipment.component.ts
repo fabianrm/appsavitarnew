@@ -9,9 +9,10 @@ import { Observable, map, startWith } from 'rxjs';
 import { Equipment } from '../../equipment/Models/EquipmentResponse';
 
 @Component({
-  selector: 'app-change-equipment',
-  templateUrl: './change-equipment.component.html',
-  styleUrl: './change-equipment.component.scss'
+    selector: 'app-change-equipment',
+    templateUrl: './change-equipment.component.html',
+    styleUrl: './change-equipment.component.scss',
+    standalone: false
 })
 export class ChangeEquipmentComponent {
 

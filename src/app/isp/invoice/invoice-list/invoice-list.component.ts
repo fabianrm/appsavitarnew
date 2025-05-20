@@ -15,9 +15,10 @@ import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 
 @Component({
-  selector: 'app-invoice-list',
-  templateUrl: './invoice-list.component.html',
-  styleUrl: './invoice-list.component.scss'
+    selector: 'app-invoice-list',
+    templateUrl: './invoice-list.component.html',
+    styleUrl: './invoice-list.component.scss',
+    standalone: false
 })
 export class InvoiceListComponent implements OnInit, AfterViewInit {
 

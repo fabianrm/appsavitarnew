@@ -8,9 +8,10 @@ import { DatePipe } from '@angular/common';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-expense-paid',
-  templateUrl: './expense-paid.component.html',
-  styleUrl: './expense-paid.component.scss'
+    selector: 'app-expense-paid',
+    templateUrl: './expense-paid.component.html',
+    styleUrl: './expense-paid.component.scss',
+    standalone: false
 })
 export class ExpensePaidComponent {
 

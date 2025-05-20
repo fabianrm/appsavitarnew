@@ -11,9 +11,10 @@ import { EquipmentEditComponent } from '../equipment-edit/equipment-edit.compone
 import { Equipment } from '../Models/EquipmentResponse';
 
 @Component({
-  selector: 'app-equipment-list',
-  templateUrl: './equipment-list.component.html',
-  styleUrl: './equipment-list.component.scss'
+    selector: 'app-equipment-list',
+    templateUrl: './equipment-list.component.html',
+    styleUrl: './equipment-list.component.scss',
+    standalone: false
 })
 export class EquipmentListComponent {
 

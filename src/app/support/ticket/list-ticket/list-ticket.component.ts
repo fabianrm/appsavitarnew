@@ -15,9 +15,10 @@ import { AssignTicketComponent } from '../assign-ticket/assign-ticket.component'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-list-ticket',
-  templateUrl: './list-ticket.component.html',
-  styleUrl: './list-ticket.component.scss'
+    selector: 'app-list-ticket',
+    templateUrl: './list-ticket.component.html',
+    styleUrl: './list-ticket.component.scss',
+    standalone: false
 })
 export class ListTicketComponent implements OnInit {
 

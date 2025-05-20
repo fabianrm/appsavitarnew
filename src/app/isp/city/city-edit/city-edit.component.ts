@@ -10,9 +10,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { City } from '../Models/CityResponse';
 
 @Component({
-  selector: 'app-city-edit',
-  templateUrl: './city-edit.component.html',
-  styleUrl: './city-edit.component.scss'
+    selector: 'app-city-edit',
+    templateUrl: './city-edit.component.html',
+    styleUrl: './city-edit.component.scss',
+    standalone: false
 })
 export class CityEditComponent {
   formCity!: FormGroup;

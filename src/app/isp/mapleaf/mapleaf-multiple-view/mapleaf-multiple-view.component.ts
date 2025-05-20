@@ -8,9 +8,10 @@ import { DataPoint } from '../Models/DataPoint';
 
 
 @Component({
-  selector: 'app-mapleaf-multiple-view',
-  templateUrl: './mapleaf-multiple-view.component.html',
-  styleUrls: ['./mapleaf-multiple-view.component.scss']
+    selector: 'app-mapleaf-multiple-view',
+    templateUrl: './mapleaf-multiple-view.component.html',
+    styleUrls: ['./mapleaf-multiple-view.component.scss'],
+    standalone: false
 })
 export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mapDiv') mapDivElement!: ElementRef;

@@ -14,9 +14,10 @@ import { OutputDetail, OutputRequest } from '../models/OutputRequest';
 import { AuthService } from '../../../auth/auth.service';
 
 @Component({
-  selector: 'app-output-create',
-  templateUrl: './output-create.component.html',
-  styleUrl: './output-create.component.scss'
+    selector: 'app-output-create',
+    templateUrl: './output-create.component.html',
+    styleUrl: './output-create.component.scss',
+    standalone: false
 })
 export class OutputCreateComponent implements OnInit {
 

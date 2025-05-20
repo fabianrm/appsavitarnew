@@ -12,9 +12,10 @@ import { EditCategoryTicketComponent } from '../edit-category-ticket/edit-catego
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-list-category-ticket',
-  templateUrl: './list-category-ticket.component.html',
-  styleUrl: './list-category-ticket.component.scss'
+    selector: 'app-list-category-ticket',
+    templateUrl: './list-category-ticket.component.html',
+    styleUrl: './list-category-ticket.component.scss',
+    standalone: false
 })
 export class ListCategoryTicketComponent {
 

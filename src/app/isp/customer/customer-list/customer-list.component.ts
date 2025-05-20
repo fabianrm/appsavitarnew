@@ -13,9 +13,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { CustomerSuspendComponent } from '../customer-suspend/customer-suspend.component';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-customer-list',
-  templateUrl: './customer-list.component.html',
-  styleUrl: './customer-list.component.css'
+    selector: 'app-customer-list',
+    templateUrl: './customer-list.component.html',
+    styleUrl: './customer-list.component.css',
+    standalone: false
 })
 export class CustomerListComponent implements OnInit, OnDestroy {
 
