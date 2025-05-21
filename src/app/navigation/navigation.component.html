@@ -12,7 +12,6 @@
   >
     <mat-toolbar class="toolbar">
       <span *ngIf="isExpanded">Savitar</span>
-
       <button mat-icon-button (click)="toggleMenu()">
         <mat-icon>{{ isExpanded ? "close" : "menu" }}</mat-icon>
       </button>
@@ -59,13 +58,19 @@
 
       <div class="divider"></div>
 
-      <mat-slide-toggle
+      <!-- <mat-slide-toggle
         color="accent"
         [checked]="isDark"
         (change)="setTheme($event.checked)"
       >
         Dark Mode
-      </mat-slide-toggle>
+      </mat-slide-toggle> -->
+
+      <button mat-icon-button (click)="toggleTheme()">
+        <mat-icon>
+          {{ isDark ? "light_mode" : "dark_mode" }}
+        </mat-icon>
+      </button>
 
       <button mat-icon-button [mat-menu-trigger-for]="menu">
         <mat-icon>account_circle</mat-icon>

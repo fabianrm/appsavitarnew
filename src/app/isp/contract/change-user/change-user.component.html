@@ -1,55 +1,52 @@
-<form ngNativeValidate [formGroup]="formContrato" (submit)="enviarDatos()">
-  <mat-card>
-    <mat-card-header class="header-form">
-      <mat-card-title> Cambiar Usuario </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
- 
-
-      <div class="row">
-        <div class="col-sm-12">
-          <h2>Cliente: {{ getData[0].customerName }}</h2>
+<h2 mat-dialog-title class="title-card mb-2">Cambiar Usuario</h2>
+<mat-dialog-content>
+  <form ngNativeValidate [formGroup]="formContrato" (submit)="enviarDatos()">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <span>Cliente: </span>
+            <p class="fs-3 lh-sm">{{ getData[0].customerName }}</p>
+          </div>
         </div>
-      </div>
-      <div class="row">
-
-        <div class="col-sm-6">
-          <mat-form-field class="control-full-width" appearance="fill">
-            <mat-label>Usuario pppoe</mat-label>
-            <input
-              matInput
-              placeholder="Usuario pppoe"
-              formControlName="userPppoe"
-            />
-          </mat-form-field>
+        <div class="row">
+          <div class="col-12 col-md-6 mb-2">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Usuario pppoe</mat-label>
+              <input
+                matInput
+                placeholder="Usuario pppoe"
+                formControlName="userPppoe"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Clave pppoe</mat-label>
+              <input
+                matInput
+                placeholder="Clave pppoe"
+                formControlName="passPppoe"
+              />
+            </mat-form-field>
+          </div>
         </div>
-        <div class="col-sm-6">
-          <mat-form-field class="control-full-width" appearance="fill">
-            <mat-label>Clave pppoe</mat-label>
-            <input
-              matInput
-              placeholder="Clave pppoe"
-              formControlName="passPppoe"
-            />
-          </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions class="mt-3">
+        <div class="d-flex flex-row justify-content-end w-100">
+          <button
+            [disabled]="formContrato.invalid"
+            color="primary"
+            mat-flat-button
+            style="margin-right: 5px"
+          >
+            Guardar
+          </button>
+          <button mat-dialog-close="" color="accent" mat-raised-button>
+            Cancelar
+          </button>
         </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <div class="row-buttons">
-        <button
-          [disabled]="formContrato.invalid"
-          color="primary"
-          mat-raised-button
-          style="margin-right: 5px"
-        >
-          Guardar
-        </button>
-        <button mat-dialog-close="" color="accent" mat-raised-button>
-          Cancelar
-        </button>
-      </div>
-    </mat-card-actions>
-  </mat-card>
-</form>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</mat-dialog-content>

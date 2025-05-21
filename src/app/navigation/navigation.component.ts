@@ -180,4 +180,10 @@ export class NavigationComponent implements OnInit {
     this.router.navigate(['/dashboard/city/cities']); // Navega al componente "customer edit"
   }
 
+  toggleTheme() {
+    this.isDark = !this.isDark;
+    this.setTheme(this.isDark);
+  }
+
+
 }

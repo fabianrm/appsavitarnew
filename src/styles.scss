@@ -37,6 +37,13 @@ h6 {
   margin: 20px;
 }
 
+.title-card {
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-primary) !important;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
 .mat-mdc-snack-bar-container {
   &.error-snackbar {
     --mdc-snackbar-container-color: var(--mat-sys-error);
@@ -93,9 +100,8 @@ h6 {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-  background-color: rgb(116, 111, 111);
+  background-color: rgb(236, 121, 50);
   color: #ffffff;
 }
-
 /* Importing Bootstrap SCSS file. */
 //@import "bootstrap/scss/bootstrap";

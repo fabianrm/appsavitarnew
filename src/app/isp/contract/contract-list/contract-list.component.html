@@ -251,7 +251,7 @@
       <tr
         mat-row
         *matRowDef="let row; columns: displayedColumns"
-        [ngClass]="{ 'row-inactive': row.status === 'terminado' }"
+        [ngClass]="{ 'row-terminated': row.status === 'terminado' }"
       ></tr>
     </table>
     <mat-paginator

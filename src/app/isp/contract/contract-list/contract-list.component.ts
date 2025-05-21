@@ -19,10 +19,10 @@ import { SuspensionService } from '../../suspension/suspension.service';
 
 
 @Component({
-    selector: 'app-contract-list',
-    templateUrl: './contract-list.component.html',
-    styleUrl: './contract-list.component.scss',
-    standalone: false
+  selector: 'app-contract-list',
+  templateUrl: './contract-list.component.html',
+  styleUrl: './contract-list.component.scss',
+  standalone: false
 })
 export class ContractListComponent implements OnInit {
 
@@ -217,14 +217,11 @@ export class ContractListComponent implements OnInit {
   }
 
   changeEquipment(id: number) {
-
     //filtrar la caja del contrato
     this.contrato = this.respuesta.filter(contrato => contrato.id === id)
-
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    //dialogConfig.width = '40%';
     dialogConfig.data = this.contrato;
     this.dialog.open(ChangeEquipmentComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
