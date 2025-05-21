@@ -2,29 +2,6 @@
 @use "./assets/css/table.scss";
 
 /*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
-
-@font-face {
-  font-family: Roboto-Regular;
-  src: url("./assets/fonts/roboto/Roboto-Bold.ttf");
-}
-
-@font-face {
-  font-family: Roboto-Medium;
-  src: url("./assets/fonts/roboto/Roboto-Medium.ttf");
-}
-
-@font-face {
-  font-family: Roboto-Bold;
-  src: url("./assets/fonts/roboto/Roboto-Regular.ttf");
-}
-
-@font-face {
-  font-family: Roboto-SemiBold;
-  src: url("./assets/fonts/roboto/Roboto-SemiBold.ttf");
-}
-
-/*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 * {
   margin: 0px;

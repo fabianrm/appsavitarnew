@@ -23,6 +23,14 @@ mat-card-header {
   color: var(--mat-sys-primary);
 }
 
+:root {
+  @include mat.table-overrides(
+    (
+      row-item-outline-color: #e0e0e0,
+    )
+  );
+}
+
 // mat-icon {
 //   color: var(--mat-sys-primary);
 // }

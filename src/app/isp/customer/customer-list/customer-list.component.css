@@ -1,26 +1,3 @@
-.row-acciones {
-  display: flex;
-  /*background-color: dodgerblue;*/
-  justify-content: flex-end;
-  padding: 5px;
-}
-
-:host ::ng-deep .mat-sort-header-container {
-  display: flex;
-  justify-content: center;
-}
-
-.btn-pointer {
-  cursor: pointer;
-}
-
-.menu-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  height: 100%;
-}
-
 /* Media Query para dispositivos móviles */
 @media (max-width: 767px) {
   mat-form-field {
