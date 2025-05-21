@@ -79,6 +79,21 @@
   align-items: center;
 }
 
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 599px) {
+  .mobile-menu-button {
+    display: block;
+    margin-right: 1rem;
+  }
+
+  .sidenav {
+    width: 100% !important;
+  }
+}
+
 .divider {
   flex: 1 1 auto;
 }

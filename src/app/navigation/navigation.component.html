@@ -12,9 +12,6 @@
   >
     <mat-toolbar class="toolbar">
       <span *ngIf="isExpanded">Savitar</span>
-      <button mat-icon-button (click)="toggleMenu()">
-        <mat-icon>{{ isExpanded ? "close" : "menu" }}</mat-icon>
-      </button>
     </mat-toolbar>
 
     <mat-accordion>
@@ -54,6 +51,13 @@
 
   <mat-sidenav-content>
     <mat-toolbar color="primary">
+      <button
+        class="mobile-menu-button"
+        mat-icon-button
+        (click)="drawer.toggle()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
       <span class="title">{{ currentTitle }}</span>
 
       <div class="divider"></div>
