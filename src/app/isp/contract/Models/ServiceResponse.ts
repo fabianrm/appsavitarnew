@@ -11,6 +11,7 @@ export interface Service {
     serviceCode: string;
     customerName: string;
     planName: string;
+    planId: number;
     routerId: number;
     routerIp: string;
     vlan: string;

@@ -74,6 +74,30 @@ export class ContractService {
       );
   }
 
+  //Cambiar Plan de Cliente
+  addPlanCustomer(contractId: number, datos: any): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}services/${contractId}/add-plan`, datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      })
+      );
+  }
+
+
+  //Agregar Promo al Cliente
+  addPromoCustomer(contractId: number, datos: any): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}services/${contractId}/add-promo`, datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }),
+        catchError(err => {
+          return throwError(() => err.error.message);
+        }),
+      );
+  }
+
+
+
   //Cambiar puerto de Cliente
   updatePortCustomer(id: number, data: any,): Observable<any> {
     return this.clienteHttp.patch(`${this.API}services/${id}/update-box-port`, data, { headers: this.headers })

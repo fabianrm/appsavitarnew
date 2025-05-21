@@ -186,6 +186,15 @@
             </button>
 
             <button
+              [disabled]="row.status !== 'activo'"
+              mat-menu-item
+              (click)="addPromo(row)"
+            >
+              <mat-icon matListItemIcon>campaign</mat-icon>
+              Aplicar Promoción
+            </button>
+
+            <button
               [disabled]="
                 row.status === 'terminado' || row.status === 'suspendido'
               "

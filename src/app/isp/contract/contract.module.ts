@@ -33,6 +33,7 @@ import { ContractEditBasicsComponent } from './contract-edit-basics/contract-edi
 import { ChangeVlanComponent } from './change-vlan/change-vlan.component';
 import { ChangeUserComponent } from './change-user/change-user.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AddPromoComponent } from './add-promo/add-promo.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ContractEditBasicsComponent,
     ChangeVlanComponent,
     ChangeUserComponent,
+    AddPromoComponent,
   ],
   imports: [
     CommonModule,

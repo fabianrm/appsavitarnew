@@ -16,6 +16,7 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { ChangeVlanComponent } from '../change-vlan/change-vlan.component';
 import { ChangeUserComponent } from '../change-user/change-user.component';
 import { SuspensionService } from '../../suspension/suspension.service';
+import { AddPromoComponent } from '../add-promo/add-promo.component';
 
 
 @Component({
@@ -123,6 +124,17 @@ export class ContractListComponent implements OnInit {
     //dialogConfig.width = '40%';
     dialogConfig.data = this.contrato;
     this.dialog.open(ChangeUserComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => { });
+  }
+
+
+  addPromo(row: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    // dialogConfig.width = '40%';
+    dialogConfig.data = row;
+    this.dialog.open(AddPromoComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
   }
 
