@@ -1,17 +1,20 @@
 <div class="contenedor">
-  <div class="row row-filter">
-    <div class="col-12">
-      <!--  Filtro -->
-      <mat-form-field>
-        <mat-label>Buscar</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Ej. Fernando Nizama"
-          #input
-          autocomplete="off"
-        />
-      </mat-form-field>
+  <div class="row">
+    <div class="col-12 d-flex flex-column flex-md-row justify-content-end">
+      <!-- Cuadro de búsqueda -->
+      <div class="w-50">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Fernando Nizama"
+            #input
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
     </div>
   </div>
 

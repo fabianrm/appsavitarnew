@@ -1,48 +1,8 @@
-.contenedor {
-  margin: 20px;
-}
-
-/* table {
-    width: 100%;
-} */
-
-.mat-header-row {
-  background-color: #3f51b5;
-  color: white;
-  /*font-weight: bold;*/
-}
-
-.mat-header-cell {
-  color: white;
-
-  /*font-weight: bold;*/
-  /*border-right: solid 0.5px white;*/
-}
-
-mat-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-
-.row-filter {
-  margin: 5px;
-  display: flex;
-  align-items: center;
-}
-
 .row-acciones {
   display: flex;
   /*background-color: dodgerblue;*/
   justify-content: flex-end;
   padding: 5px;
-}
-
-.filtro {
-  padding-top: 10px;
-}
-
-.center {
-  text-align: center;
 }
 
 :host ::ng-deep .mat-sort-header-container {
@@ -52,31 +12,6 @@ mat-form-field {
 
 .btn-pointer {
   cursor: pointer;
-}
-
-.circular-btn {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.circular-btn:hover {
-  background-color: #45a049;
-}
-
-.circular-btn:active {
-  background-color: #3e8e41;
-  transform: scale(0.95);
 }
 
 .menu-actions {
@@ -97,28 +32,12 @@ mat-form-field {
   }
 }
 
-/* Tabla responsive con stick */
+/* :host ::ng-deep table {
+  border: 1px solid green;
+} */
 
-.table-container {
-  height: 100%;
-  width: 100vw;
-  max-width: 100%;
-  overflow: auto;
-}
-
-table {
-  width: 800px;
-}
-
-td.mat-column-acciones {
-  width: 20px;
-  padding-right: 8px;
-}
-
-.mat-mdc-table-sticky-border-elem-right {
-  border-left: 1px solid #e0e0e0;
-}
-
-.mat-mdc-table-sticky-border-elem-left {
-  border-right: 1px solid #e0e0e0;
-}
+/* Funciona estilos */
+/* table td,
+table th {
+  border-bottom: 1px solid var(--mat-sys-primary-fixed);
+} */

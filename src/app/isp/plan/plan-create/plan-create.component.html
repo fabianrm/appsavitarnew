@@ -1,149 +1,149 @@
-<form ngNativeValidate [formGroup]="formCreate" (ngSubmit)="enviarDatos()">
-  <mat-card>
-    <mat-card-header class="header-form">
-      <mat-card-title> Nuevo Plan </mat-card-title>
-    </mat-card-header>
+<h2 mat-dialog-title class="title">Datos del Plan</h2>
 
-    <mat-card-content>
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Nombre</mat-label>
-            <input
-              matInput
-              placeholder="Nombre"
-              formControlName="name"
-              #code
-              (input)="code.value = code.value.toUpperCase()"
-            />
-          </mat-form-field>
+<mat-dialog-content>
+  <form ngNativeValidate [formGroup]="formCreate" (ngSubmit)="enviarDatos()">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>Nombre</mat-label>
+              <input
+                matInput
+                placeholder="Nombre"
+                formControlName="name"
+                #code
+                (input)="code.value = code.value.toUpperCase()"
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-6">
+            <mat-slide-toggle
+              [color]="color"
+              [checked]="checked"
+              formControlName="status"
+              >Activo</mat-slide-toggle
+            >
+          </div>
         </div>
 
-        <div class="col-sm-6">
-          <mat-slide-toggle
-            [color]="color"
-            [checked]="checked"
-            formControlName="status"
-            >Activo</mat-slide-toggle
-          >
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>Descarga</mat-label>
+              <input
+                matInput
+                placeholder="Descarga"
+                formControlName="download"
+                type="number"
+              />
+              <span matTextSuffix>Mbps</span>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>Subida</mat-label>
+              <input
+                matInput
+                placeholder="Subida"
+                formControlName="upload"
+                type="number"
+              />
+              <span matTextSuffix>Mbps</span>
+            </mat-form-field>
+          </div>
         </div>
-      </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>Precio</mat-label>
+              <span matTextPrefix>S/. &nbsp;</span>
+              <input
+                matInput
+                placeholder="Precio"
+                formControlName="price"
+                type="number"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>Vel. Garant.</mat-label>
+              <input
+                matInput
+                placeholder="Vel. Garant."
+                formControlName="guaranteedSpeed"
+                type="number"
+              />
+              <span matTextSuffix>Mbps</span>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>Prioridad</mat-label>
+              <mat-select [(value)]="selected" formControlName="priority">
+                <mat-option value="baja">Baja</mat-option>
+                <mat-option value="normal">Normal</mat-option>
+                <mat-option value="alta">Alta</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <p class="fs-4">Avanzado:</p>
 
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Descarga</mat-label>
-            <input
-              matInput
-              placeholder="Descarga"
-              formControlName="download"
-              type="number"
-            />
-            <span matTextSuffix>Mbps</span>
-          </mat-form-field>
+        <div class="row">
+          <div class="col-sm-4">
+            <mat-form-field>
+              <mat-label>Burst limit</mat-label>
+              <input
+                matInput
+                placeholder="Burst limit"
+                formControlName="burstLimit"
+                type="number"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field>
+              <mat-label>Burst Threshold</mat-label>
+              <input
+                matInput
+                placeholder="Burst Threshold"
+                formControlName="burstThreshold"
+                type="number"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field>
+              <mat-label>Burst Time</mat-label>
+              <input
+                matInput
+                placeholder="Burst Time"
+                formControlName="burstTime"
+                type="number"
+              />
+            </mat-form-field>
+          </div>
         </div>
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Subida</mat-label>
-            <input
-              matInput
-              placeholder="Subida"
-              formControlName="upload"
-              type="number"
-            />
-            <span matTextSuffix>Mbps</span>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Precio</mat-label>
-            <span matTextPrefix>S/. &nbsp;</span>
-            <input
-              matInput
-              placeholder="Precio"
-              formControlName="price"
-              type="number"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Velocidad garantizada</mat-label>
-            <input
-              matInput
-              placeholder="Velocidad garantizada"
-              formControlName="guaranteedSpeed"
-              type="number"
-            />
-            <span matTextSuffix>Mbps</span>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Prioridad</mat-label>
-            <mat-select [(value)]="selected" formControlName="priority">
-              <mat-option value="baja">Baja</mat-option>
-              <mat-option value="normal">Normal</mat-option>
-              <mat-option value="alta">Alta</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-      <h2>Avanzado:</h2>
+      </mat-card-content>
+    </mat-card>
 
-      <div class="row">
-        <div class="col-sm-4">
-          <mat-form-field>
-            <mat-label>Burst limit</mat-label>
-            <input
-              matInput
-              placeholder="Burst limit"
-              formControlName="burstLimit"
-              type="number"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-sm-4">
-          <mat-form-field>
-            <mat-label>Burst Threshold</mat-label>
-            <input
-              matInput
-              placeholder="Burst Threshold"
-              formControlName="burstThreshold"
-              type="number"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-sm-4">
-          <mat-form-field>
-            <mat-label>Burst Time</mat-label>
-            <input
-              matInput
-              placeholder="Burst Time"
-              formControlName="burstTime"
-              type="number"
-            />
-          </mat-form-field>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <div class="row-buttons">
-    <button
-      [disabled]="formCreate.invalid"
-      color="primary"
-      mat-raised-button
-      style="margin-right: 5px"
-    >
-      Guardar
-    </button>
-    <button mat-dialog-close="" color="accent" mat-raised-button>
-      Cancelar
-    </button>
-  </div>
-</form>
+    <div class="row-buttons">
+      <button
+        [disabled]="formCreate.invalid"
+        color="primary"
+        mat-flat-button
+        style="margin-right: 5px"
+      >
+        Guardar
+      </button>
+      <button mat-dialog-close="" color="accent" mat-raised-button>
+        Cancelar
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>

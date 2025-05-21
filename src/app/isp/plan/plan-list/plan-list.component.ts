@@ -13,13 +13,13 @@ import { PlanService } from '../plan.service';
 
 
 @Component({
-    selector: 'app-plan-list',
-    templateUrl: './plan-list.component.html',
-    styleUrl: './plan-list.component.css',
-    standalone: false
+  selector: 'app-plan-list',
+  templateUrl: './plan-list.component.html',
+  styleUrl: './plan-list.component.css',
+  standalone: false
 })
 export class PlanListComponent {
-  displayedColumns: string[] = ['id', 'name', 'download', 'upload', 'price', 'guaranteed_speed', 'priority', 'burst_limit', 'burst_threshold','burst_time', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'name', 'download', 'upload', 'price', 'guaranteed_speed', 'priority', 'burst_limit', 'burst_threshold', 'burst_time', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<CPlan[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -37,7 +37,7 @@ export class PlanListComponent {
       this.getPlans()
     });
   }
-  
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -68,7 +68,7 @@ export class PlanListComponent {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     // dialogConfig.width = '40%';
-    dialogConfig.height = '680px';
+    // dialogConfig.height = '680px';
     this.dialog.open(PlanCreateComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => {
@@ -80,13 +80,13 @@ export class PlanListComponent {
 
     this.planService.getPlanByID(id).subscribe(respuesta => {
       this.respuesta = respuesta.data;
-      
+
       if (respuesta.data) {
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-       // dialogConfig.width = '40%';
+        // dialogConfig.width = '40%';
         dialogConfig.height = '680px';
         dialogConfig.data = this.respuesta;
 
@@ -97,7 +97,7 @@ export class PlanListComponent {
   }
 
   deletePlan(id: number) {
-    
+
   }
 
   applyFilter(event: Event) {

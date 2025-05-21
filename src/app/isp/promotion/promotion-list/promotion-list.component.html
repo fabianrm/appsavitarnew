@@ -1,20 +1,21 @@
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col-md-10">
-      <mat-form-field class="w-100">
-        <mat-label>Buscar</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Promo verano"
-          #input
-          autocomplete="off"
-        />
-      </mat-form-field>
-    </div>
-
+<div class="contenedor">
+  <div
+    class="col-12 d-flex flex-row justify-content-end align-items-center gap-3"
+  >
+    <!--  Filtro -->
+    <mat-form-field appearance="outline" class="w-25">
+      <mat-label>Buscar</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Promo Verano"
+        #input
+        autocomplete="off"
+      />
+    </mat-form-field>
     <div class="col-md-2">
-      <button (click)="newPromotion()" mat-raised-button color="accent">
+      <button (click)="newPromotion()" mat-flat-button color="accent">
         + Nueva Promoción
       </button>
     </div>

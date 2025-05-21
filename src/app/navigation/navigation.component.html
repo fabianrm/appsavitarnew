@@ -1,5 +1,6 @@
 <mat-sidenav-container class="sidenav-container" autosize>
   <mat-sidenav
+    class="dark-theme"
     #drawer
     fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
@@ -9,7 +10,7 @@
     (mouseenter)="expandMenu()"
     (mouseleave)="collapseMenu()"
   >
-    <mat-toolbar class="toolbar" color="primary">
+    <mat-toolbar class="toolbar">
       <span *ngIf="isExpanded">Savitar</span>
 
       <button mat-icon-button (click)="toggleMenu()">
@@ -53,7 +54,7 @@
 
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <span>{{ currentTitle }}</span>
+      <span class="title">{{ currentTitle }}</span>
 
       <div class="divider"></div>
 

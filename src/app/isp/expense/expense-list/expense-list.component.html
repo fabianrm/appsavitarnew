@@ -1,23 +1,30 @@
 <div class="contenedor">
-  <div class="row-filter">
-    <!--  Filtro -->
-    <mat-form-field>
-      <mat-label>Buscar</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ej. Compra de utiles"
-        #input
-        autocomplete="off"
-      />
-    </mat-form-field>
+  <div class="row">
+    <div
+      class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-2"
+    >
+      <!-- Botón: solo el contenedor tiene w-100 en móvil, sin clase en el botón -->
+      <div class="w-100 w-md-auto">
+        <button (click)="openDialog()" mat-flat-button color="accent">
+          + Registrar Gasto
+        </button>
+      </div>
 
-    <!-- <button *ngIf="tipo ==='fijo'" (click)="generatePaids()" mat-raised-button color="accent">
-      Generar pagos
-    </button> -->
-    <button (click)="openDialog()" mat-raised-button color="accent">
-      + Nuevo
-    </button>
+      <!-- Cuadro de búsqueda -->
+      <div class="w-100 w-md-25">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Pago de Luz"
+            #input
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
+    </div>
   </div>
 
   <div class="mat-elevation-z8">
@@ -30,7 +37,7 @@
         </td>
       </ng-container>
 
-       <!-- Type Column
+      <!-- Type Column
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">
           Tipo
@@ -45,7 +52,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">
           Descripción
         </th>
-        <td  mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element">
           {{ element.description | uppercase }}
         </td>
       </ng-container>
@@ -53,13 +60,13 @@
       <!-- Monto Column -->
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Monto</th>
-        <td style="text-align: right;"mat-cell *matCellDef="let element">
-          {{ element.amount | currency:'PEN':'symbol':'1.2-2':'es-PE'  }}
+        <td style="text-align: right" mat-cell *matCellDef="let element">
+          {{ element.amount | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
         </td>
       </ng-container>
 
       <!-- fecha Column -->
-      <ng-container matColumnDef="date" >
+      <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Fecha</th>
         <td class="center" mat-cell *matCellDef="let element">
           {{ element.date | date }}
@@ -76,19 +83,25 @@
 
       <!-- voutcher Column -->
       <ng-container matColumnDef="voutcher">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Recibo Nro.</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">
+          Recibo Nro.
+        </th>
         <td mat-cell *matCellDef="let element">{{ element.voutcher }}</td>
       </ng-container>
 
-       <!-- voutcher Column -->
+      <!-- voutcher Column -->
       <ng-container matColumnDef="note">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Observación</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">
+          Observación
+        </th>
         <td mat-cell *matCellDef="let element">{{ element.note }}</td>
       </ng-container>
 
-       <!-- fecha Column -->
-      <ng-container   matColumnDef="datePaid" >
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Fecha de Pago</th>
+      <!-- fecha Column -->
+      <ng-container matColumnDef="datePaid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">
+          Fecha de Pago
+        </th>
         <td class="center" mat-cell *matCellDef="let element">
           {{ element.datePaid | date }}
         </td>
@@ -108,13 +121,12 @@
         </td>
       </ng-container>
 
-
       <!-- Acciones -->
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef>Accciones</th>
         <td mat-cell *matCellDef="let row" class="menu-actions">
-          
-           <mat-icon  *ngIf="row.status === 1 && tipo==='fijo' && row.datePaid=== null  "
+          <mat-icon
+            *ngIf="row.status === 1 && tipo === 'fijo' && row.datePaid === null"
             #tooltip="matTooltip"
             class="btn-pointer"
             (click)="openPaidDialog(row)"
@@ -123,7 +135,8 @@
             >paid</mat-icon
           >
 
-          <mat-icon *ngIf="row.status === 1"
+          <mat-icon
+            *ngIf="row.status === 1"
             #tooltip="matTooltip"
             class="btn-pointer"
             (click)="openEditDialog(row.id)"
@@ -132,7 +145,8 @@
             >edit</mat-icon
           >
 
-          <mat-icon *ngIf="row.status === 1 && tipo==='fijo'"
+          <mat-icon
+            *ngIf="row.status === 1 && tipo === 'fijo'"
             #tooltip="matTooltip"
             class="btn-pointer"
             (click)="deleteExpense(row.id)"
@@ -140,7 +154,6 @@
             matTooltip="Suspender"
             >delete</mat-icon
           >
-
         </td>
       </ng-container>
 

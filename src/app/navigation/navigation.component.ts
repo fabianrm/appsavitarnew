@@ -15,10 +15,10 @@ interface MenuNode {
 }
 
 @Component({
-    selector: 'app-navigation',
-    templateUrl: './navigation.component.html',
-    styleUrl: './navigation.component.scss',
-    standalone: false
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrl: './navigation.component.scss',
+  standalone: false
 })
 export class NavigationComponent implements OnInit {
 
@@ -151,6 +151,7 @@ export class NavigationComponent implements OnInit {
         localStorage.removeItem('id_user');
         localStorage.removeItem('role');
         localStorage.removeItem('enterprise_id');
+        localStorage.removeItem('theme');
         this.router.navigate(['/login']);
       },
       (error) => {

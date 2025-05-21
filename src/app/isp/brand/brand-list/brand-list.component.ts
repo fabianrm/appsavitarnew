@@ -10,10 +10,10 @@ import { BrandCreateComponent } from '../brand-create/brand-create.component';
 import { BrandEditComponent } from '../brand-edit/brand-edit.component';
 
 @Component({
-    selector: 'app-brand-list',
-    templateUrl: './brand-list.component.html',
-    styleUrl: './brand-list.component.scss',
-    standalone: false
+  selector: 'app-brand-list',
+  templateUrl: './brand-list.component.html',
+  styleUrl: './brand-list.component.scss',
+  standalone: false
 })
 export class BrandListComponent {
 
@@ -73,30 +73,19 @@ export class BrandListComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '40%';
-    dialogConfig.height = '380px';
     this.dialog.open(BrandCreateComponent, dialogConfig);
-
     this.dialog.afterAllClosed.subscribe(() => {
     })
   }
 
   openEditDialog(id: number) {
-
     this.brandService.getBrandByID(id).subscribe(respuesta => {
-      console.log(respuesta.data);
-      
       this.respuesta = respuesta.data;
 
       if (respuesta.data) {
         const dialogConfig = new MatDialogConfig();
-
         dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        // dialogConfig.width = '40%';
-        dialogConfig.height = '380px';
         dialogConfig.data = this.respuesta;
-
         this.dialog.open(BrandEditComponent, dialogConfig);
         this.dialog.afterAllClosed.subscribe(() => { })
       }

@@ -1,36 +1,40 @@
-<div class="container">
-  <div class="row row-filter">
-    <div class="col-12 col-md-8">
-      <!--  Filtro -->
-      <mat-form-field>
-        <mat-label>Buscar</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Ej. Fernando Nizama"
-          #input
-          autocomplete="off"
-        />
-      </mat-form-field>
-    </div>
+<div class="contenedor">
+  <div class="row">
+    <div
+      class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-stretch"
+    >
+      <!-- Botón: solo el contenedor tiene w-100 en móvil, sin clase en el botón -->
+      <div class="w-100 w-md-auto d-flex gap-3">
+        <button (click)="newCustomer()" mat-flat-button color="accent">
+          + Nuevo Cliente
+        </button>
 
-    <div class="col-12 col-md-2">
-      <button (click)="exportToExcel()" mat-raised-button color="accent">
-        Exportar
-      </button>
-    </div>
+        <button (click)="exportToExcel()" mat-raised-button color="accent">
+          Exportar
+        </button>
+      </div>
 
-    <div class="col-12 col-md-2">
-      <button (click)="newCustomer()" mat-raised-button color="accent">
-        + Nuevo
-      </button>
+      <!-- Cuadro de búsqueda -->
+      <div class="w-100 w-md-25">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Luis Fernando"
+            #input
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
     </div>
   </div>
 
   <!-- Tabla -->
 
   <div class="table-container">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort class="custom-table">
       <!-- id Video -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">ID</th>

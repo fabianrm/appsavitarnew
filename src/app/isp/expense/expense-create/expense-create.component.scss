@@ -23,26 +23,9 @@ mat-form-field {
   justify-content: flex-end;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100px;
-  background: #79abda;
-  margin-bottom: 10px;
-}
-
-mat-card-title{
-  color: white;
-  font-size: 2.5Rem;
-}
-
-.container {
-  margin-top: 20px;
-  /* margin-bottom: 20px; */
-}
-
-.row-items {
-  display: flex;
-  justify-content: space-between;
+.title {
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-primary);
+  font-size: 1.5rem;
+  font-weight: 500;
 }
