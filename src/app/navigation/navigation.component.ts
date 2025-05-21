@@ -97,6 +97,7 @@ export class NavigationComponent implements OnInit {
 
   setActiveRoute(route: string) {
     this.activeRoute = route;
+    this.collapseMenu();
   }
 
   isActive(route: string): boolean {
