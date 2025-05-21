@@ -45,16 +45,15 @@
   display: none; /* Oculta el texto del menú cuando está colapsado */
 }
 
-.sidenav .mat-expansion-panel-header .menu-text.active {
-  color: #4cf433; /* Color verde para el texto activo */
-}
-
 .active-link {
-  color: #4cf433; /* Cambia el color del texto activo a verde */
+  color: #4cf433 !important;
+  font-weight: bold;
+  background: rgba(76, 244, 51, 0.1);
+  border-left: 3px solid #4cf433;
 }
 
 .active {
-  color: #4cf433; /* Cambia el color del texto activo a verde */
+  color: var(--mat-sys-primary); /* Cambia el color del texto activo a verde */
 }
 
 .menu-text {
@@ -66,12 +65,12 @@
 }
 
 .mat-expansion-panel-header.mat-expanded {
-  border-left: 4px solid green;
+  border-left: 4px solid var(--mat-sys-on-primary);
 }
 
 .mat-icon {
   margin-right: 5px; /* Espacio entre el ícono y el texto */
-  color: gray;
+  color: var(--mat-sys-tertiary);
 }
 
 .toolbar {

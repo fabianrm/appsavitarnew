@@ -100,8 +100,12 @@ export class NavigationComponent implements OnInit {
   }
 
   isActive(route: string): boolean {
-    //return this.activeRoute === route;
-    return this.router.url === route;
+    return this.router.isActive(route, {
+      paths: 'subset',
+      matrixParams: 'ignored',
+      queryParams: 'ignored',
+      fragment: 'ignored'
+    });
   }
 
 
