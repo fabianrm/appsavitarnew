@@ -70,3 +70,8 @@ mat-icon {
 .icon-w {
   color: var(--mat-sys-on-primary);
 }
+
+.chart {
+  height: 300px;
+  width: 100%;
+}
