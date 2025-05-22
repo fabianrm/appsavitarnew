@@ -9,7 +9,7 @@
           <input
             matInput
             (keyup)="applyFilter($event)"
-            placeholder="Caja 20"
+            placeholder="Fernando Nizama"
             #input
             autocomplete="off"
           />
@@ -90,6 +90,22 @@
         <th mat-header-cell *matHeaderCellDef>Longitude</th>
         <td data-title="Longitud" mat-cell *matCellDef="let element">
           {{ element.longitude | number : "1.6-6" }}
+        </td>
+      </ng-container>
+
+      <!--Email Column -->
+      <ng-container matColumnDef="promotion">
+        <th mat-header-cell *matHeaderCellDef>Promoción</th>
+        <td
+          data-title="promotion"
+          mat-cell
+          *matCellDef="let element"
+          class="column-promotion text-center"
+          matTooltip="{{
+            element.promotion.name !== '-' ? element.promotion.name : ''
+          }}"
+        >
+          {{ element.promotion.name !== "-" ? "😃" : "" }}
         </td>
       </ng-container>
 

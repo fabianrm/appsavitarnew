@@ -27,8 +27,11 @@ import { AddPromoComponent } from '../add-promo/add-promo.component';
 })
 export class ContractListComponent implements OnInit {
 
+  availableColumns: string[] = ['id', 'serviceCode', 'customerName', 'planName', 'installationDate', 'city', 'addressInstallation', 'latitude', 'longitude', 'promotion', 'status', 'acciones'];
 
-  displayedColumns: string[] = ['id', 'serviceCode', 'customerName', 'planName', 'installationDate', 'city', 'addressInstallation', 'latitude', 'longitude', 'status', 'acciones'];
+  displayedColumns: string[] = ['serviceCode', 'customerName', 'planName', 'installationDate', 'city', 'addressInstallation', 'promotion', 'status', 'acciones'];
+
+
   public dataSource!: MatTableDataSource<Service>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -41,4 +41,10 @@ export interface Service {
     iptv: boolean;
     userIptv: string;
     passIptv: string;
+    promotion?: Promotion
+}
+
+interface Promotion {
+    id?: number;
+    name?: number;
 }
