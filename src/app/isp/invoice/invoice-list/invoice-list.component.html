@@ -38,13 +38,11 @@
 
     <div class="col-12 col-md-1">
       <mat-form-field>
-        <mat-label>Seleccione un estado</mat-label>
-        <mat-select [(value)]="status">
-          <mat-option value="">Seleccione</mat-option>
-          <mat-option value="pendiente">Pendiente</mat-option>
-          <mat-option value="pagada">Pagada</mat-option>
-          <mat-option value="vencida">Vencida</mat-option>
-          <mat-option value="anulada">Anulada</mat-option>
+        <mat-label>Estado</mat-label>
+        <mat-select [(value)]="status" multiple>
+          @for (status of statusList; track status) {
+          <mat-option [value]="status">{{ status | titlecase }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>

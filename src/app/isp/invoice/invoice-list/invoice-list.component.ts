@@ -15,15 +15,17 @@ import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 
 @Component({
-    selector: 'app-invoice-list',
-    templateUrl: './invoice-list.component.html',
-    styleUrl: './invoice-list.component.scss',
-    standalone: false
+  selector: 'app-invoice-list',
+  templateUrl: './invoice-list.component.html',
+  styleUrl: './invoice-list.component.scss',
+  standalone: false
 })
 export class InvoiceListComponent implements OnInit, AfterViewInit {
 
   availableColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'address', 'planName', 'periodic', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'acciones'];
   displayedColumns: string[] = ['contractId', 'customerName', 'planName', 'address', 'periodic', 'price', 'discount', 'amount', 'dueDate', 'paidDated', 'status', 'acciones'];
+
+  statusList: string[] = ['pendiente', 'pagada', 'vencida', 'anulada'];
 
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
@@ -153,11 +155,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
       this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
     }
 
-    // if (this.qCity === undefined || this.qCity == null) {
-    //   this.qCity = ''
-    // } else {
-    //   this.qCity = this.citySelected;
-    // }
+    console.log(this.status);
 
     this.getInvoices()
   }

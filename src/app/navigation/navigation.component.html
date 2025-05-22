@@ -63,8 +63,8 @@
       <div class="divider"></div>
 
       <div class="welcome-info title-bar hide-on-mobile">
-        <span class="fs-5">Bienvenido: {{ userName }}</span>
-        <span class="fs-6">{{ storeName }}</span>
+        <span class="fs-6">Bienvenido: {{ userName | titlecase }}</span>
+        <span class="fs-6">{{ storeName | titlecase }}</span>
       </div>
 
       <button mat-icon-button (click)="toggleTheme()">
