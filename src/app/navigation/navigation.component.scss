@@ -83,6 +83,18 @@
   display: none;
 }
 
+.welcome-info {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.title-bar {
+  color: var(--mat-sys-primary);
+}
+
 @media (max-width: 599px) {
   .mobile-menu-button {
     display: block;
@@ -91,6 +103,10 @@
 
   .sidenav {
     width: 90% !important;
+  }
+
+  .hide-on-mobile {
+    display: none !important;
   }
 }
 

@@ -1,20 +1,80 @@
 .sidenav-container {
-    height: 100%;
-    background: lightblue;
+  height: 100%;
+  background: lightblue;
 }
 
-mat-form-field {
-  width: 100%;
-  margin-bottom: 16px;
-}
-
-button {
-  width: 100%;
-}
-
-.logo{
+.logo {
   display: flex;
   align-items: center;
   width: 80%;
-  
+}
+
+.card {
+  background-color: white !important;
+  position: relative;
+  z-index: 1;
+}
+
+section.vh-100 {
+  position: relative;
+  background: radial-gradient(
+    ellipse at center,
+    #1b0f27 0%,
+    #202d43 50%,
+    #143b76 100%
+  );
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Partículas animadas */
+section.vh-100::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    radial-gradient(circle, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px, 120px 120px;
+  animation: moveParticles 60s linear infinite;
+  top: -50%;
+  left: -50%;
+  z-index: -1;
+}
+
+/* Líneas verticales tipo escáner */
+section.vh-100::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px
+  );
+  background-size: 3px 100%;
+  animation: scanlines 10s linear infinite;
+  z-index: -2;
+}
+
+@keyframes moveParticles {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50%, 50%);
+  }
+}
+
+@keyframes scanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
 }

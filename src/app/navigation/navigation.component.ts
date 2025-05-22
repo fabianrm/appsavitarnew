@@ -171,6 +171,15 @@ export class NavigationComponent implements OnInit {
     this.id = Number(localStorage.getItem('enterprise_id'));
   }
 
+  get storeName() {
+    return localStorage.getItem('enterprise_name')
+  }
+
+  get userName() {
+    return localStorage.getItem('user_name')
+  }
+
+
 
   //TODO:Traer todas las ciudades con limit 1
   detailEnterprise(id: number) {

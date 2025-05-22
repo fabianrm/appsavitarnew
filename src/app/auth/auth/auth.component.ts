@@ -8,10 +8,10 @@ import { EnterpriseService } from '../../isp/enterprise/enterprise.service';
 import { Enterprise } from '../../isp/enterprise/Models/EnterpriseResponse';
 
 @Component({
-    selector: 'app-auth',
-    templateUrl: './auth.component.html',
-    styleUrl: './auth.component.css',
-    standalone: false
+  selector: 'app-auth',
+  templateUrl: './auth.component.html',
+  styleUrl: './auth.component.css',
+  standalone: false
 })
 export class AuthComponent implements OnInit {
   email: string = '';
@@ -53,6 +53,7 @@ export class AuthComponent implements OnInit {
           localStorage.setItem('user_name', response.user.name);
           localStorage.setItem('role', response.user.role[0].id.toString());
           localStorage.setItem('enterprise_id', response.enterprise.id.toString());
+          localStorage.setItem('enterprise_name', response.enterprise.name.toString());
           this.setEnterprise(response.enterprise.id);
         })
       ).subscribe(

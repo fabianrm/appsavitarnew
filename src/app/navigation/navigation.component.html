@@ -62,13 +62,10 @@
 
       <div class="divider"></div>
 
-      <!-- <mat-slide-toggle
-        color="accent"
-        [checked]="isDark"
-        (change)="setTheme($event.checked)"
-      >
-        Dark Mode
-      </mat-slide-toggle> -->
+      <div class="welcome-info title-bar hide-on-mobile">
+        <span class="fs-5">Bienvenido: {{ userName }}</span>
+        <span class="fs-6">{{ storeName }}</span>
+      </div>
 
       <button mat-icon-button (click)="toggleTheme()">
         <mat-icon>
