@@ -287,7 +287,7 @@
           <mat-menu #menu="matMenu">
             <button
               mat-menu-item
-              [disabled]="row.status === 'pagada'"
+              [disabled]="row.status === 'pagada' || row.status === 'anulada'"
               (click)="paid(row)"
             >
               <mat-icon matListItemIcon>paid</mat-icon>
@@ -302,7 +302,11 @@
               Imprimir
             </button>
 
-            <button mat-menu-item (click)="cancelInvoice(row)">
+            <button
+              mat-menu-item
+              [disabled]="row.status === 'anulada'"
+              (click)="cancelInvoice(row)"
+            >
               <mat-icon matListItemIcon>delete</mat-icon>
               Anular
             </button>

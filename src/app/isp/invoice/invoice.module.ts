@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { MatListModule } from '@angular/material/list';
 import { CancelInvoiceComponent } from './cancel-invoice/cancel-invoice.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { CancelInvoiceComponent } from './cancel-invoice/cancel-invoice.componen
     MatCardTitle,
     MatDatepickerModule,
     MatSelectModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ]
 })
 export class InvoiceModule { }
