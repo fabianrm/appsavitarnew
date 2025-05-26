@@ -1,77 +1,94 @@
-<form ngNativeValidate [formGroup]="formRouter" (ngSubmit)="enviarDatos()">
-  <mat-card>
-    <mat-card-header class="header-form">
-      <mat-card-title> Nuevo Router </mat-card-title>
-    </mat-card-header>
+<h2 mat-dialog-title class="title-card">Nuevo Router</h2>
+<mat-dialog-content>
+  <form ngNativeValidate [formGroup]="formRouter" (ngSubmit)="enviarDatos()">
+    <mat-card>
+      <mat-card-content>
+        <div class="d-flex">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>IP</mat-label>
+              <input matInput placeholder="IP" formControlName="ip" />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>VLAN</mat-label>
+              <input
+                matInput
+                placeholder="VLAN"
+                formControlName="vlan"
+                #code
+                (input)="code.value = code.value.toUpperCase()"
+              />
+            </mat-form-field>
+          </div>
+        </div>
 
-    <mat-card-content>
-      <div class="row">
-        <div class="col-sm-4">
-          <mat-form-field>
-            <mat-label>IP</mat-label>
-            <input matInput placeholder="IP" formControlName="ip" />
-          </mat-form-field>
+        <div class="d-flex">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>Usuario</mat-label>
+              <input matInput placeholder="Usuario" formControlName="usuario" />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                placeholder="Password"
+                formControlName="password"
+              />
+            </mat-form-field>
+          </div>
         </div>
-         <div class="col-sm-4">
-          <mat-form-field>
-            <mat-label>VLAN</mat-label>
-            <input matInput placeholder="VLAN" formControlName="vlan"
-             #code 
-             (input)="code.value = code.value.toUpperCase()"
-            />
-          </mat-form-field>
+        <div class="d-flex">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>Port</mat-label>
+              <input
+                matInput
+                placeholder="Port"
+                formControlName="port"
+                type="number"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-label>API</mat-label>
+              <input
+                matInput
+                placeholder="API"
+                formControlName="apiConnection"
+              />
+            </mat-form-field>
+          </div>
         </div>
-        <div class="col-sm-4">
-          <mat-slide-toggle [color]="color" [checked]="checked"
-            >Activo</mat-slide-toggle
+        <div class="d-flex">
+          <div class="col-sm-4">
+            <mat-slide-toggle [color]="color" [checked]="checked"
+              >Activo</mat-slide-toggle
+            >
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <div class="d-flex flex-row justify-content-end w-100">
+          <button
+            [disabled]="formRouter.invalid"
+            color="primary"
+            mat-raised-button
+            style="margin-right: 5px"
           >
+            Guardar
+          </button>
+          <button mat-dialog-close="" color="accent" mat-raised-button>
+            Cancelar
+          </button>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Usuario</mat-label>
-            <input matInput placeholder="Usuario" formControlName="usuario" />
-          </mat-form-field>
-        </div>
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput placeholder="Password" formControlName="password" />
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>Port</mat-label>
-            <input matInput placeholder="Port" formControlName="port" type="number" />
-          </mat-form-field>
-        </div>
-        <div class="col-sm-6">
-          <mat-form-field>
-            <mat-label>API</mat-label>
-            <input matInput placeholder="API" formControlName="apiConnection" />
-          </mat-form-field>
-        </div>
-      </div>
-    </mat-card-content>
-
-    <mat-card-actions>
-      <div class="row-buttons">
-        <button
-          [disabled]="formRouter.invalid"
-          color="primary"
-          mat-raised-button
-          style="margin-right: 5px"
-        >
-          Guardar
-        </button>
-        <button mat-dialog-close="" color="accent" mat-raised-button>
-          Cancelar
-        </button>
-      </div>
-    </mat-card-actions>
-  </mat-card>
-</form>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</mat-dialog-content>
