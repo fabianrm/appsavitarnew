@@ -9,20 +9,18 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { CategoryTicketService } from '../../category-ticket/categoryTicket.service';
-import { CategoryTicket } from '../../category-ticket/Models/CategoryTicketResponse';
 import { AssignTicketComponent } from '../assign-ticket/assign-ticket.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'app-list-ticket',
-    templateUrl: './list-ticket.component.html',
-    styleUrl: './list-ticket.component.scss',
-    standalone: false
+  selector: 'app-list-ticket',
+  templateUrl: './list-ticket.component.html',
+  styleUrl: './list-ticket.component.scss',
+  standalone: false
 })
 export class ListTicketComponent implements OnInit {
 
-  availableColumns: string[] = ['id', 'code', 'subject', 'description', 'category', 'customer', 'technician', 'admin', 'assigned_at', 'resolved_at', 'closed_at', 'created_at', 'status',  'acciones'];
+  availableColumns: string[] = ['id', 'code', 'subject', 'description', 'category', 'customer', 'technician', 'admin', 'assigned_at', 'resolved_at', 'closed_at', 'created_at', 'status', 'acciones'];
 
   displayedColumns: string[] = ['code', 'created_at', 'subject', 'customer', 'technician', 'status', 'acciones'];
 
@@ -32,13 +30,15 @@ export class ListTicketComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatMenuTrigger) columnasMenuTrigger!: MatMenuTrigger;
 
-
   subscription!: Subscription
 
   public respuesta!: Ticket[];
   formTicket!: FormGroup;
 
- 
+  status?: string = '';
+  statusList: string[] = ['registrado', 'pendiente', 'validacion', 'solucionado'];
+  selectedStatuses: string[] = [];
+
   constructor(
     public formulario: FormBuilder,
     private ticketService: TicketService,
@@ -49,7 +49,7 @@ export class ListTicketComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getTickets();
-
+    this.selectedStatuses = this.statusList.filter(status => status !== 'solucionado');
     this.subscription = this.ticketService.refresh$.subscribe(() => {
       this.getTickets();
     });
@@ -65,7 +65,6 @@ export class ListTicketComponent implements OnInit {
   }
 
 
-
   actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
     this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
   }
@@ -74,31 +73,62 @@ export class ListTicketComponent implements OnInit {
   //Cargar tickets
   getTickets() {
     this.ticketService.getTickets().subscribe((respuesta) => {
-     // console.log(respuesta.data)
       if (respuesta.data.length > 0) {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+
+        this.dataSource.filterPredicate = (data: Ticket, filter: string): boolean => {
+          const parsed = JSON.parse(filter);
+          const search = parsed.search || '';
+          const statuses: string[] = parsed.statuses || [];
+
+          const matchesStatus = statuses.length === 0 || statuses.includes(data.status);
+          const matchesSearch =
+            data.subject?.toLowerCase().includes(search) ||
+            data.description?.toLowerCase().includes(search) ||
+            data.category?.name?.toLowerCase().includes(search) ||
+            data.customer?.customerName?.toLowerCase().includes(search);
+
+          return matchesStatus && matchesSearch;
+        };
+
         this.respuesta = respuesta.data;
+
+        // 🔁 Aplicar filtro inicial (excluir 'solucionado')
+        const initialFilter = {
+          search: '',
+          statuses: this.selectedStatuses
+        };
+        this.dataSource.filter = JSON.stringify(initialFilter);
       }
     });
-
   }
 
+
   exportToExcel() { }
-  
+
   newTicket() {
     this.router.navigate(['/support/tickets/create-ticket']); // Navega al componente "customer create"
   }
 
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const searchValue = (event.target as HTMLInputElement).value;
+    const filterData = {
+      search: searchValue.trim().toLowerCase(),
+      statuses: this.selectedStatuses
+    };
+    this.dataSource.filter = JSON.stringify(filterData);
+  }
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  applyCombinedFilter() {
+    const searchInput = (document.querySelector('#searchInput') as HTMLInputElement)?.value || '';
+    const filterData = {
+      search: searchInput.trim().toLowerCase(),
+      statuses: this.selectedStatuses
+    };
+    this.dataSource.filter = JSON.stringify(filterData);
   }
 
   assign(row: any) {
@@ -128,12 +158,12 @@ export class ListTicketComponent implements OnInit {
 
     if (this.formTicket.valid) {
       this.ticketService.updateStatus(id, dataToSend).subscribe(respuesta => {
-       // console.log(respuesta);
+        // console.log(respuesta);
         this.showSuccess();
         this.router.navigate(['/support/tickets/attend-ticket/' + id]); // Navega al componente "attend"
       });
     }
-   
+
   }
 
 

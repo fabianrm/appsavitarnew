@@ -10,10 +10,10 @@ import { DestinationCreateComponent } from '../destination-create/destination-cr
 import { DestinationEditComponent } from '../destination-edit/destination-edit.component';
 
 @Component({
-    selector: 'app-destination-list',
-    templateUrl: './destination-list.component.html',
-    styleUrl: './destination-list.component.scss',
-    standalone: false
+  selector: 'app-destination-list',
+  templateUrl: './destination-list.component.html',
+  styleUrl: './destination-list.component.scss',
+  standalone: false
 })
 export class DestinationListComponent {
 
@@ -73,8 +73,6 @@ export class DestinationListComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '40%';
-    dialogConfig.height = '380px';
     this.dialog.open(DestinationCreateComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => {
@@ -93,8 +91,6 @@ export class DestinationListComponent {
 
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        // dialogConfig.width = '40%';
-        dialogConfig.height = '380px';
         dialogConfig.data = this.respuesta;
 
         this.dialog.open(DestinationEditComponent, dialogConfig);

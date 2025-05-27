@@ -12,10 +12,10 @@ import { DestinationService } from '../../../logistic/destination/destination.se
 import { Destination } from '../../../logistic/destination/models/DestinationResponse';
 
 @Component({
-    selector: 'app-create-ticket',
-    templateUrl: './create-ticket.component.html',
-    styleUrl: './create-ticket.component.scss',
-    standalone: false
+  selector: 'app-create-ticket',
+  templateUrl: './create-ticket.component.html',
+  styleUrl: './create-ticket.component.scss',
+  standalone: false
 })
 export class CreateTicketComponent implements OnInit {
 
@@ -99,7 +99,7 @@ export class CreateTicketComponent implements OnInit {
   //cargar categorías
   getCategories() {
     this.categoryTicket.getCategoryTickets().subscribe((respuesta) => {
-       // console.log(respuesta.data)
+      // console.log(respuesta.data)
       if (respuesta.data.length > 0) {
         this.categoryTickets = respuesta.data.filter(x => x.status === 1);
       }
@@ -153,16 +153,14 @@ export class CreateTicketComponent implements OnInit {
 
     if (this.formTicket.valid) {
       this.ticketService.addTicket(dataToSend).subscribe(respuesta => {
-       // console.log(respuesta);
+        // console.log(respuesta);
+        //this.showTicket(respuesta.id);
+        this.goTickets();
         this.showSuccess();
-        this.showTicket(respuesta.id);
-        //this.goTickets();
       });
     }
 
   }
-
-
 
   showError() {
     this.snackbarService.showError('Ocurrio un error al actualizar los datos...');

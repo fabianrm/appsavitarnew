@@ -16,11 +16,25 @@
         </button>
       </div>
 
-      <div class="d-flex col-12 col-md-6 mt-2">
+      <div class="d-flex col-12 col-md-6 mt-2 gap-2">
+        <mat-form-field class="w-50" appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select
+            [(value)]="selectedStatuses"
+            multiple
+            (selectionChange)="applyCombinedFilter()"
+          >
+            @for (status of statusList; track status) {
+            <mat-option [value]="status">{{ status | titlecase }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
         <!--  Filtro -->
-        <mat-form-field class="w-100" appearance="outline">
+        <mat-form-field class="w-50" appearance="outline">
           <mat-label>Buscar</mat-label>
           <input
+            id="searchInput"
             matInput
             (keyup)="applyFilter($event)"
             placeholder="Ej. Internet lento"
