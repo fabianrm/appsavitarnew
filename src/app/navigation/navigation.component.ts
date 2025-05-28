@@ -183,7 +183,7 @@ export class NavigationComponent implements OnInit {
 
   //TODO:Traer todas las ciudades con limit 1
   detailEnterprise(id: number) {
-    this.router.navigate(['/dashboard/enterprise/enterpriseDetails/' + id]); // Navega al componente "enterprise edit"
+    this.router.navigate(['/dashboard/enterprise/edit/' + id]); // Navega al componente "enterprise edit"
   }
 
   goCities() {
