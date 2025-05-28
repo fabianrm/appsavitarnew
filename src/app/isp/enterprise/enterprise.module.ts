@@ -6,7 +6,6 @@ import { EnterpriseEditComponent } from './enterprise-edit/enterprise-edit.compo
 import { EnterpriseDetailsComponent } from './enterprise-details/enterprise-details.component';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { CustomerRoutingModule } from '../customer/customer-routing.module';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
 import { EnterpriseRoutingModule } from './enterprise-routing.module';
 import { MatButtonModule } from '@angular/material/button';

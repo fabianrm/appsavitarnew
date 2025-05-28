@@ -25,7 +25,7 @@ export interface Role {
     name: string;
 }
 
-export interface Enterprise {
+interface Enterprise {
     id: number;
     name: string;
 }
