@@ -67,6 +67,8 @@ export class EnterpriseDetailsComponent {
   }
 
   goList() {
+    console.log('Debo ir a Lista de empresas');
+
     this.router.navigateByUrl('/dashboard/enterprise/list')
   }
 
