@@ -4,14 +4,14 @@ import { EnterpriseListComponent } from './enterprise-list/enterprise-list.compo
 import { EnterpriseCreateComponent } from './enterprise-create/enterprise-create.component';
 import { EnterpriseEditComponent } from './enterprise-edit/enterprise-edit.component';
 import { EnterpriseDetailsComponent } from './enterprise-details/enterprise-details.component';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { CustomerRoutingModule } from '../customer/customer-routing.module';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
 import { EnterpriseRoutingModule } from './enterprise-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {  MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -23,6 +23,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SharedModule } from '../../shared/shared.module';
 
 
 
@@ -46,11 +47,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatCard,
-    MatCardActions,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
+    MatCardModule,
     MatSelectModule,
     MatOptionModule,
     MatSlideToggleModule,
@@ -58,7 +55,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FormsModule,
     MapleafModule,
     MatMenuModule,
-    MatTooltipModule
+    MatTooltipModule,
+    SharedModule
 
   ]
 })

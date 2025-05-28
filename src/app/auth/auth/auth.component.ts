@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
 import { EnterpriseService } from '../../isp/enterprise/enterprise.service';
-import { Enterprise } from '../../isp/enterprise/Models/EnterpriseResponse';
+import { Enterprise } from '../../isp/enterprise/Models/enterpriseResponse';
 
 @Component({
   selector: 'app-auth',
@@ -77,7 +77,7 @@ export class AuthComponent implements OnInit {
 
   setEnterprise(id: number) {
     this.enterpriseService.getEnterpriseByID(id).subscribe((respuesta) => {
-      this.initCoords = respuesta?.coordinates
+      this.initCoords = respuesta?.city.coordinates
       localStorage.setItem('coords', JSON.stringify(this.initCoords));
     })
   }

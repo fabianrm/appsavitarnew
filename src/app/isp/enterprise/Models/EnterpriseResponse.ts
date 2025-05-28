@@ -2,15 +2,21 @@ export interface EnterpriseResponse {
     data: Enterprise[];
 }
 
-
 export interface Enterprise {
     id: number;
     ruc: string;
     name: string;
-    cityId: number;
-    city: string;
+    city: City;
     address: string;
-    phone: string;
-    coordinates: [number, number];
+    phone: null;
+    logo: string;
+    status: boolean;
+    createdAt: Date;
     updatedAt: Date;
+}
+
+interface City {
+    id: number;
+    name: string;
+    coordinates: [number, number];
 }

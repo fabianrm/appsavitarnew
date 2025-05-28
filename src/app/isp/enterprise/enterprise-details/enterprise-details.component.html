@@ -1,12 +1,9 @@
 <!-- contrato-detalle.component.html -->
 <div class="container my-4">
   <mat-card>
-    <header class="header">
+    <header class="header-form">
       <div class="left-section">
-        <button
-          mat-icon-button
-          [routerLink]="['/dashboard/home/home']"
-        >
+        <button mat-icon-button [routerLink]="['/dashboard/home/home']">
           <mat-icon>arrow_back_ios</mat-icon>
         </button>
         <div class="text-container">
@@ -30,7 +27,7 @@
           </div>
           <div class="mb-3">
             <strong>Ciudad:</strong>
-            {{ dataEnterprise?.city }}
+            {{ dataEnterprise?.city?.name }}
           </div>
 
           <div class="mb-3">

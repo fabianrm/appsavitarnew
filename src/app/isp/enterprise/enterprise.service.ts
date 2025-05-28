@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, of, Subject, tap, throwError } from 'rxjs';
-import { Enterprise, EnterpriseResponse } from './Models/EnterpriseResponse';
+import { Enterprise, EnterpriseRequest, EnterpriseResponse } from './Models';
 
 
 @Injectable({
@@ -25,19 +25,68 @@ export class EnterpriseService {
   });
 
 
-  addEnterprise(datos: any): Observable<any> {
-    return this.clienteHttp.post(this.API + 'enterprises', datos, { headers: this.headers })
-      .pipe(tap(() => {
-        this._refresh$.next()
-      }));
+  addEnterprise(enterprise: EnterpriseRequest, imageFile: File | null): Observable<any> {
+    const url = `${this.API}enterprises`;
+    const formData = new FormData();
+    formData.append('name', enterprise.name);
+    formData.append('ruc', enterprise.ruc);
+    formData.append('cityId', enterprise.cityId.toString());
+    formData.append('address', enterprise.address);
+    formData.append('phone', enterprise.phone);
+    formData.append('status', enterprise.status ? '1' : '0');
+
+    // Adjuntar el archivo de imagen
+    if (imageFile) {
+      formData.append('logo', imageFile);
+    }
+    // Configurar headers
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.clienteHttp.post<Enterprise>(url, formData, { headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+
+
   }
 
-  updateEnterprise(id: number, datos: any): Observable<any> {
-    return this.clienteHttp.put(this.API + 'enterprises/' + id, datos, { headers: this.headers })
-      .pipe(tap(() => {
-        this._refresh$.next()
-      }));
+  //Actualizar Producto
+  updateEnterprise(enterprise: EnterpriseRequest, imageFile: File | null): Observable<Enterprise> {
+    const url = `${this.API}enterprises/${enterprise.id}`;
+
+    const formData = new FormData();
+    formData.append('name', enterprise.name);
+    formData.append('ruc', enterprise.ruc);
+    formData.append('cityId', enterprise.cityId.toString());
+    formData.append('address', enterprise.address);
+    formData.append('phone', enterprise.phone);
+    formData.append('status', enterprise.status ? '1' : '0');
+
+    if (imageFile) {
+      formData.append('logo', imageFile);
+    }
+
+    // Agrega el campo `_method` para simular el método PUT
+    formData.append('_method', 'PUT');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.clienteHttp.post<Enterprise>(url, formData, { headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
   }
+
+
+
 
   getEnterpriseByID(id: number): Observable<Enterprise> {
     return this.clienteHttp.get<{ data: Enterprise }>(this.API + 'enterprises/' + id, { headers: this.headers })

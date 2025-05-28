@@ -1,1 +1,123 @@
-<p>enterprise-list works!</p>
+<div class="contenedor">
+  <div class="row">
+    <div
+      class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-2"
+    >
+      <!-- Botón: solo el contenedor tiene w-100 en móvil, sin clase en el botón -->
+      <div class="w-100 w-md-auto">
+        <button (click)="newEnterprise()" mat-flat-button color="accent">
+          + Nueva Empresa
+        </button>
+      </div>
+
+      <!-- Cuadro de búsqueda -->
+      <div class="w-100 w-md-25">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Caja 20"
+            #input
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- id Video -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">ID</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ruc">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">RUC</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.ruc }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Nombre</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.name }}
+        </td>
+      </ng-container>
+
+      <!-- Documento Column -->
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Ciudad</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.city.name }}
+        </td>
+      </ng-container>
+
+      <!-- Documento Column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Dirección</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.address }}
+        </td>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Teléfono</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.phone }}
+        </td>
+      </ng-container>
+
+      <!-- Estado Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Estado</th>
+        <td mat-cell *matCellDef="let element">
+          <span
+            [ngClass]="{
+              'status-active': element.status == 1,
+              'status-terminated': element.status == 0
+            }"
+            >{{ element.status == 0 ? "Suspendido" : "Activo" }}</span
+          >
+        </td>
+      </ng-container>
+
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef>Accciones</th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          class="menu-actions"
+          style="text-align: center"
+        >
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editEnterprise(row.id)">
+              <mat-icon matListItemIcon>edit</mat-icon>
+              Editar
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      pageSize="10"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+</div>

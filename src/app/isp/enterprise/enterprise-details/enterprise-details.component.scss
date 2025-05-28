@@ -11,17 +11,16 @@ mat-card {
 
 mat-card-content {
   padding: 16px;
-  color:black;
+  color: black;
 }
 
 .mb-3 {
   margin-bottom: 1rem;
 }
 
-.mat-card-header-child {
-  background: rgb(155, 159, 155);
+.header-form {
+  background: var(--mat-sys-primary-container) !important;
   color: white;
-  padding: 10px;
   border-radius: 8px 8px 0 0;
 }
 
@@ -34,7 +33,8 @@ table {
   margin-top: 1rem;
 }
 
-th, td {
+th,
+td {
   text-align: left;
   padding: 8px;
 }
@@ -48,16 +48,14 @@ tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-
 /* Mapa */
 
-.container-map{
+.container-map {
   margin-top: 15px;
   width: 100%;
   height: 330px;
   display: flex;
 }
-
 
 .center-content {
   display: flex;
@@ -65,7 +63,6 @@ tbody tr:nth-child(even) {
   align-items: center;
   height: 100%; /* Asegúrate de que el contenedor tenga una altura definida */
 }
-
 
 .full-size {
   width: 100%;
@@ -87,53 +84,50 @@ tbody tr:nth-child(even) {
 .head-title {
   display: flex;
   width: 100%;
-
 }
 
-
-
 .header {
-    width: 780px;
-    height: 100px;
-    background-color: var(--primary);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5px;
-    box-sizing: border-box;
-    border-radius: 8px 8px 0 0;
+  width: 780px;
+  height: 100px;
+  background-color: var(--primary);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 8px 8px 0 0;
 }
 
 .left-section {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .icon {
-    font-size: 24px;
-    margin-right: 15px;
+  font-size: 24px;
+  margin-right: 15px;
 }
 
 .text-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
 
 .title {
-    margin: 0;
-    font-size: 1.5rem;
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 .subtitle {
-    margin: 0;
-    font-size: 1rem;
-    color: #d1ecf1;
+  margin: 0;
+  font-size: 1rem;
+  color: #d1ecf1;
 }
 
 .edit-icon {
-    margin-left: auto;
-    margin-right: 5px;
+  margin-left: auto;
+  margin-right: 5px;
 }

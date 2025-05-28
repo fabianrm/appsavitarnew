@@ -3,13 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EnterpriseService } from '../enterprise.service';
 import { PlacesService } from '../../mapleaf/places.service';
 import { MapleafService } from '../../mapleaf/mapleaf.service';
-import { Enterprise } from '../Models/EnterpriseResponse';
+import { Enterprise } from '../Models/enterpriseResponse';
 
 @Component({
-    selector: 'app-enterprise-details',
-    templateUrl: './enterprise-details.component.html',
-    styleUrl: './enterprise-details.component.scss',
-    standalone: false
+  selector: 'app-enterprise-details',
+  templateUrl: './enterprise-details.component.html',
+  styleUrl: './enterprise-details.component.scss',
+  standalone: false
 })
 export class EnterpriseDetailsComponent {
   id!: number;
@@ -52,7 +52,7 @@ export class EnterpriseDetailsComponent {
       this.dataEnterprise = respuesta;
       console.log(this.dataEnterprise.id);
 
-      this.setNewCoordinates(this.dataEnterprise.coordinates[0], this.dataEnterprise.coordinates[1]);
+      this.setNewCoordinates(this.dataEnterprise.city.coordinates[0], this.dataEnterprise.city.coordinates[1]);
     });
   }
 
@@ -63,7 +63,7 @@ export class EnterpriseDetailsComponent {
   }
 
   editEnterprise() {
-    this.router.navigate(['/dashboard/enterprise/enterpriseEdit/' + this.dataEnterprise?.id]); // Navega al componente "contrato"
+    this.router.navigate(['/dashboard/enterprise/edit/' + this.dataEnterprise?.id]); // Navega al componente "contrato"
   }
 
 }
