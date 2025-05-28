@@ -109,7 +109,7 @@ export class EnterpriseCreateComponent {
                 .subscribe({
                     next: () => {
                         this.showSuccess();
-                        this.router.navigateByUrl('/dashboard/enterprise/enterprise-list')
+                        this.router.navigateByUrl('/dashboard/enterprise/list')
                     },
                     error: (error) => {
                         Swal.fire('Error ☹️', error.message, 'error')
@@ -123,7 +123,7 @@ export class EnterpriseCreateComponent {
                 .subscribe({
                     next: () => {
                         this.showSuccess();
-                        this.router.navigateByUrl('/dashboard/enterprise/enterprise-list')
+                        this.router.navigateByUrl('/dashboard/enterprise/list')
                     },
                     error: (error) => {
                         Swal.fire('Error ☹️', error.message, 'error')
@@ -138,7 +138,7 @@ export class EnterpriseCreateComponent {
 
 
     onCancel() {
-        this.router.navigateByUrl('/dashboard/enterprise/enterprise-list');
+        this.router.navigateByUrl('/dashboard/enterprise/list');
     }
 
     showError() {

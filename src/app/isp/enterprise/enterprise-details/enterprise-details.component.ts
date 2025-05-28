@@ -66,6 +66,10 @@ export class EnterpriseDetailsComponent {
     this.router.navigate(['/dashboard/enterprise/edit/' + this.dataEnterprise?.id]); // Navega al componente "contrato"
   }
 
+  goList() {
+    this.router.navigateByUrl('/dashboard/enterprise/list')
+  }
+
 }
 
 
