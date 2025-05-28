@@ -8,7 +8,7 @@ import { EnterpriseListComponent } from './enterprise-list/enterprise-list.compo
 
 const routes: Routes = [
   { path: 'enterprise-new', component: EnterpriseCreateComponent, data: { title: 'Nueva Empresa' }, canActivate: [AuthGuard] },
-  { path: 'enterprise-list', component: EnterpriseListComponent, data: { title: 'Lista de Empresas' }, canActivate: [AuthGuard] },
+  { path: 'list', component: EnterpriseListComponent, data: { title: 'Lista de Empresas' }, canActivate: [AuthGuard] },
   { path: 'enterpriseDetails/:id', component: EnterpriseDetailsComponent, data: { title: 'Datos de la Empresa' }, canActivate: [AuthGuard] },
   // { path: 'enterpriseEdit/:id', component: EnterpriseEditComponent, data: { title: 'Editar Empresa' }, canActivate: [AuthGuard] },
   { path: 'edit/:id', component: EnterpriseCreateComponent, data: { title: 'Editar Empresa' }, canActivate: [AuthGuard] },
