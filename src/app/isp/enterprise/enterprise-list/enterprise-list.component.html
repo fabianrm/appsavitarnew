@@ -106,6 +106,10 @@
               <mat-icon matListItemIcon>edit</mat-icon>
               Editar
             </button>
+            <button mat-menu-item (click)="addAmin(row.id)">
+              <mat-icon matListItemIcon>manage_accounts</mat-icon>
+              Asignar Administrador
+            </button>
           </mat-menu>
         </td>
       </ng-container>

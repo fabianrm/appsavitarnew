@@ -1,42 +1,42 @@
-<form ngNativeValidate [formGroup]="formRole" (ngSubmit)="enviarDatos()">
-  <mat-card>
-    <mat-card-header class="header-form">
-      <mat-card-title> Asignar Rol </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-      <div class="row">
-        <div class="col-12">
-          <mat-form-field class="control-full-width" appearance="fill">
-            <mat-label>Rol</mat-label>
-            <mat-select formControlName="role_id">
-              @for (role of roles; track role) {
-              <mat-option [value]="role.id">{{ role.name }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
+<h2 mat-dialog-title class="title-card">Cambiar Rol</h2>
+<mat-dialog-content>
+  <form ngNativeValidate [formGroup]="formRole" (ngSubmit)="enviarDatos()">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Rol</mat-label>
+              <mat-select formControlName="role_id">
+                @for (role of roles; track role) {
+                <mat-option [value]="role.id">{{ role.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <div class="row-buttons">
-    <button
-      [disabled]="formRole.invalid"
-      color="primary"
-      type="submit"
-      mat-raised-button
-      style="margin-right: 5px"
-    >
-      Guardar
-    </button>
-    <button
-      (click)="onCancel()"
-      type="button"
-      mat-dialog-close=""
-      color="accent"
-      mat-raised-button
-    >
-      Cancelar
-    </button>
-  </div>
-</form>
+      </mat-card-content>
+
+      <mat-card-actions class="d-flex justify-content-center">
+        <button
+          [disabled]="formRole.invalid"
+          color="primary"
+          type="submit"
+          mat-raised-button
+          style="margin-right: 5px"
+        >
+          Guardar
+        </button>
+        <button
+          (click)="onCancel()"
+          type="button"
+          mat-dialog-close=""
+          color="accent"
+          mat-raised-button
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</mat-dialog-content>

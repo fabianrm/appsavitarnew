@@ -11,12 +11,13 @@ import { RoleCreateComponent } from '../role-create/role-create.component';
 import { RoleEditComponent } from '../role-edit/role-edit.component';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { PermissionListComponent } from '../../permission/permission-list/permission-list.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-role-list',
-    templateUrl: './role-list.component.html',
-    styleUrl: './role-list.component.scss',
-    standalone: false
+  selector: 'app-role-list',
+  templateUrl: './role-list.component.html',
+  styleUrl: './role-list.component.scss',
+  standalone: false
 })
 export class RoleListComponent {
 
@@ -50,10 +51,18 @@ export class RoleListComponent {
     this.subscription.unsubscribe();
   }
 
+  get roleUser() {
+    return localStorage.getItem('role');
+  }
+
   getRoles() {
     this.roleService.getRoles().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
-        this.dataSource = new MatTableDataSource(respuesta.data);
+        if (Number(this.roleUser) !== 1) {
+          this.dataSource = new MatTableDataSource(respuesta.data.filter((x: any) => x.id !== 1));
+        } else {
+          this.dataSource = new MatTableDataSource(respuesta.data);
+        }
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
@@ -86,16 +95,18 @@ export class RoleListComponent {
   }
 
   deleteRole(id: number) {
-    this.roleService.deleteRole(id).subscribe(respuesta => {
-      if (respuesta.data.status === 'true') {
-        this.showSuccess();
 
-      } else {
-        // this.showError();
-        this.snackbarService.showError(respuesta.data.message);
+    this.roleService.deleteRole(id).subscribe({
+      next: (respuesta) => {
+        this.snackbarService.showSuccess(respuesta.message);
+
+      },
+      error: (err) => {
+        this.snackbarService.showError(err);
       }
 
     });
+
   }
 
 

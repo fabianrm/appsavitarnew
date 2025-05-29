@@ -13,10 +13,10 @@ import { AddRoleComponent } from '../add-role/add-role.component';
 import { EditRoleComponent } from '../edit-role/edit-role.component';
 
 @Component({
-    selector: 'app-employee-list',
-    templateUrl: './employee-list.component.html',
-    styleUrl: './employee-list.component.scss',
-    standalone: false
+  selector: 'app-employee-list',
+  templateUrl: './employee-list.component.html',
+  styleUrl: './employee-list.component.scss',
+  standalone: false
 })
 export class EmployeeListComponent {
 
@@ -107,44 +107,27 @@ export class EmployeeListComponent {
 
 
   addRoleDialog(id: any) {
-
     const dialogConfig = new MatDialogConfig();
-
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '40%';
-    dialogConfig.height = '320px';
     dialogConfig.data = id;
-
+    dialogConfig.width = '400px'
     this.dialog.open(AddRoleComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
-
   }
 
 
-  editRoleDialog(id: any) {
+  // editRoleDialog(id: any) {
+  //   this.employeeService.getRoleByID(id).subscribe(respuesta => {
+  //     const dialogConfig = new MatDialogConfig();
+  //     dialogConfig.disableClose = true;
+  //     dialogConfig.autoFocus = true;
+  //     dialogConfig.data = respuesta.data
+  //     this.dialog.open(EditRoleComponent, dialogConfig);
+  //     this.dialog.afterAllClosed.subscribe(() => { });
+  //   });
 
-    this.employeeService.getRoleByID(id).subscribe(respuesta => {
-
-      const dialogConfig = new MatDialogConfig();
-
-      dialogConfig.disableClose = true;
-      dialogConfig.autoFocus = true;
-      // dialogConfig.width = '40%';
-      dialogConfig.height = '320px';
-      dialogConfig.data = respuesta.data
-
-      this.dialog.open(EditRoleComponent, dialogConfig);
-      this.dialog.afterAllClosed.subscribe(() => { });
-      
-    });
-
-   
-
-  }
-
-
-
+  // }
 
 
   ngOnDestroy() {

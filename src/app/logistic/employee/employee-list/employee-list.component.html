@@ -1,19 +1,30 @@
 <div class="contenedor">
-  <div class="row-filter">
-    <!--  Filtro -->
-    <mat-form-field>
-      <mat-label>Buscar</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ej. Luis Nizama"
-        #input
-        autocomplete="off"
-      />
-    </mat-form-field>
-    <button (click)="openDialog('')" mat-raised-button color="accent">
-      + Nuevo
-    </button>
+  <div class="row">
+    <div
+      class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-2"
+    >
+      <!-- Botón: solo el contenedor tiene w-100 en móvil, sin clase en el botón -->
+      <div class="w-100 w-md-auto">
+        <button (click)="openDialog('')" mat-flat-button color="accent">
+          + Nuevo Empleado
+        </button>
+      </div>
+
+      <!-- Cuadro de búsqueda -->
+      <div class="w-100 w-md-25">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Caja 20"
+            #input
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
+    </div>
   </div>
 
   <div class="table-container">
@@ -109,18 +120,7 @@
               Editar Empleado
             </button>
 
-            <button
-              mat-menu-item
-              [hidden]="row.role.length > 0"
-              (click)="addRoleDialog(row.id)"
-            >
-              <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
-              Asignar Rol
-            </button>
-
-            <button mat-menu-item
-             [hidden]="row.role.length === 0"
-            (click)="editRoleDialog(row.id)">
+            <button mat-menu-item (click)="addRoleDialog(row.id)">
               <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
               Cambiar Rol
             </button>

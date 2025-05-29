@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginResponse } from './Models/LoginResponse';
 import { UserRequest } from './Models/UserRequest';
@@ -59,7 +59,11 @@ export class AuthService {
     return this.http.post(this.API + 'users', datos, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
-      }));
+      }),
+        catchError(err => {
+          return throwError(() => err.error.message);
+        })
+      );
   }
 
 
@@ -70,12 +74,6 @@ export class AuthService {
       }));
   }
 
-  addRole(datos: any): Observable<any> {
-    return this.http.post(this.API + 'role-user', datos, { headers: this.headers })
-      .pipe(tap(() => {
-        this._refresh$.next()
-      }));
-  }
 
   updateRole(id: number, datos: any): Observable<any> {
     return this.http.put(this.API + 'role-user/' + id, datos, { headers: this.headers })

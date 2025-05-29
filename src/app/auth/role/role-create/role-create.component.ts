@@ -6,10 +6,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-    selector: 'app-role-create',
-    templateUrl: './role-create.component.html',
-    styleUrl: './role-create.component.scss',
-    standalone: false
+  selector: 'app-role-create',
+  templateUrl: './role-create.component.html',
+  styleUrl: './role-create.component.scss',
+  standalone: false
 })
 export class RoleCreateComponent {
 
@@ -31,11 +31,10 @@ export class RoleCreateComponent {
   initForm() {
     this.formRole = this.formulario.group({
       name: ['', Validators.required],
-  
+
 
     });
   }
-
 
   enviarDatos() {
     if (this.formRole.valid) {
@@ -43,8 +42,11 @@ export class RoleCreateComponent {
         this.showSuccess();
         this.dialogRef.close();
       });
+    } else {
+      console.log('El formulario tiene errores.');
     }
   }
+
 
   showError() {
     this.snackbarService.showError('☹️ Ocurrio un error');

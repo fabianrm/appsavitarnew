@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EnterpriseListComponent } from './enterprise-list/enterprise-list.component';
 import { EnterpriseCreateComponent } from './enterprise-create/enterprise-create.component';
-import { EnterpriseEditComponent } from './enterprise-edit/enterprise-edit.component';
-import { EnterpriseDetailsComponent } from './enterprise-details/enterprise-details.component';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
 import { EnterpriseRoutingModule } from './enterprise-routing.module';
@@ -23,6 +21,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from '../../shared/shared.module';
+import { AddAdminComponent } from './add-admin/add-admin.component';
 
 
 
@@ -30,8 +29,7 @@ import { SharedModule } from '../../shared/shared.module';
   declarations: [
     EnterpriseListComponent,
     EnterpriseCreateComponent,
-    EnterpriseEditComponent,
-    EnterpriseDetailsComponent
+    AddAdminComponent
   ],
   imports: [
     CommonModule,

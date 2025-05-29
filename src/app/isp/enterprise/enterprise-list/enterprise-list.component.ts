@@ -6,6 +6,8 @@ import { Enterprise } from '../Models';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { EnterpriseService } from '../enterprise.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddAdminComponent } from '../add-admin/add-admin.component';
 
 @Component({
     selector: 'app-enterprise-list',
@@ -20,6 +22,8 @@ export class EnterpriseListComponent {
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
+
+    constructor(public dialog: MatDialog) { }
 
     subscription!: Subscription
 
@@ -66,6 +70,18 @@ export class EnterpriseListComponent {
     editEnterprise(id: number) {
         this.router.navigate(['/dashboard/enterprise/edit/' + id]); // Navega al componente "contrato"
     }
+
+
+    addAmin(id: number) {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = id;
+        dialogConfig.width = '400px'
+        this.dialog.open(AddAdminComponent, dialogConfig);
+        this.dialog.afterAllClosed.subscribe(() => { });
+    }
+
 
 
 

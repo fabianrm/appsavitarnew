@@ -1,26 +1,19 @@
-<form ngNativeValidate [formGroup]="formRole" (ngSubmit)="enviarDatos()">
-  <mat-card>
-    <mat-card-header class="header-form">
-      <mat-card-title> Nuevo Rol </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-      <div class="row">
-        <div class="col-12">
-          <mat-form-field>
-            <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Nombre" formControlName="name" />
-          </mat-form-field>
+<h2 mat-dialog-title class="title-card">Agregar Rol</h2>
+<mat-dialog-content>
+  <form ngNativeValidate [formGroup]="formRole" (ngSubmit)="enviarDatos()">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field class="w-100">
+              <mat-label>Nombre</mat-label>
+              <input matInput placeholder="Nombre" formControlName="name" />
+            </mat-form-field>
+          </div>
         </div>
+      </mat-card-content>
 
-
-      </div>
-
-
-    </mat-card-content>
-
-    <mat-card-actions>
-      <div class="row-buttons">
+      <mat-card-actions class="d-flex justify-content-center">
         <button
           [disabled]="formRole.invalid"
           type="submit"
@@ -30,10 +23,15 @@
         >
           Guardar
         </button>
-        <button mat-dialog-close="" color="accent" mat-raised-button type="button">
+        <button
+          mat-dialog-close=""
+          color="accent"
+          mat-raised-button
+          type="button"
+        >
           Cancelar
         </button>
-      </div>
-    </mat-card-actions>
-  </mat-card>
-</form>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</mat-dialog-content>

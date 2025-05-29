@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, Subject, tap } from 'rxjs';
+import { catchError, Observable, of, Subject, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RoleResponse } from './Models/RoleResponse';
@@ -43,22 +43,33 @@ export class RoleService {
       }));
   }
 
-
   deleteRole(id: number,): Observable<any> {
     return this.clienteHttp.delete(this.API + 'roles/' + id, { headers: this.headers })
-      .pipe(
-        catchError(error => {
-          return of({
-            data: {
-              status: false,
-              message: 'Error desconocido al eliminar el Rol'
-            }
-          });
-        }), tap(() => {
-          this._refresh$.next()
-        })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }),
+        catchError(err => {
+          return throwError(() => err.error.message);
+        }),
       );
   }
+
+
+  // deleteRole(id: number,): Observable<any> {
+  //   return this.clienteHttp.delete(this.API + 'roles/' + id, { headers: this.headers })
+  //     .pipe(
+  //       catchError(error => {
+  //         return of({
+  //           data: {
+  //             status: false,
+  //             message: 'Error desconocido al eliminar el Rol'
+  //           }
+  //         });
+  //       }), tap(() => {
+  //         this._refresh$.next()
+  //       })
+  //     );
+  // }
 
   getRoleByID(id: number): Observable<any> {
     return this.clienteHttp.get(this.API + 'roles/' + id, { headers: this.headers })

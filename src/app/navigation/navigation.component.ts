@@ -156,6 +156,7 @@ export class NavigationComponent implements OnInit {
         localStorage.removeItem('id_user');
         localStorage.removeItem('role');
         localStorage.removeItem('enterprise_id');
+        localStorage.removeItem('enterprise_name');
         localStorage.removeItem('theme');
         this.router.navigate(['/login']);
       },
@@ -177,6 +178,10 @@ export class NavigationComponent implements OnInit {
 
   get userName() {
     return localStorage.getItem('user_name')
+  }
+
+  get role() {
+    return Number(localStorage.getItem('role'));
   }
 
 

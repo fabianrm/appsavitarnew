@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, of, Subject, tap, throwError } from 'rxjs';
-import { Enterprise, EnterpriseRequest, EnterpriseResponse } from './Models';
+import { Enterprise, EnterpriseRequest, EnterpriseResponse, RoleUserRequest } from './Models';
 
 
 @Injectable({
@@ -51,7 +51,6 @@ export class EnterpriseService {
         }),
       );
 
-
   }
 
   //Actualizar Producto
@@ -82,6 +81,18 @@ export class EnterpriseService {
         catchError(err => {
           return throwError(() => err.error);
         }),
+      );
+  }
+
+
+  addRoleUser(datos: RoleUserRequest): Observable<any> {
+    return this.clienteHttp.patch(this.API + 'add-admin', datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }),
+        catchError(err => {
+          return throwError(() => err.error.message);
+        })
       );
   }
 

@@ -77,8 +77,14 @@
         <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="goCities()">Configurar Ciudades</button>
-        <button mat-menu-item (click)="detailEnterprise(this.id)">
+        <button *ngIf="role === 2" mat-menu-item (click)="goCities()">
+          Configurar Ciudades
+        </button>
+        <button
+          *ngIf="role === 2"
+          mat-menu-item
+          (click)="detailEnterprise(this.id)"
+        >
           Configurar Empresa
         </button>
         <button mat-menu-item>Cambiar Clave</button>
