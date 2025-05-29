@@ -7,10 +7,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PermissionRole } from '../Models/PermissionRoleResponse';
 
 @Component({
-    selector: 'app-permission-list',
-    templateUrl: './permission-list.component.html',
-    styleUrl: './permission-list.component.scss',
-    standalone: false
+  selector: 'app-permission-list',
+  templateUrl: './permission-list.component.html',
+  styleUrl: './permission-list.component.scss',
+  standalone: false
 })
 export class PermissionListComponent implements OnInit {
 
@@ -46,13 +46,23 @@ export class PermissionListComponent implements OnInit {
     this.formPermissions = this.formulario.group(formControlsConfig);
   }
 
+  get role() {
+    return Number(localStorage.getItem('role'));
+  }
+
 
   getPermissions() {
     this.permissionService.getPermissions().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
-        this.permissions = respuesta.data;
+        if (this.role !== 1) {
+          this.permissions = respuesta.data.filter(x => x.id !== 39);
+        } else {
+          this.permissions = respuesta.data;
+        }
         //  console.log('Obteniendo permisos', this.permissions);
+
         this.permissionTree = buildPermissionTree(this.permissions);
+
       }
     });
   }

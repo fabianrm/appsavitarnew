@@ -1,50 +1,55 @@
- <form ngNativeValidate [formGroup]="formPermissions" (ngSubmit)="enviarDatos()">
+<form ngNativeValidate [formGroup]="formPermissions" (ngSubmit)="enviarDatos()">
   <div class="permissions-container">
-  <h2>Permisos de Usuario</h2>
-  <ng-container
-    *ngTemplateOutlet="treeNode; context: { nodes: permissionTree }"
-  ></ng-container>
+    <h2>Permisos de Usuario</h2>
+    <ng-container
+      *ngTemplateOutlet="treeNode; context: { nodes: permissionTree }"
+    ></ng-container>
 
-  <!-- <div class="selected-permissions">
+    <!-- <div class="selected-permissions">
     <h3>Permisos Seleccionados:</h3>
     <p>{{ selectedPermissions.join(", ") }}</p>
   </div> -->
-</div>
+  </div>
 
-<ng-template #treeNode let-nodes="nodes">
-  <ul class="permission-list">
-    <li *ngFor="let node of nodes">
-      <mat-checkbox
-        [checked]="node.checked"
-        [indeterminate]="someChildrenChecked(node) && !allChildrenChecked(node)"
-        (change)="onCheckboxChange(node, $event.checked)"
-      >
-        {{ node.name }}
-      </mat-checkbox>
-      <ng-container *ngIf="node.children.length > 0">
-        <ng-container
-          *ngTemplateOutlet="treeNode; context: { nodes: node.children }"
-        ></ng-container>
-      </ng-container>
-    </li>
-  </ul>
-</ng-template>
+  <ng-template #treeNode let-nodes="nodes">
+    <ul class="permission-list">
+      <li *ngFor="let node of nodes">
+        <mat-checkbox
+          [checked]="node.checked"
+          [indeterminate]="
+            someChildrenChecked(node) && !allChildrenChecked(node)
+          "
+          (change)="onCheckboxChange(node, $event.checked)"
+        >
+          {{ node.name }}
+        </mat-checkbox>
+        <ng-container *ngIf="node.children.length > 0">
+          <ng-container
+            *ngTemplateOutlet="treeNode; context: { nodes: node.children }"
+          ></ng-container>
+        </ng-container>
+      </li>
+    </ul>
+  </ng-template>
 
-<div class="row-buttons">
-  <button
-    type="submit"
-    color="primary"
-    mat-raised-button
-    style="margin-right: 5px"
-  >
-    Guardar
-  </button>
-  <button
-  type="button"
-  (click)="close()"
-  mat-dialog-close="" color="accent" mat-raised-button type="button">
-    Cancelar
-  </button>
-</div>
-
+  <div class="row-buttons">
+    <button
+      type="submit"
+      color="primary"
+      mat-flat-button
+      style="margin-right: 5px"
+    >
+      Guardar
+    </button>
+    <button
+      type="button"
+      (click)="close()"
+      mat-dialog-close=""
+      color="accent"
+      mat-raised-button
+      type="button"
+    >
+      Cancelar
+    </button>
+  </div>
 </form>
