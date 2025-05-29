@@ -1,7 +1,3 @@
-export interface EnterpriseResponse {
-    data: Enterprise[];
-}
-
 export interface Enterprise {
     id: number;
     ruc: string;
@@ -19,4 +15,8 @@ interface City {
     id: number;
     name: string;
     coordinates: [number, number];
+}
+
+export interface EnterpriseResponse {
+    data: Enterprise[];
 }
