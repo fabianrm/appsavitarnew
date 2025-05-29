@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable, of, Subject, tap, throwError } from 'rxjs';
-import { Enterprise, EnterpriseRequest, EnterpriseResponse, RoleUserRequest } from './Models';
+import { Enterprise, EnterpriseRequest, EnterpriseResponse, RoleUserRequest } from './models';
 
 
 @Injectable({

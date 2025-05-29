@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Enterprise } from '../../isp/enterprise/Models';
+import { Enterprise } from '../../isp/enterprise/models';
 
 
 @Pipe({

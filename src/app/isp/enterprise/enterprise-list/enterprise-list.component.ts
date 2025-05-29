@@ -2,7 +2,7 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Enterprise } from '../Models';
+import { Enterprise } from '../models';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { EnterpriseService } from '../enterprise.service';

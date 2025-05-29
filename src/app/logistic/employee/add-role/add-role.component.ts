@@ -5,7 +5,7 @@ import { AuthService } from '../../../auth/auth.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { RoleService } from '../../../auth/role/role.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Enterprise } from '../../../isp/enterprise/Models';
+import { Enterprise } from '../../../isp/enterprise/models';
 import { filter } from 'rxjs/operators';
 
 @Component({

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { City } from '../../city/Models/CityResponse';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EnterpriseService } from '../enterprise.service';
-import { Enterprise } from '../Models';
+import { Enterprise } from '../models';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { CityService } from '../../city/city.service';
 import Swal from 'sweetalert2';
