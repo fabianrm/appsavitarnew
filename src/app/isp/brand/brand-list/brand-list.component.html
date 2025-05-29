@@ -41,7 +41,7 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Name</th>
         <td class="center" mat-cell *matCellDef="let element">
-          {{ element.name }}
+          {{ element.name | uppercase }}
         </td>
       </ng-container>
 

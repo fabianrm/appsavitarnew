@@ -34,6 +34,7 @@
 
   <div class="row-buttons">
     <button
+      [disabled]="role !== 1 && this.getData >= 1 && this.getData <= 5"
       type="submit"
       color="primary"
       mat-flat-button

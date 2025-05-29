@@ -131,19 +131,17 @@
         </div>
       </mat-card-content>
     </mat-card>
-
-    <div class="row-buttons">
-      <button
-        [disabled]="formCreate.invalid"
-        color="primary"
-        mat-flat-button
-        style="margin-right: 5px"
-      >
-        Guardar
-      </button>
-      <button mat-dialog-close="" color="accent" mat-raised-button>
-        Cancelar
-      </button>
-    </div>
   </form>
 </mat-dialog-content>
+
+<mat-dialog-actions class="row-buttons">
+  <button
+    [disabled]="formCreate.invalid"
+    color="primary"
+    mat-flat-button
+    style="margin-right: 5px"
+  >
+    Guardar
+  </button>
+  <button mat-dialog-close="" color="accent" mat-raised-button>Cancelar</button>
+</mat-dialog-actions>

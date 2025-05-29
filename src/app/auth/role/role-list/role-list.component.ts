@@ -28,9 +28,7 @@ export class RoleListComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   subscription!: Subscription
-
   public respuesta: Role[] = [];
-
 
   constructor(private roleService: RoleService,
     public dialog: MatDialog,
@@ -44,15 +42,14 @@ export class RoleListComponent {
     this.subscription = this.roleService.refresh$.subscribe(() => {
       this.getRoles()
     });
-
-
   }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
   get roleUser() {
-    return localStorage.getItem('role');
+    return Number(localStorage.getItem('role'));
   }
 
   getRoles() {
@@ -95,18 +92,14 @@ export class RoleListComponent {
   }
 
   deleteRole(id: number) {
-
     this.roleService.deleteRole(id).subscribe({
       next: (respuesta) => {
         this.snackbarService.showSuccess(respuesta.message);
-
       },
       error: (err) => {
         this.snackbarService.showError(err);
       }
-
     });
-
   }
 
 
@@ -124,7 +117,6 @@ export class RoleListComponent {
   }
 
 
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -133,7 +125,6 @@ export class RoleListComponent {
       this.dataSource.paginator.firstPage();
     }
   }
-
 
 
   showError() {

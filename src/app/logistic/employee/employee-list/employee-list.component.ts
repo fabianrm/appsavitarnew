@@ -68,18 +68,11 @@ export class EmployeeListComponent {
   // }
 
 
-  deleteBrand(id: number) {
-
-  }
-
   openDialog(row: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '40%';
-    dialogConfig.height = '600px';
     this.dialog.open(EmployeeCreateComponent, dialogConfig);
-
     this.dialog.afterAllClosed.subscribe(() => {
     })
   }
@@ -87,18 +80,12 @@ export class EmployeeListComponent {
   openEditDialog(id: number) {
 
     this.employeeService.getUserByID(id).subscribe(respuesta => {
-
       this.respuesta = respuesta.data;
-
       if (respuesta.data) {
         const dialogConfig = new MatDialogConfig();
-
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        // dialogConfig.width = '40%';
-        dialogConfig.height = '450px';
         dialogConfig.data = this.respuesta;
-
         this.dialog.open(EmployeeEditComponent, dialogConfig);
         this.dialog.afterAllClosed.subscribe(() => { })
       }

@@ -59,12 +59,20 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="editRole(row)">
+            <button
+              mat-menu-item
+              [disabled]="roleUser !== 1 && row.id >= 1 && row.id <= 5"
+              (click)="editRole(row)"
+            >
               <mat-icon matListItemIcon>edit</mat-icon>
               Editar
             </button>
 
-            <button mat-menu-item (click)="deleteRole(row.id)">
+            <button
+              mat-menu-item
+              [disabled]="roleUser !== 1 && row.id >= 1 && row.id <= 5"
+              (click)="deleteRole(row.id)"
+            >
               <mat-icon matListItemIcon>delete</mat-icon>
               Eliminar
             </button>

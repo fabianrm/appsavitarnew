@@ -8,10 +8,10 @@ import { Employee } from '../models/EmployeeResponse';
 import { AuthService } from '../../../auth/auth.service';
 
 @Component({
-    selector: 'app-employee-edit',
-    templateUrl: './employee-edit.component.html',
-    styleUrl: './employee-edit.component.scss',
-    standalone: false
+  selector: 'app-employee-edit',
+  templateUrl: './employee-edit.component.html',
+  styleUrl: './employee-edit.component.scss',
+  standalone: false
 })
 export class EmployeeEditComponent {
 
@@ -20,8 +20,9 @@ export class EmployeeEditComponent {
   checked = true;
   disabled = false;
   selected = 'normal';
-
   id_employee!: number;
+
+  cargos: String[] = ['Empleado', 'Técnico'];
 
   constructor(public formulario: FormBuilder,
     private employeService: AuthService,
@@ -39,10 +40,10 @@ export class EmployeeEditComponent {
     this.formCreate = this.formulario.group({
       dni: [this.getData.dni, Validators.required],
       name: [this.getData.name, Validators.required],
-      address: [ this.getData.address , Validators.required],
+      address: [this.getData.address, Validators.required],
       phone: [this.getData.phone, Validators.required],
       position: [this.getData.position, Validators.required],
-  
+
       status: this.getData.status,
     });
   }
