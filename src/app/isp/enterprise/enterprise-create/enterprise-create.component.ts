@@ -136,9 +136,16 @@ export class EnterpriseCreateComponent {
         this.status = event.checked; // Actualiza el valor de status con el nuevo estado del slide-toggle
     }
 
+    get role() {
+        return Number(localStorage.getItem('role'));
+    }
 
     onCancel() {
-        this.router.navigateByUrl('/dashboard/enterprise/list');
+        if (this.role !== 1) {
+            this.router.navigateByUrl('/dashboard/home/home');
+        } else {
+            this.router.navigateByUrl('/dashboard/enterprise/list');
+        }
     }
 
     showError() {

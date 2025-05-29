@@ -77,7 +77,11 @@
         <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button *ngIf="role === 2" mat-menu-item (click)="goCities()">
+        <button
+          *ngIf="role === 2 || role === 1"
+          mat-menu-item
+          (click)="goCities()"
+        >
           Configurar Ciudades
         </button>
         <button
