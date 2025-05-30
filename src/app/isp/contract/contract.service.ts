@@ -157,8 +157,8 @@ export class ContractService {
   }
 
   //Suspender el contrato
-  generateInvoices(service_id: number,): Observable<any> {
-    return this.clienteHttp.post(`${this.API}invoices/generate`, { service_id }, { headers: this.headers })
+  generateInvoices(service_id: number, months: number): Observable<any> {
+    return this.clienteHttp.post(`${this.API}invoices/generate`, { service_id, months }, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }),

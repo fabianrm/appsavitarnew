@@ -296,11 +296,13 @@ export class ContractListComponent implements OnInit {
       confirmButtonColor: "#43a047",
       cancelButtonColor: "#e91e63",
       cancelButtonText: "Cancelar",
-      confirmButtonText: "Si, generar"
+      confirmButtonText: "Si, generar",
+      input: "number",
+      inputValue: 0,
+      inputLabel: "Número de meses a generar {0 = Mes actual}"
     }).then((result) => {
       if (result.isConfirmed) {
-
-        this.contractService.generateInvoices(row.id).
+        this.contractService.generateInvoices(row.id, result.value).
           subscribe({
             next: (respuesta) => {
               if (respuesta.totalInvoices == 0) {
