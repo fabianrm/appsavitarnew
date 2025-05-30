@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginResponse } from './Models/LoginResponse';
@@ -12,6 +12,7 @@ import { EmployeeResponse } from '../logistic/employee/models/EmployeeResponse';
 export class AuthService {
 
   private _refresh$ = new Subject<void>()
+  //home$ = signal<boolean>(false);
 
   API: string = environment.servidor;
 
@@ -26,7 +27,15 @@ export class AuthService {
   });
 
   login(email: string, password: string, enterprise_id: number): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.API + 'login', { email, password, enterprise_id }, { headers: this.headers });
+    return this.http.post<LoginResponse>(this.API + 'login', { email, password, enterprise_id }, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }),
+        catchError(err => {
+          return throwError(() => err.error.message);
+        })
+      );
+
   }
 
   register(data: any): Observable<any> {

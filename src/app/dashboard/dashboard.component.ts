@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { Summary } from './Models/SummaryResponse';
-import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +28,12 @@ export class DashboardComponent implements OnInit {
     { icon: 'event_busy', number: '0', label: 'Pagos Vencidos' }
   ];
 
+  cardsTotalsExpenses = [
+    { icon: 'local_atm', number: '0', label: 'Gastos del día' },
+    { icon: 'payments', number: '0', label: 'Gastos del mes' },
+  ];
+
+
   summary?: Summary;
 
   ngOnInit(): void {
@@ -48,24 +53,28 @@ export class DashboardComponent implements OnInit {
         { icon: 'wifi', number: this.summary.activePlans, label: 'Planes Activos' },
         { icon: 'attach_money', number: this.summary.pendingInvoices, label: 'Facturas Pendientes' },
         { icon: 'report_problem', number: this.summary.overdueInvoices, label: 'Facturas Vencidas' },
-        // { icon: 'local_atm', number: this.formatCurrency(this.summary.paidDaySum), label: 'Hoy ' + this.summary.totalPaidDay + ' Pagos' },
-        // { icon: 'payments', number: this.formatCurrency(this.summary.paidMonthSum), label: 'Pagos del Mes' },
-        // { icon: 'event_busy', number: this.formatCurrency(this.summary.overduePaidSum), label: 'Pagos Vencidos' },
       ];
       this.getSummaryAmounts();
+      this.getExpensesSummary();
     });
   }
 
 
   getSummaryAmounts() {
-
     this.cardsTotals = [
       { icon: 'local_atm', number: this.formatCurrency(this.summary!.paidDaySum), label: 'Hoy ' + this.summary?.totalPaidDay + ' Pagos' },
       { icon: 'payments', number: this.formatCurrency(this.summary!.paidMonthSum), label: 'Pagos del Mes' },
       { icon: 'event_busy', number: this.formatCurrency(this.summary!.overduePaidSum), label: 'Pagos Vencidos' },
     ];
-
   }
+
+  getExpensesSummary() {
+    this.cardsTotalsExpenses = [
+      { icon: 'local_atm', number: this.formatCurrency(this.summary!.expenseDaySum), label: 'Gastos del Día' },
+      { icon: 'payments', number: this.formatCurrency(this.summary!.expenseMonthSum), label: 'Gastos del Mes' },
+    ];
+  }
+
 
   formatCurrency(value: number = 0): string {
     return new Intl.NumberFormat('es-PE', {

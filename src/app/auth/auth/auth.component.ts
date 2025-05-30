@@ -6,8 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs/operators';
 import { EnterpriseService } from '../../isp/enterprise/enterprise.service';
 import { Enterprise } from '../../isp/enterprise/models';
-
-
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-auth',
@@ -25,8 +24,10 @@ export class AuthComponent implements OnInit {
   loginForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-    private authService: AuthService, private router: Router,
+    private authService: AuthService,
+    private router: Router,
     private enterpriseService: EnterpriseService,
+    private snackbarService: SnackbarService,
     private _snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
@@ -58,13 +59,14 @@ export class AuthComponent implements OnInit {
           localStorage.setItem('enterprise_name', response.enterprise.name.toString());
           this.setEnterprise(response.enterprise.id);
         })
-      ).subscribe(
-        (response) => {
+      ).subscribe({
+        next: (response) => {
+          this.snackbarService.showSuccess(response.message)
           this.router.navigate(['/dashboard/home/home']);
-        },
-        (error) => {
-          this.msgSusscess("Credenciales incorrectas o su cuenta ha sido desactivada");
+        }, error: (err) => {
+          this.snackbarService.showError(err);
         }
+      }
       );
     }
   }

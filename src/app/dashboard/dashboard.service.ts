@@ -34,4 +34,9 @@ export class DashboardService {
     return this.clienteHttp.get<ResumeResponse>(this.API + 'invoices/monthly-paid-amounts', { headers: this.headers })
   }
 
+  getResumenExpense(): Observable<ResumeResponse> {
+    return this.clienteHttp.get<ResumeResponse>(this.API + 'expenses/resume-paid-expenses', { headers: this.headers })
+  }
+
+
 }

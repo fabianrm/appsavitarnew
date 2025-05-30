@@ -1,6 +1,6 @@
 <h2 mat-dialog-title class="title-card">Nuevo Usuario</h2>
 <mat-dialog-content class="mt-2">
-  <form ngNativeValidate [formGroup]="formCreate" (ngSubmit)="enviarDatos()">
+  <form ngNativeValidate [formGroup]="formCreate">
     <div class="row d-flex align-items-center">
       <div class="col-12 col-md-6">
         <mat-form-field class="w-100">
@@ -103,6 +103,7 @@
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex justify-content-end">
   <button
+    (click)="enviarDatos()"
     [disabled]="formCreate.invalid"
     color="primary"
     mat-flat-button

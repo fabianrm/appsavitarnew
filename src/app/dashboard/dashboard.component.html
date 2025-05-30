@@ -51,6 +51,24 @@
         </div>
       </div>
     </div>
+    <div class="row justify-content-center">
+      <div
+        class="col-12 col-lg-3 mb-4"
+        *ngFor="let card of cardsTotalsExpenses"
+      >
+        <mat-card class="data-box-expense">
+          <mat-card-content class="d-flex align-items-center">
+            <div class="icon">
+              <mat-icon class="text-danger">{{ card.icon }}</mat-icon>
+            </div>
+            <div class="content">
+              <div class="fs-4 fw-bold">{{ card.number }}</div>
+              <div class="label">{{ card.label }}</div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
 
     <div class="row">
       <app-resume></app-resume>

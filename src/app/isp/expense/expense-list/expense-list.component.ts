@@ -8,20 +8,19 @@ import { ExpenseService } from '../expense.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ExpenseCreateComponent } from '../expense-create/expense-create.component';
 import { ExpenseEditComponent } from '../expense-edit/expense-edit.component';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExpensePaidComponent } from '../expense-paid/expense-paid.component';
 
 
 @Component({
-    selector: 'app-expense-list',
-    templateUrl: './expense-list.component.html',
-    styleUrl: './expense-list.component.scss',
-    standalone: false
+  selector: 'app-expense-list',
+  templateUrl: './expense-list.component.html',
+  styleUrl: './expense-list.component.scss',
+  standalone: false
 })
 export class ExpenseListComponent implements OnInit, OnDestroy {
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -32,8 +31,9 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     }
   }
 
+  availableColumns: string[] = ['id', 'description', 'date', 'reason', 'voutcher', 'note', 'amount', 'status', 'acciones'];
 
-  displayedColumns: string[] = ['id', 'description', 'date', 'reason', 'voutcher', 'note', 'amount', 'status', 'acciones'];
+  displayedColumns: string[] = ['date', 'description', 'reason', 'voutcher', 'note', 'amount', 'status', 'acciones'];
 
 
   public dataSource!: MatTableDataSource<Expense>;
@@ -64,8 +64,8 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     });
 
     if (this.tipo === 'fijo') {
-      this.displayedColumns.splice(7,0,'datePaid')
-    } 
+      this.displayedColumns.splice(7, 0, 'datePaid')
+    }
 
     this.getExpenses();
     this.subscription = this.expenseService.refresh$.subscribe(() => {
@@ -91,7 +91,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-  //  dialogConfig.width = '40%';
+    //  dialogConfig.width = '40%';
     dialogConfig.data = this.tipo;
     this.dialog.open(ExpenseCreateComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => {
@@ -103,7 +103,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-   // dialogConfig.width = '40%';
+    // dialogConfig.width = '40%';
     dialogConfig.data = id;
     this.dialog.open(ExpenseEditComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })
@@ -115,8 +115,8 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-  //  dialogConfig.width = '40%';
-    dialogConfig.data =row;
+    //  dialogConfig.width = '40%';
+    dialogConfig.data = row;
     this.dialog.open(ExpensePaidComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })
   }
@@ -131,7 +131,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
       } else {
         this.msgSusscess(`No se encontraron facturas que generar`);
       }
-      
+
     });
   }
 
@@ -156,14 +156,14 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
         this.expenseService.suspendPaid(id, dataToSend).subscribe(respuesta => {
           if (!respuesta.data.isEmpty) {
-            
+
             Swal.fire({
               title: "Suspender!",
               text: "Se ha suspendido la generación de facturas.",
               icon: "success"
             });
           }
-        }); 
+        });
       }
     });
   }
