@@ -13,10 +13,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { CustomerSuspendComponent } from '../customer-suspend/customer-suspend.component';
 import Swal from 'sweetalert2';
 @Component({
-    selector: 'app-customer-list',
-    templateUrl: './customer-list.component.html',
-    styleUrl: './customer-list.component.css',
-    standalone: false
+  selector: 'app-customer-list',
+  templateUrl: './customer-list.component.html',
+  styleUrl: './customer-list.component.css',
+  standalone: false
 })
 export class CustomerListComponent implements OnInit, OnDestroy {
 
@@ -29,7 +29,10 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     }
   }
 
-  displayedColumns: string[] = ['id', 'customerCode', 'customerName', 'city', 'address', 'reference', 'latitude', 'longitude', 'phoneNumber', 'status', 'acciones'];
+  availableColumns: string[] = ['id', 'customerCode', 'customerName', 'city', 'address', 'reference', 'latitude', 'longitude', 'phoneNumber', 'status', 'acciones'];
+
+  displayedColumns: string[] = ['customerCode', 'customerName', 'city', 'address', 'reference', 'phoneNumber', 'status', 'acciones'];
+
   public dataSource!: MatTableDataSource<Customer>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
