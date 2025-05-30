@@ -5,6 +5,8 @@ import { filter, map, shareReplay } from 'rxjs/operators';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { EnterpriseService } from '../isp/enterprise/enterprise.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ChangePasswordComponent } from '../logistic/employee/change-password/change-password.component';
 
 
 interface MenuNode {
@@ -38,7 +40,7 @@ export class NavigationComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private enterpriseService: EnterpriseService,
+    public dialog: MatDialog,
     private renderer: Renderer2) {
   }
 
@@ -182,6 +184,16 @@ export class NavigationComponent implements OnInit {
 
   get role() {
     return Number(localStorage.getItem('role'));
+  }
+
+  changePass() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '400px'
+    this.dialog.open(ChangePasswordComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => {
+    })
   }
 
 

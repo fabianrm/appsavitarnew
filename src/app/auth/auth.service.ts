@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginResponse } from './Models/LoginResponse';
-import { UserRequest } from './Models/UserRequest';
+import { ChangePass, UserRequest } from './Models/UserRequest';
 import { EmployeeResponse } from '../logistic/employee/models/EmployeeResponse';
 
 @Injectable({
@@ -65,6 +65,18 @@ export class AuthService {
         })
       );
   }
+
+  changePass(datos: ChangePass): Observable<any> {
+    return this.http.patch(this.API + 'users/change-pass', datos, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }),
+        catchError(err => {
+          return throwError(() => err.error.message);
+        })
+      );
+  }
+
 
 
   updateUser(id: number, datos: UserRequest): Observable<any> {

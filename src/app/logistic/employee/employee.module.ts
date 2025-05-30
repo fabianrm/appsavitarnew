@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { AddRoleComponent } from './add-role/add-role.component';
 import { EditRoleComponent } from './edit-role/edit-role.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 
@@ -30,7 +31,8 @@ import { EditRoleComponent } from './edit-role/edit-role.component';
     EmployeeCreateComponent,
     EmployeeEditComponent,
     AddRoleComponent,
-    EditRoleComponent
+    EditRoleComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,

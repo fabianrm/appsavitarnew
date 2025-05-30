@@ -9,3 +9,10 @@ export interface UserRequest {
     position: string;
     status: number;
 }
+
+
+export interface ChangePass {
+    current_password: string;
+    new_password: string;
+    new_password_confirmation: string;
+}
