@@ -72,6 +72,7 @@ export class DashboardComponent implements OnInit {
     this.cardsTotalsExpenses = [
       { icon: 'local_atm', number: this.formatCurrency(this.summary!.expenseDaySum), label: 'Gastos del Día' },
       { icon: 'payments', number: this.formatCurrency(this.summary!.expenseMonthSum), label: 'Gastos del Mes' },
+      { icon: 'payments', number: this.formatCurrency(this.summary!.paidMonthSum - this.summary!.expenseMonthSum), label: 'Total' },
     ];
   }
 

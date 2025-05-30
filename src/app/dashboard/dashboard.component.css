@@ -58,6 +58,15 @@
   height: 50px; /* Ajusta según sea necesario */
 }
 
+.last-card {
+  background-color: var(--mat-sys-secondary);
+  color: var(--mat-sys-on-secondary);
+}
+
+.last-card .icon mat-icon {
+  color: var(--mat-sys-on-secondary) !important;
+}
+
 .data-box .icon {
   font-size: 40px;
   margin-right: 15px;
