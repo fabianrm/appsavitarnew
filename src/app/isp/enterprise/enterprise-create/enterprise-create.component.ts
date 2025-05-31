@@ -42,7 +42,6 @@ export class EnterpriseCreateComponent {
         this.activateRoute.params
             .pipe(switchMap(({ id }) => this.enterpriseService.getEnterpriseByID(id)))
             .subscribe((enterprise) => {
-                console.log(enterprise);
 
                 if (!enterprise)
                     return this.router.navigateByUrl('/dashboard/enterprise/enterprise-list');

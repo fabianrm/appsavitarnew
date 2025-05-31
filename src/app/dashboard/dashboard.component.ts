@@ -10,7 +10,8 @@ import { Summary } from './Models/SummaryResponse';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService) {
+  }
 
   cards = [
     { icon: 'group', number: 0, label: 'Clientes Activos' },
@@ -33,8 +34,8 @@ export class DashboardComponent implements OnInit {
     { icon: 'payments', number: '0', label: 'Gastos del mes' },
   ];
 
-
   summary?: Summary;
+
 
   ngOnInit(): void {
     this.getSummary();

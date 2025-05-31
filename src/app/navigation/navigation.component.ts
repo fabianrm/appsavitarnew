@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { EnterpriseService } from '../isp/enterprise/enterprise.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChangePasswordComponent } from '../logistic/employee/change-password/change-password.component';
+
 
 
 interface MenuNode {
@@ -27,8 +27,7 @@ export class NavigationComponent implements OnInit {
   currentTitle: string = 'ISP CRM';
   @HostBinding('class') class: string = '';
   isDark: boolean = false;
-  //home = signal<boolean>(false);
-
+  existe: boolean = false;
 
   isExpanded = true;
 
@@ -45,10 +44,6 @@ export class NavigationComponent implements OnInit {
     private renderer: Renderer2) {
   }
 
-
-  // toggleMenu() {
-  //   this.isExpanded = !this.isExpanded;
-  // }
 
   toggleMenu(): void {
     this.isExpanded = !this.isExpanded;
@@ -124,22 +119,12 @@ export class NavigationComponent implements OnInit {
   getUserPermissions() {
     this.authService.getUserPermissions().subscribe(response => {
       this.treeData = response.data;
-      //console.log(this.treeData);
-
 
       // Ordenar los permisos por el campo 'order'
       this.treeData.sort((a: any, b: any) => a.order - b.order);
 
       this.treeData.forEach((elem) => {
         elem.children?.sort((a: any, b: any) => a.order - b.order);
-
-        //TODO:Restringir Dashboard
-        //Verificamos si viene Inicio y lo asignamos al signal
-        // const found = (elem.children?.filter((m) => {
-        //   if (m.name === "Inicio") {
-        //     console.log({ existe: true });
-        //   }
-        // }))
       })
     })
   }
