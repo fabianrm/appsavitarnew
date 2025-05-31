@@ -1,30 +1,33 @@
 <div class="contenedor">
-  <div class="row row-filter">
+  <div class="row">
+    <div
+      class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-2"
+    >
+      <!-- Botón: solo el contenedor tiene w-100 en móvil, sin clase en el botón -->
+      <div class="w-100 w-md-auto">
+        <button (click)="newOutput()" mat-flat-button color="accent">
+          + Registrar Salida
+        </button>
+      </div>
 
-    <div class="col-9 col-md-11">
-    <!--  Filtro -->
-    <mat-form-field>
-      <mat-label>Buscar</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ej. Router"
-        #input
-        autocomplete="off"
-      />
-    </mat-form-field>
+      <!-- Cuadro de búsqueda -->
+      <div class="w-100 w-md-25">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Savitar"
+            #input
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
     </div>
-
-    <div class="col-3 col-md-1">
-    <button type="button" (click)="newOutput()" mat-raised-button color="accent">
-      + Nuevo
-    </button>
-    </div>
-
-
   </div>
 
-  <div class="table-container" >
+  <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- id Video -->
       <ng-container matColumnDef="id">
@@ -34,7 +37,7 @@
         </td>
       </ng-container>
 
-       <!-- id Video -->
+      <!-- id Video -->
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Fecha</th>
         <td data-title="Fecha" mat-cell *matCellDef="let element">
@@ -42,7 +45,6 @@
         </td>
       </ng-container>
 
-      
       <ng-container matColumnDef="number">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Documento</th>
         <td data-title="Documento" mat-cell *matCellDef="let element">
@@ -50,30 +52,27 @@
         </td>
       </ng-container>
 
-      
       <!-- Empleado Column -->
       <ng-container matColumnDef="destination">
         <th mat-header-cell *matHeaderCellDef>Destino</th>
         <td data-title="Destino" mat-cell *matCellDef="let element">
-          {{ element.destination.name}}
+          {{ element.destination.name }}
         </td>
       </ng-container>
-
 
       <!-- Empleado Column -->
       <ng-container matColumnDef="employee">
         <th mat-header-cell *matHeaderCellDef>Empleado</th>
         <td data-title="Empleado" mat-cell *matCellDef="let element">
-          {{ element.employee.name}}
+          {{ element.employee.name }}
         </td>
       </ng-container>
 
-
- <!-- Longitude Column -->
+      <!-- Longitude Column -->
       <ng-container matColumnDef="total">
         <th mat-header-cell *matHeaderCellDef>Total</th>
         <td data-title="Total" mat-cell *matCellDef="let element">
-          {{ element.total  }}
+          {{ element.total }}
         </td>
       </ng-container>
 
@@ -116,8 +115,6 @@
               <mat-icon matListItemIcon>visibility</mat-icon>
               Ver detalle
             </button>
-
-           
           </mat-menu>
         </td>
       </ng-container>
@@ -133,6 +130,3 @@
     </mat-paginator>
   </div>
 </div>
-
-
-

@@ -1,28 +1,29 @@
 <div class="contenedor">
-  <div class="row row-filter">
-    <div class="col-9 col-md-11">
-      <!--  Filtro -->
-      <mat-form-field>
-        <mat-label>Buscar</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Ej. Router"
-          #input
-          autocomplete="off"
-        />
-      </mat-form-field>
-    </div>
+  <div class="row">
+    <div
+      class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-2"
+    >
+      <!-- Botón: solo el contenedor tiene w-100 en móvil, sin clase en el botón -->
+      <div class="w-100 w-md-auto">
+        <button (click)="newMaterial()" mat-flat-button color="accent">
+          + Nuevo Material
+        </button>
+      </div>
 
-    <div class="col-3 col-md-1">
-      <button
-        type="button"
-        (click)="newMaterial()"
-        mat-raised-button
-        color="accent"
-      >
-        + Nuevo
-      </button>
+      <!-- Cuadro de búsqueda -->
+      <div class="w-100 w-md-25">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Savitar"
+            #input
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
     </div>
   </div>
 

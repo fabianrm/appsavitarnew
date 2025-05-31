@@ -12,10 +12,10 @@ import Swal from 'sweetalert2';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-    selector: 'app-entry-list',
-    templateUrl: './entry-list.component.html',
-    styleUrl: './entry-list.component.scss',
-    standalone: false
+  selector: 'app-entry-list',
+  templateUrl: './entry-list.component.html',
+  styleUrl: './entry-list.component.scss',
+  standalone: false
 })
 export class EntryListComponent implements OnInit {
 
@@ -45,8 +45,8 @@ export class EntryListComponent implements OnInit {
         this.dataSource = new MatTableDataSource(respuesta.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-       // console.log(respuesta.data);
-        
+        // console.log(respuesta.data);
+
       }
     });
   }
@@ -69,15 +69,14 @@ export class EntryListComponent implements OnInit {
     this.router.navigateByUrl('/dashboard/entry/entry-create'); // Navega al componente "contrato"
   }
 
-  viewDetails(id: number){
+  viewDetails(id: number) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '40%';
-    //dialogConfig.height = '380px';
     dialogConfig.data = id;
+    dialogConfig.width = '800px';
+    dialogConfig.maxWidth = '95vw';
     this.dialog.open(EntryDetailsComponent, dialogConfig);
-
     this.dialog.afterAllClosed.subscribe(() => {
     })
   }
@@ -112,7 +111,7 @@ export class EntryListComponent implements OnInit {
         });
       }
     });
-    
+
   }
 
 

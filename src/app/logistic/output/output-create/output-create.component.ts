@@ -12,12 +12,13 @@ import { EntrySelectDialogComponent } from '../entry-select-dialog/entry-select-
 import { OutputService } from './../output.service';
 import { OutputDetail, OutputRequest } from '../models/OutputRequest';
 import { AuthService } from '../../../auth/auth.service';
+import { merge } from 'rxjs';
 
 @Component({
-    selector: 'app-output-create',
-    templateUrl: './output-create.component.html',
-    styleUrl: './output-create.component.scss',
-    standalone: false
+  selector: 'app-output-create',
+  templateUrl: './output-create.component.html',
+  styleUrl: './output-create.component.scss',
+  standalone: false
 })
 export class OutputCreateComponent implements OnInit {
 
@@ -79,7 +80,7 @@ export class OutputCreateComponent implements OnInit {
   getEmployees() {
     this.employeeService.getUsers().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
-        this.employees = respuesta.data.filter((x: { status: number; })=>x.status==1)
+        this.employees = respuesta.data.filter((x: { status: number; }) => x.status == 1)
       }
     });
   }
@@ -89,6 +90,8 @@ export class OutputCreateComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+    dialogConfig.width = '800px';
+    dialogConfig.maxWidth = '95dvw';
 
     const dialogRef = this.dialog.open(EntrySelectDialogComponent, dialogConfig);
 
@@ -108,7 +111,7 @@ export class OutputCreateComponent implements OnInit {
     if (existingDetail) {
       const newQuantity = existingDetail.get('quantity')!.value + 1;
       existingDetail.get('quantity')!.setValue(newQuantity);
-    //  existingDetail.get('subtotal')!.setValue(newQuantity * existingDetail.get('price')!.value);
+      //  existingDetail.get('subtotal')!.setValue(newQuantity * existingDetail.get('price')!.value);
     } else {
       this.outputDetails.push(this.fb.group({
         ...detail,
@@ -117,7 +120,7 @@ export class OutputCreateComponent implements OnInit {
         quantity: 1
       }));
     }
-   // this.updateTotal();
+    // this.updateTotal();
     this.dataSource.data = this.outputDetails.controls;
     this.dataSource._updateChangeSubscription();
   }
@@ -143,7 +146,7 @@ export class OutputCreateComponent implements OnInit {
     const dataToSend: OutputRequest = {
       date: formValue.date,
       destination_id: formValue.destination_id,
-      employee_id: formValue.employee_id,
+      user_id: formValue.employee_id,
       comment: formValue.comment,
       total: formValue.total,
       status: formValue.status,
@@ -152,15 +155,14 @@ export class OutputCreateComponent implements OnInit {
 
     //Envía los datos mediante el servicio
     this.outputService.addOutput(dataToSend).subscribe(
-      (respuesta) => {
-        // Manejo de la respuesta exitosa
-        this.router.navigate(['/dashboard/output/outputs']);
-        this.showSuccess();
-      },
-      error => {
-        // Manejo de errores
-        console.error('Error al enviar los datos:', error);
-        this.showError();
+      {
+        next: () => {
+          this.showSuccess();
+          this.router.navigate(['/dashboard/output/outputs']);
+        },
+        error: (error) => {
+          this.snackbarService.showError(error)
+        }
       }
     );
   }

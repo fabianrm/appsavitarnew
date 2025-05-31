@@ -6,15 +6,15 @@ import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { OutputService } from '../output.service';
 import { Router } from '@angular/router';
-import { Output, OutputResponse } from '../models/OutputResponse';
+import { Output } from '../models/OutputResponse';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OutputDetailsComponent } from '../output-details/output-details.component';
 
 @Component({
-    selector: 'app-output-list',
-    templateUrl: './output-list.component.html',
-    styleUrl: './output-list.component.scss',
-    standalone: false
+  selector: 'app-output-list',
+  templateUrl: './output-list.component.html',
+  styleUrl: './output-list.component.scss',
+  standalone: false
 })
 export class OutputListComponent implements OnInit {
 
@@ -73,7 +73,8 @@ export class OutputListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '40%';
+    dialogConfig.width = '800px';
+    dialogConfig.maxWidth = '95dvw';
     //dialogConfig.height = '380px';
     dialogConfig.data = row.output_details;
     this.dialog.open(OutputDetailsComponent, dialogConfig);

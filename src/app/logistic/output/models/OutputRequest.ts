@@ -1,7 +1,7 @@
 export interface OutputRequest {
     date: Date;
     destination_id: number;
-    employee_id: number;
+    user_id: number;
     comment: string;
     total: number;
     status: number;

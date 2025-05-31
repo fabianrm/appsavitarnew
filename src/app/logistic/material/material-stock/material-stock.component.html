@@ -1,17 +1,22 @@
 <div class="contenedor">
-  <div class="row row-filter">
-    <div class="col-9 col-md-11">
-      <!--  Filtro -->
-      <mat-form-field>
-        <mat-label>Buscar</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Ej. Router"
-          #input
-          autocomplete="off"
-        />
-      </mat-form-field>
+  <div class="row">
+    <div
+      class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-2"
+    >
+      <!-- Cuadro de búsqueda -->
+      <div class="w-100 w-md-25">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Savitar"
+            #input
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
     </div>
   </div>
 
@@ -41,7 +46,7 @@
       </ng-container>
 
       <!-- unidad -->
-        
+
       <ng-container matColumnDef="unit">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Un.</th>
         <td data-title="Unidad" mat-cell *matCellDef="let element">
@@ -74,11 +79,10 @@
               <mat-icon matListItemIcon>info</mat-icon>
               Ver Kárdex
             </button>
-              <button mat-menu-item (click)="viewLocations(row.id)">
+            <button mat-menu-item (click)="viewLocations(row.id)">
               <mat-icon matListItemIcon>home_pin</mat-icon>
               Ubicaciones
             </button>
-
           </mat-menu>
         </td>
       </ng-container>

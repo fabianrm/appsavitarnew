@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OutputResponse, OutputSingleResponse } from './models/OutputResponse';
@@ -37,7 +37,10 @@ export class OutputService {
     return this.clienteHttp.post(this.API + 'outputs', datos, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
-      }));
+      }),
+        catchError(err => {
+          return throwError(() => err.error.message);
+        }));
   }
 
 }
