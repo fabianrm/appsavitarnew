@@ -3,31 +3,8 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { map, catchError, of } from 'rxjs';
 import { AuthService } from './auth.service';
-// Asegúrate que esta interfaz esté definida aquí
-
-export interface MenuNode {
-  name: string;
-  icon: string;
-  route: string;
-  children?: MenuNode[];
-}
-
-//Helper para aplanar el arbol de Permisos
-function flattenMenu(menu: MenuNode[]): MenuNode[] {
-  const result: MenuNode[] = [];
-
-  const recurse = (items: MenuNode[]) => {
-    for (const item of items) {
-      result.push(item);
-      if (item.children?.length) {
-        recurse(item.children);
-      }
-    }
-  };
-  recurse(menu);
-  return result;
-}
-
+import { MenuNode } from '../shared/utils/menu-node.model';
+import { flattenMenu } from '../shared/utils/menu-utils';
 
 //Guard
 export const permissionGuard: CanActivateFn = () => {
