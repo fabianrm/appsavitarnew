@@ -1,54 +1,41 @@
-<form ngNativeValidate [formGroup]="frmRq" (ngSubmit)="enviarDatos()">
-  <mat-card>
-    <mat-card-header class="header-form">
-      <mat-card-title> Registrar Categoría </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-      <div class="row">
-        <div class="col-12 col-sm-4">
-          <mat-form-field>
-            <mat-label>Tipo de gasto</mat-label>
-            <mat-select [(value)]="selected" formControlName="type">
-              @for (tipo of tipos; track tipo) {
-              <mat-option [value]="tipo.value">{{ tipo.viewValue }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="col-12 col-sm-6">
-          <mat-form-field>
-            <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Nombre" formControlName="name" />
-          </mat-form-field>
-        </div>
-        <div class="col-12 col-sm-2">
-          <mat-slide-toggle
-            [color]="color"
-            [checked]="checked"
-            formControlName="status"
-          >
-            Activo
-          </mat-slide-toggle>
-        </div>
+<h2 mat-dialog-title class="title-card">Agregar Categoría</h2>
+<mat-dialog-content class="mt-2">
+  <form ngNativeValidate [formGroup]="frmRq">
+    <div class="row mt-2">
+      <div class="col-12">
+        <!-- Clave Actual -->
+        <mat-form-field class="w-100">
+          <mat-label>Tipo de gasto</mat-label>
+          <mat-select [(value)]="selected" formControlName="type">
+            @for (tipo of tipos; track tipo) {
+            <mat-option [value]="tipo.value">{{ tipo.viewValue }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
       </div>
-    </mat-card-content>
+    </div>
 
-    <mat-card-actions>
-      <div class="row-buttons">
-        <button
-          [disabled]="frmRq.invalid"
-          color="primary"
-          mat-raised-button
-          style="margin-right: 5px"
-        >
-          Guardar
-        </button>
-        <button mat-dialog-close="" color="accent" mat-raised-button>
-          Cancelar
-        </button>
+    <div class="row">
+      <div class="col-12">
+        <!-- Nueva Clave -->
+        <mat-form-field class="w-100">
+          <mat-label>Nombre</mat-label>
+          <input matInput placeholder="Nombre" formControlName="name" />
+        </mat-form-field>
       </div>
-    </mat-card-actions>
-  </mat-card>
-</form>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button
+    (click)="enviarDatos()"
+    [disabled]="frmRq.invalid"
+    color="primary"
+    mat-flat-button
+    style="margin-right: 5px"
+  >
+    Guardar
+  </button>
+  <button mat-dialog-close="" color="accent" mat-raised-button>Cancelar</button>
+</mat-dialog-actions>

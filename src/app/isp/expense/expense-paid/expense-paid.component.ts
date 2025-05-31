@@ -1,17 +1,16 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExpenseService } from '../expense.service';
 import { Expense } from '../Models/ExpenseResponse';
 import { DatePipe } from '@angular/common';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-    selector: 'app-expense-paid',
-    templateUrl: './expense-paid.component.html',
-    styleUrl: './expense-paid.component.scss',
-    standalone: false
+  selector: 'app-expense-paid',
+  templateUrl: './expense-paid.component.html',
+  styleUrl: './expense-paid.component.scss',
+  standalone: false
 })
 export class ExpensePaidComponent {
 

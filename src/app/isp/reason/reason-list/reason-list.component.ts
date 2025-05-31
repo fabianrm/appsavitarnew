@@ -11,10 +11,10 @@ import { ReasonEditComponent } from '../reason-edit/reason-edit.component';
 import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-reason-list',
-    templateUrl: './reason-list.component.html',
-    styleUrl: './reason-list.component.scss',
-    standalone: false
+  selector: 'app-reason-list',
+  templateUrl: './reason-list.component.html',
+  styleUrl: './reason-list.component.scss',
+  standalone: false
 })
 export class ReasonListComponent {
 
@@ -68,9 +68,7 @@ export class ReasonListComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-   // dialogConfig.width = '40%';
     this.dialog.open(ReasonCreateComponent, dialogConfig);
-
     this.dialog.afterAllClosed.subscribe(() => {
     })
   }
@@ -80,7 +78,7 @@ export class ReasonListComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-  //  dialogConfig.width = '40%';
+    //  dialogConfig.width = '40%';
     dialogConfig.data = row;
     this.dialog.open(ReasonEditComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { })
@@ -109,7 +107,7 @@ export class ReasonListComponent {
             'success'
           ).then(r => {
             if (r) {
-             // this.dialogRef.close();
+              // this.dialogRef.close();
             }
           })
         }, error => {
@@ -130,6 +128,6 @@ export class ReasonListComponent {
 
 
 
-  
+
 
 }

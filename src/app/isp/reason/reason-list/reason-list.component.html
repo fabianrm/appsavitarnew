@@ -1,19 +1,30 @@
 <div class="contenedor">
-  <div class="row-filter">
-    <!--  Filtro -->
-    <mat-form-field>
-      <mat-label>Buscar</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ej. Fernando Nizama"
-        #input
-        autocomplete="off"
-      />
-    </mat-form-field>
-    <button (click)="openDialog()" mat-raised-button color="accent">
-      + Nuevo
-    </button>
+  <div class="row">
+    <div
+      class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-2"
+    >
+      <!-- Botón: solo el contenedor tiene w-100 en móvil, sin clase en el botón -->
+      <div class="w-100 w-md-auto">
+        <button (click)="openDialog()" mat-flat-button color="accent">
+          + Agregar Motivo
+        </button>
+      </div>
+
+      <!-- Cuadro de búsqueda -->
+      <div class="w-100 w-md-25">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Pago de Internet"
+            #input
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
+    </div>
   </div>
 
   <div class="mat-elevation-z8">
@@ -35,7 +46,9 @@
 
       <!-- Documento Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Descripción</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">
+          Descripción
+        </th>
         <td class="center" mat-cell *matCellDef="let element">
           {{ element.name }}
         </td>
@@ -64,11 +77,12 @@
             color="primary"
             >edit</mat-icon
           >
-          <mat-icon 
-          class="btn-pointer" 
-          (click)="suspendReason(row.id)"
-          color="accent">delete</mat-icon>
-         
+          <mat-icon
+            class="btn-pointer"
+            (click)="suspendReason(row.id)"
+            color="accent"
+            >delete</mat-icon
+          >
         </td>
       </ng-container>
 
@@ -83,4 +97,3 @@
     </mat-paginator>
   </div>
 </div>
-

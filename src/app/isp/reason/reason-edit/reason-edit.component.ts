@@ -13,10 +13,10 @@ interface Tipo {
 }
 
 @Component({
-    selector: 'app-reason-edit',
-    templateUrl: './reason-edit.component.html',
-    styleUrl: './reason-edit.component.scss',
-    standalone: false
+  selector: 'app-reason-edit',
+  templateUrl: './reason-edit.component.html',
+  styleUrl: './reason-edit.component.scss',
+  standalone: false
 })
 export class ReasonEditComponent {
   frmRq!: FormGroup;
