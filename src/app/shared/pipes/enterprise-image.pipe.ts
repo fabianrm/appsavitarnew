@@ -10,6 +10,9 @@ export class EnterpriseImagePipe implements PipeTransform {
 
   transform(enterprise: Enterprise): string {
 
+    console.log(enterprise);
+
+
     if (!enterprise.id && !enterprise.logo)
       return 'assets/no-image.jpg';
 

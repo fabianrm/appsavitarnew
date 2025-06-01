@@ -96,10 +96,32 @@
         <th mat-header-cell *matHeaderCellDef>Imagen</th>
         <td data-title="Imagen" mat-cell *matCellDef="let element">
           <ng-container *ngIf="element.image">
-            <a href="{{ API_IMG + element.image }}" target="_blank">
+            <button
+              (click)="openModal(element.image)"
+              mat-icon-button
+              aria-label="Ver Imagen"
+            >
               <mat-icon>visibility</mat-icon>
-            </a>
+            </button>
           </ng-container>
+
+          <!-- Modal para mostrar la imagen en grande -->
+          <div class="modal" *ngIf="isModalOpen" (click)="closeModal()">
+            <span class="close">&times;</span>
+            <div class="image-container">
+              <!-- Spinner mientras la imagen carga -->
+              <div *ngIf="!isLoading" class="spinner"></div>
+              <!-- Imagen -->
+              <img
+                [src]="selectedImage"
+                (load)="onModalImageLoad()"
+                (error)="handleModalImageError($event)"
+                class="modal-content"
+                alt="Full-size image"
+                [class.hidden]="!isLoading"
+              />
+            </div>
+          </div>
         </td>
       </ng-container>
 
