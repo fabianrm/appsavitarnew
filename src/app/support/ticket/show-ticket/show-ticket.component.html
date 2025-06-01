@@ -58,6 +58,7 @@
             <strong>Estado:</strong>
             <span
               [ngClass]="{
+                'status-registered': dataTicket?.status == 'registrado',
                 'status-pending': dataTicket?.status == 'pendiente',
                 'status-atention': dataTicket?.status == 'atencion',
                 'status-resolved': dataTicket?.status == 'solucionado',
