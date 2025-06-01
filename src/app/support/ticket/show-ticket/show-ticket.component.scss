@@ -4,14 +4,15 @@
 }
 
 mat-card {
-  background: #f8f9fa;
+  background: var(--mat-sys-surface-container);
+
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 mat-card-header {
-  background: var(--primary);
-  color: white;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
   padding: 16px;
   border-radius: 8px 8px 0 0;
 }
@@ -22,24 +23,24 @@ mat-card-title {
 
 mat-card-subtitle {
   font-size: 1rem;
-  color: #d1ecf1;
+  color: var(--mat-sys-on-secondary-container);
 }
 
 mat-card-content {
   padding: 16px;
-  color:black;
+  color: var(--mat-sys-on-surface);
 }
 
 .mb-3 {
   margin-bottom: 1rem;
 }
 
-.mat-card-header-child {
-  background: rgb(155, 159, 155);
-  color: white;
-  padding: 10px;
-  border-radius: 8px 8px 0 0;
-}
+// .mat-card-header-child {
+//   background: var(--mat-sys-secondary-container);
+//   color: var(--mat-sys-on-secondary-container);
+//   padding: 10px;
+//   border-radius: 8px 8px 0 0;
+// }
 
 .mat-card-title-child {
   font-size: 1.2rem;
@@ -48,32 +49,29 @@ mat-card-content {
 table {
   width: 100%;
   margin-top: 1rem;
+  background: var(--mat-sys-surface-bright);
+  color: var(--mat-sys-on-secondary-container);
 }
 
-th, td {
+th,
+td {
   text-align: left;
   padding: 8px;
 }
 
 thead {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
 }
-
-tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
 
 /* Mapa */
 
-.container-map{
+.container-map {
   margin-top: 15px;
   width: 100%;
   height: 330px;
   display: flex;
 }
-
 
 .center-content {
   display: flex;
@@ -81,7 +79,6 @@ tbody tr:nth-child(even) {
   align-items: center;
   height: 100%; /* Asegúrate de que el contenedor tenga una altura definida */
 }
-
 
 .full-size {
   width: 100%;
@@ -100,7 +97,6 @@ tbody tr:nth-child(even) {
   align-items: center;
 }
 
-
 .status-registered {
   display: flex;
   align-items: center;
@@ -112,8 +108,6 @@ tbody tr:nth-child(even) {
   background-color: rgb(16, 148, 224);
   color: #ffff;
 }
-
-
 
 //Estados
 .status-resolved {
@@ -175,7 +169,6 @@ tbody tr:nth-child(even) {
   background-color: rgb(199, 12, 196);
   color: #ffff;
 }
-
 
 .list-attach {
   list-style: none; /* Elimina los círculos */
