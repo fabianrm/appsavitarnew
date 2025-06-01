@@ -11,40 +11,44 @@
         </button>
         Movimiento del Material</mat-card-title
       >
-      <mat-card-subtitle style="margin-left: 55px">{{ dataKardex[0].material.name }}</mat-card-subtitle>
+      <mat-card-subtitle style="margin-left: 55px">{{
+        dataKardex[0].material.name
+      }}</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content >
-     
-        <div class="row" >
-          <div class="col-md-6">
-            <div class="mb-3" >
-              <strong>Código de Material:</strong> {{ dataKardex[0].material.code }}
-            </div>
-            <div class="mb-3" >
-              <strong>Categoría:</strong>
-              {{ dataKardex[0].material.category.name }}
-            </div>
-            <div class="mb-3" >
-              <strong>Presentación:</strong>
-              {{ dataKardex[0].material.presentation.name }}
-            </div>
-            <div class="mb-3">
-              <strong>Marca:</strong>
-              {{ dataKardex[0].material.brand.name }}
-            </div>
-
-            <div class="mb-3">
-              <strong>Tipo:</strong> {{ dataKardex[0].material.type === 'M' ? "MATERIAL" : "HERRAMIENTA" }}
-            </div>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <strong>Código de Material:</strong>
+            {{ dataKardex[0].material.code }}
           </div>
-          <div class="col-md-6">
-            <div class="mb-3">
-              <strong>Ultima actualización:</strong>
-              {{ dataKardex[0].updated_at | date }}
-            </div>
+          <div class="mb-3">
+            <strong>Categoría:</strong>
+            {{ dataKardex[0].material.category.name }}
+          </div>
+          <div class="mb-3">
+            <strong>Presentación:</strong>
+            {{ dataKardex[0].material.presentation.name }}
+          </div>
+          <div class="mb-3">
+            <strong>Marca:</strong>
+            {{ dataKardex[0].material.brand.name }}
+          </div>
+
+          <div class="mb-3">
+            <strong>Tipo:</strong>
+            {{
+              dataKardex[0].material.type === "M" ? "MATERIAL" : "HERRAMIENTA"
+            }}
           </div>
         </div>
-      
+        <div class="col-md-6">
+          <div class="mb-3">
+            <strong>Ultima actualización:</strong>
+            {{ dataKardex[0].updated_at | date }}
+          </div>
+        </div>
+      </div>
 
       <!-- Contratos -->
       <div class="mt-2">
@@ -67,7 +71,7 @@
             <tr *ngFor="let kardex of dataKardex">
               <td>{{ kardex.date | date }}</td>
               <td>{{ kardex.has }}</td>
-              <td>{{ kardex.operation == 'entry' ? "Entrada" : "Salida" }}</td>
+              <td>{{ kardex.operation == "entry" ? "Entrada" : "Salida" }}</td>
               <td>{{ kardex.quantity }}</td>
               <td>{{ kardex.stock }}</td>
               <td>{{ kardex.comment }}</td>
