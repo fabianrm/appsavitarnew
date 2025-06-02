@@ -13,4 +13,8 @@ export interface Summary {
     overduePaidSum: number;
     expenseDaySum: number;
     expenseMonthSum: number;
+    paidYearSum: number;
+    expenseYearSum: number;
+    resumeTotalYear: number;
+
 }

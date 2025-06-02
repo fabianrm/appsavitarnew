@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
   ];
 
   summary?: Summary;
+  balance: number = 0;
 
 
   ngOnInit(): void {
@@ -57,6 +58,7 @@ export class DashboardComponent implements OnInit {
       ];
       this.getSummaryAmounts();
       this.getExpensesSummary();
+      this.balance = this.summary.resumeTotalYear;
     });
   }
 

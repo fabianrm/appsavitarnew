@@ -5,11 +5,11 @@
       <mat-card class="welcome-card">
         <mat-card-content class="d-flex align-items-center">
           <div class="icon">
-            <mat-icon class="icon-w">person</mat-icon>
+            <mat-icon class="icon-w">equalizer</mat-icon>
           </div>
           <div class="content">
-            <div class="user-name">¡Bienvenido!</div>
-            <div class="user-name">{{ User }}</div>
+            <div class="user-name">Resumen Anual</div>
+            <div class="user-name">{{ balance | currency }}</div>
           </div>
         </mat-card-content>
       </mat-card>
