@@ -21,6 +21,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { ExpensePaidComponent } from './expense-paid/expense-paid.component';
 import { ExpenseReportComponent } from './expense-report/expense-report.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 
 
 
@@ -51,7 +53,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDatepickerModule,
     MatSelectModule,
     MatOptionModule,
-   MatDialogModule
+    MatDialogModule,
+    MatMenuModule,
+    MatListModule
 
   ]
 })

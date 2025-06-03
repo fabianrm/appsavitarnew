@@ -107,6 +107,58 @@
         </td>
       </ng-container>
 
+      <!-- Actualizado el Column -->
+      <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>F.Actualiz.</th>
+        <td data-title="F. Actualiz." mat-cell *matCellDef="let element">
+          {{ element.updatedAt | date }}
+        </td>
+      </ng-container>
+
+      <!-- Creado Por Column -->
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Creado Por.</th>
+        <td data-title="Creado Por" mat-cell *matCellDef="let element">
+          {{ element.createdBy }}
+        </td>
+      </ng-container>
+
+      <!-- Actualizado Por Column -->
+      <ng-container matColumnDef="updatedBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Actualizado Por.
+        </th>
+        <td data-title="Actual. Por" mat-cell *matCellDef="let element">
+          {{ element.updatedBy }}
+        </td>
+      </ng-container>
+
+      <!-- Actualizado el Column -->
+      <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>F.Actualiz.</th>
+        <td data-title="F. Actualiz." mat-cell *matCellDef="let element">
+          {{ element.updatedAt | date }}
+        </td>
+      </ng-container>
+
+      <!-- Creado Por Column -->
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Creado Por.</th>
+        <td data-title="Creado Por" mat-cell *matCellDef="let element">
+          {{ element.createdBy }}
+        </td>
+      </ng-container>
+
+      <!-- Actualizado Por Column -->
+      <ng-container matColumnDef="updatedBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Actualizado Por.
+        </th>
+        <td data-title="Actual. Por" mat-cell *matCellDef="let element">
+          {{ element.updatedBy }}
+        </td>
+      </ng-container>
+
       <!-- Estado Column -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Estado</th>
@@ -123,7 +175,22 @@
 
       <!-- Acciones -->
       <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef>Accciones</th>
+        <th mat-header-cell *matHeaderCellDef style="text-align: center">
+          <button
+            mat-icon-button
+            matTooltip="Recargar los datos"
+            (click)="getExpenses()"
+          >
+            <mat-icon>update</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            matTooltip="Selector de columnas"
+            [matMenuTriggerFor]="columnasMenu"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </th>
         <td mat-cell *matCellDef="let row" class="menu-actions">
           <mat-icon
             *ngIf="row.status === 1 && tipo === 'fijo' && row.datePaid === null"
@@ -167,4 +234,31 @@
     >
     </mat-paginator>
   </div>
+</div>
+
+<div class="col-12 col-md-1 mb-2">
+  <mat-menu #columnasMenu="matMenu">
+    <div (click)="$event.stopPropagation()" class="columnas-menu-content">
+      <mat-selection-list #columnasList [multiple]="true">
+        <mat-list-option
+          *ngFor="let columna of availableColumns"
+          [value]="columna"
+          [selected]="displayedColumns.includes(columna)"
+        >
+          {{ columna | titlecase }}
+        </mat-list-option>
+      </mat-selection-list>
+      <div class="menu-actions">
+        <button
+          mat-button
+          (click)="
+            actualizarColumnasVisibles(columnasList.selectedOptions.selected);
+            columnasMenuTrigger.closeMenu()
+          "
+        >
+          Aplicar
+        </button>
+      </div>
+    </div>
+  </mat-menu>
 </div>

@@ -17,6 +17,7 @@ import { ChangeVlanComponent } from '../change-vlan/change-vlan.component';
 import { ChangeUserComponent } from '../change-user/change-user.component';
 import { SuspensionService } from '../../suspension/suspension.service';
 import { AddPromoComponent } from '../add-promo/add-promo.component';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 
 @Component({
@@ -27,7 +28,7 @@ import { AddPromoComponent } from '../add-promo/add-promo.component';
 })
 export class ContractListComponent implements OnInit {
 
-  availableColumns: string[] = ['id', 'serviceCode', 'customerName', 'planName', 'installationDate', 'city', 'addressInstallation', 'latitude', 'longitude', 'promotion', 'status', 'acciones'];
+  availableColumns: string[] = ['id', 'serviceCode', 'customerName', 'planName', 'installationDate', 'city', 'addressInstallation', 'latitude', 'longitude', 'promotion', 'status', 'createdBy', 'updatedBy', 'updatedAt', 'acciones'];
 
   displayedColumns: string[] = ['serviceCode', 'customerName', 'planName', 'installationDate', 'city', 'addressInstallation', 'promotion', 'status', 'acciones'];
 
@@ -36,6 +37,8 @@ export class ContractListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  @ViewChild(MatMenuTrigger) columnasMenuTrigger!: MatMenuTrigger;
 
   subscription!: Subscription
 
@@ -74,6 +77,9 @@ export class ContractListComponent implements OnInit {
   }
 
 
+  actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
+    this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

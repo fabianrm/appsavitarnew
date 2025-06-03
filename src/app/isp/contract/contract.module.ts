@@ -34,6 +34,7 @@ import { ChangeVlanComponent } from './change-vlan/change-vlan.component';
 import { ChangeUserComponent } from './change-user/change-user.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddPromoComponent } from './add-promo/add-promo.component';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -83,7 +84,9 @@ import { AddPromoComponent } from './add-promo/add-promo.component';
     MapleafModule,
     MatTooltipModule,
     MatTabsModule,
-
+    MatDialogModule,
+    MatMenuModule,
+    MatListModule
   ],
   providers: [
     {

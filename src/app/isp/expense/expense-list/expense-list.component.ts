@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExpensePaidComponent } from '../expense-paid/expense-paid.component';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     }
   }
 
-  availableColumns: string[] = ['id', 'description', 'date', 'reason', 'voutcher', 'note', 'amount', 'status', 'acciones'];
+  availableColumns: string[] = ['id', 'description', 'date', 'reason', 'voutcher', 'note', 'amount', 'status', 'createdBy', 'updatedBy', 'updatedAt', 'acciones'];
 
   displayedColumns: string[] = ['date', 'description', 'reason', 'voutcher', 'note', 'amount', 'status', 'acciones'];
 
@@ -40,6 +41,8 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatMenuTrigger) columnasMenuTrigger!: MatMenuTrigger;
+
 
   subscription!: Subscription
   public respuesta?: Expense[];
@@ -71,6 +74,10 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     this.subscription = this.expenseService.refresh$.subscribe(() => {
       this.getExpenses()
     });
+  }
+
+  actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
+    this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
   }
 
 
