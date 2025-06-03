@@ -20,9 +20,9 @@ import { CityService } from '../../city/city.service';
   styleUrl: './invoice-list.component.scss',
   standalone: false
 })
-export class InvoiceListComponent implements OnInit, AfterViewInit {
+export class InvoiceListComponent implements OnInit {
 
-  availableColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'address', 'planName', 'periodic', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'acciones'];
+  availableColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'address', 'planName', 'periodic', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'createdBy', 'updatedBy', 'updatedAt', 'acciones'];
   displayedColumns: string[] = ['contractId', 'customerName', 'planName', 'address', 'periodic', 'price', 'discount', 'amount', 'dueDate', 'paidDated', 'status', 'acciones'];
 
   statusList: string[] = ['pendiente', 'pagada', 'vencida', 'anulada'];
@@ -74,8 +74,8 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
     this.subscription.unsubscribe();
   }
 
-  ngAfterViewInit() {
-    // this.getInvoices()
+  get role() {
+    return Number(localStorage.getItem('role'));
   }
 
   getInvoices() {

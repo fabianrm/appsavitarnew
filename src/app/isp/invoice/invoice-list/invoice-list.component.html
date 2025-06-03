@@ -244,6 +244,32 @@
         </td>
       </ng-container>
 
+      <!-- Actualizado el Column -->
+      <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>F.Actualiz.</th>
+        <td data-title="F. Actualiz." mat-cell *matCellDef="let element">
+          {{ element.updatedAt | date }}
+        </td>
+      </ng-container>
+
+      <!-- Creado Por Column -->
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Creado Por.</th>
+        <td data-title="Creado Por" mat-cell *matCellDef="let element">
+          {{ element.createdBy }}
+        </td>
+      </ng-container>
+
+      <!-- Actualizado Por Column -->
+      <ng-container matColumnDef="updatedBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Actualizado Por.
+        </th>
+        <td data-title="Actual. Por" mat-cell *matCellDef="let element">
+          {{ element.updatedBy }}
+        </td>
+      </ng-container>
+
       <!-- Status Column -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
