@@ -24,13 +24,14 @@ import { MapleafService } from '../../mapleaf/mapleaf.service';
 import { Customer } from '../../customer/Models/CustomerResponseU';
 import { PromotionService } from './../../promotion/promotion.service';
 import { Promotion, PromotionResponse } from '../../promotion/models';
+import { MikrotikService } from '../../mikrotik/mikrotik.service';
 
 
 @Component({
-    selector: 'app-contract-create-new',
-    templateUrl: './contract-create-new.component.html',
-    styleUrl: './contract-create-new.component.scss',
-    standalone: false
+  selector: 'app-contract-create-new',
+  templateUrl: './contract-create-new.component.html',
+  styleUrl: './contract-create-new.component.scss',
+  standalone: false
 })
 export class ContractCreateNewComponent implements OnInit, OnDestroy {
 
@@ -91,7 +92,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private mkservice: MikrotikService
 
   ) { }
 
@@ -109,6 +111,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     this.getRouters();
     this.getBoxs();
     this.getEquipments();
+
+    // this.getProfiles();
 
     //Obtener la direccion
     this.mapleafService.currentAddress.subscribe(address => {
@@ -151,6 +155,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       installationAmount: ['',],
       prepayment: [true, Validators.required],
       check: [false],
+      mikrotik: [true]
     }
 
     this.formContrato = this.formulario.group(formControlsConfig);
@@ -209,6 +214,14 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     //Subscribirse a los cambios del check
     this.formContrato.get('installationPayment')?.valueChanges.subscribe(checked => {
       this.onCheckInstallationPay(checked);
+    });
+
+  }
+
+  getProfiles() {
+    this.mkservice.getProfiles().subscribe((resp) => {
+      console.log(resp);
+
     });
 
   }
