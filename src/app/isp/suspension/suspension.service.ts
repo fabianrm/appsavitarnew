@@ -50,8 +50,8 @@ export class SuspensionService {
   }
 
   //reactivar el contrato
-  reactiveService(id: number,): Observable<any> {
-    return this.clienteHttp.patch(`${this.API}suspensions/${id}/reactive`, { headers: this.headers })
+  reactiveService(id: number, mk: number): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}suspensions/${id}/reactive`, { mikrotik: mk }, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }),

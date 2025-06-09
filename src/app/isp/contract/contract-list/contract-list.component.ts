@@ -276,10 +276,13 @@ export class ContractListComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: "#43a047",
       cancelButtonColor: "#e91e63",
-      confirmButtonText: "Si, reactivar"
+      confirmButtonText: "Si, reactivar",
+      input: "checkbox",
+      inputValue: 1,
+      inputLabel: "Reactivar en Mikrotik"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.suspensionService.reactiveService(id).
+        this.suspensionService.reactiveService(id, result.value).
           subscribe({
             next: (respuesta) => {
               this.snackbarService.showInfo(`${respuesta.message}`);

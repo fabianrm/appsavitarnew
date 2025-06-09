@@ -73,13 +73,21 @@
           </mat-form-field>
         </div>
       </div>
+
+      <div class="row mt-2">
+        <div class="col12">
+          <mat-checkbox formControlName="mikrotik" checked="true"
+            >Suspender en Mikrotik</mat-checkbox
+          >
+        </div>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <div class="row-buttons">
         <button
           [disabled]="formContrato.invalid"
           color="primary"
-          mat-raised-button
+          mat-flat-button
           style="margin-right: 5px"
         >
           Guardar

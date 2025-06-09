@@ -7,10 +7,10 @@ import { ContractService } from '../contract.service';
 import { SuspensionService } from '../../suspension/suspension.service';
 
 @Component({
-    selector: 'app-contract-suspend',
-    templateUrl: './contract-suspend.component.html',
-    styleUrl: './contract-suspend.component.scss',
-    standalone: false
+  selector: 'app-contract-suspend',
+  templateUrl: './contract-suspend.component.html',
+  styleUrl: './contract-suspend.component.scss',
+  standalone: false
 })
 export class ContractSuspendComponent implements OnInit {
 
@@ -47,6 +47,7 @@ export class ContractSuspendComponent implements OnInit {
       end_date: ['', Validators.required],
       reason: ['', Validators.required],
       observation: ['',],
+      mikrotik: [true,],
       status: [true, Validators.required],
     });
   }
