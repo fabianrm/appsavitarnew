@@ -71,6 +71,15 @@
       <mat-card-actions>
         <div class="d-flex flex-row justify-content-end w-100">
           <button
+            (click)="test()"
+            mat-dialog-close=""
+            color="accent"
+            mat-button
+          >
+            Test
+          </button>
+
+          <button
             [disabled]="formEditRouter.invalid"
             color="primary"
             mat-raised-button

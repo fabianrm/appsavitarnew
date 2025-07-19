@@ -8,10 +8,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 
 @Component({
-    selector: 'app-router-edit',
-    templateUrl: './router-edit.component.html',
-    styleUrl: './router-edit.component.css',
-    standalone: false
+  selector: 'app-router-edit',
+  templateUrl: './router-edit.component.html',
+  styleUrl: './router-edit.component.css',
+  standalone: false
 })
 export class RouterEditComponent {
   formEditRouter!: FormGroup;
@@ -66,5 +66,11 @@ export class RouterEditComponent {
     this.snackbarService.showSuccess('Registro editado correctamente');
   }
 
+  test() {
+    this.routerService.getTestConnection(this.getData.id).subscribe(respuesta => {
+      console.log(respuesta);
+    });
+
+  }
 
 }

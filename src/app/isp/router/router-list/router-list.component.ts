@@ -11,12 +11,13 @@ import { RouterCreateComponent } from '../router-create/router-create.component'
 import { RouterEditComponent } from '../router-edit/router-edit.component';
 import { RouterService } from '../router.service';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { TestComponent } from '../test/test.component';
 
 @Component({
-    selector: 'app-router-list',
-    templateUrl: './router-list.component.html',
-    styleUrl: './router-list.component.css',
-    standalone: false
+  selector: 'app-router-list',
+  templateUrl: './router-list.component.html',
+  styleUrl: './router-list.component.css',
+  standalone: false
 })
 export class RouterListComponent {
 
@@ -83,11 +84,25 @@ export class RouterListComponent {
   }
 
 
+  openDialogTest(id: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = id
+    this.dialog.open(TestComponent, dialogConfig);
+
+    this.dialog.afterAllClosed.subscribe(() => {
+    })
+  }
+
+
+
   openEditDialog(id: number) {
 
     this.routerService.getRouterByID(id).subscribe(respuesta => {
       this.respuesta = respuesta.data;
-      console.log(respuesta);
+      //console.log(respuesta);
 
       if (respuesta.data) {
         const dialogConfig = new MatDialogConfig();

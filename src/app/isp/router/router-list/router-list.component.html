@@ -109,6 +109,11 @@
               <mat-icon matListItemIcon>delete</mat-icon>
               Eliminar
             </button>
+
+            <button mat-menu-item (click)="openDialogTest(row.id)">
+              <mat-icon matListItemIcon>science</mat-icon>
+              Test
+            </button>
           </mat-menu>
         </td>
       </ng-container>

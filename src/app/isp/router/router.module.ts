@@ -20,6 +20,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { TestComponent } from './test/test.component';
 
 
 
@@ -27,7 +28,8 @@ import { MatListModule } from '@angular/material/list';
   declarations: [
     RouterListComponent,
     RouterCreateComponent,
-    RouterEditComponent
+    RouterEditComponent,
+    TestComponent
   ],
   imports: [
     CommonModule,
