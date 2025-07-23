@@ -35,11 +35,8 @@ export class TestComponent {
   test() {
     this.routerService.getTestConnection(this.id).subscribe({
       next: (respuesta) => {
-
-        this.testMK = respuesta;
         console.log(this.testMK);
         this.testMK = respuesta;
-
       },
 
       error: (error) => {

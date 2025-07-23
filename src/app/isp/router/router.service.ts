@@ -4,6 +4,7 @@ import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ReqRouter } from './Models/ResponseRouter';
 import { TestResponse } from './Models/TestResponse';
+import { SyncResponse } from './Models/SyncResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,14 @@ export class RouterService {
 
   getTestConnection(id: number): Observable<TestResponse> {
     return this.clienteHttp.get<TestResponse>(this.API + 'routers/' + id + '/test', { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
+  getInfiltrados(id: number): Observable<SyncResponse> {
+    return this.clienteHttp.post<SyncResponse>(this.API + 'routers/' + id + '/sync-contacts', { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }));

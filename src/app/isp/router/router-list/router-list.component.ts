@@ -12,6 +12,7 @@ import { RouterEditComponent } from '../router-edit/router-edit.component';
 import { RouterService } from '../router.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { TestComponent } from '../test/test.component';
+import { InfiltradosComponent } from '../infiltrados/infiltrados.component';
 
 @Component({
   selector: 'app-router-list',
@@ -96,6 +97,18 @@ export class RouterListComponent {
     })
   }
 
+
+  openInfiltrados(id: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = id
+    this.dialog.open(InfiltradosComponent, dialogConfig);
+
+    this.dialog.afterAllClosed.subscribe(() => {
+    })
+  }
 
 
   openEditDialog(id: number) {

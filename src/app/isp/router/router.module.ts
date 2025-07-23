@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { TestComponent } from './test/test.component';
+import { InfiltradosComponent } from './infiltrados/infiltrados.component';
 
 
 
@@ -29,7 +30,8 @@ import { TestComponent } from './test/test.component';
     RouterListComponent,
     RouterCreateComponent,
     RouterEditComponent,
-    TestComponent
+    TestComponent,
+    InfiltradosComponent
   ],
   imports: [
     CommonModule,
