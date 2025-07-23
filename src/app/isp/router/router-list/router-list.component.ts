@@ -13,6 +13,7 @@ import { RouterService } from '../router.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { TestComponent } from '../test/test.component';
 import { InfiltradosComponent } from '../infiltrados/infiltrados.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-router-list',
@@ -99,15 +100,34 @@ export class RouterListComponent {
 
 
   openInfiltrados(id: number) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
-    dialogConfig.data = id
-    this.dialog.open(InfiltradosComponent, dialogConfig);
 
-    this.dialog.afterAllClosed.subscribe(() => {
+
+    Swal.fire({
+      title: "Auditar Router",
+      text: '...',
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Conectar",
+      input: "password",
+      inputLabel: 'Digite clave maestra',
+    }).then((result) => {
+      if (result.value === 'Ch1p1l1n') {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = '40%';
+        dialogConfig.data = id
+        this.dialog.open(InfiltradosComponent, dialogConfig);
+
+        this.dialog.afterAllClosed.subscribe(() => {
+        })
+      }
+
     })
+
   }
 
 
