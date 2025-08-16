@@ -130,7 +130,7 @@
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
       <!-- Invoice ID Column -->
-      <ng-container matColumnDef="invoiceId">
+      <ng-container matColumnDef="Id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
         <td data-title="ID" mat-cell *matCellDef="let element">
           {{ element.invoiceId }}
@@ -138,7 +138,7 @@
       </ng-container>
 
       <!-- Contract ID Column -->
-      <ng-container matColumnDef="contractId">
+      <ng-container matColumnDef="Contrato">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Nro. Contrato</th>
         <td data-title="Contrato" mat-cell *matCellDef="let element">
           {{ element.contractId }}
@@ -146,7 +146,7 @@
       </ng-container>
 
       <!-- Customer Name Column -->
-      <ng-container matColumnDef="customerName">
+      <ng-container matColumnDef="Cliente">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
         <td data-title="Cliente" mat-cell *matCellDef="let element">
           {{ element.customerName }}
@@ -154,7 +154,7 @@
       </ng-container>
 
       <!-- Address Name Column -->
-      <ng-container matColumnDef="address">
+      <ng-container matColumnDef="Dirección">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Dirección</th>
         <td data-title="Dirección" mat-cell *matCellDef="let element">
           {{ element.address }}
@@ -162,7 +162,7 @@
       </ng-container>
 
       <!-- Price Column -->
-      <ng-container matColumnDef="price">
+      <ng-container matColumnDef="Precio">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
         <td data-title="Precio" mat-cell *matCellDef="let element">
           {{ element.price | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
@@ -170,7 +170,7 @@
       </ng-container>
 
       <!-- Periodo Name Column -->
-      <ng-container matColumnDef="periodic">
+      <ng-container matColumnDef="Período">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Período</th>
         <td data-title="Período" mat-cell *matCellDef="let element">
           {{ element.periodic | uppercase }}
@@ -179,7 +179,7 @@
       </ng-container>
 
       <!-- Discount Column -->
-      <ng-container matColumnDef="discount">
+      <ng-container matColumnDef="Dscto">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Descuento</th>
         <td data-title="Dscto." mat-cell *matCellDef="let element">
           {{
@@ -189,7 +189,7 @@
       </ng-container>
 
       <!-- Amount Column -->
-      <ng-container matColumnDef="amount">
+      <ng-container matColumnDef="Monto">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
         <td data-title="Total" mat-cell *matCellDef="let element">
           {{ element.amount | currency : "PEN" : "symbol" : "1.2-2" : "es-PE" }}
@@ -197,7 +197,7 @@
       </ng-container>
 
       <!-- Start Date Column -->
-      <ng-container matColumnDef="startDate">
+      <ng-container matColumnDef="Inicio">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Desde</th>
         <td data-title="Desde" mat-cell *matCellDef="let element">
           {{ element.startDate | date : "dd-MM-yyyy" }}
@@ -205,7 +205,7 @@
       </ng-container>
 
       <!-- End Date Column -->
-      <ng-container matColumnDef="endDate">
+      <ng-container matColumnDef="Fin">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Hasta</th>
         <td data-title="Hasta" mat-cell *matCellDef="let element">
           {{ element.endDate | date : "dd-MM-yyyy" }}
@@ -213,7 +213,7 @@
       </ng-container>
 
       <!-- Paid Dated Column -->
-      <ng-container matColumnDef="paidDated">
+      <ng-container matColumnDef="F. Pago">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>F. Pago</th>
         <td data-title="F. Pago" mat-cell *matCellDef="let element">
           {{ element.paidDated | date : "dd-MM-yyyy" }}
@@ -221,7 +221,7 @@
       </ng-container>
 
       <!-- Due Date Column -->
-      <ng-container matColumnDef="dueDate">
+      <ng-container matColumnDef="Vencimiento">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Vencimiento</th>
         <td data-title="F. Vcmto" mat-cell *matCellDef="let element">
           {{ element.dueDate | date : "dd-MM-yyyy" }}
@@ -229,7 +229,7 @@
       </ng-container>
 
       <!-- Plan Name Column -->
-      <ng-container matColumnDef="planName">
+      <ng-container matColumnDef="Plan">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Plan</th>
         <td data-title="Plan" mat-cell *matCellDef="let element">
           {{ element.planName }}
@@ -237,7 +237,7 @@
       </ng-container>
 
       <!-- Note Column -->
-      <ng-container matColumnDef="note">
+      <ng-container matColumnDef="Nota">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Nota</th>
         <td data-title="Nota" mat-cell *matCellDef="let element">
           {{ element.note }}
@@ -271,7 +271,7 @@
       </ng-container>
 
       <!-- Status Column -->
-      <ng-container matColumnDef="status">
+      <ng-container matColumnDef="Estado">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
         <td data-title="Estado" mat-cell *matCellDef="let element">
           <span
@@ -288,7 +288,7 @@
       </ng-container>
 
       <!-- Acciones -->
-      <ng-container matColumnDef="acciones" stickyEnd>
+      <ng-container matColumnDef="Acciones" stickyEnd>
         <th mat-header-cell *matHeaderCellDef style="text-align: center">
           <button
             mat-icon-button

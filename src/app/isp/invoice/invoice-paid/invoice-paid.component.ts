@@ -7,15 +7,15 @@ import Swal from "sweetalert2";
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-    selector: 'app-invoice-paid',
-    templateUrl: './invoice-paid.component.html',
-    styleUrl: './invoice-paid.component.scss',
-    standalone: false
+  selector: 'app-invoice-paid',
+  templateUrl: './invoice-paid.component.html',
+  styleUrl: './invoice-paid.component.scss',
+  standalone: false
 })
 export class InvoicePaidComponent implements OnInit {
 
   formPaid!: FormGroup;
-  finalPrice: number = this.getData.price;
+  finalPrice: number = 0;
   amount: number = 0;
   selected = 'efectivo';
 
@@ -31,9 +31,17 @@ export class InvoicePaidComponent implements OnInit {
   }
 
   initForm() {
+    // Validar datos iniciales
+    if (!this.getData) {
+      throw new Error('No se proporcionaron datos de factura');
+    }
+
+    this.finalPrice = this.getData.price || 0;
+    this.amount = this.finalPrice;
+
     this.formPaid = this.fb.group({
       discount: [0],
-      receipt: [this.getData.receipt, { readonly: true }],
+      receipt: [this.getData.receipt || '', { readonly: true }],
       note: [''],
       tipo_pago: [this.selected, Validators.required],
       status: ['pagada'],
@@ -77,19 +85,34 @@ export class InvoicePaidComponent implements OnInit {
         confirmButtonText: "Si, registrar pago!"
       }).then((result) => {
         if (result.isConfirmed) {
-          this.invoiceService.paidInvoice(this.getData.invoiceId, dataToSend).subscribe(respuesta => {
-            Swal.fire(
-              'Guardado!',
-              'Pago realizado con éxito.',
-              'success'
-            ).then(r => {
-              if (r) {
-                this.dialogRef.close();
+          this.invoiceService.paidInvoice(this.getData.invoiceId, dataToSend)
+            .subscribe({
+              next: (response: any) => {
+                Swal.fire(
+                  'Guardado!',
+                  'Pago realizado con éxito.',
+                  'success'
+                ).then(r => {
+                  if (r) {
+                    this.dialogRef.close();
+                  }
+                });
+              },
+              error: (err: Error) => {
+                // console.error('Error al guardar los datos:', err);
+                // this.showError();
+                //this.snackbarService.showError('Error al registrar el pago: ' + err);
+                Swal.fire(
+                  'Error!',
+                  'Error al registrar el pago: ' + err,
+                  'error'
+                ).then(r => {
+                  if (r) {
+                    this.dialogRef.close();
+                  }
+                });
               }
-            })
-          }, error => {
-            console.error('Error al guardar los datos:', error);
-          });
+            });
         }
       });
     }

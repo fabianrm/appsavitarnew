@@ -22,8 +22,8 @@ import { CityService } from '../../city/city.service';
 })
 export class InvoiceListComponent implements OnInit {
 
-  availableColumns: string[] = ['invoiceId', 'contractId', 'customerName', 'address', 'planName', 'periodic', 'price', 'discount', 'amount', 'startDate', 'endDate', 'dueDate', 'paidDated', 'note', 'status', 'createdBy', 'updatedBy', 'updatedAt', 'acciones'];
-  displayedColumns: string[] = ['contractId', 'customerName', 'planName', 'address', 'periodic', 'price', 'discount', 'amount', 'dueDate', 'paidDated', 'status', 'acciones'];
+  availableColumns: string[] = ['Id', 'Contrato', 'Cliente', 'Dirección', 'Plan', 'Período', 'Precio', 'Dscto', 'Monto', 'Inicio', 'Fin', 'Vencimiento', 'F. Pago', 'Nota', 'Estado', 'createdBy', 'updatedBy', 'updatedAt', 'Acciones'];
+  displayedColumns: string[] = ['Contrato', 'Cliente', 'Plan', 'Dirección', 'Período', 'Precio', 'Dscto', 'Monto', 'Vencimiento', 'F. Pago', 'Estado', 'Acciones'];
 
   statusList: string[] = ['pendiente', 'pagada', 'vencida', 'anulada'];
 
@@ -110,9 +110,21 @@ export class InvoiceListComponent implements OnInit {
   }
 
 
+  // actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
+  //   this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
+  // }
+
+
   actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
-    this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
+    const columnasFijas = ['Estado', 'Acciones']; // Columnas que siempre estarán al final
+    const columnasSinFijas = columnasSeleccionadas
+      .map(opcion => opcion.value)
+      .filter(columna => !columnasFijas.includes(columna)); // Excluir columnas fijas
+
+    // Agregar las columnas fijas al final
+    this.displayedColumns = [...columnasSinFijas, ...columnasFijas];
   }
+
 
   //Generar Invoices
   generateInvoices() {

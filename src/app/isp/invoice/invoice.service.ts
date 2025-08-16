@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { InvoiceResponse } from './Models/InvoiceResponse';
 import { RequestPaid } from './Models/RequestPaid';
@@ -49,9 +49,14 @@ export class InvoiceService {
 
   paidInvoice(invoiceID: number, datos: RequestPaid): Observable<RequestPaid> {
     return this.clienteHttp.patch<RequestPaid>(`${this.API}invoices/${invoiceID}/paid-invoice`, datos, { headers: this.headers })
-      .pipe(tap(() => {
-        this._refresh$.next()
-      }));
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error.message);
+        }),
+        tap(() => {
+          this._refresh$.next()
+        })
+      )
   }
 
 
