@@ -336,6 +336,16 @@
               <mat-icon matListItemIcon>delete</mat-icon>
               Anular
             </button>
+
+            <button
+              *ngIf="userID === 1 || userID === 2"
+              mat-menu-item
+              [disabled]="row.status !== 'anulada' && row.status !== 'pagada'"
+              (click)="resetInvoice(row)"
+            >
+              <mat-icon matListItemIcon>refresh</mat-icon>
+              Resetear
+            </button>
           </mat-menu>
         </td>
       </ng-container>

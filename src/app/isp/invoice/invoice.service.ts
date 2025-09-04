@@ -69,6 +69,16 @@ export class InvoiceService {
       }));
   }
 
+
+  //reset invoice
+  resetInvoice(invoiceID: number,): Observable<any> {
+    return this.clienteHttp.patch<any>(`${this.API}invoices/${invoiceID}/reset-invoice`, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
   //Exportar facturas
 
   exportInvoices(filters: any) {

@@ -13,6 +13,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { CancelInvoiceComponent } from '../cancel-invoice/cancel-invoice.component';
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-invoice-list',
@@ -77,6 +78,11 @@ export class InvoiceListComponent implements OnInit {
   get role() {
     return Number(localStorage.getItem('role'));
   }
+
+  get userID() {
+    return Number(localStorage.getItem('id_user'));
+  }
+
 
   getInvoices() {
     this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2, this.citySelected,);
@@ -239,9 +245,62 @@ export class InvoiceListComponent implements OnInit {
     dialogConfig.data = row;
     this.dialog.open(CancelInvoiceComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => { });
+  }
 
+  //Resetear factura
+  resetInvoice(row: any) {
+    // if (confirm(`¿Estás seguro de resetear la factura ${row.receipt} del cliente ${row.customerName}?`)) {
+    //   this.invoiceService.resetInvoice(row.invoiceId).subscribe(() => {
+    //     this.snackbarService.showSuccess('Factura reseteada correctamente');
+    //     this.getInvoices();
+    //   }, (error) => {
+    //     this.snackbarService.showError('Error al resetear la factura: ' + error);
+    //   });
+    // }
+
+    Swal.fire({
+      title: "Resetear Factura",
+      text: `¿Estás seguro de resetear la factura ${row.receipt} del cliente ${row.customerName}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#43a047",
+      cancelButtonColor: "#e91e63",
+      confirmButtonText: "Si, resetear factura!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.invoiceService.resetInvoice(row.invoiceId)
+          .subscribe({
+            next: (response: any) => {
+              Swal.fire(
+                'Guardado!',
+                'Factura reseteada con éxito.',
+                'success'
+              ).then(r => {
+                if (r) {
+                  console.log(r);
+                }
+              });
+            },
+            error: (err: Error) => {
+              // console.error('Error al guardar los datos:', err);
+              // this.showError();
+              //this.snackbarService.showError('Error al registrar el pago: ' + err);
+              Swal.fire(
+                'Error!',
+                'Error al registrar el pago: ' + err,
+                'error'
+              ).then(r => {
+                if (r) {
+                  console.log(r);
+                }
+              });
+            }
+          });
+      }
+    });
 
   }
+
 
   getCities() {
     this.cityService.getCities().subscribe((respuesta) => {
