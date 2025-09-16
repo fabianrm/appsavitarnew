@@ -167,7 +167,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
           if (respuesta.status == true) {
             Swal.fire(
               'Activado!',
-              respuesta.data.message,
+              'Cliente reactivado correctamente',
               'success'
             ).then(r => {
               if (r) {
