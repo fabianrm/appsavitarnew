@@ -8,10 +8,10 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { Customer } from '../Models/CustomerResponseU_bak';
 
 @Component({
-    selector: 'app-customer-suspend',
-    templateUrl: './customer-suspend.component.html',
-    styleUrl: './customer-suspend.component.scss',
-    standalone: false
+  selector: 'app-customer-suspend',
+  templateUrl: './customer-suspend.component.html',
+  styleUrl: './customer-suspend.component.scss',
+  standalone: false
 })
 export class CustomerSuspendComponent {
   formContrato!: FormGroup;
@@ -40,7 +40,7 @@ export class CustomerSuspendComponent {
   enviarDatos(): any {
     if (this.formContrato.valid) {
       //console.log('agregar....')
-      this.customerService.suspendOrActivateCustomer(this.getData.id, this.formContrato.value).subscribe(respuesta => {
+      this.customerService.suspendCustomer(this.getData.id, this.formContrato.value).subscribe(respuesta => {
         this.showSuccess();
         this.dialogRef.close();
       });
@@ -52,7 +52,7 @@ export class CustomerSuspendComponent {
   }
 
   showSuccess() {
-    this.snackbarService.showSuccess('Contrato suspendido correctamente');
+    this.snackbarService.showSuccess('Cliente suspendido correctamente');
   }
 
 

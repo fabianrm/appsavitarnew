@@ -51,12 +51,22 @@ export class CustomerService {
   }
 
   //Suspender o activar el cliente
-  suspendOrActivateCustomer(id: number, data: any,): Observable<any> {
-    return this.clienteHttp.patch(`${this.API}customer/${id}/suspend`, data, { headers: this.headers })
+  suspendCustomer(id: number, data: any,): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}customers/${id}/suspend`, data, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }));
   }
+
+  //Activar el cliente
+  activateCustomer(id: number,): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}customers/${id}/activate`, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
+
 
 
   deleteCustomer1(id: number): Observable<any> {

@@ -163,7 +163,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
       confirmButtonText: "Si, activar"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.customerService.suspendOrActivateCustomer(id, { 'status': 1, 'observation': 'Activado por sistema' }).subscribe((respuesta) => {
+        this.customerService.activateCustomer(id).subscribe((respuesta) => {
           if (respuesta.status == true) {
             Swal.fire(
               'Activado!',
