@@ -200,10 +200,13 @@ export class ContractListComponent implements OnInit {
       confirmButtonColor: "#43a047",
       cancelButtonColor: "#e91e63",
       cancelButtonText: "Cancelar",
-      confirmButtonText: "Si, terminar"
+      confirmButtonText: "Si, terminar",
+      input: "checkbox",
+      inputValue: 1,
+      inputLabel: "Borrar en Mikrotik"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.suspensionService.finishService(row.id).
+        this.suspensionService.finishService(row.id, result.value).
           subscribe({
             next: (respuesta) => {
               this.snackbarService.showInfo(`${respuesta.message}`);

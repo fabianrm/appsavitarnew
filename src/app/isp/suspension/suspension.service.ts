@@ -62,8 +62,8 @@ export class SuspensionService {
 
 
   //reactivar el contrato
-  finishService(id: number,): Observable<any> {
-    return this.clienteHttp.patch(`${this.API}services/${id}/finish`, { headers: this.headers })
+  finishService(id: number, mk: number): Observable<any> {
+    return this.clienteHttp.patch(`${this.API}services/${id}/finish`, { mikrotik: mk }, { headers: this.headers })
       .pipe(tap(() => {
         this._refresh$.next()
       }),
