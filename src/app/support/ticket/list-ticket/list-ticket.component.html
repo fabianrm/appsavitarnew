@@ -200,7 +200,7 @@
                 [hidden]="
                   row.status === 'cerrado' ||
                   row.status === 'solucionado' ||
-                  Role === '3'
+                  Role === '4'
                 "
                 (click)="assign(row)"
               >
@@ -210,7 +210,7 @@
 
               <button
                 mat-menu-item
-                *ngIf="row.status === 'pendiente' && Role === '3'"
+                *ngIf="row.status === 'pendiente' && Role === '4'"
                 (click)="attendTicket(row.id)"
               >
                 <mat-icon matListItemIcon>priority_high</mat-icon>
@@ -228,7 +228,7 @@
                 [hidden]="
                   row.status === 'cerrado' ||
                   row.status === 'solucionado' ||
-                  Role === '3'
+                  Role === '4'
                 "
               >
                 <mat-icon matListItemIcon>edit</mat-icon>
