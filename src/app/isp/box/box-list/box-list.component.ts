@@ -4,19 +4,21 @@ import { Box } from '../Models/BoxResponse';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BoxService } from '../box.service';
 import { ReqBox } from '../Models/RequestBox';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { BoxServiceResponse } from '../Models/BoxService';
+import { ShowServicesComponent } from '../show-services/show-services.component';
 
 
 @Component({
-    selector: 'app-box-list',
-    templateUrl: './box-list.component.html',
-    styleUrl: './box-list.component.css',
-    standalone: false
+  selector: 'app-box-list',
+  templateUrl: './box-list.component.html',
+  styleUrl: './box-list.component.css',
+  standalone: false
 })
 export class BoxListComponent {
 
@@ -29,6 +31,7 @@ export class BoxListComponent {
   subscription!: Subscription
 
   public respuesta: ReqBox[] = [];
+  servicesByBox: any[] = [];
 
 
   constructor(private boxService: BoxService,
@@ -108,6 +111,15 @@ export class BoxListComponent {
     });
   }
 
+  //Obtener contratos asociados a la caja
 
+
+  showServices(id: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { id: id };
+    this.dialog.open(ShowServicesComponent, dialogConfig);
+  }
 
 }

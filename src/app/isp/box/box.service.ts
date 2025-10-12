@@ -52,6 +52,11 @@ export class BoxService {
     return this.clienteHttp.get(this.API + 'ports/' + id, { headers: this.headers })
   }
 
+  getServicesByBox(id: number): Observable<any> {
+    return this.clienteHttp.get(this.API + 'boxs/' + id + '/services', { headers: this.headers })
+  }
+
+
   deleteBox(id: number,): Observable<any> {
     return this.clienteHttp.delete(`${this.API}boxs/${id}`, { headers: this.headers })
       .pipe(tap(() => {

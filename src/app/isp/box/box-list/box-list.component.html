@@ -136,6 +136,11 @@
               <mat-icon matListItemIcon>location_on</mat-icon>
               Ver ubicación
             </button>
+
+            <button mat-menu-item (click)="showServices(row.id)">
+              <mat-icon matListItemIcon>account_tree</mat-icon>
+              Servicios conectados
+            </button>
           </mat-menu>
         </td>
       </ng-container>
