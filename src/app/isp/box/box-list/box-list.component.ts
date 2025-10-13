@@ -114,11 +114,11 @@ export class BoxListComponent {
   //Obtener contratos asociados a la caja
 
 
-  showServices(id: number) {
+  showServices(id: number, name: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = { id: id };
+    dialogConfig.data = { id: id, name: name };
     this.dialog.open(ShowServicesComponent, dialogConfig);
   }
 

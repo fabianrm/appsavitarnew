@@ -16,7 +16,7 @@ export class ShowServicesComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ShowServicesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number },
+    @Inject(MAT_DIALOG_DATA) public data: { id: number, name: string },
     private boxService: BoxService
   ) { }
 
@@ -25,17 +25,16 @@ export class ShowServicesComponent implements OnInit {
   }
 
   getContractsByBox(id: number): void {
-    this.boxService.getServicesByBox(id).subscribe(
-      (respuesta: BoxServiceResponse[]) => {
-        console.log(respuesta);
-
-        this.services = respuesta;
+    this.boxService.getServicesByBox(id).subscribe({
+      next: (response: BoxServiceResponse[]) => {
+        this.services = response;
         this.isLoading = false;
       },
-      (error) => {
-        console.error('Error fetching services:', error);
+      error: (error) => {
+        console.error('Error obteniendi servicios:', error);
         this.isLoading = false;
       }
+    }
     );
   }
 
