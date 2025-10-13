@@ -10,7 +10,6 @@ import { ReqBox } from '../Models/RequestBox';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
-import { BoxServiceResponse } from '../Models/BoxService';
 import { ShowServicesComponent } from '../show-services/show-services.component';
 
 
@@ -112,8 +111,6 @@ export class BoxListComponent {
   }
 
   //Obtener contratos asociados a la caja
-
-
   showServices(id: number, name: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;

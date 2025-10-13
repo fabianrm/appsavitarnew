@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.gridlayer.googlemutant'; // Importa el plugin
 import { MapleafService } from '../mapleaf.service';
 import { Subscription } from 'rxjs';
 import { DataPoint } from '../Models/DataPoint';
-
+import { ShowServicesComponent } from '../../box/show-services/show-services.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 
 @Component({
@@ -35,9 +36,12 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   dataPointSubscription!: Subscription;
   typeMap: 'openstreetmap' | 'roadmap' | 'satellite' | 'terrain' | 'hybrid' = 'openstreetmap'; // propiedad entrada
 
-  constructor(private coordinateService: MapleafService,) { }
+  private showServicesListener!: ((event: Event) => void);
+
+  constructor(private coordinateService: MapleafService, public dialog: MatDialog, private zone: NgZone,) { }
 
   ngOnInit(): void {
+    this.setupShowServicesListener();
 
     this.initCoords = JSON.parse(localStorage.getItem("coords")!)
 
@@ -67,6 +71,21 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     if (this.dataPointSubscription) {
       this.dataPointSubscription.unsubscribe();
     }
+    document.removeEventListener('showServicesEvent', this.showServicesListener);
+  }
+
+
+  private setupShowServicesListener() {
+    this.showServicesListener = (event: Event) => {
+      // Forzar la ejecución dentro de la zona de Angular para actualizar la vista
+      this.zone.run(() => {
+        const customEvent = event as CustomEvent;
+        // Llamar a tu función showServices con los datos del evento
+        this.showServices(customEvent.detail);
+      });
+    };
+
+    document.addEventListener('showServicesEvent', this.showServicesListener);
   }
 
   //TODO: Permita setear las coordenadas iniciales desde base de datos
@@ -170,29 +189,40 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   setMarkers(dataPoints: DataPoint[]) {
     if (!this.map) return;
 
-    // Limpiar los marcadores actuales
-    // this.markers.forEach(marker => this.map.removeLayer(marker));
-    // this.markers = [];
-
-    // Limpiar los marcadores actuales, pero mantener el marcador central si existe
+    // Limpiar marcadores, manteniendo el central si existe
     this.markers.forEach(marker => {
       if (marker !== this.centerMarker) {
         this.map.removeLayer(marker);
       }
     });
-    this.markers = [];
-
+    this.markers = this.markers.filter(marker => marker === this.centerMarker);
 
     if (dataPoints.length === 0) {
-      // No añadir marcadores si no hay puntos de datos
       return;
     }
 
     // Añadir nuevos marcadores
     dataPoints.forEach(dataPoint => {
+      // 💡 Usa un vínculo <a> con un CustomEvent para ejecutar la lógica de Angular
+      const popupContent = `
+      <b>${dataPoint.name}</b>
+      <br>Puertos disponibles: ${dataPoint.availablePorts}
+      <br>Nota: ${dataPoint.note}
+      <br><a href="#" 
+             style="cursor: pointer; color: #3f51b5;" 
+             onclick="document.dispatchEvent(new CustomEvent('showServicesEvent', { 
+               detail: { 
+                 id: ${dataPoint.id}, 
+                 name: '${dataPoint.name}' 
+               } 
+             })); return false;">
+             Ver Servicios
+      </a>`;
+
       const marker = L.marker([dataPoint.coordinates[0], dataPoint.coordinates[1]])
         .addTo(this.map)
-        .bindPopup(`<b>${dataPoint.name}</b><br>Puertos disponibles: ${dataPoint.availablePorts}<br>Nota: ${dataPoint.note}`);
+        .bindPopup(popupContent);
+
       this.markers.push(marker);
     });
   }
@@ -208,6 +238,27 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
   }
 
 
+  showServices(data: { id: number, name: string }) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { id: data.id, name: data.name };
+    this.dialog.open(ShowServicesComponent, dialogConfig);
+  }
+
+
+  // showServices(data: { id: number, name: string }) {
+  //   console.log(`Abriendo modal para ID: ${data.id}, Nombre: ${data.name}`);
+
+  //   // Aquí usas Angular Material para abrir el Dialog (Modal)
+  //   this.dialog.open(ShowServicesComponent, {
+  //     width: '400px',
+  //     data: {
+  //       id: data.id,
+  //       name: data.name
+  //     }
+  //   });
+  // }
 
 
 }

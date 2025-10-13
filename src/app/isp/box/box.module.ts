@@ -22,7 +22,6 @@ import { MapleafModule } from '../mapleaf/mapleaf.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { ShowServicesComponent } from './show-services/show-services.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
@@ -32,7 +31,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     BoxCreateComponent,
     BoxEditComponent,
     BoxListComponent,
-    ShowServicesComponent,
   ],
   imports: [
     CommonModule,
@@ -62,10 +60,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     TextFieldModule,
     MatProgressSpinnerModule,
     MatTooltipModule
-
-
-
-
   ]
 })
 export class BoxModule { }

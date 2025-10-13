@@ -1,13 +1,28 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoxService } from '../box.service';
 import { BoxServiceResponse } from '../Models/BoxService';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-show-services',
   templateUrl: './show-services.component.html',
   styleUrls: ['./show-services.component.scss'],
-  standalone: false
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatButtonModule,
+  ],
 })
 export class ShowServicesComponent implements OnInit {
 

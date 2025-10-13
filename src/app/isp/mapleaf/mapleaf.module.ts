@@ -11,7 +11,7 @@ import { MapleafMultipleViewComponent } from './mapleaf-multiple-view/mapleaf-mu
     MapleafViewComponent,
     MapleafLoadingComponent,
     MapleafSingleViewComponent,
-    MapleafMultipleViewComponent
+    MapleafMultipleViewComponent,
   ],
   imports: [
     CommonModule,
@@ -20,7 +20,8 @@ import { MapleafMultipleViewComponent } from './mapleaf-multiple-view/mapleaf-mu
     MapleafViewComponent,
     MapleafLoadingComponent,
     MapleafSingleViewComponent,
-    MapleafMultipleViewComponent
+    MapleafMultipleViewComponent,
+
   ]
 })
 export class MapleafModule { }
