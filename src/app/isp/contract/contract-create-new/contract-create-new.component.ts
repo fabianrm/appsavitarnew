@@ -25,6 +25,8 @@ import { Customer } from '../../customer/Models/CustomerResponseU';
 import { PromotionService } from './../../promotion/promotion.service';
 import { Promotion, PromotionResponse } from '../../promotion/models';
 import { MikrotikService } from '../../mikrotik/mikrotik.service';
+import { TestResponse } from '../../router/Models/TestResponse';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -45,6 +47,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   equipmentSelected = 1;
   citySelected = 1;
   recurrent = true
+  statusMK: string = '---';
 
   routers: ReqRouter[] = [];
   boxs: Box[] = [];
@@ -57,6 +60,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
   equipments: Equipment[] = [];
   filteredEquipos!: Observable<Equipment[]>;
   selectedEquipment!: Equipment | null;
+  selectedRouter!: ReqRouter;
 
   allPromotions: Promotion[] = [];
   promotions: Promotion[] = [];
@@ -172,6 +176,15 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     //Subscribirse a los cambios del combo equipo
     this.formContrato.get('equipmentId')!.valueChanges.subscribe(value => {
       this.selectedEquipment = typeof value === 'object' ? value : null;
+    });
+
+
+    //Subscribirse a los cambios del combo router
+    this.formContrato.get('routerId')!.valueChanges.subscribe(value => {
+      console.log(value);
+
+      this.selectedRouter = typeof value === 'object' ? value : null;
+      this.test(value)
     });
 
 
@@ -559,4 +572,45 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  test(idR: number) {
+    this.routerService.getTestConnection(idR).subscribe({
+      next: (respuesta) => {
+        console.log(respuesta);
+        this.testMK = respuesta;
+        if (respuesta.conectado === true) {
+          this.statusMK = '🟢En línea';
+          this.formContrato.get('mikrotik')?.setValue(true);
+
+        } else {
+          this.formContrato.get('mikrotik')?.setValue(false);
+          this.statusMK = '🔴Desconectado';
+        }
+      },
+
+      error: (error) => {
+        this.formContrato.get('mikrotik')?.setValue(false);
+        this.statusMK = '🔴Desconectado';
+      },
+
+    });
+
+  }
+
+
+  testMK: TestResponse = {
+    ip: '',
+    usuario: '',
+    conectado: false,
+    mensaje: '',
+    system_info: {
+      headers: {},
+      original: [],
+      exception: null
+    }
+  };
+
+
+
 }
+
