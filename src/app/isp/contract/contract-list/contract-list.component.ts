@@ -196,33 +196,60 @@ export class ContractListComponent implements OnInit {
   }
 
   finishService(row: any) {
-    this.checkMK(row.routerId);
-    Swal.fire({
-      title: "Terminar Contrato",
-      text: `Se va a liberar la caja, puerto y equipo del Contrato ${row.serviceCode}`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#43a047",
-      cancelButtonColor: "#e91e63",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "Si, terminar",
-      input: "checkbox",
-      inputValue: this.testMK.conectado === true ? 1 : 0,
-      inputLabel: "Borrar en Mikrotik - " + (this.statusMK)
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.suspensionService.finishService(row.id, result.value).
-          subscribe({
-            next: (respuesta) => {
-              this.snackbarService.showInfo(`${respuesta.message}`);
-              this.getContracts();
-            },
-            error: (err) => {
-              this.snackbarService.showError(err);
-            }
-          })
-      }
+
+    //this.checkMK(row.routerId);
+
+
+    this.routerService.getTestConnection(row.routerId).subscribe({
+      next: (respuesta) => {
+        this.testMK = respuesta;
+        if (respuesta.conectado === true) {
+          this.statusMK = '🟢En línea';
+        } else {
+          this.statusMK = '🔴Desconectado';
+        }
+
+        Swal.fire({
+          title: "Terminar Contrato",
+          text: `Se va a liberar la caja, puerto y equipo del Contrato ${row.serviceCode}`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#43a047",
+          cancelButtonColor: "#e91e63",
+          cancelButtonText: "Cancelar",
+          confirmButtonText: "Si, terminar",
+          input: "checkbox",
+          inputValue: this.testMK.conectado === true ? 1 : 0,
+          inputLabel: "Borrar en Mikrotik - " + (this.statusMK)
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.suspensionService.finishService(row.id, result.value).
+              subscribe({
+                next: (respuesta) => {
+                  this.snackbarService.showInfo(`${respuesta.message}`);
+                  this.getContracts();
+                },
+                error: (err) => {
+                  this.snackbarService.showError(err);
+                }
+              })
+          }
+        });
+
+      },
+
+      error: (error) => {
+        // this.formContrato.get('mikrotik')?.setValue(false);
+        this.statusMK = '🔴Desconectado';
+      },
+
     });
+
+
+
+
+
+
   }
 
 
@@ -346,10 +373,10 @@ export class ContractListComponent implements OnInit {
         this.testMK = respuesta;
         if (respuesta.conectado === true) {
           this.statusMK = '🟢En línea';
-          // this.formContrato.get('mikrotik')?.setValue(true);
+
 
         } else {
-          // this.formContrato.get('mikrotik')?.setValue(false);
+
           this.statusMK = '🔴Desconectado';
         }
       },
