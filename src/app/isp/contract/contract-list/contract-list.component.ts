@@ -18,6 +18,8 @@ import { ChangeUserComponent } from '../change-user/change-user.component';
 import { SuspensionService } from '../../suspension/suspension.service';
 import { AddPromoComponent } from '../add-promo/add-promo.component';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { RouterService } from '../../router/router.service';
+import { TestResponse } from '../../router/Models/TestResponse';
 
 
 @Component({
@@ -44,10 +46,12 @@ export class ContractListComponent implements OnInit {
 
   public respuesta!: Service[];
   public contrato!: Service[];
+  statusMK: string = '---';
 
   constructor(
     private contractService: ContractService,
     private suspensionService: SuspensionService,
+    private routerService: RouterService,
     public dialog: MatDialog, private router: Router,
     private snackbarService: SnackbarService) { }
 
@@ -192,6 +196,7 @@ export class ContractListComponent implements OnInit {
   }
 
   finishService(row: any) {
+    this.checkMK(row.routerId);
     Swal.fire({
       title: "Terminar Contrato",
       text: `Se va a liberar la caja, puerto y equipo del Contrato ${row.serviceCode}`,
@@ -202,8 +207,8 @@ export class ContractListComponent implements OnInit {
       cancelButtonText: "Cancelar",
       confirmButtonText: "Si, terminar",
       input: "checkbox",
-      inputValue: 1,
-      inputLabel: "Borrar en Mikrotik"
+      inputValue: this.testMK.conectado === true ? 1 : 0,
+      inputLabel: "Borrar en Mikrotik - " + (this.statusMK)
     }).then((result) => {
       if (result.isConfirmed) {
         this.suspensionService.finishService(row.id, result.value).
@@ -331,6 +336,45 @@ export class ContractListComponent implements OnInit {
 
     });
   }
+
+
+
+  checkMK(idR: number) {
+    this.routerService.getTestConnection(idR).subscribe({
+      next: (respuesta) => {
+        //console.log(respuesta);
+        this.testMK = respuesta;
+        if (respuesta.conectado === true) {
+          this.statusMK = '🟢En línea';
+          // this.formContrato.get('mikrotik')?.setValue(true);
+
+        } else {
+          // this.formContrato.get('mikrotik')?.setValue(false);
+          this.statusMK = '🔴Desconectado';
+        }
+      },
+
+      error: (error) => {
+        // this.formContrato.get('mikrotik')?.setValue(false);
+        this.statusMK = '🔴Desconectado';
+      },
+
+    });
+
+  }
+
+
+  testMK: TestResponse = {
+    ip: '',
+    usuario: '',
+    conectado: false,
+    mensaje: '',
+    system_info: {
+      headers: {},
+      original: [],
+      exception: null
+    }
+  };
 
 
 }
