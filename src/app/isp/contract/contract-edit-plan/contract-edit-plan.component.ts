@@ -6,12 +6,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ContractService } from '../contract.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { Service } from '../Models/ServiceResponse';
+import { RouterService } from '../../router/router.service';
 
 @Component({
-    selector: 'app-contract-edit-plan',
-    templateUrl: './contract-edit-plan.component.html',
-    styleUrl: './contract-edit-plan.component.scss',
-    standalone: false
+  selector: 'app-contract-edit-plan',
+  templateUrl: './contract-edit-plan.component.html',
+  styleUrl: './contract-edit-plan.component.scss',
+  standalone: false
 })
 export class ContractEditPlanComponent implements OnInit {
 
@@ -19,9 +20,11 @@ export class ContractEditPlanComponent implements OnInit {
   planes: ReqPlan[] = [];
   planInicial = 1;
   planSelected: any;
+  statusMK: string = '---';
 
   constructor(public fb: FormBuilder,
     private planService: PlanService,
+    private routerService: RouterService,
     private snackbarService: SnackbarService,
     private contractService: ContractService,
     @Inject(MAT_DIALOG_DATA) public getData: Service,
@@ -31,6 +34,7 @@ export class ContractEditPlanComponent implements OnInit {
   ngOnInit(): void {
     // console.log('Contrato', this.getData.id);
     this.initForm();
+    this.checkMK(this.getData.routerId);
     this.getPlans();
 
   }
@@ -80,6 +84,30 @@ export class ContractEditPlanComponent implements OnInit {
 
   showSuccess() {
     this.snackbarService.showSuccess('Plan actualizado correctamente');
+  }
+
+  checkMK(idR: number) {
+    this.routerService.getTestConnection(idR).subscribe({
+      next: (respuesta) => {
+        console.log(respuesta);
+        // this.testMK = respuesta;
+        if (respuesta.conectado === true) {
+          this.statusMK = '🟢En línea';
+          this.formContrato.get('mikrotik')?.setValue(true);
+
+        } else {
+          this.formContrato.get('mikrotik')?.setValue(false);
+          this.statusMK = '🔴Desconectado';
+        }
+      },
+
+      error: (error) => {
+        this.formContrato.get('mikrotik')?.setValue(false);
+        this.statusMK = '🔴Desconectado';
+      },
+
+    });
+
   }
 
 }
