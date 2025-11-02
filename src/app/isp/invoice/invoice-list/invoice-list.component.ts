@@ -14,6 +14,7 @@ import { CancelInvoiceComponent } from '../cancel-invoice/cancel-invoice.compone
 import { City } from '../../city/Models/CityResponse';
 import { CityService } from '../../city/city.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-invoice-list',
@@ -46,6 +47,8 @@ export class InvoiceListComponent implements OnInit {
   cities: City[] = [];
   citySelected?: string = '';
 
+  public esAdmin: boolean = false;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -57,10 +60,12 @@ export class InvoiceListComponent implements OnInit {
     private invoiceService: InvoiceService,
     private snackbarService: SnackbarService,
     private cityService: CityService,
+    private authService: AuthService,
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
+    this.checkUserRole();
     this.getCities();
 
     this.dataSource.paginator = this.paginator;
@@ -81,6 +86,12 @@ export class InvoiceListComponent implements OnInit {
 
   get userID() {
     return Number(localStorage.getItem('id_user'));
+  }
+
+  checkUserRole(): void {
+    this.authService.getRoleByID(this.userID).subscribe((response) => {
+      this.esAdmin = (response.data.role_id === 1);
+    });
   }
 
 
@@ -237,6 +248,11 @@ export class InvoiceListComponent implements OnInit {
   //Anular factura
   cancelInvoice(row: any) {
 
+    if (this.esAdmin === false) {
+      this.snackbarService.showError('☹️ Solo un Super Administrador puede anular facturas');
+      return;
+    }
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -331,7 +347,6 @@ export class InvoiceListComponent implements OnInit {
   showSuccess() {
     this.snackbarService.showSuccess('Cliente agregado correctamente');
   }
-
 
 
 }
