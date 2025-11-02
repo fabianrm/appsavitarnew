@@ -338,7 +338,7 @@
             </button>
 
             <button
-              *ngIf="userID === 1 || userID === 2"
+              *ngIf="esAdmin"
               mat-menu-item
               [disabled]="row.status !== 'anulada' && row.status !== 'pagada'"
               (click)="resetInvoice(row)"
