@@ -24,7 +24,7 @@ import { AuthService } from '../../../auth/auth.service';
 })
 export class InvoiceListComponent implements OnInit {
 
-  availableColumns: string[] = ['Id', 'Contrato', 'Cliente', 'Dirección', 'Plan', 'Período', 'Precio', 'Dscto', 'Monto', 'Inicio', 'Fin', 'Vencimiento', 'F. Pago', 'Nota', 'Estado', 'createdBy', 'updatedBy', 'updatedAt', 'Acciones'];
+  availableColumns: string[] = ['Id', 'Contrato', 'Cliente', 'Dirección', 'Plan', 'Período', 'Precio', 'Dscto', 'Monto', 'Inicio', 'Fin', 'Vencimiento', 'F. Pago', 'Nota', 'Recibo', 'Estado', 'createdBy', 'updatedBy', 'updatedAt', 'Acciones'];
   displayedColumns: string[] = ['Contrato', 'Cliente', 'Plan', 'Dirección', 'Período', 'Precio', 'Dscto', 'Monto', 'Vencimiento', 'F. Pago', 'Estado', 'Acciones'];
 
   statusList: string[] = ['pendiente', 'pagada', 'vencida', 'anulada'];

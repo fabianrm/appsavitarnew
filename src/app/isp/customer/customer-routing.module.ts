@@ -5,6 +5,7 @@ import { CustomerCreateComponent } from './customer-create/customer-create.compo
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { AuthGuard } from '../../auth/auth.guard';
+import { CustomerHistoryComponent } from './customer-history/customer-history.component';
 
 
 
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'customers', component: CustomerListComponent, data: { title: 'Clientes' }, canActivate: [AuthGuard] },
   { path: 'customerCreate', component: CustomerCreateComponent, data: { title: 'Registro de Cliente' }, canActivate: [AuthGuard] },
   { path: 'customerEdit/:id', component: CustomerEditComponent, data: { title: 'Editar Cliente' }, canActivate: [AuthGuard] },
+  { path: 'customerHistory/:id', component: CustomerHistoryComponent, data: { title: 'Historial del Cliente' }, canActivate: [AuthGuard] },
   { path: 'customerDetails/:id', component: CustomerDetailsComponent },
 ];
 

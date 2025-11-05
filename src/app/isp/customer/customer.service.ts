@@ -6,6 +6,7 @@ import { CustomerRequest } from './Models/CustomerRequest';
 
 import { CustomerResponseU } from './Models/CustomerResponseU';
 import { CustomerResponse } from './Models/CustomerResponse';
+import { Historical } from './Models/Historical';
 
 @Injectable({
   providedIn: 'root'
@@ -112,5 +113,10 @@ export class CustomerService {
     });
     return this.clienteHttp.post<any>(`https://apiperu.dev/api/dni?dni=${dni}`, { headers: headers });
   }
+
+  getHistory(id: number): Observable<Historical> {
+    return this.clienteHttp.get<Historical>(`${this.API}customers/${id}/historical-summary`, { headers: this.headers });
+  }
+
 
 }

@@ -139,6 +139,10 @@
               <mat-icon matListItemIcon>info</mat-icon>
               Detalle de cliente
             </button>
+            <button mat-menu-item (click)="historyCustomer(row.id)">
+              <mat-icon matListItemIcon>history</mat-icon>
+              Historial de cliente
+            </button>
             <button mat-menu-item (click)="openListContracts(row.id)">
               <mat-icon matListItemIcon>cable</mat-icon>
               Contratos: {{ row.totalContracts }}

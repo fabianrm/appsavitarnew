@@ -244,6 +244,14 @@
         </td>
       </ng-container>
 
+      <!-- Recibo -->
+      <ng-container matColumnDef="Recibo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Recibo</th>
+        <td data-title="Recibo" mat-cell *matCellDef="let element">
+          {{ element.receipt }}
+        </td>
+      </ng-container>
+
       <!-- Actualizado el Column -->
       <ng-container matColumnDef="updatedAt">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>F.Actualiz.</th>

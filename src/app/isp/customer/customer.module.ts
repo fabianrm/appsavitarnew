@@ -24,6 +24,7 @@ import { ContractsListComponent } from './contracts-list/contracts-list.componen
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { MapleafModule } from '../mapleaf/mapleaf.module';
 import { CustomerSuspendComponent } from './customer-suspend/customer-suspend.component';
+import { CustomerHistoryComponent } from './customer-history/customer-history.component';
 
 
 @NgModule({ declarations: [
@@ -32,7 +33,8 @@ import { CustomerSuspendComponent } from './customer-suspend/customer-suspend.co
         CustomerDetailsComponent,
         CustomerEditComponent,
         ContractsListComponent,
-        CustomerSuspendComponent
+        CustomerSuspendComponent,
+        CustomerHistoryComponent
     ], imports: [CommonModule,
         CustomerRoutingModule,
         MatTableModule,
