@@ -1,0 +1,55 @@
+.container {
+  max-width: 100%;
+  // margin: 20px;
+  padding: 20px;
+}
+
+.active {
+  background: green;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.inactive {
+  background: gray;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+  width: 100%;
+}
+
+// Estado de facturas de cliente
+
+.status-paid {
+  background: #0dcaf0;
+  padding: 2px 1rem;
+  color: whitesmoke;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.status-pending {
+  background: #fd7e14;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.status-overdue {
+  background: #dc3545;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.status-cancelled {
+  background: #6c757d;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+  width: 100%;
+}

@@ -4,35 +4,37 @@
     <div class="col-12">
       <div class="card mat-elevation-z2 mb-3">
         <div class="card-body">
-          <h5 class="card-title mb-3">Cliente — Resumen</h5>
+          <h5 class="card-title mb-3">
+            Cliente: {{ data.customer.customerName }}
+          </h5>
           <div class="row">
             <div class="col-md-6">
               <table class="table table-borderless table-sm mb-0">
                 <tbody>
                   <tr>
                     <th class="p-1">ID</th>
-                    <td class="p-1">{{ data.customer?.id }}</td>
+                    <td class="p-1">{{ data.customer.id }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">Tipo</th>
-                    <td class="p-1">{{ data.customer?.type }}</td>
+                    <td class="p-1">{{ data.customer.type | titlecase }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">Código</th>
-                    <td class="p-1">{{ data.customer?.customerCode }}</td>
+                    <td class="p-1">{{ data.customer.customerCode }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">Nombre</th>
-                    <td class="p-1">{{ data.customer?.customerName }}</td>
+                    <td class="p-1">{{ data.customer.customerName }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">Documento</th>
-                    <td class="p-1">{{ data.customer?.documentNumber }}</td>
+                    <td class="p-1">{{ data.customer.documentNumber }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">Ciudad</th>
                     <td class="p-1">
-                      {{ data.customer?.city }} ({{ data.customer?.cityId }})
+                      {{ data.customer.city }} ({{ data.customer.cityId }})
                     </td>
                   </tr>
                 </tbody>
@@ -43,40 +45,47 @@
                 <tbody>
                   <tr>
                     <th class="p-1">Dirección</th>
-                    <td class="p-1">{{ data.customer?.address }}</td>
+                    <td class="p-1">{{ data.customer.address }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">Referencia</th>
-                    <td class="p-1">{{ data.customer?.reference }}</td>
+                    <td class="p-1">{{ data.customer.reference }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">Coordenadas</th>
                     <td class="p-1">
-                      {{ data.customer?.latitude }},
-                      {{ data.customer?.longitude }}
+                      {{ data.customer.latitude }},
+                      {{ data.customer.longitude }}
                     </td>
                   </tr>
                   <tr>
                     <th class="p-1">Teléfono</th>
-                    <td class="p-1">{{ data.customer?.phoneNumber }}</td>
+                    <td class="p-1">{{ data.customer.phoneNumber }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">WhatsApp</th>
-                    <td class="p-1">{{ data.customer?.whatsapp }}</td>
+                    <td class="p-1">{{ data.customer.whatsapp }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">Email</th>
-                    <td class="p-1">{{ data.customer?.email }}</td>
+                    <td class="p-1">{{ data.customer.email }}</td>
                   </tr>
                   <tr>
                     <th class="p-1">Estado</th>
                     <td class="p-1">
-                      {{ data.customer?.status ? "Activo" : "Inactivo" }}
+                      <span
+                        [ngClass]="{
+                          'status-active': data.customer.status == true,
+                          'status-inactive': data.customer.status == false
+                        }"
+                      >
+                        {{ data.customer.status ? "Activo" : "Inactivo" }}
+                      </span>
                     </td>
                   </tr>
                   <tr>
                     <th class="p-1">Contratos</th>
-                    <td class="p-1">{{ data.customer?.totalContracts }}</td>
+                    <td class="p-1">{{ data.customer.totalContracts }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -84,8 +93,8 @@
           </div>
 
           <div class="mt-2 text-muted small">
-            Creado: {{ data.customer?.createdAt | date : "short" }} —
-            Actualizado: {{ data.customer?.updatedAt | date : "short" }}
+            Creado: {{ data.customer.createdAt | date : "short" }} —
+            Actualizado: {{ data.customer.updatedAt | date : "short" }}
           </div>
         </div>
       </div>
@@ -95,7 +104,7 @@
   <!-- Services -->
   <div class="row">
     <div class="col-12">
-      <h5 class="mb-2">Servicios ({{ data.services?.length || 0 }})</h5>
+      <h5 class="mb-2">Servicios ({{ data.services.length || 0 }})</h5>
     </div>
 
     <div class="col-12" *ngFor="let s of data.services || []; let i = index">
@@ -111,9 +120,19 @@
               </div>
             </div>
             <div class="text-end small">
-              Estado: <strong>{{ s?.service?.status }}</strong
+              Estado:
+
+              <span
+                [ngClass]="{
+                  active: s.service.status == 'activo',
+                  inactive: s.service.status == 'inactivo',
+                  suspended: s.service.status == 'suspendido',
+                  'status-cancelled': s.service.status == 'terminado'
+                }"
+              >
+                {{ s?.service?.status | titlecase }} </span
               ><br />
-              Registrado: {{ s?.service?.registrationDate | date : "short" }}
+              Registrado: {{ s?.service?.registrationDate | date }}
             </div>
           </div>
 
@@ -180,20 +199,19 @@
                     <th class="p-1">Fechas</th>
                     <td class="p-1">
                       Instalación:
-                      {{ s?.service?.installationDate | date : "short" }}<br />
-                      Inicio: {{ s?.service?.registrationDate | date : "short"
-                      }}<br />
+                      {{ s?.service?.installationDate | date }}<br />
+                      Inicio: {{ s?.service?.registrationDate | date }}<br />
                       Fin:
                       {{
-                        s?.service?.endDate
-                          ? (s?.service?.endDate | date : "short")
-                          : "-"
+                        s?.service?.endDate ? (s?.service?.endDate | date) : "-"
                       }}
                     </td>
                   </tr>
                   <tr>
                     <th class="p-1">Pre-pago</th>
-                    <td class="p-1">{{ s?.service?.prepayment }}</td>
+                    <td class="p-1">
+                      {{ s?.service?.prepayment ? "Sí" : "No" }}
+                    </td>
                   </tr>
                   <tr>
                     <th class="p-1">Observación</th>
@@ -236,16 +254,26 @@
                     <td>{{ inv?.igv }}</td>
                     <td>{{ inv?.discount }}</td>
                     <td>{{ inv?.amount }}</td>
-                    <td>{{ inv?.periodic }}</td>
-                    <td>{{ inv?.startDate | date : "short" }}</td>
-                    <td>{{ inv?.endDate | date : "short" }}</td>
-                    <td>{{ inv?.dueDate | date : "short" }}</td>
+                    <td>{{ inv?.periodic | titlecase }}</td>
+                    <td>{{ inv?.startDate | date }}</td>
+                    <td>{{ inv?.endDate | date }}</td>
+                    <td>{{ inv?.dueDate | date }}</td>
                     <td>
-                      {{
-                        inv?.paidDated ? (inv?.paidDated | date : "short") : "-"
-                      }}
+                      {{ inv?.paidDated ? (inv?.paidDated | date) : "-" }}
                     </td>
-                    <td>{{ inv?.status }}</td>
+                    <td>
+                      <span
+                        [ngClass]="{
+                'status-paid': inv?.status == 'pagada',
+                'status-pending': inv?.status == 'pendiente',
+                'status-overdue': inv?.status == 'vencida',
+                'status-cancelled': inv?.status == 'anulada',
+              
+              }"
+                      >
+                        {{ inv?.status }}
+                      </span>
+                    </td>
                     <td>{{ inv?.note || "-" }}</td>
                   </tr>
                 </tbody>
@@ -276,12 +304,12 @@
                   <tr *ngFor="let sp of s?.suspensions || []">
                     <td>{{ sp?.id }}</td>
                     <td>{{ sp?.enterprise_id }}</td>
-                    <td>{{ sp?.start_date | date : "short" }}</td>
-                    <td>{{ sp?.end_date | date : "short" }}</td>
+                    <td>{{ sp?.start_date | date }}</td>
+                    <td>{{ sp?.end_date | date }}</td>
                     <td>
                       {{
                         sp?.reactivation_date
-                          ? (sp?.reactivation_date | date : "short")
+                          ? (sp?.reactivation_date | date)
                           : "-"
                       }}
                     </td>
@@ -303,7 +331,7 @@
     <div class="col-12">
       <div class="card mat-elevation-z2 mb-4">
         <div class="card-body">
-          <h5 class="mb-3">Tickets ({{ data.tickets?.length || 0 }})</h5>
+          <h5 class="mb-3">Tickets ({{ data.tickets.length || 0 }})</h5>
           <div *ngIf="(data.tickets?.length || 0) === 0" class="text-muted">
             No hay tickets.
           </div>
