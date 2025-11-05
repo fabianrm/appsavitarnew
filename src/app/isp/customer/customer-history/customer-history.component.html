@@ -1,1 +1,357 @@
-{{ this.dataCustomerHistory | json }}
+<div *ngIf="dataCustomerHistory as data; else loading" class="container mt-3">
+  <!-- Customer summary -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card mat-elevation-z2 mb-3">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Cliente — Resumen</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table table-borderless table-sm mb-0">
+                <tbody>
+                  <tr>
+                    <th class="p-1">ID</th>
+                    <td class="p-1">{{ data.customer?.id }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Tipo</th>
+                    <td class="p-1">{{ data.customer?.type }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Código</th>
+                    <td class="p-1">{{ data.customer?.customerCode }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Nombre</th>
+                    <td class="p-1">{{ data.customer?.customerName }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Documento</th>
+                    <td class="p-1">{{ data.customer?.documentNumber }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Ciudad</th>
+                    <td class="p-1">
+                      {{ data.customer?.city }} ({{ data.customer?.cityId }})
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <table class="table table-borderless table-sm mb-0">
+                <tbody>
+                  <tr>
+                    <th class="p-1">Dirección</th>
+                    <td class="p-1">{{ data.customer?.address }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Referencia</th>
+                    <td class="p-1">{{ data.customer?.reference }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Coordenadas</th>
+                    <td class="p-1">
+                      {{ data.customer?.latitude }},
+                      {{ data.customer?.longitude }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Teléfono</th>
+                    <td class="p-1">{{ data.customer?.phoneNumber }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">WhatsApp</th>
+                    <td class="p-1">{{ data.customer?.whatsapp }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Email</th>
+                    <td class="p-1">{{ data.customer?.email }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Estado</th>
+                    <td class="p-1">
+                      {{ data.customer?.status ? "Activo" : "Inactivo" }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Contratos</th>
+                    <td class="p-1">{{ data.customer?.totalContracts }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mt-2 text-muted small">
+            Creado: {{ data.customer?.createdAt | date : "short" }} —
+            Actualizado: {{ data.customer?.updatedAt | date : "short" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="row">
+    <div class="col-12">
+      <h5 class="mb-2">Servicios ({{ data.services?.length || 0 }})</h5>
+    </div>
+
+    <div class="col-12" *ngFor="let s of data.services || []; let i = index">
+      <div class="card mat-elevation-z2 mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="mb-1">
+                Servicio #{{ i + 1 }} — {{ s?.service?.serviceCode || "N/A" }}
+              </h6>
+              <div class="small text-muted">
+                {{ s?.service?.planName }} (Plan ID: {{ s?.service?.planId }})
+              </div>
+            </div>
+            <div class="text-end small">
+              Estado: <strong>{{ s?.service?.status }}</strong
+              ><br />
+              Registrado: {{ s?.service?.registrationDate | date : "short" }}
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <table class="table table-sm table-striped mb-0">
+                <tbody>
+                  <tr>
+                    <th class="p-1">ID</th>
+                    <td class="p-1">{{ s?.service?.id }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Código</th>
+                    <td class="p-1">{{ s?.service?.serviceCode }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Router</th>
+                    <td class="p-1">
+                      {{ s?.service?.routerId }} — {{ s?.service?.routerIp }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">VLAN / Puerto</th>
+                    <td class="p-1">
+                      {{ s?.service?.vlan }} / {{ s?.service?.portNumber }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Equipo</th>
+                    <td class="p-1">
+                      {{ s?.service?.equipmentId }} —
+                      {{ s?.service?.equipmentSerie }} (MAC:
+                      {{ s?.service?.equipmentMac }})
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Dirección instalación</th>
+                    <td class="p-1">{{ s?.service?.addressInstallation }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="col-md-6">
+              <table class="table table-sm table-striped mb-0">
+                <tbody>
+                  <tr>
+                    <th class="p-1">IPTV</th>
+                    <td class="p-1">{{ s?.service?.iptv }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Usuario PPPoE</th>
+                    <td class="p-1">{{ s?.service?.userPppoe || "-" }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Promoción</th>
+                    <td class="p-1">
+                      {{ s?.service?.promotion?.name }} ({{
+                        s?.service?.promotion?.id
+                      }})
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Fechas</th>
+                    <td class="p-1">
+                      Instalación:
+                      {{ s?.service?.installationDate | date : "short" }}<br />
+                      Inicio: {{ s?.service?.registrationDate | date : "short"
+                      }}<br />
+                      Fin:
+                      {{
+                        s?.service?.endDate
+                          ? (s?.service?.endDate | date : "short")
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Pre-pago</th>
+                    <td class="p-1">{{ s?.service?.prepayment }}</td>
+                  </tr>
+                  <tr>
+                    <th class="p-1">Observación</th>
+                    <td class="p-1">{{ s?.service?.observation || "-" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Invoices table -->
+          <div class="mt-3">
+            <h6 class="mb-1">Facturas ({{ s?.invoices?.length || 0 }})</h6>
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Invoice ID</th>
+                    <th>Contrato</th>
+                    <th>Plan</th>
+                    <th>Precio</th>
+                    <th>IGV</th>
+                    <th>Descuento</th>
+                    <th>Monto</th>
+                    <th>Periodo</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Vencimiento</th>
+                    <th>Pago</th>
+                    <th>Estado</th>
+                    <th>Nota</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let inv of s?.invoices || []">
+                    <td>{{ inv?.invoiceId }}</td>
+                    <td>{{ inv?.contractId }}</td>
+                    <td>{{ inv?.planName }}</td>
+                    <td>{{ inv?.price }}</td>
+                    <td>{{ inv?.igv }}</td>
+                    <td>{{ inv?.discount }}</td>
+                    <td>{{ inv?.amount }}</td>
+                    <td>{{ inv?.periodic }}</td>
+                    <td>{{ inv?.startDate | date : "short" }}</td>
+                    <td>{{ inv?.endDate | date : "short" }}</td>
+                    <td>{{ inv?.dueDate | date : "short" }}</td>
+                    <td>
+                      {{
+                        inv?.paidDated ? (inv?.paidDated | date : "short") : "-"
+                      }}
+                    </td>
+                    <td>{{ inv?.status }}</td>
+                    <td>{{ inv?.note || "-" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Suspensions table -->
+          <div class="mt-3">
+            <h6 class="mb-1">
+              Suspensiones ({{ s?.suspensions?.length || 0 }})
+            </h6>
+            <div class="table-responsive">
+              <table class="table table-sm table-striped table-bordered mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>ID</th>
+                    <th>Empresa</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Reactivación</th>
+                    <th>Motivo</th>
+                    <th>Observación</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let sp of s?.suspensions || []">
+                    <td>{{ sp?.id }}</td>
+                    <td>{{ sp?.enterprise_id }}</td>
+                    <td>{{ sp?.start_date | date : "short" }}</td>
+                    <td>{{ sp?.end_date | date : "short" }}</td>
+                    <td>
+                      {{
+                        sp?.reactivation_date
+                          ? (sp?.reactivation_date | date : "short")
+                          : "-"
+                      }}
+                    </td>
+                    <td>{{ sp?.reason }}</td>
+                    <td>{{ sp?.observation }}</td>
+                    <td>{{ sp?.status }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tickets -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card mat-elevation-z2 mb-4">
+        <div class="card-body">
+          <h5 class="mb-3">Tickets ({{ data.tickets?.length || 0 }})</h5>
+          <div *ngIf="(data.tickets?.length || 0) === 0" class="text-muted">
+            No hay tickets.
+          </div>
+
+          <div
+            *ngFor="let ticket of data.tickets || []; let ti = index"
+            class="mb-3"
+          >
+            <div class="card border-0">
+              <div class="card-body p-2">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <strong>#{{ ti + 1 }}</strong> —
+                    {{ ticket?.title || "Ticket " + (ticket?.id || "") }}
+                  </div>
+                  <div class="small text-muted">
+                    {{ ticket?.status || "-" }}
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <table class="table table-sm table-borderless mb-0">
+                    <tbody>
+                      <tr *ngFor="let kv of ticket | keyvalue">
+                        <th class="p-1 text-muted" style="width: 25%">
+                          {{ kv.key }}
+                        </th>
+                        <td class="p-1">
+                          <span
+                            *ngIf="kv.value && (kv.value | json) !== 'null'"
+                            >{{ kv.value | json }}</span
+                          ><span *ngIf="!kv.value">-</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="d-flex justify-content-center align-items-center p-4">
+    <!-- <mat-spinner diameter="36"></mat-spinner> -->
+    <div class="ms-2 text-muted">Cargando historial del cliente…</div>
+  </div>
+</ng-template>
