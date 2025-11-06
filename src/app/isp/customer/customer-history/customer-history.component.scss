@@ -53,3 +53,42 @@
   border-radius: 10px;
   width: 100%;
 }
+
+//Tickets
+
+.registered {
+  background: cornflowerblue;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+}
+
+.pending {
+  background: red;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+}
+
+.atention {
+  background: #fd7e14;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+}
+.wait {
+  background: indigo;
+  color: white;
+}
+.validation {
+  background: yellow;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+}
+.resolved {
+  background: green;
+  padding: 2px 1rem;
+  color: white;
+  border-radius: 10px;
+}

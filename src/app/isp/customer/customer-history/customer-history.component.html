@@ -332,7 +332,7 @@
       <div class="card mat-elevation-z2 mb-4">
         <div class="card-body">
           <h5 class="mb-3">Tickets ({{ data.tickets.length || 0 }})</h5>
-          <div *ngIf="(data.tickets?.length || 0) === 0" class="text-muted">
+          <div *ngIf="(data.tickets.length || 0) === 0" class="text-muted">
             No hay tickets.
           </div>
 
@@ -340,33 +340,141 @@
             *ngFor="let ticket of data.tickets || []; let ti = index"
             class="mb-3"
           >
-            <div class="card border-0">
-              <div class="card-body p-2">
-                <div class="d-flex justify-content-between">
+            <div class="card">
+              <div class="card-body p-3">
+                <div
+                  class="d-flex justify-content-between align-items-start mb-2"
+                >
                   <div>
-                    <strong>#{{ ti + 1 }}</strong> —
-                    {{ ticket?.title || "Ticket " + (ticket?.id || "") }}
+                    <h6 class="mb-0">
+                      #{{ ti + 1 }} — {{ ticket.code || "Ticket " + ticket.id }}
+                    </h6>
+                    <div class="small text-muted">{{ ticket.subject }}</div>
                   </div>
-                  <div class="small text-muted">
-                    {{ ticket?.status || "-" }}
+                  <div class="text-end small text-muted">
+                    Estado:
+                    <span
+                      [ngClass]="{
+                  registered: ticket.status == 'registrado',
+                  pending: ticket.status == 'pendiente',
+                  atention: ticket.status == 'atencion',
+                  wait: ticket.status == 'espera_pase',
+                  validation: ticket.status == 'validacion',
+                  resolved: ticket.status == 'solucionado',
+                  
+                }"
+                    >
+                      {{ ticket.status | titlecase }} </span
+                    ><br />
+                    Prioridad: {{ ticket.priority | titlecase }}
                   </div>
                 </div>
-                <div class="mt-2">
+
+                <div class="mb-2">
                   <table class="table table-sm table-borderless mb-0">
                     <tbody>
-                      <tr *ngFor="let kv of ticket | keyvalue">
-                        <th class="p-1 text-muted" style="width: 25%">
-                          {{ kv.key }}
-                        </th>
+                      <tr>
+                        <th class="p-1" style="width: 20%">ID</th>
+                        <td class="p-1">{{ ticket.id }}</td>
+                      </tr>
+                      <tr>
+                        <th class="p-1">Código</th>
+                        <td class="p-1">{{ ticket.code }}</td>
+                      </tr>
+                      <tr>
+                        <th class="p-1">Asunto</th>
+                        <td class="p-1">{{ ticket.subject }}</td>
+                      </tr>
+                      <tr>
+                        <th class="p-1">Descripción</th>
+                        <td class="p-1">{{ ticket.description || "-" }}</td>
+                      </tr>
+                      <tr>
+                        <th class="p-1">Vencimiento</th>
                         <td class="p-1">
-                          <span
-                            *ngIf="kv.value && (kv.value | json) !== 'null'"
-                            >{{ kv.value | json }}</span
-                          ><span *ngIf="!kv.value">-</span>
+                          {{ ticket.expiration | date : "short" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th class="p-1">Asignado</th>
+                        <td class="p-1">
+                          {{
+                            ticket.assigned_at
+                              ? (ticket.assigned_at | date : "short")
+                              : "-"
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th class="p-1">Resuelto</th>
+                        <td class="p-1">
+                          {{
+                            ticket.resolved_at
+                              ? (ticket.resolved_at | date : "short")
+                              : "-"
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th class="p-1">Cerrado</th>
+                        <td class="p-1">
+                          {{
+                            ticket.closed_at
+                              ? (ticket.closed_at | date : "short")
+                              : "-"
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th class="p-1">Creado</th>
+                        <td class="p-1">
+                          {{ ticket.created_at | date : "short" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th class="p-1">Actualizado</th>
+                        <td class="p-1">
+                          {{ ticket.updated_at | date : "short" }}
                         </td>
                       </tr>
                     </tbody>
                   </table>
+                </div>
+
+                <!-- Historial del ticket -->
+                <div class="mt-3">
+                  <h6 class="mb-2">
+                    Historial ({{ ticket.history.length || 0 }})
+                  </h6>
+                  <div class="table-responsive">
+                    <table
+                      class="table table-sm table-striped table-bordered mb-0"
+                    >
+                      <thead class="table-light">
+                        <tr>
+                          <th>ID</th>
+                          <th>Ticket ID</th>
+                          <th>Comentario</th>
+                          <th>Fecha actualización</th>
+                          <th>Estado</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let h of ticket.history || []">
+                          <td>{{ h.id }}</td>
+                          <td>{{ h.ticket_id }}</td>
+                          <td>{{ h.comment }}</td>
+                          <td>{{ h.updated_at | date : "short" }}</td>
+                          <td>{{ h.status | titlecase }}</td>
+                        </tr>
+                        <tr *ngIf="!ticket.history.length">
+                          <td colspan="5" class="text-center text-muted">
+                            Sin eventos en el historial
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
