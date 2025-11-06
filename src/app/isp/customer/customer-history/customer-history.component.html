@@ -75,8 +75,8 @@
                     <td class="p-1">
                       <span
                         [ngClass]="{
-                          'status-active': data.customer.status == true,
-                          'status-inactive': data.customer.status == false
+                          active: data.customer.status == true,
+                          inactive: data.customer.status == false
                         }"
                       >
                         {{ data.customer.status ? "Activo" : "Inactivo" }}
@@ -201,7 +201,7 @@
                       Instalación:
                       {{ s?.service?.installationDate | date }}<br />
                       Inicio: {{ s?.service?.registrationDate | date }}<br />
-                      Fin:
+                      Fin de Contrato:
                       {{
                         s?.service?.endDate ? (s?.service?.endDate | date) : "-"
                       }}
