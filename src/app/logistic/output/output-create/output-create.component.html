@@ -73,7 +73,7 @@
 
     <mat-card>
       <mat-card-content>
-        <div class="action-buttons">
+        <div class="action-buttons mb-2">
           <button
             type="button"
             mat-raised-button
@@ -159,7 +159,13 @@
     </mat-card>
 
     <div class="action-buttons">
-      <button type="submit" class="mr mr-2" mat-raised-button color="primary">
+      <button 
+      type="submit" 
+      class="mr mr-2" 
+      mat-flat-button 
+      color="primary"
+      [disabled]="outputForm.invalid || dataSource.data.length === 0"
+      >
         Guardar Entrada
       </button>
       <button
