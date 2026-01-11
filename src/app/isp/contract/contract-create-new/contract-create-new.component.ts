@@ -13,6 +13,8 @@ import { EquipmentService } from '../../equipment/equipment.service';
 import { PlanService } from '../../plan/plan.service';
 import { RouterService } from '../../router/router.service';
 import { ContractService } from '../contract.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EquipmentCreateComponent } from '../../equipment/equipment-create/equipment-create.component';
 import { Observable, Subscription, map, startWith } from 'rxjs';
 import { CustomerService } from '../../customer/customer.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -97,7 +99,8 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private router: Router,
     private route: ActivatedRoute,
-    private mkservice: MikrotikService
+    private mkservice: MikrotikService,
+    private dialog: MatDialog
 
   ) { }
 
@@ -565,6 +568,18 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     this.snackbarService.showSuccess('Contrato registrado correctamente');
   }
 
+  openEquipmentDialog(): void {
+    const dialogRef = this.dialog.open(EquipmentCreateComponent, {
+      width: '600px',
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Refrescar la lista de equipos después de cerrar el diálogo
+      this.getEquipments();
+    });
+  }
+
   ngOnDestroy(): void {
     // Desuscribirse de los cambios de coordenadas para evitar fugas de memoria
     if (this.coordinatesSubscription) {
@@ -579,18 +594,18 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
         console.log(respuesta);
         this.testMK = respuesta;
         if (respuesta.conectado === true) {
-          this.statusMK = '🟢En línea';
+          this.statusMK = '🟢 En línea';
           this.formContrato.get('mikrotik')?.setValue(true);
 
         } else {
           this.formContrato.get('mikrotik')?.setValue(false);
-          this.statusMK = '🔴Desconectado';
+          this.statusMK = '🔴 Desconectado';
         }
       },
 
       error: (error) => {
         this.formContrato.get('mikrotik')?.setValue(false);
-        this.statusMK = '🔴Desconectado';
+        this.statusMK = '🔴 Desconectado';
       },
 
     });

@@ -251,6 +251,16 @@
                     formControlName="equipmentId"
                     [matAutocomplete]="auto"
                   />
+                  <button
+                    type="button"
+                    mat-icon-button
+                    matSuffix
+                    color="primary"
+                    (click)="openEquipmentDialog()"
+                    matTooltip="Agregar nuevo equipo"
+                  >
+                    <mat-icon>add_circle</mat-icon>
+                  </button>
                   <mat-autocomplete
                     #auto="matAutocomplete"
                     [displayWith]="displayFn"

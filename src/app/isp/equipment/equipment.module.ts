@@ -55,6 +55,9 @@ import { MatMenuModule } from '@angular/material/menu';
     ReactiveFormsModule,
     FormsModule,
 
+  ],
+  exports: [
+    EquipmentCreateComponent
   ]
 })
 export class EquipmentModule { }

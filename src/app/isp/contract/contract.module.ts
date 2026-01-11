@@ -35,6 +35,7 @@ import { ChangeUserComponent } from './change-user/change-user.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddPromoComponent } from './add-promo/add-promo.component';
 import { MatListModule } from '@angular/material/list';
+import { EquipmentModule } from '../equipment/equipment.module';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { MatListModule } from '@angular/material/list';
     MatTabsModule,
     MatDialogModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    EquipmentModule
   ],
   providers: [
     {
