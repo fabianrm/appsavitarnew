@@ -472,6 +472,31 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Manejar cambio de cajas cercanas desde el mapa
+  onNearbyBoxesChange(nearbyBoxes: Box[]) {
+    // Si hay cajas cercanas, filtrar el autocomplete para mostrar solo esas
+    if (nearbyBoxes.length > 0) {
+      // Actualizar el filtro de cajas para mostrar solo las cercanas
+      this.filteredBox = this.formContrato.get('boxId')!.valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : value?.name)),
+        map(name => {
+          // Filtrar solo entre las cajas cercanas
+          const filtered = name ? nearbyBoxes.filter(option => option.name.toLowerCase().includes(name.toLowerCase())) : nearbyBoxes.slice();
+          return filtered;
+        })
+      );
+    } else {
+      // Si no hay cajas cercanas, mostrar todas las cajas
+      this.filteredBox = this.formContrato.get('boxId')!.valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : value?.name)),
+        map(name => (name ? this._filterBox(name) : this.boxs.slice()))
+      );
+    }
+  }
+
+
   displayFnBox(box: Box): string {
     return box && box.name ? box.name : '';
   }

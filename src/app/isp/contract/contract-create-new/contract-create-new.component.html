@@ -173,7 +173,11 @@
                     ></app-mapleaf-loading>
                     <ng-template #mapReady>
                       <div class="border rounded p-2" style="height: 300px">
-                        <app-mapleaf-single-view></app-mapleaf-single-view>
+                        <app-mapleaf-contract-view
+                          [boxes]="boxs"
+                          [searchRadius]="100"
+                          (nearbyBoxesChange)="onNearbyBoxesChange($event)"
+                        ></app-mapleaf-contract-view>
                       </div>
                     </ng-template>
                   </div>
