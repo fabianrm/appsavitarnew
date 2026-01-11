@@ -15,6 +15,7 @@ import { RouterService } from '../../router/router.service';
 import { ContractService } from '../contract.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EquipmentCreateComponent } from '../../equipment/equipment-create/equipment-create.component';
+import { OutputCreateComponent } from '../../../logistic/output/output-create/output-create.component';
 import { Observable, Subscription, map, startWith } from 'rxjs';
 import { CustomerService } from '../../customer/customer.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -577,6 +578,19 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       // Refrescar la lista de equipos después de cerrar el diálogo
       this.getEquipments();
+    });
+  }
+
+  openOutputDialog(): void {
+    const dialogRef = this.dialog.open(OutputCreateComponent, {
+      width: '90vw',
+      maxWidth: '1200px',
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // El usuario permanece en el formulario de contrato después de cerrar el diálogo
+      console.log('Diálogo de salida de material cerrado');
     });
   }
 

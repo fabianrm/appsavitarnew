@@ -357,7 +357,20 @@
             </div>
           </div>
         </div>
-        Estado MK: {{ statusMK }}
+        <div class="mt-3">
+          Estado MK: {{ statusMK }}
+        </div>
+        <div class="mt-3">
+          <button
+            type="button"
+            mat-raised-button
+            color="accent"
+            (click)="openOutputDialog()"
+          >
+            <mat-icon>inventory_2</mat-icon>
+            Registrar Salida de Material
+          </button>
+        </div>
       </div>
     </div>
 

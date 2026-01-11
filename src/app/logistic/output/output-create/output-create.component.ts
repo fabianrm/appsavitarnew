@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Destination } from '../../destination/models/DestinationResponse';
 import { Employee } from '../../employee/models/EmployeeResponse';
@@ -7,7 +7,7 @@ import { DestinationService } from '../../destination/destination.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EntrySelectDialogComponent } from '../entry-select-dialog/entry-select-dialog.component';
 import { OutputService } from './../output.service';
 import { OutputDetail, OutputRequest } from '../models/OutputRequest';
@@ -39,7 +39,8 @@ export class OutputCreateComponent implements OnInit {
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    @Optional() public dialogRef: MatDialogRef<OutputCreateComponent>
   ) { }
 
 
@@ -158,7 +159,13 @@ export class OutputCreateComponent implements OnInit {
       {
         next: () => {
           this.showSuccess();
-          this.router.navigate(['/dashboard/output/outputs']);
+          // Si está abierto como diálogo, cierra el diálogo
+          if (this.dialogRef) {
+            this.dialogRef.close(true);
+          } else {
+            // Si no es un diálogo, navega a la lista de salidas
+            this.router.navigate(['/dashboard/output/outputs']);
+          }
         },
         error: (error) => {
           this.snackbarService.showError(error)
@@ -177,7 +184,13 @@ export class OutputCreateComponent implements OnInit {
 
 
   goOutputs() {
-    this.router.navigate(['/dashboard/output/outputs']);
+    // Si está abierto como diálogo, cierra el diálogo
+    if (this.dialogRef) {
+      this.dialogRef.close(false);
+    } else {
+      // Si no es un diálogo, navega a la lista de salidas
+      this.router.navigate(['/dashboard/output/outputs']);
+    }
   }
 
 }

@@ -36,6 +36,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddPromoComponent } from './add-promo/add-promo.component';
 import { MatListModule } from '@angular/material/list';
 import { EquipmentModule } from '../equipment/equipment.module';
+import { OutputModule } from '../../logistic/output/output.module';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { EquipmentModule } from '../equipment/equipment.module';
     MatDialogModule,
     MatMenuModule,
     MatListModule,
-    EquipmentModule
+    EquipmentModule,
+    OutputModule
   ],
   providers: [
     {
