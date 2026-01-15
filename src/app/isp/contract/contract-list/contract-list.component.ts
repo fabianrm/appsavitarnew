@@ -56,6 +56,7 @@ export class ContractListComponent implements OnInit {
     private snackbarService: SnackbarService) { }
 
   ngOnInit() {
+    // this.checkMK(row.routerId);
     this.getContracts();
     this.subscription = this.contractService.refresh$.subscribe(() => {
       this.getContracts()
@@ -196,19 +197,15 @@ export class ContractListComponent implements OnInit {
   }
 
   finishService(row: any) {
-
-    //this.checkMK(row.routerId);
-
-
     this.routerService.getTestConnection(row.routerId).subscribe({
       next: (respuesta) => {
+        console.log(respuesta);
         this.testMK = respuesta;
         if (respuesta.conectado === true) {
-          this.statusMK = '🟢En línea';
+          this.statusMK = '🟢 En línea';
         } else {
-          this.statusMK = '🔴Desconectado';
+          this.statusMK = '🔴 Desconectado';
         }
-
         Swal.fire({
           title: "Terminar Contrato",
           text: `Se va a liberar la caja, puerto y equipo del Contrato ${row.serviceCode}`,
@@ -235,22 +232,14 @@ export class ContractListComponent implements OnInit {
               })
           }
         });
-
       },
-
       error: (error) => {
         // this.formContrato.get('mikrotik')?.setValue(false);
         this.statusMK = '🔴Desconectado';
       },
-
     });
-
-
-
-
-
-
   }
+
 
 
   viewMap(latitude: string, longitude: string) {

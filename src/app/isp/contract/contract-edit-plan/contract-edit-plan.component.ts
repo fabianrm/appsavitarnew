@@ -43,6 +43,7 @@ export class ContractEditPlanComponent implements OnInit {
     this.formContrato = this.fb.group({
       id: [this.getData.id, Validators.required],
       plan_id: [this.planInicial, Validators.required],
+      mikrotik: [false, Validators.required],
     });
   }
 
@@ -66,17 +67,39 @@ export class ContractEditPlanComponent implements OnInit {
     }
   }
 
+enviarDatos(): any {
+  if (this.formContrato.valid) {
+    this.contractService
+      .updatePlantCustomer(this.getData.id, this.planSelected[0].id)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          
+          if (res.success==true) {
+            // 1) contrato OK
+            this.showSuccess(); // “Plan actualizado correctamente”
 
-  enviarDatos(): any {
-    if (this.formContrato.valid) {
-      //console.log('agregar....')
-      this.contractService.updatePlantCustomer(this.getData.id, this.planSelected[0].id).subscribe(respuesta => {
-        //  console.log('Plan actualizado', respuesta);
-        this.showSuccess();
-        this.dialogRef.close();
+            // 2) aviso opcional si Mikrotik falló
+            if (res.mikrotik_ok === false && res.mikrotik_msg) {
+              this.snackbarService.showError(res.mikrotik_msg);
+            }
+
+            // 3) cerrar diálogo y refrescar
+            this.dialogRef.close();
+          } else {
+            // solo si hubiera success = false
+            this.snackbarService.showError(res.message || 'No se pudo actualizar el plan');
+          }
+        },
+        error: (err) => {
+          // solo si el backend devolviera 4xx/5xx sin este JSON
+          this.snackbarService.showError(err?.error?.message || 'Error inesperado');
+        }
       });
-    }
   }
+}
+
+
 
   showError() {
     this.snackbarService.showError('Ocurrio un error...');
@@ -92,18 +115,18 @@ export class ContractEditPlanComponent implements OnInit {
         console.log(respuesta);
         // this.testMK = respuesta;
         if (respuesta.conectado === true) {
-          this.statusMK = '🟢En línea';
+          this.statusMK = '🟢 En línea';
           this.formContrato.get('mikrotik')?.setValue(true);
 
         } else {
           this.formContrato.get('mikrotik')?.setValue(false);
-          this.statusMK = '🔴Desconectado';
+          this.statusMK = '🔴 Desconectado';
         }
       },
 
       error: (error) => {
         this.formContrato.get('mikrotik')?.setValue(false);
-        this.statusMK = '🔴Desconectado';
+        this.statusMK = '🔴 Desconectado';
       },
 
     });
