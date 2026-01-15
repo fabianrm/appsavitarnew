@@ -40,12 +40,13 @@ export class OutputCreateComponent implements OnInit {
     private datePipe: DatePipe,
     private router: Router,
     private dialog: MatDialog,
-    @Optional() public dialogRef: MatDialogRef<OutputCreateComponent>
+    @Optional() public dialogRef: MatDialogRef<OutputCreateComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
 
   ngOnInit() {
-
+    console.log('OutputCreateComponent Data:', this.data);
     this.initForm();
     this.getDestinations();
     this.getEmployees();
@@ -53,12 +54,17 @@ export class OutputCreateComponent implements OnInit {
   }
 
   initForm() {
+    let commentValue = '';
+    if (this.data && this.data.serviceCode) {
+      commentValue = `Ref. Contrato: ${this.data.serviceCode}`;
+    }
+
     this.outputForm = this.fb.group({
       destination_id: ['', Validators.required],
       employee_id: ['', Validators.required],
       date: [this.datePipe.transform(this.date, "yyyy-MM-dd")],
       total: [0.00, { value: 0, readonly: true }],
-      comment: [''],
+      comment: [commentValue],
       status: [1],
       output_details: this.fb.array([])
     });

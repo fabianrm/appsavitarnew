@@ -576,8 +576,12 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       this.contractService.getServiceByEquipment(equipmentId!).subscribe(respuesta => {
         if (respuesta.exists == false) {
           this.contractService.addService(dataToSend).subscribe(respuesta => {
-            // this.router.navigate(['/dashboard/contract/contracts']); // Navega al componente "contrato"
+            console.log('Respuesta addService:', respuesta);
             this.showSuccess();
+            
+            // Extract serviceCode safely, checking multiple potential paths
+            const serviceCode = respuesta?.service?.serviceCode || respuesta?.data?.serviceCode || respuesta?.serviceCode || '';
+            console.log('Extracted serviceCode:', serviceCode);
 
             Swal.fire({
               title: 'Contrato guardado',
@@ -588,7 +592,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
               cancelButtonText: 'No, ir a lista'
             }).then((result) => {
               if (result.isConfirmed) {
-                this.openOutputDialog();
+                this.openOutputDialog(serviceCode);
               } else {
                 this.router.navigate(['/dashboard/contract/contracts']);
               }
@@ -622,11 +626,12 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     });
   }
 
-  openOutputDialog(): void {
+  openOutputDialog(serviceCode?: string): void {
     const dialogRef = this.dialog.open(OutputCreateComponent, {
       width: '90vw',
       maxWidth: '1200px',
-      disableClose: false
+      disableClose: false,
+      data: { serviceCode: serviceCode }
     });
 
     dialogRef.afterClosed().subscribe(result => {
