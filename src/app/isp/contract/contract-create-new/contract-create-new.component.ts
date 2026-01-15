@@ -576,8 +576,24 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       this.contractService.getServiceByEquipment(equipmentId!).subscribe(respuesta => {
         if (respuesta.exists == false) {
           this.contractService.addService(dataToSend).subscribe(respuesta => {
-            this.router.navigate(['/dashboard/contract/contracts']); // Navega al componente "contrato"
+            // this.router.navigate(['/dashboard/contract/contracts']); // Navega al componente "contrato"
             this.showSuccess();
+
+            Swal.fire({
+              title: 'Contrato guardado',
+              text: '¿Desea registrar la salida de los materiales?',
+              icon: 'question',
+              showCancelButton: true,
+              confirmButtonText: 'Sí, registrar',
+              cancelButtonText: 'No, ir a lista'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.openOutputDialog();
+              } else {
+                this.router.navigate(['/dashboard/contract/contracts']);
+              }
+            });
+
           });
         } else {
           this.showError();
@@ -616,6 +632,7 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       // El usuario permanece en el formulario de contrato después de cerrar el diálogo
       console.log('Diálogo de salida de material cerrado');
+      this.router.navigate(['/dashboard/contract/contracts']);
     });
   }
 
