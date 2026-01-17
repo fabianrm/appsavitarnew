@@ -1,0 +1,52 @@
+<div class="connections-container">
+  <div class="controls-header">
+    <div class="city-selector">
+      <mat-form-field appearance="outline">
+        <mat-label>Seleccione Ciudad</mat-label>
+        <mat-select (selectionChange)="onCityChange($event.value)">
+          <mat-option *ngFor="let city of cities" [value]="city">
+            {{ city.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="actions">
+      <button
+        mat-raised-button
+        color="accent"
+        class="ml-2"
+        (click)="toggleDrawingMode()"
+        [disabled]="isDrawingMode"
+      >
+        {{ isDrawingMode ? "Dibujando..." : "Crear Ruta Manual" }}
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="ml-2"
+        (click)="loadRoutes()"
+        [disabled]="!selectedCityId"
+      >
+        Pintar Rutas
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openAddRouteDialog()"
+        [disabled]="!selectedCityId || isDrawingMode"
+      >
+        <mat-icon>add</mat-icon> Agregar Ruta Directa
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isDrawingMode" class="drawing-instruction">
+    <p>
+      <strong>Modo Dibujo:</strong> Haga clic en una caja INICIAL, luego clic en
+      el mapa para trazar la ruta, y finalmente clic en la caja FINAL.
+    </p>
+  </div>
+
+  <div id="map-connections" class="map-view"></div>
+</div>

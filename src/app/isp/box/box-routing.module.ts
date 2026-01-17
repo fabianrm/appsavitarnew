@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { BoxListComponent } from './box-list/box-list.component';
 import { BoxCreateComponent } from './box-create/box-create.component';
 import { BoxEditComponent } from './box-edit/box-edit.component';
+import { BoxConnectionsComponent } from './box-connections/box-connections.component';
 import { AuthGuard } from '../../auth/auth.guard';
 
 const routes: Routes = [
   { path: 'boxes', component: BoxListComponent, data: { title: 'Cajas' }, canActivate: [AuthGuard] },
   { path: 'boxCreate', component: BoxCreateComponent, data: { title: 'Crear Caja' }, canActivate: [AuthGuard] },
   { path: 'boxEdit/:id', component: BoxEditComponent, data: { title: 'Editar Caja' }, canActivate: [AuthGuard] },
+  { path: 'boxConnections', component: BoxConnectionsComponent, data: { title: 'Planta Externa' }, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
