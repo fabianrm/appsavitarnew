@@ -69,6 +69,10 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   getCities() {
     this.cityService.getCities().subscribe(res => {
       this.cities = res.data;
+      if (this.cities.length > 0) {
+        // Auto-select first city
+        this.onCityChange(this.cities[0]);
+      }
     });
   }
 
@@ -139,6 +143,17 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   toggleDrawingMode() {
     this.isDrawingMode = !this.isDrawingMode;
     this.resetDrawingState();
+    
+    // Toggle cursor style
+    const mapContainer = this.map.getContainer();
+    if (this.isDrawingMode) {
+      L.DomUtil.addClass(mapContainer, 'crosshair-cursor');
+      this.map.setZoom(18); // Zoom in for easier drawing
+    } else {
+      L.DomUtil.removeClass(mapContainer, 'crosshair-cursor');
+      // Optional: Reset zoom or leave as is? User might want to stay. 
+      // Let's leave it as is to not be annoying designated prompt "comodidad".
+    }
   }
 
   resetDrawingState() {
@@ -201,7 +216,9 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
       const pointsToDraw = [...this.drawPoints];
       const wasDrawing = this.isDrawingMode;
 
-      this.toggleDrawingMode(); // Exit drawing mode regardless of result
+      if (wasDrawing) {
+        this.toggleDrawingMode(); 
+      }
       
       if (result) {
         // Use the drawn points if they exist and we were drawing, otherwise just straight line

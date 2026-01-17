@@ -13,30 +13,29 @@
     <div class="actions">
       <button
         mat-raised-button
-        color="accent"
+        [color]="isDrawingMode ? 'warn' : 'accent'"
         class="ml-2"
         (click)="toggleDrawingMode()"
-        [disabled]="isDrawingMode"
       >
-        {{ isDrawingMode ? "Dibujando..." : "Crear Ruta Manual" }}
+        {{ isDrawingMode ? "Cancelar Dibujo" : "Ruta Manual" }}
       </button>
 
-      <button
-        mat-raised-button
-        color="primary"
-        class="ml-2"
-        (click)="loadRoutes()"
-        [disabled]="!selectedCityId"
-      >
-        Pintar Rutas
-      </button>
       <button
         mat-raised-button
         color="primary"
         (click)="openAddRouteDialog()"
         [disabled]="!selectedCityId || isDrawingMode"
       >
-        <mat-icon>add</mat-icon> Agregar Ruta Directa
+        <mat-icon>add</mat-icon>Ruta Directa
+      </button>
+          <button
+        mat-raised-button
+        color="primary"
+        class="ml-2"
+        (click)="loadRoutes()"
+        [disabled]="!selectedCityId"
+      >
+        <mat-icon>route</mat-icon>Pintar Rutas
       </button>
     </div>
   </div>
