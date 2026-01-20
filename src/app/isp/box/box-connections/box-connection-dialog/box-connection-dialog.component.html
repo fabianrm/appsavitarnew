@@ -2,7 +2,7 @@
 <mat-dialog-content>
     <form [formGroup]="form" class="connection-form">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 mt-2">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Caja Inicio</mat-label>
                     <mat-select formControlName="startBoxId">
@@ -25,13 +25,35 @@
             </div>
 
             <div class="col-12">
-                <label>Color de la Ruta:</label>
-                <input type="color" formControlName="color" class="form-control form-control-color" title="Elige un color">
+                <label class="mb-2 d-block">Color de la Ruta:</label>
+                
+                <div class="color-grid py-2">
+                    <!-- Predefined Colors -->
+                    <div *ngFor="let c of predefinedColors"
+                         class="color-swatch"
+                         [style.background]="c"
+                         [class.selected]="form.get('color')?.value === c"
+                         (click)="form.get('color')?.setValue(c)"
+                         [title]="c">
+                    </div>
+
+                    <!-- Custom Color Trigger -->
+                    <div class="color-swatch custom-color-btn" 
+                         [class.selected]="!predefinedColors.includes(form.get('color')?.value)"
+                         (click)="colorInput.click()"
+                         title="Otro color..."
+                         [style.background]="!predefinedColors.includes(form.get('color')?.value) ? form.get('color')?.value : '#fff'">
+                        <span *ngIf="predefinedColors.includes(form.get('color')?.value)" style="font-size: 20px; font-weight: bold; color: #555;">+</span>
+                    </div>
+                </div>
+
+                <!-- Hidden native input for custom colors -->
+                <input #colorInput type="color" formControlName="color" class="hidden-input">
             </div>
         </div>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button (click)="onCancel()">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="onSave()" [disabled]="form.invalid">Guardar</button>
+    <button mat-flat-button color="primary" (click)="onSave()" [disabled]="form.invalid">Guardar</button>
 </mat-dialog-actions>
