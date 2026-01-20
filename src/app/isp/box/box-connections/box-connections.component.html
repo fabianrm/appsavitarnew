@@ -28,7 +28,7 @@
       >
         <mat-icon>add</mat-icon>Ruta Directa
       </button>
-          <button
+      <button
         mat-raised-button
         color="primary"
         class="ml-2"
@@ -36,6 +36,16 @@
         [disabled]="!selectedCityId"
       >
         <mat-icon>route</mat-icon>Mostrar Rutas
+      </button>
+
+      <button
+        mat-raised-button
+        class="ml-2"
+        color="accent"
+        (click)="exportPdf()"
+        [disabled]="!selectedCityId"
+      >
+        <mat-icon>print</mat-icon> Imprimir / Exportar
       </button>
     </div>
   </div>

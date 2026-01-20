@@ -1,87 +1,95 @@
+@media print {
+  // Hide everything by default
+  body * {
+    visibility: hidden;
+  }
+
+  // Hide specific UI elements that might still show up
+  .controls-header,
+  .drawing-instruction,
+  app-header,
+  app-sidebar,
+  mat-toolbar,
+  .mat-mdc-dialog-container,
+  .cdk-overlay-container {
+    display: none !important;
+  }
+
+  // Show only the map container and its children
+  .connections-container,
+  .connections-container * {
+    visibility: visible;
+  }
+
+  // Reset positioning for the map container to fill the page
+  .connections-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    z-index: 9999;
+  }
+
+  // Ensure the map itself fills the container
+  #map-connections {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  // Keep map controls (zoom, etc) hidden if desired, or show them.
+  // Usually clean map is better.
+  .leaflet-control-container {
+    display: none !important;
+  }
+}
+
 .connections-container {
-  height: 100%;
+  height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
-  padding: 20px;
 
   .controls-header {
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap; // Allow wrapping on small screens
-    margin-bottom: 20px;
     background: #fff;
-    padding: 15px;
-    border-radius: 8px;
+    z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     .city-selector {
-      width: 300px;
-      flex-grow: 1; // Allow it to take available space
-      max-width: 100%;
+      min-width: 250px;
     }
 
     .actions {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap; // Stack buttons if needed
-      justify-content: flex-end;
-
-      button {
-        margin-left: 0 !important; // Remove inline margin in favor of gap
-      }
-    }
-  }
-
-  // Mobile adjustments
-  @media (max-width: 768px) {
-    padding: 10px;
-
-    .controls-header {
-      flex-direction: column;
-      align-items: stretch;
-
-      .city-selector {
-        width: 100%;
-      }
-
-      .actions {
-        justify-content: stretch;
-        flex-direction: column;
-
-        button {
-          width: 100%;
-        }
-      }
-    }
-
-    .map-view {
-      min-height: calc(100vh - 250px); // Adjust height for mobile
     }
   }
 
   .drawing-instruction {
-    background-color: #ffe0b2;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    color: #e65100;
     text-align: center;
-    font-weight: 500;
+    margin: 0;
   }
 
   .map-view {
     flex: 1;
     width: 100%;
-    min-height: 600px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-
-    &.crosshair-cursor {
-      cursor: crosshair !important;
-    }
+    min-height: 400px;
   }
+}
+.crosshair-cursor {
+  cursor: crosshair !important;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
 }

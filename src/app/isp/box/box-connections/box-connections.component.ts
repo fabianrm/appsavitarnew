@@ -390,4 +390,8 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
         console.error(error);
     });
   }
+
+  exportPdf() {
+    window.print();
+  }
 }
