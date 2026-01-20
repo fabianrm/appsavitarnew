@@ -110,6 +110,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
     this.map.setView(city.coordinates, 15);
     this.filteredBoxes = this.boxes.filter(b => b.city_id === city.id);
     this.drawMarkers();
+    this.loadRoutes();
   }
 
   drawMarkers() {
@@ -138,6 +139,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
         this.markers.push(marker);
       }
     });
+
   }
 
   toggleDrawingMode() {
