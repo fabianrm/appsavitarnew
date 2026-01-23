@@ -6,6 +6,7 @@ import { BoxRoute } from '../../Models/BoxRouteResponse';
 
 export interface BoxConnectionsListData {
   boxes: Box[];
+  cityId?: number;
 }
 
 @Component({
@@ -36,7 +37,11 @@ export class BoxConnectionsListComponent implements OnInit {
 
   loadRoutes() {
     this.routeService.getRoutes().subscribe(res => {
-      this.routes = res.data;
+      let tempRoutes = res.data;
+      if (this.data.cityId) {
+        tempRoutes = tempRoutes.filter(r => r.city_id === this.data.cityId);
+      }
+      this.routes = tempRoutes;
       this.filterRoutes();
     });
   }

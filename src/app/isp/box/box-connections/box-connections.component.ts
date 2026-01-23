@@ -400,7 +400,8 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
     this.dialog.open(BoxConnectionsListComponent, {
       width: '800px',
       data: {
-        boxes: this.boxes
+        boxes: this.boxes,
+        cityId: this.selectedCityId
       }
     });
   }

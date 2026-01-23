@@ -11,6 +11,7 @@ export interface BoxRoute {
   points: any; // Can be string (JSON) or array depending on parsing
   distance?: number;
   status: string;
+  city_id: number;
   created_at?: string;
   updated_at?: string;
 }
