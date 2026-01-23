@@ -40,6 +40,16 @@
 
       <button
         mat-raised-button
+        color="warn"
+        class="ml-2"
+        (click)="openConnectionsList()"
+        [disabled]="!selectedCityId"
+      >
+        <mat-icon>list</mat-icon> Tabla de Conexiones
+      </button>
+
+      <button
+        mat-raised-button
         class="ml-2"
         color="accent"
         (click)="exportPdf()"

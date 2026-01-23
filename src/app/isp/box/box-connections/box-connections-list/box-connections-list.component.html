@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Tabla de Conexiones</h2>
+<mat-dialog-content class="mat-typography">
+  
+  <div class="search-container mt-2">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Buscar conexiones...</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Caja A" #input>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="table-container">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Caja Inicial</th>
+          <th>Caja Final</th>
+          <th>Color</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let route of filteredRoutes">
+          <td>{{ getBoxName(route.start_box_id) }}</td>
+          <td>{{ getBoxName(route.end_box_id) }}</td>
+          <td class="text-center">
+            <div [style.background-color]="route.color" class="color-swatch" [title]="route.color"></div>
+            <span class="color-text">{{ route.color }}</span>
+          </td>
+        </tr>
+        <tr *ngIf="filteredRoutes.length === 0">
+          <td colspan="3" class="text-center">No se encontraron conexiones</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cerrar</button>
+</mat-dialog-actions>

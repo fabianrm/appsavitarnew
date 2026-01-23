@@ -10,6 +10,7 @@ import { BoxCreateComponent } from './box-create/box-create.component';
 import { BoxEditComponent } from './box-edit/box-edit.component';
 import { BoxConnectionsComponent } from './box-connections/box-connections.component';
 import { BoxConnectionDialogComponent } from './box-connections/box-connection-dialog/box-connection-dialog.component';
+import { BoxConnectionsListComponent } from './box-connections/box-connections-list/box-connections-list.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -34,7 +35,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     BoxEditComponent,
     BoxListComponent,
     BoxConnectionsComponent,
-    BoxConnectionDialogComponent
+    BoxConnectionDialogComponent,
+    BoxConnectionsListComponent
   ],
   imports: [
     CommonModule,

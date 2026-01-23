@@ -7,6 +7,7 @@ import { CityService } from '../../city/city.service';
 import { City } from '../../city/Models/CityResponse';
 import { Box } from '../Models/BoxResponse';
 import { BoxConnectionDialogComponent } from './box-connection-dialog/box-connection-dialog.component';
+import { BoxConnectionsListComponent } from './box-connections-list/box-connections-list.component';
 import { BoxRouteService } from '../box-route.service';
 import { BoxRoute } from '../Models/BoxRouteResponse';
 import Swal from 'sweetalert2';
@@ -393,5 +394,14 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
 
   exportPdf() {
     window.print();
+  }
+
+  openConnectionsList() {
+    this.dialog.open(BoxConnectionsListComponent, {
+      width: '800px',
+      data: {
+        boxes: this.boxes
+      }
+    });
   }
 }
