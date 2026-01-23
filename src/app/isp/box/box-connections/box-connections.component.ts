@@ -49,9 +49,16 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   ) {}
 
   ngOnInit(): void {
-    this.getCities();
-    this.getAllBoxes();
+    this.loadInitialData();
     this.setupDeleteRouteListener();
+  }
+
+  loadInitialData() {
+    this.boxService.getBoxes().subscribe(res => {
+      this.boxes = res.data;
+      // Now fetch cities and auto-select
+      this.getCities();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -77,11 +84,6 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
-  getAllBoxes() {
-    this.boxService.getBoxes().subscribe(res => {
-      this.boxes = res.data;
-    });
-  }
 
   private initMap(): void {
     this.map = L.map('map-connections').setView(this.initCoords, 13);
