@@ -3,7 +3,7 @@
     <div class="city-selector">
       <mat-form-field appearance="outline">
         <mat-label>Seleccione Ciudad</mat-label>
-        <mat-select (selectionChange)="onCityChange($event.value)">
+        <mat-select [(value)]="selectedCity" (selectionChange)="onCityChange($event.value)">
           <mat-option *ngFor="let city of cities" [value]="city">
             {{ city.name }}
           </mat-option>
@@ -27,15 +27,6 @@
         [disabled]="!selectedCityId || isDrawingMode"
       >
         <mat-icon>add</mat-icon>Ruta Directa
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        class="ml-2"
-        (click)="loadRoutes()"
-        [disabled]="!selectedCityId"
-      >
-        <mat-icon>route</mat-icon>Mostrar Rutas
       </button>
 
       <button
@@ -68,4 +59,15 @@
   </div>
 
   <div id="map-connections" class="map-view"></div>
+  
+  <button 
+    mat-fab 
+    color="primary" 
+    class="filter-fab" 
+    (click)="openFilterDialog()" 
+    [disabled]="!selectedCityId"
+    matTooltip="Filtrar Rutas"
+  >
+    <mat-icon>filter_list</mat-icon>
+  </button>
 </div>

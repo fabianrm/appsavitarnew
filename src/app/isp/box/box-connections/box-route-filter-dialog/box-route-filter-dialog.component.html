@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Filtrar Rutas por Color</h2>
+<mat-dialog-content>
+    <div class="actions">
+        <button mat-button color="primary" (click)="toggleAll(true)">Marcar Todos</button>
+        <button mat-button color="warn" (click)="toggleAll(false)">Desmarcar Todos</button>
+    </div>
+    
+    <div class="color-list">
+        <div *ngFor="let item of colors" class="color-row">
+            <mat-checkbox [(ngModel)]="item.selected" color="primary" class="mr-2">
+            </mat-checkbox>
+            <div class="color-swatch" [style.background-color]="item.color"></div>
+            <span>{{ item.color }}</span>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="apply()">Aplicar Filtro</button>
+</mat-dialog-actions>

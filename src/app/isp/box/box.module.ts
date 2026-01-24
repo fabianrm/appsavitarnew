@@ -11,6 +11,8 @@ import { BoxEditComponent } from './box-edit/box-edit.component';
 import { BoxConnectionsComponent } from './box-connections/box-connections.component';
 import { BoxConnectionDialogComponent } from './box-connections/box-connection-dialog/box-connection-dialog.component';
 import { BoxConnectionsListComponent } from './box-connections/box-connections-list/box-connections-list.component';
+import { BoxRouteFilterDialogComponent } from './box-connections/box-route-filter-dialog/box-route-filter-dialog.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -36,7 +38,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     BoxListComponent,
     BoxConnectionsComponent,
     BoxConnectionDialogComponent,
-    BoxConnectionsListComponent
+    BoxConnectionDialogComponent,
+    BoxConnectionsListComponent,
+    BoxRouteFilterDialogComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +69,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatMenuModule,
     TextFieldModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatCheckboxModule
   ]
 })
 export class BoxModule { }

@@ -10,6 +10,7 @@ import { BoxConnectionDialogComponent } from './box-connection-dialog/box-connec
 import { BoxConnectionsListComponent } from './box-connections-list/box-connections-list.component';
 import { BoxRouteService } from '../box-route.service';
 import { BoxRoute } from '../Models/BoxRouteResponse';
+import { BoxRouteFilterDialogComponent, FilterColor } from './box-route-filter-dialog/box-route-filter-dialog.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,6 +22,7 @@ import Swal from 'sweetalert2';
 export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy {
   cities: City[] = [];
   selectedCityId: number | null = null;
+  selectedCity: City | null = null; // To bind in UI
   boxes: Box[] = [];
   filteredBoxes: Box[] = [];
   
@@ -38,7 +40,12 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   startBoxId: number | null = null;
   endBoxId: number | null = null;
 
+  // Filter State
+  visibleColors: Set<string> = new Set();
+  allRoutes: BoxRoute[] = [];
+
   private deleteRouteListener!: ((event: Event) => void);
+  private editRouteListener!: ((event: Event) => void);
 
   constructor(
     private boxService: BoxService,
@@ -49,7 +56,6 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   ) {}
 
   ngOnInit(): void {
-    this.loadInitialData();
     this.loadInitialData();
     this.setupDeleteRouteListener();
     this.setupEditRouteListener();
@@ -114,6 +120,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onCityChange(city: City) {
+    this.selectedCity = city;
     this.selectedCityId = city.id;
     this.map.setView(city.coordinates, 15);
     this.filteredBoxes = this.boxes.filter(b => b.city_id === city.id);
@@ -161,8 +168,6 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
       this.map.setZoom(18); // Zoom in for easier drawing
     } else {
       L.DomUtil.removeClass(mapContainer, 'crosshair-cursor');
-      // Optional: Reset zoom or leave as is? User might want to stay. 
-      // Let's leave it as is to not be annoying designated prompt "comodidad".
     }
   }
 
@@ -241,10 +246,6 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
                 color: result.color,
                 notes: result.notes,
                 status: 'active'
-                // points? Usually we don't update points via dialog unless we support redrawing. 
-                // For now assuming metadata update only provided by dialog. 
-                // If points changed, it would be complex. 
-                // Let's keep points as is for now.
             };
 
             this.routeService.updateRoute(routeToEdit.id, updatedRoute).subscribe((res: any) => {
@@ -257,7 +258,6 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
 
         } else {
             // CREATE NEW ROUTE
-            // Use the drawn points if they exist and we were drawing, otherwise just straight line
             const finalPoints = (wasDrawing && pointsToDraw.length > 2) ? pointsToDraw : null; 
             
             const newRoute = {
@@ -349,7 +349,6 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
     this.deleteRouteListener = (event: Event) => {
       this.zone.run(() => {
         const customEvent = event as CustomEvent;
-        // Verify we have a polyline ID to delete
         const polylineId = customEvent.detail.id;
         this.deleteRoute(polylineId);
       });
@@ -397,10 +396,17 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   loadRoutes() {
     this.routeService.getRoutes().subscribe(res => {
         const routes = res.data;
-        // Optionally clear existing routes first, but maybe we want to append?
-        // Let's clear to avoid duplicates if pressed multiple times
+        this.allRoutes = routes;
+
+        // Reset Polylines
         this.polylines.forEach(p => this.map.removeLayer(p));
         this.polylines = [];
+
+        // If visibleColors is empty (first load), add all encountered colors
+        const encounteredColors = new Set(routes.map(r => r.color));
+        if (this.visibleColors.size === 0) {
+            encounteredColors.forEach(c => this.visibleColors.add(c));
+        }
 
         routes.forEach((route: BoxRoute) => {
             let points = route.points;
@@ -413,7 +419,10 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
                 }
             }
             
-            this.drawRoute(route.start_box_id, route.end_box_id, route.color, points, route.id);
+            // Draw only if in visibleColors
+            if (this.visibleColors.has(route.color)) {
+                this.drawRoute(route.start_box_id, route.end_box_id, route.color, points, route.id);
+            }
         });
 
         const Toast = Swal.mixin({
@@ -456,8 +465,6 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   // Listener for edit
-  private editRouteListener!: ((event: Event) => void);
-
   private setupEditRouteListener() {
     this.editRouteListener = (event: Event) => {
         this.zone.run(() => {
@@ -475,5 +482,40 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
         });
     };
     document.addEventListener('editRouteEvent', this.editRouteListener);
+  }
+
+  openFilterDialog() {
+    const distinctColors = Array.from(new Set(this.allRoutes.map(r => r.color)));
+    
+    const filterData: FilterColor[] = distinctColors.map(c => ({
+        color: c,
+        selected: this.visibleColors.has(c)
+    }));
+
+    const dialogRef = this.dialog.open(BoxRouteFilterDialogComponent, {
+        width: '400px',
+        data: { colors: filterData }
+    });
+
+    dialogRef.afterClosed().subscribe((result: FilterColor[]) => {
+        if (result) {
+            this.visibleColors.clear();
+            result.filter(fc => fc.selected).forEach(fc => this.visibleColors.add(fc.color));
+            
+            // Re-draw based on filter
+            this.polylines.forEach(p => this.map.removeLayer(p));
+            this.polylines = [];
+            
+            this.allRoutes.forEach(route => {
+                if (this.visibleColors.has(route.color)) {
+                    let points = route.points;
+                     if (typeof points === 'string') {
+                        try { points = JSON.parse(points); } catch(e){}
+                     }
+                    this.drawRoute(route.start_box_id, route.end_box_id, route.color, points, route.id);
+                }
+            });
+        }
+    });
   }
 }
