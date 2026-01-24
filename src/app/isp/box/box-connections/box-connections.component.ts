@@ -50,7 +50,9 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.loadInitialData();
+    this.loadInitialData();
     this.setupDeleteRouteListener();
+    this.setupEditRouteListener();
   }
 
   loadInitialData() {
@@ -71,6 +73,9 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
     }
     if (this.deleteRouteListener) {
       document.removeEventListener('deleteRouteEvent', this.deleteRouteListener);
+    }
+    if (this.editRouteListener) {
+      document.removeEventListener('editRouteEvent', this.editRouteListener);
     }
   }
 
@@ -201,7 +206,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
     }
   }
 
-  openAddRouteDialog(startId?: number, endId?: number) {
+  openAddRouteDialog(startId?: number, endId?: number, routeToEdit?: any) {
     if (!this.selectedCityId) {
       Swal.fire('Atención', 'Seleccione una ciudad primero', 'warning');
       return;
@@ -212,7 +217,8 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
       data: { 
         boxes: this.filteredBoxes,
         startBoxId: startId,
-        endBoxId: endId
+        endBoxId: endId,
+        route: routeToEdit
       }
     });
 
@@ -226,42 +232,72 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
       }
       
       if (result) {
-        // Use the drawn points if they exist and we were drawing, otherwise just straight line
-        const finalPoints = (wasDrawing && pointsToDraw.length > 2) ? pointsToDraw : null; 
         
-        // SAVE TO DB
-        const newRoute = {
-            start_box_id: result.startBoxId,
-            end_box_id: result.endBoxId,
-            color: result.color,
-            points: finalPoints, 
-            status: 'active'
-        };
+        if (routeToEdit) {
+            // UPDATE EXISTING ROUTE
+            const updatedRoute = {
+                start_box_id: result.startBoxId,
+                end_box_id: result.endBoxId,
+                color: result.color,
+                notes: result.notes,
+                status: 'active'
+                // points? Usually we don't update points via dialog unless we support redrawing. 
+                // For now assuming metadata update only provided by dialog. 
+                // If points changed, it would be complex. 
+                // Let's keep points as is for now.
+            };
 
-        this.routeService.storeRoute(newRoute).subscribe((res: any) => {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "center",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: false,
-                didOpen: (toast) => {
-                  toast.onmouseenter = Swal.stopTimer;
-                  toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "Ruta guardada correctamente"
+            this.routeService.updateRoute(routeToEdit.id, updatedRoute).subscribe((res: any) => {
+                 this.showToast("Ruta actualizada correctamente");
+                 this.loadRoutes(); // Reload to refresh map and data
+            }, err => {
+                Swal.fire('Error', 'Error al actualizar la ruta', 'error');
+                console.error(err);
             });
 
-             const createdId = res.data ? res.data.id : null; 
-             this.drawRoute(result.startBoxId, result.endBoxId, result.color, finalPoints, createdId);
-        }, err => {
-            Swal.fire('Error', 'Error al guardar la ruta', 'error');
-            console.error(err);
-        });
+        } else {
+            // CREATE NEW ROUTE
+            // Use the drawn points if they exist and we were drawing, otherwise just straight line
+            const finalPoints = (wasDrawing && pointsToDraw.length > 2) ? pointsToDraw : null; 
+            
+            const newRoute = {
+                start_box_id: result.startBoxId,
+                end_box_id: result.endBoxId,
+                color: result.color,
+                notes: result.notes,
+                points: finalPoints, 
+                status: 'active'
+            };
+
+            this.routeService.storeRoute(newRoute).subscribe((res: any) => {
+                this.showToast("Ruta guardada correctamente");
+
+                const createdId = res.data ? res.data.id : null; 
+                this.drawRoute(result.startBoxId, result.endBoxId, result.color, finalPoints, createdId);
+            }, err => {
+                Swal.fire('Error', 'Error al guardar la ruta', 'error');
+                console.error(err);
+            });
+        }
       }
+    });
+  }
+
+  showToast(title: string) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "center",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+    Toast.fire({
+        icon: "success",
+        title: title
     });
   }
 
@@ -293,9 +329,14 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
     const popupContent = `
       <div style="text-align: center;">
         <button 
+          style="background: #2196F3; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px;"
+          onclick="document.dispatchEvent(new CustomEvent('editRouteEvent', { detail: { id: ${leafletId} } }))">
+          Editar
+        </button>
+        <button 
           style="background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"
           onclick="document.dispatchEvent(new CustomEvent('deleteRouteEvent', { detail: { id: ${leafletId} } }))">
-          Eliminar Ruta
+          Eliminar
         </button>
       </div>
     `;
@@ -399,12 +440,40 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   openConnectionsList() {
-    this.dialog.open(BoxConnectionsListComponent, {
+    const dialogRef = this.dialog.open(BoxConnectionsListComponent, {
       width: '800px',
       data: {
         boxes: this.boxes,
         cityId: this.selectedCityId
       }
     });
+
+    dialogRef.afterClosed().subscribe(res => {
+        if (res && res.action === 'edit' && res.route) {
+            this.openAddRouteDialog(undefined, undefined, res.route);
+        }
+    });
+  }
+
+  // Listener for edit
+  private editRouteListener!: ((event: Event) => void);
+
+  private setupEditRouteListener() {
+    this.editRouteListener = (event: Event) => {
+        this.zone.run(() => {
+            const customEvent = event as CustomEvent;
+            const leafletId = customEvent.detail.id;
+            const polyline = this.polylines.find(p => L.Util.stamp(p) === leafletId);
+            if (polyline) {
+                const routeId = (polyline as any).boxRouteId;
+                if (routeId) {
+                    this.routeService.showRoute(routeId).subscribe(res => {
+                        this.openAddRouteDialog(undefined, undefined, res.data);
+                    });
+                }
+            }
+        });
+    };
+    document.addEventListener('editRouteEvent', this.editRouteListener);
   }
 }

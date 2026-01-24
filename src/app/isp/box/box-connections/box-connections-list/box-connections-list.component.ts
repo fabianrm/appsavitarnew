@@ -70,6 +70,10 @@ export class BoxConnectionsListComponent implements OnInit {
     });
   }
 
+  edit(route: BoxRoute) {
+    this.dialogRef.close({ action: 'edit', route: route });
+  }
+
   close(): void {
     this.dialogRef.close();
   }

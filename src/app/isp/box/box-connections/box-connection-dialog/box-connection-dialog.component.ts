@@ -72,14 +72,25 @@ export class BoxConnectionDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<BoxConnectionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { boxes: Box[], startBoxId?: number, endBoxId?: number }
+    @Inject(MAT_DIALOG_DATA) public data: { boxes: Box[], startBoxId?: number, endBoxId?: number, route?: any }
   ) {
     this.boxes = data.boxes;
-    this.form = this.fb.group({
-      startBoxId: [data.startBoxId || '', Validators.required],
-      endBoxId: [data.endBoxId || '', Validators.required],
-      color: ['#FF0000', Validators.required]
-    });
+    
+    if (data.route) {
+        this.form = this.fb.group({
+            startBoxId: [data.route.start_box_id, Validators.required],
+            endBoxId: [data.route.end_box_id, Validators.required],
+            color: [data.route.color, Validators.required],
+            notes: [data.route.notes || '']
+        });
+    } else {
+        this.form = this.fb.group({
+            startBoxId: [data.startBoxId || '', Validators.required],
+            endBoxId: [data.endBoxId || '', Validators.required],
+            color: ['#FF0000', Validators.required],
+            notes: ['']
+        });
+    }
   }
 
   ngOnInit(): void {}
