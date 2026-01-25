@@ -132,11 +132,19 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
     this.markers.forEach(m => this.map.removeLayer(m));
     this.markers = [];
 
-    const icon = L.icon({
-      iconUrl: 'assets/icon-home.png',
+    const defaultIcon = L.icon({
+      iconUrl: 'assets/box03.png',
+      //shadowUrl: 'assets/marker-shadow.png',
+      iconSize: [30, 31],
+      iconAnchor: [12, 31],
+      popupAnchor: [1, -34],
+    });
+
+    const mufaIcon = L.icon({
+      iconUrl: 'assets/mufa04.png', 
       shadowUrl: 'assets/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
+      iconSize: [30, 41],
+      iconAnchor: [12, 31],
       popupAnchor: [1, -34],
     });
 
@@ -145,11 +153,13 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
         const lat = parseFloat(box.coordinates[0]);
         const lng = parseFloat(box.coordinates[1]);
         
+        const icon = (box.type && box.type.toLowerCase() === 'mufa') ? mufaIcon : defaultIcon;
+
         const marker = L.marker([lat, lng], { icon }).addTo(this.map);
         
         // Add click handler for routing
         marker.on('click', () => this.handleMarkerClick(box));
-        marker.bindPopup(`<b>${box.name}</b><br>${box.address}`);
+        marker.bindPopup(`<b>${box.name}</b><br>${box.address}<br><small>${box.type || ''}</small>`);
         
         this.markers.push(marker);
       }
