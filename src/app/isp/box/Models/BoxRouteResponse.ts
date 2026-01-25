@@ -10,6 +10,7 @@ export interface BoxRoute {
   color: string;
   points: any; // Can be string (JSON) or array depending on parsing
   distance?: number;
+  type: string;
   notes?: string;
   status: string;
   city_id: number;

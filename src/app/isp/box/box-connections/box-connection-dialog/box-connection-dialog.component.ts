@@ -136,14 +136,16 @@ export class BoxConnectionDialogComponent implements OnInit, OnDestroy {
             startBoxId: [data.route.start_box_id, Validators.required],
             endBoxId: [data.route.end_box_id, Validators.required],
             color: [data.route.color, Validators.required],
-            notes: [data.route.notes || '']
+            notes: [data.route.notes || ''],
+            type: [data.route.type || 'derivada', Validators.required]
         });
     } else {
         this.form = this.fb.group({
             startBoxId: [data.startBoxId || '', Validators.required],
             endBoxId: [data.endBoxId || '', Validators.required],
             color: ['#FF0000', Validators.required],
-            notes: ['']
+            notes: [''],
+            type: ['derivada', Validators.required]
         });
     }
   }

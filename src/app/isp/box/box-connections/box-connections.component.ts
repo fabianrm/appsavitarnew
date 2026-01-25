@@ -245,6 +245,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
                 end_box_id: result.endBoxId,
                 color: result.color,
                 notes: result.notes,
+                type: result.type,
                 status: 'active'
             };
 
@@ -265,6 +266,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
                 end_box_id: result.endBoxId,
                 color: result.color,
                 notes: result.notes,
+                type: result.type,
                 points: finalPoints, 
                 status: 'active'
             };
@@ -273,7 +275,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
                 this.showToast("Ruta guardada correctamente");
 
                 const createdId = res.data ? res.data.id : null; 
-                this.drawRoute(result.startBoxId, result.endBoxId, result.color, finalPoints, createdId);
+                this.drawRoute(result.startBoxId, result.endBoxId, result.color, result.type, finalPoints, createdId);
             }, err => {
                 Swal.fire('Error', 'Error al guardar la ruta', 'error');
                 console.error(err);
@@ -301,11 +303,12 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
-  drawRoute(startId: number, endId: number, color: string, customPoints?: L.LatLngExpression[] | null, dbId?: number) {
+  drawRoute(startId: number, endId: number, color: string, type: string, customPoints?: L.LatLngExpression[] | null, dbId?: number) {
     let polyline: L.Polyline;
 
+    const weight = (type === 'principal') ? 3 : 1.5;
     if (customPoints) {
-       polyline = L.polyline(customPoints, { color: color, weight: 5 }).addTo(this.map);
+       polyline = L.polyline(customPoints, { color: color, weight: weight }).addTo(this.map);
     } else {
       const startBox = this.filteredBoxes.find(b => b.id === startId);
       const endBox = this.filteredBoxes.find(b => b.id === endId);
@@ -314,7 +317,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
         const startLatLng: L.LatLngExpression = [parseFloat(startBox.coordinates[0]), parseFloat(startBox.coordinates[1])];
         const endLatLng: L.LatLngExpression = [parseFloat(endBox.coordinates[0]), parseFloat(endBox.coordinates[1])];
 
-        polyline = L.polyline([startLatLng, endLatLng], { color: color, weight: 5 }).addTo(this.map);
+        polyline = L.polyline([startLatLng, endLatLng], { color: color, weight: weight }).addTo(this.map);
       } else {
         return; 
       }
@@ -421,7 +424,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
             
             // Draw only if in visibleColors
             if (this.visibleColors.has(route.color)) {
-                this.drawRoute(route.start_box_id, route.end_box_id, route.color, points, route.id);
+                this.drawRoute(route.start_box_id, route.end_box_id, route.color, route.type, points, route.id);
             }
         });
 
@@ -512,7 +515,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
                      if (typeof points === 'string') {
                         try { points = JSON.parse(points); } catch(e){}
                      }
-                    this.drawRoute(route.start_box_id, route.end_box_id, route.color, points, route.id);
+                    this.drawRoute(route.start_box_id, route.end_box_id, route.color, route.type, points, route.id);
                 }
             });
         }
