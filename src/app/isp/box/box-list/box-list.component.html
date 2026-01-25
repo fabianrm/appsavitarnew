@@ -44,6 +44,14 @@
         </td>
       </ng-container>
 
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="">Tipo</th>
+        <td class="center" mat-cell *matCellDef="let element">
+          {{ element.type | uppercase}}
+        </td>
+      </ng-container>
+
       <!-- Documento Column -->
       <ng-container matColumnDef="city">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Ciudad</th>
@@ -68,7 +76,7 @@
       <ng-container matColumnDef="latitude">
         <th mat-header-cell *matHeaderCellDef>Latitude</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.latitude | number : "1.6-6" }}
+          {{ element.latitude | number: "1.6-6" }}
         </td>
       </ng-container>
 
@@ -76,7 +84,7 @@
       <ng-container matColumnDef="longitude">
         <th mat-header-cell *matHeaderCellDef>Longitude</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.longitude | number : "1.6-6" }}
+          {{ element.longitude | number: "1.6-6" }}
         </td>
       </ng-container>
 
@@ -100,7 +108,7 @@
           <span
             [ngClass]="{
               'status-active': element.status == 1,
-              'status-terminated': element.status == 0
+              'status-terminated': element.status == 0,
             }"
             >{{ element.status == 0 ? "Suspendido" : "Activo" }}</span
           >

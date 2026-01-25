@@ -21,7 +21,7 @@ import { ShowServicesComponent } from '../show-services/show-services.component'
 })
 export class BoxListComponent {
 
-  displayedColumns: string[] = ['id', 'name', 'city', 'address', 'reference', 'latitude', 'longitude', 'totalPorts', 'availablePorts', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'name', 'type', 'city', 'address', 'reference', 'latitude', 'longitude', 'totalPorts', 'availablePorts', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<Box>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

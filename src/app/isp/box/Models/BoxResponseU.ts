@@ -15,5 +15,6 @@ export interface Box {
     totalPorts: number;
     availablePorts: number;
     note: string;
+    type: string; 
     status: number;
 }

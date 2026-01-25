@@ -11,6 +11,7 @@ export interface ReqBox {
     name: string;
     city_id: number;
     address: string;
+    type: string;
     reference: string;
     latitude: string;
     longitude: string;

@@ -30,7 +30,6 @@ export class BoxCreateComponent implements OnInit, OnDestroy {
 
   address: string = '';
 
-
   constructor(public formulario: FormBuilder,
     private boxService: BoxService,
     private cityService: CityService,
@@ -73,6 +72,7 @@ export class BoxCreateComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       city_id: ['', Validators.required],
       address: ['', Validators.required],
+      type: ['', Validators.required],
       reference: [''],
       latitude: [''],
       longitude: [''],

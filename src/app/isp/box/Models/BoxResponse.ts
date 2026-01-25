@@ -9,6 +9,7 @@ export interface Box {
     city_id: number;
     city: string;
     address: string;
+    type: string;
     reference: string;
     latitude: string;
     longitude: string;

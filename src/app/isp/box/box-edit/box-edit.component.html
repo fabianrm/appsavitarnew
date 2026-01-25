@@ -6,7 +6,16 @@
         <mat-card>
           <mat-card-content>
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-6">
+                <mat-form-field class="control-full-width" appearance="fill">
+                  <mat-label>Tipo</mat-label>
+                  <mat-select formControlName="type">
+                    <mat-option value="caja">Caja</mat-option>
+                    <mat-option value="mufa">Mufa</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
                 <mat-form-field>
                   <mat-label>Nombre</mat-label>
                   <input matInput placeholder="Nombre" formControlName="name" />
@@ -161,7 +170,7 @@
           <button
             [disabled]="formBox.invalid"
             color="primary"
-            mat-raised-button
+            mat-flat-button
             style="margin-right: 5px"
           >
             Guardar

@@ -56,6 +56,7 @@ export class BoxEditComponent implements OnInit, OnDestroy {
   initForm() {
     const formControlsConfig = {
       name: ['', Validators.required],
+      type: ['', Validators.required],
       city_id: ['', Validators.required],
       address: ['', Validators.required],
       reference: [''],
@@ -128,6 +129,7 @@ export class BoxEditComponent implements OnInit, OnDestroy {
       //Llenamos el formEdit
       this.formBox.patchValue({
         name: this.dataBox.name,
+        type: this.dataBox.type,
         city_id: this.dataBox.city_id,
         address: this.dataBox.address,
         reference: this.dataBox.reference,
