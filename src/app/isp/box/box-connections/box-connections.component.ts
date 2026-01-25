@@ -36,6 +36,7 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
   // Drawing Mode
   isDrawingMode: boolean = false;
   currentPolyline: L.Polyline | null = null;
+  previewPolyline: L.Polyline | null = null; // New property for rubber-banding
   drawPoints: L.LatLngExpression[] = [];
   startBoxId: number | null = null;
   endBoxId: number | null = null;
@@ -117,6 +118,37 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
         this.addPointToPolyline(e.latlng);
       }
     });
+
+    // Add mousemove listener for rubber-banding
+    this.map.on('mousemove', (e: L.LeafletMouseEvent) => {
+        this.updatePreviewLine(e.latlng);
+    });
+  }
+
+  updatePreviewLine(mouseLatLng: L.LatLng) {
+    if (this.isDrawingMode && this.drawPoints.length > 0 && !this.endBoxId) {
+        const lastPoint = this.drawPoints[this.drawPoints.length - 1];
+        const previewPath = [lastPoint, mouseLatLng];
+
+        if (!this.previewPolyline) {
+             this.previewPolyline = L.polyline(previewPath, { 
+                 color: '#FF5722', // Deep Orange for visibility
+                 weight: 2, 
+                 dashArray: '5, 10',
+                 opacity: 0.7
+             }).addTo(this.map);
+        } else {
+            this.previewPolyline.setLatLngs(previewPath as L.LatLngExpression[]);
+            if (!this.map.hasLayer(this.previewPolyline)) {
+                this.previewPolyline.addTo(this.map);
+            }
+        }
+    } else {
+        if (this.previewPolyline) {
+             this.map.removeLayer(this.previewPolyline);
+             this.previewPolyline = null;
+        }
+    }
   }
 
   onCityChange(city: City) {
@@ -189,6 +221,10 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
       this.map.removeLayer(this.currentPolyline);
       this.currentPolyline = null;
     }
+    if (this.previewPolyline) {
+      this.map.removeLayer(this.previewPolyline);
+      this.previewPolyline = null;
+    }
   }
 
   handleMarkerClick(box: Box) {
@@ -206,6 +242,12 @@ export class BoxConnectionsComponent implements OnInit, AfterViewInit, OnDestroy
         const lat = parseFloat(box.coordinates[0]);
         const lng = parseFloat(box.coordinates[1]);
         this.addPointToPolyline(new L.LatLng(lat, lng));
+        
+        // Remove preview line immediately
+        if (this.previewPolyline) {
+            this.map.removeLayer(this.previewPolyline);
+            this.previewPolyline = null;
+        }
         
         this.openAddRouteDialog(this.startBoxId, this.endBoxId);
     }
