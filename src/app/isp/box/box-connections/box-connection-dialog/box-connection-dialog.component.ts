@@ -1,7 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Box } from '../../Models/BoxResponse';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-box-connection-dialog',
@@ -47,9 +49,52 @@ import { Box } from '../../Models/BoxResponse';
       height: 0;
       position: absolute;
     }
+    /* Sticky Search Header Styles */
+    ::ng-deep .search-option {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: white !important;
+      padding: 8px 16px !important;
+      border-bottom: 1px solid #eee;
+      height: auto !important;
+      line-height: normal !important;
+      overflow: visible;
+    }
+    ::ng-deep .search-option:hover, ::ng-deep .search-option:focus {
+      background: white !important;
+    }
+    ::ng-deep .search-option .mat-pseudo-checkbox {
+      display: none !important;
+    }
+    .pro-search-input {
+      width: 100%;
+      padding: 10px 36px 10px 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      outline: none;
+      font-size: 14px;
+      background: #f8f9fa;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .pro-search-input:focus {
+      background: white;
+      border-color: #3f51b5;
+      box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.15);
+    }
+    .search-icon {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+      pointer-events: none;
+      font-size: 18px;
+    }
   `]
 })
-export class BoxConnectionDialogComponent implements OnInit {
+export class BoxConnectionDialogComponent implements OnInit, OnDestroy {
   form: FormGroup;
   boxes: Box[] = [];
   
@@ -60,6 +105,16 @@ export class BoxConnectionDialogComponent implements OnInit {
     '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', 
     '#795548', '#9E9E9E', '#607D8B', '#000000'
   ];
+
+  /* Controls for the box filters */
+  public startBoxFilterCtrl: FormControl = new FormControl();
+  public endBoxFilterCtrl: FormControl = new FormControl();
+
+  /* Lists of filtered boxes */
+  public filteredStartBoxes: ReplaySubject<Box[]> = new ReplaySubject<Box[]>(1);
+  public filteredEndBoxes: ReplaySubject<Box[]> = new ReplaySubject<Box[]>(1);
+
+  protected _onDestroy = new Subject<void>();
 
   /* 
     Use styles array directly in component metadata if preferred, 
@@ -93,7 +148,44 @@ export class BoxConnectionDialogComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Load initial box list
+    this.filteredStartBoxes.next(this.boxes.slice());
+    this.filteredEndBoxes.next(this.boxes.slice());
+
+    // Listen for search field value changes
+    this.startBoxFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterBoxes(this.startBoxFilterCtrl.value, this.filteredStartBoxes);
+      });
+
+    this.endBoxFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterBoxes(this.endBoxFilterCtrl.value, this.filteredEndBoxes);
+      });
+  }
+
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
+
+  protected filterBoxes(search: string, subject: ReplaySubject<Box[]>) {
+    if (!this.boxes) {
+      return;
+    }
+    if (!search) {
+      subject.next(this.boxes.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    subject.next(
+      this.boxes.filter(box => box.name.toLowerCase().indexOf(search) > -1)
+    );
+  }
 
   onSave() {
     if (this.form.valid) {

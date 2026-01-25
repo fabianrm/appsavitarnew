@@ -6,7 +6,16 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Caja Inicio</mat-label>
                     <mat-select formControlName="startBoxId">
-                        <mat-option *ngFor="let box of boxes" [value]="box.id">
+                        <mat-option class="search-option">
+                             <div style="position: relative; width: 100%;">
+                                 <input [formControl]="startBoxFilterCtrl" placeholder="Buscar caja..." 
+                                        class="pro-search-input"
+                                        (click)="$event.stopPropagation()" 
+                                        (keydown)="$event.stopPropagation()">
+                                 <span class="search-icon">🔍</span>
+                             </div>
+                        </mat-option>
+                        <mat-option *ngFor="let box of filteredStartBoxes | async" [value]="box.id">
                             {{ box.name }}
                         </mat-option>
                     </mat-select>
@@ -17,7 +26,16 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Caja Fin</mat-label>
                     <mat-select formControlName="endBoxId">
-                        <mat-option *ngFor="let box of boxes" [value]="box.id">
+                        <mat-option class="search-option">
+                             <div style="position: relative; width: 100%;">
+                                 <input [formControl]="endBoxFilterCtrl" placeholder="Buscar caja..." 
+                                        class="pro-search-input"
+                                        (click)="$event.stopPropagation()" 
+                                        (keydown)="$event.stopPropagation()">
+                                 <span class="search-icon">🔍</span>
+                             </div>
+                        </mat-option>
+                        <mat-option *ngFor="let box of filteredEndBoxes | async" [value]="box.id">
                             {{ box.name }}
                         </mat-option>
                     </mat-select>
