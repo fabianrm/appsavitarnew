@@ -85,6 +85,56 @@
                 <!-- Hidden native input for custom colors -->
                 <input #colorInput type="color" formControlName="color" class="hidden-input">
             </div>
+
+            <!-- Photo Upload Section -->
+            <div class="col-12" *ngIf="routeId">
+                <div class="photo-upload-section">
+                    <label class="mb-2 d-block"><strong>Fotos del Trabajo</strong></label>
+                    
+                    <input type="file" 
+                           #fileInput 
+                           (change)="onFileSelected($event)" 
+                           accept="image/*" 
+                           multiple 
+                           style="display: none;">
+                    
+                    <button mat-raised-button 
+                            color="accent" 
+                            type="button"
+                            class="photo-upload-btn mb-2"
+                            (click)="fileInput.click()">
+                        <mat-icon>add_photo_alternate</mat-icon>
+                        Seleccionar Fotos
+                    </button>
+
+                    <div *ngIf="selectedFiles.length > 0" class="mb-2">
+                        <p class="mb-1"><small>{{ selectedFiles.length }} foto(s) seleccionada(s)</small></p>
+                        <button mat-flat-button 
+                                color="primary" 
+                                type="button"
+                                (click)="uploadSelectedPhotos()">
+                            <mat-icon>cloud_upload</mat-icon>
+                            Subir Fotos
+                        </button>
+                    </div>
+
+                    <!-- Photo Grid -->
+                    <div class="photo-grid" *ngIf="photos.length > 0">
+                        <div *ngFor="let photo of photos" 
+                             class="photo-thumbnail"
+                             (click)="viewPhoto(photo)">
+                            <img [src]="getPhotoUrl(photo)" [alt]="'Photo ' + photo.id">
+                            <button mat-icon-button 
+                                    class="photo-delete-btn"
+                                    color="warn"
+                                    (click)="deletePhoto(photo, $event)"
+                                    type="button">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </mat-dialog-content>

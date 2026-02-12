@@ -28,6 +28,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PhotoViewerModalComponent } from './box-connections/photo-viewer-modal/photo-viewer-modal.component';
 
 
 
@@ -40,7 +41,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     BoxConnectionDialogComponent,
     BoxConnectionDialogComponent,
     BoxConnectionsListComponent,
-    BoxRouteFilterDialogComponent
+    BoxRouteFilterDialogComponent,
+    PhotoViewerModalComponent
   ],
   imports: [
     CommonModule,

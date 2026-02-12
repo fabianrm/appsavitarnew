@@ -1,0 +1,11 @@
+<div class="photo-viewer">
+  <div class="photo-viewer-header">
+    <button mat-icon-button (click)="close()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="photo-viewer-content" (click)="close()">
+    <img [src]="photoUrl" alt="Photo" class="full-photo" />
+  </div>
+</div>
