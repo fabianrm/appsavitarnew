@@ -45,7 +45,7 @@ export class BoxRoutePhotoService {
     return this.http.delete<any>(`${this.photoApiUrl}/${photoId}`, { headers });
   }
 
-  getPhotoUrl(path: string): string {
-    return `${environment.servidor_img}storage/${path}`;
+  getPhotoUrl(photoId: number): string {
+    return `${environment.servidor_img}api/v1/box-route-photos/${photoId}/view`;
   }
 }

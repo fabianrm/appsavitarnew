@@ -345,7 +345,7 @@ export class BoxConnectionDialogComponent implements OnInit, OnDestroy {
   }
 
   viewPhoto(photo: BoxRoutePhoto) {
-    const photoUrl = this.photoService.getPhotoUrl(photo.path);
+    const photoUrl = this.photoService.getPhotoUrl(photo.id);
     this.dialog.open(PhotoViewerModalComponent, {
       width: '90vw',
       maxWidth: '1200px',
@@ -388,7 +388,7 @@ export class BoxConnectionDialogComponent implements OnInit, OnDestroy {
   }
 
   getPhotoUrl(photo: BoxRoutePhoto): string {
-    return this.photoService.getPhotoUrl(photo.path);
+    return this.photoService.getPhotoUrl(photo.id);
   }
 
   onSave() {
