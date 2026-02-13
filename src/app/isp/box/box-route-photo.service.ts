@@ -46,6 +46,6 @@ export class BoxRoutePhotoService {
   }
 
   getPhotoUrl(photoId: number): string {
-    return `${environment.servidor_img}api/v1/box-route-photos/${photoId}/view`;
+    return `${environment.servidor_img}apisavitar/api/v1/box-route-photos/${photoId}/view`;
   }
 }
