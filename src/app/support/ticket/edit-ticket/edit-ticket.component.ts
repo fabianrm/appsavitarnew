@@ -7,7 +7,7 @@ import { DestinationService } from '../../../logistic/destination/destination.se
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { CategoryTicket } from '../../category-ticket/Models/CategoryTicketResponse';
-
+import Swal from 'sweetalert2';
 import { Destination } from '../../../logistic/destination/models/DestinationResponse';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { Customer } from '../../../isp/customer/Models/CustomerResponse';
@@ -237,5 +237,21 @@ export class EditTicketComponent implements OnInit {
 
   showSuccess() {
     this.snackbarService.showSuccess('Los datos se actualizarón correctamente');
+  }
+
+  // View attachment in modal
+  viewAttachment(attachmentId: number) {
+    const imageUrl = `${this.SRVIMG}api/v1/tickets/attachments/${attachmentId}/view`;
+
+    Swal.fire({
+      imageUrl: imageUrl,
+      imageAlt: 'Ticket Attachment',
+      showCloseButton: true,
+      showConfirmButton: false,
+      width: 'auto',
+      customClass: {
+        image: 'img-fluid',
+      },
+    });
   }
 }

@@ -5,15 +5,15 @@ import { TicketService } from '../ticket.service';
 import { PlacesService } from '../../../isp/mapleaf/places.service';
 import { MapleafService } from '../../../isp/mapleaf/mapleaf.service';
 import { environment } from '../../../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-show-ticket',
-    templateUrl: './show-ticket.component.html',
-    styleUrl: './show-ticket.component.scss',
-    standalone: false
+  selector: 'app-show-ticket',
+  templateUrl: './show-ticket.component.html',
+  styleUrl: './show-ticket.component.scss',
+  standalone: false,
 })
 export class ShowTicketComponent {
-
   id!: number;
   dataTicket?: Ticket;
   SRVIMG: string = environment.servidor_img;
@@ -22,7 +22,8 @@ export class ShowTicketComponent {
     private route: ActivatedRoute,
     private ticketService: TicketService,
     private locationService: PlacesService,
-    private mapleafService: MapleafService,) { }
+    private mapleafService: MapleafService,
+  ) {}
 
   ngOnInit(): void {
     this.getTicketByID();
@@ -32,10 +33,9 @@ export class ShowTicketComponent {
     return this.locationService.locationReady;
   }
 
-
   //Obtener customer por id
   getTicketByID() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
       if (idParam !== null) {
         this.id = +idParam; // Usa el símbolo "+" para convertir a número
@@ -47,12 +47,14 @@ export class ShowTicketComponent {
     });
   }
 
-
   fetchTicketDetail(id: number) {
     this.ticketService.getTicketByID(id).subscribe((respuesta) => {
       this.dataTicket = respuesta.data;
-     // console.log(this.dataTicket);
-      this.setNewCoordinates(this.dataTicket.customer.latitude, this.dataTicket.customer.longitude);
+      // console.log(this.dataTicket);
+      this.setNewCoordinates(
+        this.dataTicket.customer.latitude,
+        this.dataTicket.customer.longitude,
+      );
     });
   }
 
@@ -62,5 +64,19 @@ export class ShowTicketComponent {
     this.mapleafService.setSingleCoordinate(singleCoordinate);
   }
 
+  // View attachment in modal
+  viewAttachment(attachmentId: number) {
+    const imageUrl = `${this.SRVIMG}api/v1/tickets/attachments/${attachmentId}/view`;
 
+    Swal.fire({
+      imageUrl: imageUrl,
+      imageAlt: 'Ticket Attachment',
+      showCloseButton: true,
+      showConfirmButton: false,
+      width: 'auto',
+      customClass: {
+        image: 'img-fluid',
+      },
+    });
+  }
 }

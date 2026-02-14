@@ -119,12 +119,13 @@
                 <div class="mb-3">
                   <ul class="list-attach">
                     <li *ngFor="let attach of dataTicket?.attachments">
-                      <a
-                        [href]="SRVIMG + 'api/v1/tickets/attachments/' + attach.id + '/view'"
-                        target="_blank"
+                      <span
+                        class="attachment-link"
+                        (click)="viewAttachment(attach.id)"
+                        style="cursor: pointer; color: #007bff; text-decoration: underline;"
                       >
                         {{ attach.file_path.replace("attachments/", "") }}
-                      </a>
+                      </span>
                     </li>
                   </ul>
                 </div>
