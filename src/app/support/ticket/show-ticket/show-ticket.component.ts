@@ -86,7 +86,7 @@ export class ShowTicketComponent {
 
   // View attachment in modal
   viewAttachment(attachmentId: number) {
-    const imageUrl = `${this.SRVIMG}api/v1/tickets/attachments/${attachmentId}/view`;
+    const imageUrl = this.getAttachmentUrl(attachmentId);
 
     Swal.fire({
       imageUrl: imageUrl,
