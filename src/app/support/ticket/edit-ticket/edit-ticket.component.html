@@ -138,9 +138,6 @@
                         >
                           <mat-icon style="font-size: 16px; line-height: 24px;">delete</mat-icon>
                         </button>
-                        <div style="font-size: 12px; margin-top: 5px; word-break: break-word; max-width: 100px;">
-                          {{ attach.file_path.replace("attachments/", "") }}
-                        </div>
                       </div>
                       <!-- Si es archivo, mostrar link de descarga -->
                       <div *ngIf="!isImage(attach.file_path)" style="position: relative; display: inline-flex; align-items: center; gap: 5px;">

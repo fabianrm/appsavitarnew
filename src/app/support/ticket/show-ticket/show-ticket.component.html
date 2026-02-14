@@ -135,9 +135,6 @@
                     style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;"
                     (error)="onImageError($event)"
                   />
-                  <div style="font-size: 12px; margin-top: 5px; word-break: break-word; max-width: 100px;">
-                    {{ attach.file_path.replace("attachments/", "") }}
-                  </div>
                 </div>
                 <!-- Si es archivo, mostrar link de descarga -->
                 <div *ngIf="!isImage(attach.file_path)">
