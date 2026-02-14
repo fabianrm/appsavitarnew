@@ -120,7 +120,7 @@
                   <ul class="list-attach">
                     <li *ngFor="let attach of dataTicket?.attachments">
                       <a
-                        href="{{ SRVIMG }}/storage/{{ attach.file_path }}"
+                        href="{{ SRVIMG }}storage/{{ attach.file_path }}"
                         download
                       >
                         {{ attach.file_path.replace("attachments/", "") }}

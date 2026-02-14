@@ -15,13 +15,12 @@ import { Ticket } from '../Models/TicketResponse';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-    selector: 'app-edit-ticket',
-    templateUrl: './edit-ticket.component.html',
-    styleUrl: './edit-ticket.component.scss',
-    standalone: false
+  selector: 'app-edit-ticket',
+  templateUrl: './edit-ticket.component.html',
+  styleUrl: './edit-ticket.component.scss',
+  standalone: false,
 })
 export class EditTicketComponent implements OnInit {
-
   constructor(
     public formulario: FormBuilder,
     private ticketService: TicketService,
@@ -30,15 +29,14 @@ export class EditTicketComponent implements OnInit {
     private destinationService: DestinationService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackbarService: SnackbarService
-  ) { }
-
+    private snackbarService: SnackbarService,
+  ) {}
 
   SRVIMG: string = environment.servidor_img;
   id!: number;
   categoryTickets: CategoryTicket[] = [];
   customers: Customer[] = [];
-  destinations: Destination[] = []
+  destinations: Destination[] = [];
   dataTicket?: Ticket;
 
   filteredCustomer!: Observable<Customer[]>;
@@ -49,12 +47,11 @@ export class EditTicketComponent implements OnInit {
   formTicket!: FormGroup;
   subscription!: Subscription;
 
-
   ngOnInit(): void {
     this.getCategories();
     this.getCustomers();
     this.getDestinations();
-   
+
     this.initForm();
 
     this.getTicketByID();
@@ -63,39 +60,41 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
-
   initForm() {
     const formControlsConfig = {
       category_ticket_id: [this.dataTicket?.category.id, Validators.required],
       destination_id: ['', Validators.required],
-      customer_id: ['', ],
+      customer_id: [''],
       subject: [this.dataTicket?.subject, Validators.required],
       description: [this.dataTicket?.description, Validators.required],
       priority: ['', Validators.required],
-      admin_id: [this.UserID,],
+      admin_id: [this.UserID],
       status: [''],
-
-    }
+    };
     this.formTicket = this.formulario.group(formControlsConfig);
 
     //Subscribirse a los cambios del combo box
-    this.formTicket.get('customer_id')!.valueChanges.subscribe(value => {
+    this.formTicket.get('customer_id')!.valueChanges.subscribe((value) => {
       this.selectedCustomer = typeof value === 'object' ? value : null;
     });
 
-
-    //Filtrar combo por name 
-    this.filteredCustomer = this.formTicket.get('customer_id')!.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value?.name)),
-      map(name => (name ? this._filterCustomer(name) : this.customers.slice()))
-    );
+    //Filtrar combo por name
+    this.filteredCustomer = this.formTicket
+      .get('customer_id')!
+      .valueChanges.pipe(
+        startWith(''),
+        map((value) => (typeof value === 'string' ? value : value?.name)),
+        map((name) =>
+          name ? this._filterCustomer(name) : this.customers.slice(),
+        ),
+      );
   }
-
 
   private _filterCustomer(name: string): Customer[] {
     const filterValue = name.toLowerCase();
-    return this.customers.filter(option => option.customerName.toLowerCase().includes(filterValue));
+    return this.customers.filter((option) =>
+      option.customerName.toLowerCase().includes(filterValue),
+    );
   }
 
   //Datos a mostrar en el combo
@@ -106,13 +105,12 @@ export class EditTicketComponent implements OnInit {
   // Para obtener solo el id cuando se guarda el formulario
   get customerIdValue(): number | null {
     const customer = this.formTicket.get('customer_id')!.value;
-    return customer ? customer.id : this.dataTicket?.customer.id;
+    return customer ? customer.id : this.dataTicket!.customer.id;
   }
-
 
   //Obtener customer por id
   getTicketByID() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
       if (idParam !== null) {
         this.id = +idParam; // Usa el símbolo "+" para convertir a número
@@ -124,7 +122,6 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
-
   fetchTicketDetail(id: number) {
     this.ticketService.getTicketByID(id).subscribe((respuesta) => {
       this.dataTicket = respuesta.data;
@@ -135,10 +132,9 @@ export class EditTicketComponent implements OnInit {
         subject: this.dataTicket?.subject,
         priority: this.dataTicket?.priority,
         status: this.dataTicket?.status,
-      })
+      });
 
       //console.log(this.dataTicket);
-      
     });
   }
 
@@ -153,22 +149,21 @@ export class EditTicketComponent implements OnInit {
     }
   }
 
-
   //Subir adjunto
   uploadAttachment() {
-
     if (this.selectedFile) {
-      this.ticketService.addAttachment(this.id, this.selectedFile, this.filename).subscribe(
-        (response) => {
-          console.log('Attachment uploaded successfully', response);
-        },
-        (error) => {
-          console.error('Error uploading attachment', error);
-        }
-      );
+      this.ticketService
+        .addAttachment(this.id, this.selectedFile, this.filename)
+        .subscribe(
+          (response) => {
+            console.log('Attachment uploaded successfully', response);
+          },
+          (error) => {
+            console.error('Error uploading attachment', error);
+          },
+        );
     }
   }
-
 
   //cargar categorías
   getCategories() {
@@ -184,11 +179,10 @@ export class EditTicketComponent implements OnInit {
   getDestinations() {
     this.destinationService.getDestinations().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
-        this.destinations = respuesta.data
+        this.destinations = respuesta.data;
       }
     });
   }
-
 
   //Cargar Clientes
   getCustomers() {
@@ -226,22 +220,22 @@ export class EditTicketComponent implements OnInit {
     };
 
     if (this.formTicket.valid) {
-      this.ticketService.updateTicket(this.id,dataToSend).subscribe(respuesta => {
-        this.showSuccess();
-        this.goTickets();
-      });
+      this.ticketService
+        .updateTicket(this.id, dataToSend)
+        .subscribe((respuesta) => {
+          this.showSuccess();
+          this.goTickets();
+        });
     }
-
   }
 
-
-
   showError() {
-    this.snackbarService.showError('Ocurrio un error al actualizar los datos...');
+    this.snackbarService.showError(
+      'Ocurrio un error al actualizar los datos...',
+    );
   }
 
   showSuccess() {
     this.snackbarService.showSuccess('Los datos se actualizarón correctamente');
   }
-
 }
