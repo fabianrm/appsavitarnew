@@ -250,7 +250,7 @@ export class EditTicketComponent implements OnInit {
 
   // Get attachment URL
   getAttachmentUrl(attachmentId: number): string {
-    return `${this.SRVIMG}api/v1/tickets/attachments/${attachmentId}/view`;
+    return `${this.SRVIMG}apisavitar/api/v1/tickets/attachments/${attachmentId}/view`;
   }
 
   // Handle image load errors
