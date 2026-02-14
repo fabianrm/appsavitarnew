@@ -256,7 +256,18 @@ export class EditTicketComponent implements OnInit {
   // Handle image load errors
   onImageError(event: Event) {
     const img = event.target as HTMLImageElement;
-    img.src = 'assets/images/no-image.png'; // Fallback image
+    // Prevent infinite loop if fallback also fails
+    if (!img.dataset['errorHandled']) {
+      img.dataset['errorHandled'] = 'true';
+      // Use a simple placeholder or hide the image
+      img.style.display = 'none';
+      // Optionally, show a placeholder icon instead
+      const parent = img.parentElement;
+      if (parent) {
+        parent.innerHTML =
+          '<div style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; background: #f0f0f0; border-radius: 8px; border: 2px solid #ddd;">📷</div>';
+      }
+    }
   }
 
   // View attachment in modal
