@@ -268,9 +268,21 @@ export class EditTicketComponent implements OnInit {
       imageAlt: 'Ticket Attachment',
       showCloseButton: true,
       showConfirmButton: false,
-      width: 'auto',
+      width: '800px',
+      padding: '20px',
       customClass: {
-        image: 'img-fluid',
+        popup: 'swal-attachment-popup',
+        image: 'swal-attachment-image',
+      },
+      didOpen: () => {
+        // Adjust for mobile
+        const popup = document.querySelector(
+          '.swal-attachment-popup',
+        ) as HTMLElement;
+        if (popup && window.innerWidth < 768) {
+          popup.style.width = '95%';
+          popup.style.maxWidth = '500px';
+        }
       },
     });
   }
