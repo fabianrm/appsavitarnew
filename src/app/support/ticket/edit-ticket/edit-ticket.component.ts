@@ -239,9 +239,29 @@ export class EditTicketComponent implements OnInit {
     this.snackbarService.showSuccess('Los datos se actualizarón correctamente');
   }
 
+  // Check if file is an image based on extension
+  isImage(filePath: string): boolean {
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
+    const extension = filePath
+      .toLowerCase()
+      .substring(filePath.lastIndexOf('.'));
+    return imageExtensions.includes(extension);
+  }
+
+  // Get attachment URL
+  getAttachmentUrl(attachmentId: number): string {
+    return `${this.SRVIMG}api/v1/tickets/attachments/${attachmentId}/view`;
+  }
+
+  // Handle image load errors
+  onImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/images/no-image.png'; // Fallback image
+  }
+
   // View attachment in modal
   viewAttachment(attachmentId: number) {
-    const imageUrl = `${this.SRVIMG}api/v1/tickets/attachments/${attachmentId}/view`;
+    const imageUrl = this.getAttachmentUrl(attachmentId);
 
     Swal.fire({
       imageUrl: imageUrl,

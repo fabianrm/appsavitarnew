@@ -125,17 +125,32 @@
           </div>
 
           <div class="mb-3">
-            <ul class="list-attach">
-              <li *ngFor="let attach of dataTicket?.attachments">
-                <span
-                  class="attachment-link"
-                  (click)="viewAttachment(attach.id)"
-                  style="cursor: pointer; color: #007bff; text-decoration: underline;"
-                >
-                  {{ attach.file_path.replace("attachments/", "") }}
-                </span>
-              </li>
-            </ul>
+            <div class="attachment-grid" style="display: flex; flex-wrap: wrap; gap: 15px;">
+              <div *ngFor="let attach of dataTicket?.attachments" style="text-align: center;">
+                <!-- Si es imagen, mostrar miniatura -->
+                <div *ngIf="isImage(attach.file_path)" style="cursor: pointer;" (click)="viewAttachment(attach.id)">
+                  <img 
+                    [src]="getAttachmentUrl(attach.id)" 
+                    [alt]="attach.file_path"
+                    style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;"
+                    (error)="onImageError($event)"
+                  />
+                  <div style="font-size: 12px; margin-top: 5px; word-break: break-word; max-width: 100px;">
+                    {{ attach.file_path.replace("attachments/", "") }}
+                  </div>
+                </div>
+                <!-- Si es archivo, mostrar link de descarga -->
+                <div *ngIf="!isImage(attach.file_path)">
+                  <a 
+                    [href]="getAttachmentUrl(attach.id)"
+                    [download]="attach.file_path.replace('attachments/', '')"
+                    style="color: #007bff; text-decoration: underline;"
+                  >
+                    📄 {{ attach.file_path.replace("attachments/", "") }}
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -64,6 +64,26 @@ export class ShowTicketComponent {
     this.mapleafService.setSingleCoordinate(singleCoordinate);
   }
 
+  // Check if file is an image based on extension
+  isImage(filePath: string): boolean {
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
+    const extension = filePath
+      .toLowerCase()
+      .substring(filePath.lastIndexOf('.'));
+    return imageExtensions.includes(extension);
+  }
+
+  // Get attachment URL
+  getAttachmentUrl(attachmentId: number): string {
+    return `${this.SRVIMG}apisavitar/api/v1/tickets/attachments/${attachmentId}/view`;
+  }
+
+  // Handle image load errors
+  onImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'assets/images/no-image.png'; // Fallback image
+  }
+
   // View attachment in modal
   viewAttachment(attachmentId: number) {
     const imageUrl = `${this.SRVIMG}api/v1/tickets/attachments/${attachmentId}/view`;
