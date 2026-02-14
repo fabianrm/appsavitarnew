@@ -120,19 +120,29 @@
                   <div class="attachment-grid" style="display: flex; flex-wrap: wrap; gap: 15px;">
                     <div *ngFor="let attach of dataTicket?.attachments" style="text-align: center;">
                       <!-- Si es imagen, mostrar miniatura -->
-                      <div *ngIf="isImage(attach.file_path)" style="cursor: pointer;" (click)="viewAttachment(attach.id)">
+                      <div *ngIf="isImage(attach.file_path)" style="position: relative; display: inline-block;">
                         <img 
                           [src]="getAttachmentUrl(attach.id)" 
                           [alt]="attach.file_path"
-                          style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;"
+                          style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #ddd; cursor: pointer;"
+                          (click)="viewAttachment(attach.id)"
                           (error)="onImageError($event)"
                         />
+                        <button 
+                          mat-mini-fab 
+                          color="warn"
+                          (click)="deleteAttachment(attach.id, $event)"
+                          style="position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; min-height: 24px;"
+                          title="Eliminar adjunto"
+                        >
+                          <mat-icon style="font-size: 16px; line-height: 24px;">delete</mat-icon>
+                        </button>
                         <div style="font-size: 12px; margin-top: 5px; word-break: break-word; max-width: 100px;">
                           {{ attach.file_path.replace("attachments/", "") }}
                         </div>
                       </div>
                       <!-- Si es archivo, mostrar link de descarga -->
-                      <div *ngIf="!isImage(attach.file_path)">
+                      <div *ngIf="!isImage(attach.file_path)" style="position: relative; display: inline-flex; align-items: center; gap: 5px;">
                         <a 
                           [href]="getAttachmentUrl(attach.id)"
                           [download]="attach.file_path.replace('attachments/', '')"
@@ -140,6 +150,15 @@
                         >
                           📄 {{ attach.file_path.replace("attachments/", "") }}
                         </a>
+                        <button 
+                          mat-icon-button 
+                          color="warn"
+                          (click)="deleteAttachment(attach.id, $event)"
+                          style="width: 24px; height: 24px;"
+                          title="Eliminar adjunto"
+                        >
+                          <mat-icon style="font-size: 18px;">delete</mat-icon>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -158,7 +177,7 @@
         [disabled]="formTicket.invalid"
         type="submit"
         color="primary"
-        mat-raised-button
+        mat-flat-button
         style="margin-right: 5px"
       >
         Guardar

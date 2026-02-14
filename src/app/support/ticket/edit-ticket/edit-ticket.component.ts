@@ -297,4 +297,44 @@ export class EditTicketComponent implements OnInit {
       },
     });
   }
+
+  // Delete attachment with confirmation
+  deleteAttachment(attachmentId: number, event: Event) {
+    event.stopPropagation(); // Prevent triggering parent click events
+
+    Swal.fire({
+      title: '¿Eliminar adjunto?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ticketService.deleteAttachment(attachmentId).subscribe({
+          next: () => {
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: 'El adjunto ha sido eliminado correctamente',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false,
+            });
+            // Refresh ticket data
+            this.getTicketByID();
+          },
+          error: (error) => {
+            console.error('Error deleting attachment:', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'No se pudo eliminar el adjunto',
+              icon: 'error',
+            });
+          },
+        });
+      }
+    });
+  }
 }
