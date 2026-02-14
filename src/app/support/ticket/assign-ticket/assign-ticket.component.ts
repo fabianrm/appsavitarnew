@@ -11,58 +11,60 @@ import { User } from '../../../auth/Models/UserResponse';
 import { Employee } from '../../../logistic/employee/models/EmployeeResponse';
 
 @Component({
-    selector: 'app-assign-ticket',
-    templateUrl: './assign-ticket.component.html',
-    styleUrl: './assign-ticket.component.scss',
-    standalone: false
+  selector: 'app-assign-ticket',
+  templateUrl: './assign-ticket.component.html',
+  styleUrl: './assign-ticket.component.scss',
+  standalone: false,
 })
 export class AssignTicketComponent {
-
   formAssign!: FormGroup;
   technician_id!: number;
   users: Employee[] = [];
   date = new Date();
-  fechaDate1 = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate());
-  fechaDate : Date;
+  fechaDate1 = new Date(
+    this.date.getFullYear(),
+    this.date.getMonth(),
+    this.date.getDate(),
+  );
+  fechaDate: Date;
 
-
-  constructor(public fb: FormBuilder,
+  constructor(
+    public fb: FormBuilder,
     private ticketService: TicketService,
     private userService: AuthService,
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
     @Inject(MAT_DIALOG_DATA) public getData: Ticket,
-    private dialogRef: MatDialogRef<AssignTicketComponent>,) { 
-    
+    private dialogRef: MatDialogRef<AssignTicketComponent>,
+  ) {
     // Ajusta la hora a 0 para evitar desfase
     this.fechaDate = new Date(this.date.setHours(0, 0, 0, 0));
 
     // Inicializa el formulario
     this.initForm();
     console.log('Fecha asignada:', this.fechaDate);
-    }
+  }
 
   ngOnInit() {
     this.getUsers();
-   // this.initForm();
+    // this.initForm();
   }
 
   initForm() {
     this.formAssign = this.fb.group({
       admin_id: [this.UserID],
       technician_id: ['', Validators.required],
-      expiration: [this.fechaDate1], 
+      expiration: [this.fechaDate1],
       //expiration: [this.getLocalDate(this.fechaDate)],
     });
-
   }
 
   getLocalDate(date: Date): Date {
-    const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+    const localDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000,
+    );
     return localDate;
   }
-
-
 
   //Usuario
   get UserID() {
@@ -71,7 +73,9 @@ export class AssignTicketComponent {
 
   enviarDatos() {
     const formData = this.formAssign.value;
-    const expirationDate = new Date(formData.expiration).toISOString().split('T')[0];
+    const expirationDate = new Date(formData.expiration)
+      .toISOString()
+      .split('T')[0];
 
     const dataToSend = {
       ...formData,
@@ -80,28 +84,33 @@ export class AssignTicketComponent {
 
     if (this.formAssign.valid) {
       Swal.fire({
-        title: "Asignar Ticket",
-        text: "Desea asignar el técnico al Ticket?",
-        icon: "warning",
+        title: 'Asignar Ticket',
+        text: 'Desea asignar el técnico al Ticket?',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#43a047",
-        cancelButtonColor: "#e91e63",
-        confirmButtonText: "Si, asignar!"
+        confirmButtonColor: '#43a047',
+        cancelButtonColor: '#e91e63',
+        confirmButtonText: 'Si, asignar!',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.ticketService.assignTicket(this.getData.id, dataToSend).subscribe(respuesta => {
-            Swal.fire(
-              'Guardado!',
-              'Técnico asignado correctamente.',
-              'success'
-            ).then(r => {
-              if (r) {
-                this.dialogRef.close();
-              }
-            })
-          }, error => {
-            console.error('Error al guardar los datos:', error);
-          });
+          this.ticketService
+            .assignTicket(this.getData.id, dataToSend)
+            .subscribe(
+              (respuesta) => {
+                Swal.fire(
+                  'Guardado!',
+                  'Técnico asignado correctamente.',
+                  'success',
+                ).then((r) => {
+                  if (r) {
+                    this.dialogRef.close();
+                  }
+                });
+              },
+              (error) => {
+                console.error('Error al guardar los datos:', error);
+              },
+            );
         }
       });
     }
@@ -111,11 +120,10 @@ export class AssignTicketComponent {
     this.userService.getUsers().subscribe((respuesta) => {
       //  console.log(respuesta.data)
       if (respuesta.data.length > 0) {
-        this.users = respuesta.data;
+        this.users = respuesta.data.filter((user) => user.status === 1);
       }
     });
   }
-
 
   showError() {
     this.snackbarService.showError('☹️ Ocurrio un error');
@@ -125,9 +133,7 @@ export class AssignTicketComponent {
     this.snackbarService.showSuccess('Registro agregado correctamente');
   }
 
-
   onCancel() {
     this.dialogRef.close();
   }
-
 }

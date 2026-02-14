@@ -6,7 +6,14 @@ import { ListTicketComponent } from './list-ticket/list-ticket.component';
 import { TicketRoutingModule } from './ticket-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle,
+} from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,12 +27,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AssignTicketComponent } from './assign-ticket/assign-ticket.component';
 import { ShowTicketComponent } from './show-ticket/show-ticket.component';
 import { MapleafModule } from '../../isp/mapleaf/mapleaf.module';
 import { AttendTicketComponent } from './attend-ticket/attend-ticket.component';
-
-
 
 @NgModule({
   declarations: [
@@ -34,7 +40,7 @@ import { AttendTicketComponent } from './attend-ticket/attend-ticket.component';
     ListTicketComponent,
     AssignTicketComponent,
     ShowTicketComponent,
-    AttendTicketComponent
+    AttendTicketComponent,
   ],
   imports: [
     CommonModule,
@@ -62,8 +68,8 @@ import { AttendTicketComponent } from './attend-ticket/attend-ticket.component';
     MatOptionModule,
     MatSlideToggleModule,
     MatAutocompleteModule,
-    MapleafModule
-
-  ]
+    MatDialogModule,
+    MapleafModule,
+  ],
 })
-export class TicketModule { }
+export class TicketModule {}
