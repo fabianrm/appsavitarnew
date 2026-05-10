@@ -37,6 +37,7 @@ import { AddPromoComponent } from './add-promo/add-promo.component';
 import { MatListModule } from '@angular/material/list';
 import { EquipmentModule } from '../equipment/equipment.module';
 import { OutputModule } from '../../logistic/output/output.module';
+import { ChangeIptvComponent } from './change-iptv/change-iptv.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { OutputModule } from '../../logistic/output/output.module';
     ChangeVlanComponent,
     ChangeUserComponent,
     AddPromoComponent,
+    ChangeIptvComponent,
   ],
   imports: [
     CommonModule,

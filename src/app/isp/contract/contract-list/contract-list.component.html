@@ -218,6 +218,15 @@
             <button
               [disabled]="row.status === 'terminado'"
               mat-menu-item
+              (click)="changeIptv(row.id)"
+            >
+              <mat-icon matListItemIcon>tv</mat-icon>
+              Cambiar IPTV
+            </button>
+
+            <button
+              [disabled]="row.status === 'terminado'"
+              mat-menu-item
               (click)="changeEquipment(row.id)"
             >
               <mat-icon matListItemIcon>router</mat-icon>

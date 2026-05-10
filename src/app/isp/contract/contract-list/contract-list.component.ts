@@ -20,20 +20,44 @@ import { AddPromoComponent } from '../add-promo/add-promo.component';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { RouterService } from '../../router/router.service';
 import { TestResponse } from '../../router/Models/TestResponse';
-
+import { ChangeIptvComponent } from '../change-iptv/change-iptv.component';
 
 @Component({
   selector: 'app-contract-list',
   templateUrl: './contract-list.component.html',
   styleUrl: './contract-list.component.scss',
-  standalone: false
+  standalone: false,
 })
 export class ContractListComponent implements OnInit {
+  availableColumns: string[] = [
+    'id',
+    'serviceCode',
+    'customerName',
+    'planName',
+    'installationDate',
+    'city',
+    'addressInstallation',
+    'latitude',
+    'longitude',
+    'promotion',
+    'status',
+    'createdBy',
+    'updatedBy',
+    'updatedAt',
+    'acciones',
+  ];
 
-  availableColumns: string[] = ['id', 'serviceCode', 'customerName', 'planName', 'installationDate', 'city', 'addressInstallation', 'latitude', 'longitude', 'promotion', 'status', 'createdBy', 'updatedBy', 'updatedAt', 'acciones'];
-
-  displayedColumns: string[] = ['serviceCode', 'customerName', 'planName', 'installationDate', 'city', 'addressInstallation', 'promotion', 'status', 'acciones'];
-
+  displayedColumns: string[] = [
+    'serviceCode',
+    'customerName',
+    'planName',
+    'installationDate',
+    'city',
+    'addressInstallation',
+    'promotion',
+    'status',
+    'acciones',
+  ];
 
   public dataSource!: MatTableDataSource<Service>;
 
@@ -42,7 +66,7 @@ export class ContractListComponent implements OnInit {
 
   @ViewChild(MatMenuTrigger) columnasMenuTrigger!: MatMenuTrigger;
 
-  subscription!: Subscription
+  subscription!: Subscription;
 
   public respuesta!: Service[];
   public contrato!: Service[];
@@ -52,16 +76,17 @@ export class ContractListComponent implements OnInit {
     private contractService: ContractService,
     private suspensionService: SuspensionService,
     private routerService: RouterService,
-    public dialog: MatDialog, private router: Router,
-    private snackbarService: SnackbarService) { }
+    public dialog: MatDialog,
+    private router: Router,
+    private snackbarService: SnackbarService,
+  ) {}
 
   ngOnInit() {
     // this.checkMK(row.routerId);
     this.getContracts();
     this.subscription = this.contractService.refresh$.subscribe(() => {
-      this.getContracts()
+      this.getContracts();
     });
-
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -81,9 +106,8 @@ export class ContractListComponent implements OnInit {
     });
   }
 
-
   actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
-    this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
+    this.displayedColumns = columnasSeleccionadas.map((opcion) => opcion.value);
   }
 
   applyFilter(event: Event) {
@@ -97,9 +121,11 @@ export class ContractListComponent implements OnInit {
 
   goToLinkMap(latitude: string, longitude: string) {
     //'https://www.google.com/maps?q=-4.907545,-81.057223&hl=es-Pe&gl=pe&shorturl=1;'
-    window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");
+    window.open(
+      `https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`,
+      '_blank',
+    );
   }
-
 
   changePlan(row: any) {
     const dialogConfig = new MatDialogConfig();
@@ -108,14 +134,12 @@ export class ContractListComponent implements OnInit {
     // dialogConfig.width = '40%';
     dialogConfig.data = row;
     this.dialog.open(ContractEditPlanComponent, dialogConfig);
-    this.dialog.afterAllClosed.subscribe(() => { });
+    this.dialog.afterAllClosed.subscribe(() => {});
   }
 
-
   changeVLAN(id: number) {
-
     //filtrar la caja del contrato
-    this.contrato = this.respuesta.filter(contrato => contrato.id === id)
+    this.contrato = this.respuesta.filter((contrato) => contrato.id === id);
 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -123,14 +147,12 @@ export class ContractListComponent implements OnInit {
     //dialogConfig.width = '40%';
     dialogConfig.data = this.contrato;
     this.dialog.open(ChangeVlanComponent, dialogConfig);
-    this.dialog.afterAllClosed.subscribe(() => { });
-
+    this.dialog.afterAllClosed.subscribe(() => {});
   }
-
 
   changeUser(id: number) {
     //filtrar la caja del contrato
-    this.contrato = this.respuesta.filter(contrato => contrato.id === id)
+    this.contrato = this.respuesta.filter((contrato) => contrato.id === id);
 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -138,9 +160,21 @@ export class ContractListComponent implements OnInit {
     //dialogConfig.width = '40%';
     dialogConfig.data = this.contrato;
     this.dialog.open(ChangeUserComponent, dialogConfig);
-    this.dialog.afterAllClosed.subscribe(() => { });
+    this.dialog.afterAllClosed.subscribe(() => {});
   }
 
+  changeIptv(id: number) {
+    //filtrar la caja del contrato
+    this.contrato = this.respuesta.filter((contrato) => contrato.id === id);
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    //dialogConfig.width = '40%';
+    dialogConfig.data = this.contrato;
+    this.dialog.open(ChangeIptvComponent, dialogConfig);
+    this.dialog.afterAllClosed.subscribe(() => {});
+  }
 
   addPromo(row: any) {
     const dialogConfig = new MatDialogConfig();
@@ -149,9 +183,8 @@ export class ContractListComponent implements OnInit {
     // dialogConfig.width = '40%';
     dialogConfig.data = row;
     this.dialog.open(AddPromoComponent, dialogConfig);
-    this.dialog.afterAllClosed.subscribe(() => { });
+    this.dialog.afterAllClosed.subscribe(() => {});
   }
-
 
   changeBilling(_t114: any) {
     throw new Error('Method not implemented.');
@@ -169,29 +202,34 @@ export class ContractListComponent implements OnInit {
     });
   }
 
-
   deleteService(id: number) {
     Swal.fire({
-      title: "Esta seguro?",
-      text: "No podrá recuperar el contrato después de eliminar!",
-      icon: "warning",
+      title: 'Esta seguro?',
+      text: 'No podrá recuperar el contrato después de eliminar!',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#43a047",
-      cancelButtonColor: "#e91e63",
-      confirmButtonText: "Si, eliminar"
+      confirmButtonColor: '#43a047',
+      cancelButtonColor: '#e91e63',
+      confirmButtonText: 'Si, eliminar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.contractService.deleteContract(id).subscribe((respuesta) => {
-
-          if (respuesta.status == true) {
-            this.snackbarService.showSuccess(`✅${respuesta.message}`);
-          } else {
-            this.snackbarService.showError(`☹️ Ocurrio un error: ${respuesta.message}`);
-          }
-        }, error => {
-          this.snackbarService.showError(`☹️ Ocurrio un error al eliminar el contrato`);
-          console.log('Error al eliminar el cliente', error.message);
-        });
+        this.contractService.deleteContract(id).subscribe(
+          (respuesta) => {
+            if (respuesta.status == true) {
+              this.snackbarService.showSuccess(`✅${respuesta.message}`);
+            } else {
+              this.snackbarService.showError(
+                `☹️ Ocurrio un error: ${respuesta.message}`,
+              );
+            }
+          },
+          (error) => {
+            this.snackbarService.showError(
+              `☹️ Ocurrio un error al eliminar el contrato`,
+            );
+            console.log('Error al eliminar el cliente', error.message);
+          },
+        );
       }
     });
   }
@@ -207,29 +245,30 @@ export class ContractListComponent implements OnInit {
           this.statusMK = '🔴 Desconectado';
         }
         Swal.fire({
-          title: "Terminar Contrato",
+          title: 'Terminar Contrato',
           text: `Se va a liberar la caja, puerto y equipo del Contrato ${row.serviceCode}`,
-          icon: "warning",
+          icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: "#43a047",
-          cancelButtonColor: "#e91e63",
-          cancelButtonText: "Cancelar",
-          confirmButtonText: "Si, terminar",
-          input: "checkbox",
+          confirmButtonColor: '#43a047',
+          cancelButtonColor: '#e91e63',
+          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'Si, terminar',
+          input: 'checkbox',
           inputValue: this.testMK.conectado === true ? 1 : 0,
-          inputLabel: "Borrar en Mikrotik - " + (this.statusMK)
+          inputLabel: 'Borrar en Mikrotik - ' + this.statusMK,
         }).then((result) => {
           if (result.isConfirmed) {
-            this.suspensionService.finishService(row.id, result.value).
-              subscribe({
+            this.suspensionService
+              .finishService(row.id, result.value)
+              .subscribe({
                 next: (respuesta) => {
                   this.snackbarService.showInfo(`${respuesta.message}`);
                   this.getContracts();
                 },
                 error: (err) => {
                   this.snackbarService.showError(err);
-                }
-              })
+                },
+              });
           }
         });
       },
@@ -240,17 +279,16 @@ export class ContractListComponent implements OnInit {
     });
   }
 
-
-
   viewMap(latitude: string, longitude: string) {
-    window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");
+    window.open(
+      `https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`,
+      '_blank',
+    );
   }
 
-
   changePort(id: number) {
-
     //filtrar la caja del contrato
-    this.contrato = this.respuesta.filter(contrato => contrato.id === id)
+    this.contrato = this.respuesta.filter((contrato) => contrato.id === id);
 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -258,25 +296,23 @@ export class ContractListComponent implements OnInit {
     //dialogConfig.width = '40%';
     dialogConfig.data = this.contrato;
     this.dialog.open(ChangePortComponent, dialogConfig);
-    this.dialog.afterAllClosed.subscribe(() => { });
+    this.dialog.afterAllClosed.subscribe(() => {});
   }
 
   changeEquipment(id: number) {
     //filtrar la caja del contrato
-    this.contrato = this.respuesta.filter(contrato => contrato.id === id)
+    this.contrato = this.respuesta.filter((contrato) => contrato.id === id);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = this.contrato;
     this.dialog.open(ChangeEquipmentComponent, dialogConfig);
-    this.dialog.afterAllClosed.subscribe(() => { });
+    this.dialog.afterAllClosed.subscribe(() => {});
   }
-
 
   viewDetail(id: number) {
     this.router.navigate(['/dashboard/contract/contract-detail/' + id]); // Navega al detalle del contrato
   }
-
 
   showError() {
     this.snackbarService.showError('☹️ Cliente ya se encuentra registrado');
@@ -287,73 +323,69 @@ export class ContractListComponent implements OnInit {
   }
 
   editDataBasic(id: number) {
-    this.router.navigate(['/dashboard/contract/contract-edit-data-basic/' + id]); // Navega al componente "editar datos basicos"
+    this.router.navigate([
+      '/dashboard/contract/contract-edit-data-basic/' + id,
+    ]); // Navega al componente "editar datos basicos"
   }
 
   //Reactivar contrato
   reactiveService(id: number) {
-
     Swal.fire({
-      title: "Esta seguro?",
-      text: "Se va a reactivar el Servicio!",
-      icon: "warning",
+      title: 'Esta seguro?',
+      text: 'Se va a reactivar el Servicio!',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#43a047",
-      cancelButtonColor: "#e91e63",
-      confirmButtonText: "Si, reactivar",
-      input: "checkbox",
+      confirmButtonColor: '#43a047',
+      cancelButtonColor: '#e91e63',
+      confirmButtonText: 'Si, reactivar',
+      input: 'checkbox',
       inputValue: 1,
-      inputLabel: "Reactivar en Mikrotik"
+      inputLabel: 'Reactivar en Mikrotik',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.suspensionService.reactiveService(id, result.value).
-          subscribe({
-            next: (respuesta) => {
-              this.snackbarService.showInfo(`${respuesta.message}`);
-              this.getContracts();
-            },
-            error: (err) => {
-              this.snackbarService.showError(err);
-            }
-          })
+        this.suspensionService.reactiveService(id, result.value).subscribe({
+          next: (respuesta) => {
+            this.snackbarService.showInfo(`${respuesta.message}`);
+            this.getContracts();
+          },
+          error: (err) => {
+            this.snackbarService.showError(err);
+          },
+        });
       }
     });
   }
 
   generateInvoices(row: any) {
     Swal.fire({
-      title: "Generar Facturas",
+      title: 'Generar Facturas',
       text: `Se van a generar las facturas para el contrato! ${row.serviceCode}`,
-      icon: "warning",
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#43a047",
-      cancelButtonColor: "#e91e63",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "Si, generar",
-      input: "number",
+      confirmButtonColor: '#43a047',
+      cancelButtonColor: '#e91e63',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, generar',
+      input: 'number',
       inputValue: 0,
-      inputLabel: "Número de meses a generar {0 = Mes actual}"
+      inputLabel: 'Número de meses a generar {0 = Mes actual}',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.contractService.generateInvoices(row.id, result.value).
-          subscribe({
-            next: (respuesta) => {
-              if (respuesta.totalInvoices == 0) {
-                this.snackbarService.showInfo(`${respuesta.message}`);
-              } else {
-                this.snackbarService.showSuccess(`✅${respuesta.message}`);
-              }
-            },
-            error: (err) => {
-              this.snackbarService.showError(err);
+        this.contractService.generateInvoices(row.id, result.value).subscribe({
+          next: (respuesta) => {
+            if (respuesta.totalInvoices == 0) {
+              this.snackbarService.showInfo(`${respuesta.message}`);
+            } else {
+              this.snackbarService.showSuccess(`✅${respuesta.message}`);
             }
-          })
+          },
+          error: (err) => {
+            this.snackbarService.showError(err);
+          },
+        });
       }
-
     });
   }
-
-
 
   checkMK(idR: number) {
     this.routerService.getTestConnection(idR).subscribe({
@@ -362,10 +394,7 @@ export class ContractListComponent implements OnInit {
         this.testMK = respuesta;
         if (respuesta.conectado === true) {
           this.statusMK = '🟢En línea';
-
-
         } else {
-
           this.statusMK = '🔴Desconectado';
         }
       },
@@ -374,11 +403,8 @@ export class ContractListComponent implements OnInit {
         // this.formContrato.get('mikrotik')?.setValue(false);
         this.statusMK = '🔴Desconectado';
       },
-
     });
-
   }
-
 
   testMK: TestResponse = {
     ip: '',
@@ -388,9 +414,7 @@ export class ContractListComponent implements OnInit {
     system_info: {
       headers: {},
       original: [],
-      exception: null
-    }
+      exception: null,
+    },
   };
-
-
 }
