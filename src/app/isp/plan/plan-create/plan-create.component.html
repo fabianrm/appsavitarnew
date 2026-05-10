@@ -1,7 +1,7 @@
 <h2 mat-dialog-title class="title">Datos del Plan</h2>
 
 <mat-dialog-content>
-  <form ngNativeValidate [formGroup]="formCreate" (ngSubmit)="enviarDatos()">
+  <form ngNativeValidate [formGroup]="formCreate">
     <mat-card>
       <mat-card-content>
         <div class="row">
@@ -136,6 +136,8 @@
 
 <mat-dialog-actions class="row-buttons">
   <button
+  type="button"
+  (click)="enviarDatos()"
     [disabled]="formCreate.invalid"
     color="primary"
     mat-flat-button

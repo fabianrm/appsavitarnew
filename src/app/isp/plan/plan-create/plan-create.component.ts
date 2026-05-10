@@ -9,7 +9,7 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
   selector: 'app-plan-create',
   templateUrl: './plan-create.component.html',
   styleUrl: './plan-create.component.scss',
-  standalone: false
+  standalone: false,
 })
 export class PlanCreateComponent {
   formCreate!: FormGroup;
@@ -18,12 +18,13 @@ export class PlanCreateComponent {
   disabled = false;
   selected = 'normal';
 
-  constructor(public formulario: FormBuilder,
+  constructor(
+    public formulario: FormBuilder,
     private planService: PlanService,
     @Inject(MAT_DIALOG_DATA) public getData: any,
     private snackbarService: SnackbarService,
-    private dialogRef: MatDialogRef<PlanCreateComponent>) { }
-
+    private dialogRef: MatDialogRef<PlanCreateComponent>,
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -44,13 +45,11 @@ export class PlanCreateComponent {
     });
   }
 
-
   enviarDatos() {
     if (this.formCreate.valid) {
-      this.planService.addPlan(this.formCreate.value).subscribe(respuesta => {
+      this.planService.addPlan(this.formCreate.value).subscribe((respuesta) => {
         this.showSuccess();
         this.dialogRef.close();
-        // console.log(respuesta);
       });
     }
   }
@@ -62,6 +61,4 @@ export class PlanCreateComponent {
   showSuccess() {
     this.snackbarService.showSuccess('Registro agregado correctamente');
   }
-
-
 }
