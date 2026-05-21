@@ -12,6 +12,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTreeModule } from '@angular/material/tree';
+import { NotificationBellComponent } from '../shared/components/notification-bell/notification-bell.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MatTreeModule } from '@angular/material/tree';
     MatSlideToggle,
     MatMenuModule,
     MatExpansionModule,
-    MatTreeModule
+    MatTreeModule,
+    NotificationBellComponent
 
 
   ]

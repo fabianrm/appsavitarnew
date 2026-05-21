@@ -30,6 +30,24 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
     iconAnchor: [12, 41], // Punto de anclaje del icono
   });
 
+  orangeIcon = L.icon({
+    iconUrl: 'assets/icon_orange.png',
+    shadowUrl: 'assets/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+  redIcon = L.icon({
+    iconUrl: 'assets/icon_red.png',
+    shadowUrl: 'assets/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
   map!: L.Map;
   markers: L.Marker[] = [];
   centerMarker: L.Marker | null = null; // Para almacenar el marcador central
@@ -219,7 +237,14 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
              Ver Servicios
       </a>`;
 
-      const marker = L.marker([dataPoint.coordinates[0], dataPoint.coordinates[1]])
+      const markerOptions: L.MarkerOptions = {};
+      if (dataPoint.availablePorts >= 8) {
+        markerOptions.icon = this.redIcon;
+      } else if (dataPoint.availablePorts >= 5 && dataPoint.availablePorts <= 7) {
+        markerOptions.icon = this.orangeIcon;
+      }
+
+      const marker = L.marker([dataPoint.coordinates[0], dataPoint.coordinates[1]], markerOptions)
         .addTo(this.map)
         .bindPopup(popupContent);
 

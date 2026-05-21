@@ -10,6 +10,7 @@ import { TicketService } from '../ticket.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { DestinationService } from '../../../logistic/destination/destination.service';
 import { Destination } from '../../../logistic/destination/models/DestinationResponse';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-create-ticket',
@@ -26,7 +27,8 @@ export class CreateTicketComponent implements OnInit {
     private customerService: CustomerService,
     private destinationService: DestinationService,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private notificationService: NotificationService
   ) { }
 
   categoryTickets: CategoryTicket[] = [];
@@ -155,6 +157,7 @@ export class CreateTicketComponent implements OnInit {
       this.ticketService.addTicket(dataToSend).subscribe(respuesta => {
         // console.log(respuesta);
         //this.showTicket(respuesta.id);
+        this.notificationService.notificationsUpdated$.next();
         this.goTickets();
         this.showSuccess();
       });

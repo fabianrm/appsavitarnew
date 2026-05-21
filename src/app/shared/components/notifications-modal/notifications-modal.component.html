@@ -1,0 +1,54 @@
+<h2 mat-dialog-title class="d-flex justify-content-between align-items-center">
+  Todas las notificaciones
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+
+<mat-dialog-content>
+  <div class="header-actions" *ngIf="notifications?.data?.length">
+    <button mat-button color="primary" (click)="markAllAsRead()">
+      <mat-icon>done_all</mat-icon>
+      Marcar todas como leídas
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <p>Cargando notificaciones...</p>
+  </div>
+
+  <div *ngIf="!isLoading && (!notifications?.data || notifications?.data?.length === 0)" class="empty-state">
+    <mat-icon>notifications_off</mat-icon>
+    <p>No tienes notificaciones.</p>
+  </div>
+
+  <mat-list *ngIf="!isLoading && notifications?.data?.length">
+    <ng-container *ngFor="let item of notifications?.data; let last = last">
+      <mat-list-item 
+        (click)="markAsRead(item)" 
+        [ngClass]="{'unread': !item.read_at}"
+        class="notification-item">
+        <mat-icon matListItemIcon color="primary">
+          {{ item.read_at ? 'notifications' : 'notifications_active' }}
+        </mat-icon>
+        <div matListItemTitle class="notification-title">
+          {{ item.data.subject }}
+          <span class="badge new-badge" *ngIf="!item.read_at">Nueva</span>
+        </div>
+        <div matListItemLine class="notification-message">{{ item.data.message }}</div>
+        <div matListItemLine class="notification-time">{{ item.created_at | date:'short' }}</div>
+      </mat-list-item>
+      <mat-divider *ngIf="!last"></mat-divider>
+    </ng-container>
+  </mat-list>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <mat-paginator
+    *ngIf="notifications?.total"
+    [length]="notifications?.total"
+    [pageSize]="notifications?.per_page"
+    [pageIndex]="(notifications?.current_page || 1) - 1"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+</mat-dialog-actions>

@@ -1,0 +1,40 @@
+<button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+  <mat-icon [matBadge]="unreadCount > 0 ? unreadCount : null" matBadgeColor="warn">
+    notifications
+  </mat-icon>
+</button>
+
+<mat-menu #notificationMenu="matMenu" xPosition="before" class="notification-menu">
+  <div class="notification-header" (click)="$event.stopPropagation()">
+    <span>Notificaciones ({{ unreadCount }})</span>
+    <button mat-button color="primary" class="mark-all-btn" *ngIf="unreadCount > 0" (click)="markAllAsRead($event)">
+      Marcar leídas
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="notification-list">
+    <div *ngIf="unreadCount === 0" class="empty-notifications">
+      No tienes notificaciones nuevas
+    </div>
+
+    <ng-container *ngFor="let notification of unreadNotifications">
+      <button mat-menu-item class="notification-item" (click)="markAsRead(notification)">
+        <div class="notification-content">
+          <div class="notification-title">{{ notification.data.subject }}</div>
+          <div class="notification-message">{{ notification.data.message }}</div>
+          <div class="notification-time">{{ notification.created_at | date:'shortTime' }}</div>
+        </div>
+      </button>
+    </ng-container>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="notification-footer">
+    <button mat-menu-item class="view-all-btn" (click)="openAllNotificationsModal()">
+      Ver todas las notificaciones
+    </button>
+  </div>
+</mat-menu>
