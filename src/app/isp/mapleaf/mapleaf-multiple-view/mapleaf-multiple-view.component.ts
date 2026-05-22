@@ -238,9 +238,9 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
       </a>`;
 
       const markerOptions: L.MarkerOptions = {};
-      if (dataPoint.availablePorts >= 8) {
+      if (dataPoint.availablePorts === 0) {
         markerOptions.icon = this.redIcon;
-      } else if (dataPoint.availablePorts >= 5 && dataPoint.availablePorts <= 7) {
+      } else if (dataPoint.availablePorts >= 1 && dataPoint.availablePorts <= 5) {
         markerOptions.icon = this.orangeIcon;
       }
 
