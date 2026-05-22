@@ -4,7 +4,7 @@
   </mat-icon>
 </button>
 
-<mat-menu #notificationMenu="matMenu" xPosition="before" class="notification-menu">
+<mat-menu #notificationMenu="matMenu" xPosition="before" class="notification-menu" panelClass="notification-menu-panel">
   <div class="notification-header" (click)="$event.stopPropagation()">
     <span>Notificaciones ({{ unreadCount }})</span>
     <button mat-button color="primary" class="mark-all-btn" *ngIf="unreadCount > 0" (click)="markAllAsRead($event)">
@@ -12,7 +12,7 @@
     </button>
   </div>
 
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
 
   <div class="notification-list">
     <div *ngIf="unreadCount === 0" class="empty-notifications">

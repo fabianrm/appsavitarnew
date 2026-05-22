@@ -1,54 +1,81 @@
-<h2 mat-dialog-title class="d-flex justify-content-between align-items-center">
-  Todas las notificaciones
-  <button mat-icon-button mat-dialog-close>
-    <mat-icon>close</mat-icon>
-  </button>
-</h2>
+<div class="notifications-dialog">
+  <header class="dialog-header">
+    <div class="header-left">
+      <h2 class="dialog-title">Notificaciones</h2>
+      <span class="unread-badge" *ngIf="unreadCount > 0">
+        {{ unreadCount }} nuevas
+      </span>
+    </div>
+    
+    <div class="header-actions">
+      <button 
+        *ngIf="unreadCount > 0" 
+        class="action-btn mark-all-btn" 
+        (click)="markAllAsRead()"
+        title="Marcar todas como leídas">
+        <mat-icon>done_all</mat-icon>
+        <span>Marcar todo leídos</span>
+      </button>
+      <button class="close-btn" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </header>
 
-<mat-dialog-content>
-  <div class="header-actions" *ngIf="notifications?.data?.length">
-    <button mat-button color="primary" (click)="markAllAsRead()">
-      <mat-icon>done_all</mat-icon>
-      Marcar todas como leídas
-    </button>
-  </div>
+  <mat-dialog-content class="dialog-scroll-content">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="state-container loading-state">
+      <div class="spinner-ring">
+        <div></div><div></div><div></div><div></div>
+      </div>
+      <p>Cargando tus notificaciones...</p>
+    </div>
 
-  <div *ngIf="isLoading" class="loading-state">
-    <p>Cargando notificaciones...</p>
-  </div>
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && (!notifications?.data || notifications?.data?.length === 0)" class="state-container empty-state">
+      <div class="empty-icon-wrapper">
+        <mat-icon>notifications_none</mat-icon>
+      </div>
+      <h3>Todo al día</h3>
+      <p>No tienes notificaciones pendientes en este momento.</p>
+    </div>
 
-  <div *ngIf="!isLoading && (!notifications?.data || notifications?.data?.length === 0)" class="empty-state">
-    <mat-icon>notifications_off</mat-icon>
-    <p>No tienes notificaciones.</p>
-  </div>
-
-  <mat-list *ngIf="!isLoading && notifications?.data?.length">
-    <ng-container *ngFor="let item of notifications?.data; let last = last">
-      <mat-list-item 
-        (click)="markAsRead(item)" 
-        [ngClass]="{'unread': !item.read_at}"
-        class="notification-item">
-        <mat-icon matListItemIcon color="primary">
-          {{ item.read_at ? 'notifications' : 'notifications_active' }}
-        </mat-icon>
-        <div matListItemTitle class="notification-title">
-          {{ item.data.subject }}
-          <span class="badge new-badge" *ngIf="!item.read_at">Nueva</span>
+    <!-- Notifications List -->
+    <div class="notifications-list" *ngIf="!isLoading && notifications?.data?.length">
+      <div 
+        *ngFor="let item of notifications?.data"
+        (click)="markAsRead(item)"
+        class="notification-card"
+        [class.unread]="!item.read_at">
+        
+        <div class="notification-indicator" *ngIf="!item.read_at"></div>
+        
+        <div class="notification-main">
+          <div class="card-header">
+            <span class="card-subject">{{ item.data.subject }}</span>
+            <span class="pulse-dot" *ngIf="!item.read_at"></span>
+          </div>
+          
+          <p class="card-message">{{ item.data.message }}</p>
+          
+          <div class="card-footer">
+            <span class="card-time">
+              <mat-icon>schedule</mat-icon>
+              {{ item.created_at | date:'dd/MM/yyyy hh:mm a' }}
+            </span>
+          </div>
         </div>
-        <div matListItemLine class="notification-message">{{ item.data.message }}</div>
-        <div matListItemLine class="notification-time">{{ item.created_at | date:'short' }}</div>
-      </mat-list-item>
-      <mat-divider *ngIf="!last"></mat-divider>
-    </ng-container>
-  </mat-list>
-</mat-dialog-content>
+      </div>
+    </div>
+  </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <mat-paginator
-    *ngIf="notifications?.total"
-    [length]="notifications?.total"
-    [pageSize]="notifications?.per_page"
-    [pageIndex]="(notifications?.current_page || 1) - 1"
-    (page)="onPageChange($event)">
-  </mat-paginator>
-</mat-dialog-actions>
+  <footer class="dialog-footer-actions" *ngIf="notifications?.total">
+    <mat-paginator
+      [length]="notifications?.total"
+      [pageSize]="notifications?.per_page"
+      [pageIndex]="(notifications?.current_page || 1) - 1"
+      (page)="onPageChange($event)"
+      class="minimal-paginator">
+    </mat-paginator>
+  </footer>
+</div>

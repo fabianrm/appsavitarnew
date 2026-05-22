@@ -29,6 +29,10 @@ export class NotificationsModalComponent implements OnInit, OnDestroy {
   isLoading = false;
   private sub?: Subscription;
 
+  get unreadCount(): number {
+    return this.notifications?.data?.filter(n => !n.read_at).length || 0;
+  }
+
   constructor(
     public dialogRef: MatDialogRef<NotificationsModalComponent>,
     private notificationService: NotificationService,
@@ -77,7 +81,7 @@ export class NotificationsModalComponent implements OnInit, OnDestroy {
     
     // Close modal and navigate
     this.dialogRef.close();
-    this.router.navigate(['/support/tickets', notification.data.ticket_id]);
+    this.router.navigate(['/support/tickets/detail-ticket', notification.data.ticket_id]);
   }
 
   markAllAsRead(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,7 +25,8 @@ import { MatDivider } from "@angular/material/divider";
     MatDivider
   ],
   templateUrl: './notification-bell.component.html',
-  styleUrls: ['./notification-bell.component.scss']
+  styleUrls: ['./notification-bell.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NotificationBellComponent implements OnInit, OnDestroy {
   unreadNotifications: AppNotification[] = [];
@@ -64,8 +65,8 @@ export class NotificationBellComponent implements OnInit, OnDestroy {
 
   markAsRead(notification: AppNotification): void {
     this.notificationService.markAsRead(notification.id).subscribe();
-    // Navigate to ticket
-    this.router.navigate(['/support/tickets', notification.data.ticket_id]);
+    // Navigate to ticket detail
+    this.router.navigate(['/support/tickets/detail-ticket', notification.data.ticket_id]);
   }
 
   markAllAsRead(event: Event): void {

@@ -9,6 +9,7 @@ import { Ticket } from '../Models/TicketResponse';
 import { AuthService } from '../../../auth/auth.service';
 import { User } from '../../../auth/Models/UserResponse';
 import { Employee } from '../../../logistic/employee/models/EmployeeResponse';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-assign-ticket',
@@ -34,6 +35,7 @@ export class AssignTicketComponent {
     private userService: AuthService,
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
+    private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) public getData: Ticket,
     private dialogRef: MatDialogRef<AssignTicketComponent>,
   ) {
@@ -97,6 +99,7 @@ export class AssignTicketComponent {
             .assignTicket(this.getData.id, dataToSend)
             .subscribe(
               (respuesta) => {
+                this.notificationService.notificationsUpdated$.next();
                 Swal.fire(
                   'Guardado!',
                   'Técnico asignado correctamente.',
