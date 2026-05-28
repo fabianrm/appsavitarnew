@@ -110,7 +110,7 @@ export class MaterialEditComponent {
         image: this.dataMaterial.image,
       });
       if (this.dataMaterial.image) {
-        this.imagePreview = environment.servidor_img + this.dataMaterial.image;
+        this.imagePreview = environment.servidor_api_public + this.dataMaterial.image;
       }
     });
   }

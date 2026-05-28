@@ -23,7 +23,7 @@ export class MaterialListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   subscription!: Subscription
-  API_IMG: string = environment.servidor_img;
+  API_IMG: string = environment.servidor_api_public;
 
   isLoading = false;
   isModalOpen: boolean = false; // Controla si el modal está abierto
