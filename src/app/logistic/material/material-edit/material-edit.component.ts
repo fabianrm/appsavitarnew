@@ -11,12 +11,14 @@ import { CategoryService } from '../../category/category.service';
 import { PresentationService } from '../../presentation/presentation.service';
 import { MaterialService } from '../material.service';
 import { Material } from '../models/MaterialResponse';
+import { HttpEventType } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
-    selector: 'app-material-edit',
-    templateUrl: './material-edit.component.html',
-    styleUrl: './material-edit.component.scss',
-    standalone: false
+  selector: 'app-material-edit',
+  templateUrl: './material-edit.component.html',
+  styleUrl: './material-edit.component.scss',
+  standalone: false
 })
 export class MaterialEditComponent {
 
@@ -28,6 +30,7 @@ export class MaterialEditComponent {
   color: ThemePalette = 'accent';
   checked = true;
   imagePreview: string | ArrayBuffer | null = null;
+  fileToUpload: File | null = null;
 
   id?: number;
   dataMaterial?: Material;
@@ -104,7 +107,11 @@ export class MaterialEditComponent {
         min: this.dataMaterial.min,
         type: this.dataMaterial.type,
         status: this.dataMaterial.status,
+        image: this.dataMaterial.image,
       });
+      if (this.dataMaterial.image) {
+        this.imagePreview = environment.servidor_img + this.dataMaterial.image;
+      }
     });
   }
 
@@ -140,20 +147,55 @@ export class MaterialEditComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
+      console.log('onFileSelected - Archivo seleccionado:', file);
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result;
       };
       reader.readAsDataURL(file);
+      this.fileToUpload = file;
     }
   }
 
   onSubmit(): void {
+    //  console.log('onSubmit - Datos del formulario:', this.formMaterial.value);
+    // console.log('onSubmit - Archivo para subir (fileToUpload):', this.fileToUpload);
     if (this.formMaterial.valid) {
-      this.materialService.updateMaterial( this.id!, this.formMaterial.value).subscribe(respuesta => {
-        this.router.navigate(['/dashboard/material/materials']);
-        this.showSuccess();
-      });
+      if (this.fileToUpload) {
+        // console.log('onSubmit - Iniciando subida de archivo...');
+        // Subimos la imagen
+        this.materialService.uploadFile(this.fileToUpload).subscribe(event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            // Monitoreamos el progreso de la carga
+            const progress = Math.round((100 * event.loaded) / event.total);
+            // console.log(`Progreso de la carga: ${progress}%`);
+          } else if (event.type === HttpEventType.Response && event.body) {
+            // Cuando la respuesta ha sido recibida con éxito
+            // console.log('Respuesta recibida', event.body);
+
+            // Verificamos si el servidor ha enviado la ruta de la imagen
+            if (event.body.nombre_archivo) {
+              // Insertamos la ruta de la imagen en el formulario
+              this.formMaterial.patchValue({ image: event.body.nombre_archivo });
+
+              // Ahora enviamos el formulario con la ruta de la imagen
+              this.materialService.updateMaterial(this.id!, this.formMaterial.value).subscribe(respuesta => {
+                this.router.navigate(['/dashboard/material/materials']);
+                this.showSuccess();
+              });
+            }
+          }
+        }, error => {
+          console.error('Error al subir la imagen:', error);
+          this.showError();
+        });
+      } else {
+        // Si no hay archivo, enviamos el formulario directamente
+        this.materialService.updateMaterial(this.id!, this.formMaterial.value).subscribe(respuesta => {
+          this.router.navigate(['/dashboard/material/materials']);
+          this.showSuccess();
+        });
+      }
     }
   }
 

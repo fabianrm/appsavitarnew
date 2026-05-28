@@ -40,9 +40,7 @@
             {{ category.name }}
           </mat-option>
         </mat-select>
-        <mat-error
-          *ngIf="formMaterial.get('category_id')?.hasError('required')"
-        >
+        <mat-error *ngIf="formMaterial.get('category_id')?.hasError('required')">
           Categoría es requerida
         </mat-error>
       </mat-form-field>
@@ -64,16 +62,11 @@
       <mat-form-field appearance="fill" class="w-100">
         <mat-label>Presentación</mat-label>
         <mat-select formControlName="presentation_id" required>
-          <mat-option
-            *ngFor="let presentation of presentations"
-            [value]="presentation.id"
-          >
+          <mat-option *ngFor="let presentation of presentations" [value]="presentation.id">
             {{ presentation.name }}
           </mat-option>
         </mat-select>
-        <mat-error
-          *ngIf="formMaterial.get('presentation_id')?.hasError('required')"
-        >
+        <mat-error *ngIf="formMaterial.get('presentation_id')?.hasError('required')">
           Presentación es requerida
         </mat-error>
       </mat-form-field>
@@ -89,12 +82,7 @@
   </div>
   <div class="row">
     <div class="col-md-4">
-      <input
-        type="file"
-        id="image"
-        (change)="onFileSelected($event)"
-        class="form-control"
-      />
+      <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" />
       <div class="image-preview" *ngIf="imagePreview">
         <img [src]="imagePreview" alt="Image Preview" />
       </div>
@@ -106,23 +94,12 @@
   </div>
   <div class="row mt-3 justify-content-end">
     <div class="col-auto">
-      <button
-        mat-raised-button
-        type="button"
-        color="accent"
-        (click)="goMaterials()"
-      >
+      <button mat-raised-button type="button" color="accent" (click)="goMaterials()">
         Cancelar
       </button>
     </div>
     <div class="col-auto">
-      <button
-        type="button"
-        mat-raised-button
-        color="primary"
-        [disabled]="formMaterial.invalid"
-        (click)="onSubmit()"
-      >
+      <button type="button" mat-flat-button color="primary" [disabled]="formMaterial.invalid" (click)="onSubmit()">
         Guardar
       </button>
     </div>
