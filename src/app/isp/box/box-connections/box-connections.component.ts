@@ -42,8 +42,8 @@ export class BoxConnectionsComponent
   markers: L.Marker[] = [];
   polylines: L.Polyline[] = [];
 
-  // Default to a generic location until city is picked
-  initCoords: [number, number] = [-12.046374, -77.042793];
+  // Punto por defecto: Pueblo Nuevo (Piura), hasta que se ajuste a los marcadores
+  initCoords: [number, number] = [-4.9083929570907, -81.057300567627];
 
   // Drawing Mode
   isDrawingMode: boolean = false;
@@ -105,10 +105,9 @@ export class BoxConnectionsComponent
   getCities() {
     this.cityService.getCities().subscribe((res) => {
       this.cities = res.data;
-      if (this.cities.length > 0) {
-        // Auto-select first city
-        this.onCityChange(this.cities[0]);
-      }
+      // No seleccionar ninguna ciudad por defecto: mostrar todas las cajas
+      // para poder trazar rutas de una ciudad a otra.
+      this.onCityChange(null);
     });
   }
 
@@ -171,13 +170,75 @@ export class BoxConnectionsComponent
     }
   }
 
-  onCityChange(city: City) {
+  onCityChange(city: City | null) {
     this.selectedCity = city;
-    this.selectedCityId = city.id;
-    this.map.setView(city.coordinates, 15);
-    this.filteredBoxes = this.boxes.filter((b) => b.city_id === city.id);
+
+    if (city) {
+      this.selectedCityId = city.id;
+      this.map.setView(city.coordinates, 15);
+      this.filteredBoxes = this.boxes.filter((b) => b.city_id === city.id);
+    } else {
+      // "Todas las ciudades": mostrar todas las cajas y ajustar el mapa
+      this.selectedCityId = null;
+      this.filteredBoxes = this.boxes;
+    }
+
     this.drawMarkers();
+
+    if (!city) {
+      this.fitMapToMarkers();
+    }
+
     this.loadRoutes();
+  }
+
+  // Descarta coordenadas fuera de rango o el placeholder (0,0) "Null Island"
+  isValidCoordinate(lat: number, lng: number): boolean {
+    if (isNaN(lat) || isNaN(lng)) return false;
+    if (lat === 0 && lng === 0) return false;
+    return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+  }
+
+  private static readonly MIN_ZOOM = 11;
+  // Radio alrededor de la mediana de coordenadas: cualquier caja más lejos
+  // que esto se considera un error de digitación y se ignora al encuadrar
+  // el mapa (pero sigue mostrándose como marcador).
+  private static readonly OUTLIER_RADIUS_METERS = 100000;
+
+  private median(values: number[]): number {
+    const sorted = [...values].sort((a, b) => a - b);
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 !== 0
+      ? sorted[mid]
+      : (sorted[mid - 1] + sorted[mid]) / 2;
+  }
+
+  // Ajusta el zoom/centro del mapa para que las cajas sean visibles, sin que
+  // una caja con coordenadas erróneas muy alejadas distorsione el encuadre.
+  fitMapToMarkers() {
+    if (this.markers.length === 0) return;
+
+    const latLngs = this.markers.map((m) => m.getLatLng());
+    const medianPoint = L.latLng(
+      this.median(latLngs.map((p) => p.lat)),
+      this.median(latLngs.map((p) => p.lng)),
+    );
+
+    const nearMedian = latLngs.filter(
+      (p) =>
+        medianPoint.distanceTo(p) <=
+        BoxConnectionsComponent.OUTLIER_RADIUS_METERS,
+    );
+
+    const bounds = L.latLngBounds(
+      nearMedian.length > 0 ? nearMedian : latLngs,
+    ).pad(0.1);
+
+    const zoom = Math.max(
+      this.map.getBoundsZoom(bounds),
+      BoxConnectionsComponent.MIN_ZOOM,
+    );
+    this.map.setView(bounds.getCenter(), zoom);
   }
 
   drawMarkers() {
@@ -204,6 +265,14 @@ export class BoxConnectionsComponent
       if (box.coordinates && box.coordinates.length >= 2) {
         const lat = parseFloat(box.coordinates[0]);
         const lng = parseFloat(box.coordinates[1]);
+
+        if (!this.isValidCoordinate(lat, lng)) {
+          console.warn(
+            `Caja "${box.name}" (id ${box.id}) tiene coordenadas inválidas y no se mostrará en el mapa:`,
+            box.coordinates,
+          );
+          return;
+        }
 
         const icon =
           box.type && box.type.toLowerCase() === 'mufa'
@@ -295,8 +364,8 @@ export class BoxConnectionsComponent
   }
 
   openAddRouteDialog(startId?: number, endId?: number, routeToEdit?: any) {
-    if (!this.selectedCityId) {
-      Swal.fire('Atención', 'Seleccione una ciudad primero', 'warning');
+    if (this.filteredBoxes.length === 0) {
+      Swal.fire('Atención', 'No hay cajas disponibles para crear una ruta', 'warning');
       return;
     }
 

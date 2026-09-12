@@ -4,6 +4,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Seleccione Ciudad</mat-label>
         <mat-select [(value)]="selectedCity" (selectionChange)="onCityChange($event.value)">
+          <mat-option [value]="null">Todas las ciudades</mat-option>
           <mat-option *ngFor="let city of cities" [value]="city">
             {{ city.name }}
           </mat-option>
@@ -24,7 +25,7 @@
         mat-raised-button
         color="primary"
         (click)="openAddRouteDialog()"
-        [disabled]="!selectedCityId || isDrawingMode"
+        [disabled]="!filteredBoxes.length || isDrawingMode"
       >
         <mat-icon>add</mat-icon>Ruta Directa
       </button>
@@ -34,7 +35,7 @@
         color="warn"
         class="ml-2"
         (click)="openConnectionsList()"
-        [disabled]="!selectedCityId"
+        [disabled]="!boxes.length"
       >
         <mat-icon>list</mat-icon> Tabla de Conexiones
       </button>
@@ -44,7 +45,7 @@
         class="ml-2"
         color="accent"
         (click)="exportPdf()"
-        [disabled]="!selectedCityId"
+        [disabled]="!boxes.length"
       >
         <mat-icon>print</mat-icon> Imprimir / Exportar
       </button>
@@ -64,8 +65,8 @@
     mat-fab 
     color="primary" 
     class="filter-fab" 
-    (click)="openFilterDialog()" 
-    [disabled]="!selectedCityId"
+    (click)="openFilterDialog()"
+    [disabled]="!boxes.length"
     matTooltip="Filtrar Rutas"
   >
     <mat-icon>filter_list</mat-icon>
