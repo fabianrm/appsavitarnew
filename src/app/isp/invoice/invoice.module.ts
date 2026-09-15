@@ -20,6 +20,7 @@ import { InvoiceReportComponent } from './invoice-report/invoice-report.componen
 import { MatListModule } from '@angular/material/list';
 import { CancelInvoiceComponent } from './cancel-invoice/cancel-invoice.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDatepickerModule,
     MatSelectModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ]
 })
 export class InvoiceModule { }

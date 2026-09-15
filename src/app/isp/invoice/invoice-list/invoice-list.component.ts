@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -37,8 +38,10 @@ export class InvoiceListComponent implements OnInit {
 
   status?: string = '';
   qCustomer?: string = '';
-  qDesde?: Date | null;
-  qHasta?: Date | null;
+  rangoFechas = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
   qCity?: string = '';
 
   qf1?: string = '';
@@ -172,17 +175,11 @@ export class InvoiceListComponent implements OnInit {
 
   searchInvoices() {
 
-    if (this.qDesde === undefined || this.qDesde == null) {
-      this.qf1 = ''
-    } else {
-      this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
-    }
+    const desde = this.rangoFechas.value.start;
+    const hasta = this.rangoFechas.value.end;
 
-    if (this.qHasta === undefined || this.qDesde == null) {
-      this.qf2 = ''
-    } else {
-      this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
-    }
+    this.qf1 = desde ? String(desde.toISOString().split('T')[0]) : '';
+    this.qf2 = hasta ? String(hasta.toISOString().split('T')[0]) : '';
 
     console.log(this.status);
 
@@ -193,17 +190,11 @@ export class InvoiceListComponent implements OnInit {
   //Export
   exportInvoices() {
 
-    if (this.qDesde === undefined || this.qDesde == null) {
-      this.qf1 = ''
-    } else {
-      this.qf1 = String(this.qDesde?.toISOString().split('T')[0]);
-    }
+    const desde = this.rangoFechas.value.start;
+    const hasta = this.rangoFechas.value.end;
 
-    if (this.qHasta === undefined || this.qDesde == null) {
-      this.qf2 = ''
-    } else {
-      this.qf2 = String(this.qHasta?.toISOString().split('T')[0]);
-    }
+    this.qf1 = desde ? String(desde.toISOString().split('T')[0]) : '';
+    this.qf2 = hasta ? String(hasta.toISOString().split('T')[0]) : '';
 
     // if (this.qCity === undefined || this.qCity == null) {
     //   this.qCity = ''

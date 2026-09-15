@@ -12,32 +12,23 @@
       </mat-form-field>
     </div>
 
-    <div class="col-6 col-md-2">
-      <mat-form-field>
-        <mat-label>Desde</mat-label>
-        <input matInput [matDatepicker]="pickerDesde" [(ngModel)]="qDesde" />
+    <div class="col-12 col-md-3">
+      <mat-form-field class="control-full-width">
+        <mat-label>Desde - Hasta</mat-label>
+        <mat-date-range-input [formGroup]="rangoFechas" [rangePicker]="pickerRango">
+          <input matStartDate formControlName="start" placeholder="Desde" />
+          <input matEndDate formControlName="end" placeholder="Hasta" />
+        </mat-date-range-input>
         <mat-datepicker-toggle
           matIconSuffix
-          [for]="pickerDesde"
+          [for]="pickerRango"
         ></mat-datepicker-toggle>
-        <mat-datepicker #pickerDesde></mat-datepicker>
+        <mat-date-range-picker #pickerRango></mat-date-range-picker>
       </mat-form-field>
     </div>
 
-    <div class="col-6 col-md-2">
-      <mat-form-field>
-        <mat-label>Hasta</mat-label>
-        <input matInput [matDatepicker]="pickerHasta" [(ngModel)]="qHasta" />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="pickerHasta"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #pickerHasta></mat-datepicker>
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 col-md-1">
-      <mat-form-field>
+    <div class="col-12 col-md-2">
+      <mat-form-field class="control-full-width">
         <mat-label>Estado</mat-label>
         <mat-select [(value)]="status" multiple>
           @for (status of statusList; track status) {
@@ -62,68 +53,63 @@
       </mat-form-field>
     </div>
 
-    <div class="col-12 col-md-1 mb-2">
+    <div class="col-auto mb-2 filter-actions">
       <button
-        (click)="searchInvoices()"
         mat-flat-button
         color="accent"
-        class="w-100"
+        matTooltip="Filtrar"
+        (click)="searchInvoices()"
       >
+        <mat-icon>filter_alt</mat-icon>
         Filtrar
       </button>
-    </div>
 
-    <div class="col-12 col-md-1 mb-2">
       <button
+        mat-flat-button
+        color="accent"
+        matTooltip="Exportar a Excel"
         (click)="exportInvoices()"
-        mat-flat-button
-        color="accent"
-        class="w-100"
       >
-        Exportar
+        <mat-icon>file_download</mat-icon>
+        Excel
       </button>
-    </div>
 
-    <div class="col-12 col-md-1 mb-2">
       <button
-        (click)="generateInvoices()"
         mat-flat-button
         color="accent"
-        class="w-100"
+        matTooltip="Generar facturas"
+        (click)="generateInvoices()"
       >
-        Gen. Fact.
+        <mat-icon>receipt_long</mat-icon>
+        Gen.Fact
       </button>
-    </div>
-
-    <div class="col-12 col-md-1 mb-2">
-      <mat-menu #columnasMenu="matMenu">
-        <div (click)="$event.stopPropagation()" class="columnas-menu-content">
-          <mat-selection-list #columnasList [multiple]="true">
-            <mat-list-option
-              *ngFor="let columna of availableColumns"
-              [value]="columna"
-              [selected]="displayedColumns.includes(columna)"
-            >
-              {{ columna | titlecase }}
-            </mat-list-option>
-          </mat-selection-list>
-          <div class="menu-actions">
-            <button
-              mat-button
-              (click)="
-                actualizarColumnasVisibles(
-                  columnasList.selectedOptions.selected
-                );
-                columnasMenuTrigger.closeMenu()
-              "
-            >
-              Aplicar
-            </button>
-          </div>
-        </div>
-      </mat-menu>
     </div>
   </div>
+
+  <mat-menu #columnasMenu="matMenu">
+    <div (click)="$event.stopPropagation()" class="columnas-menu-content">
+      <mat-selection-list #columnasList [multiple]="true">
+        <mat-list-option
+          *ngFor="let columna of availableColumns"
+          [value]="columna"
+          [selected]="displayedColumns.includes(columna)"
+        >
+          {{ columna | titlecase }}
+        </mat-list-option>
+      </mat-selection-list>
+      <div class="menu-actions">
+        <button
+          mat-button
+          (click)="
+            actualizarColumnasVisibles(columnasList.selectedOptions.selected);
+            columnasMenuTrigger.closeMenu()
+          "
+        >
+          Aplicar
+        </button>
+      </div>
+    </div>
+  </mat-menu>
 
   <!-- Tabla -->
 
