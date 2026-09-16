@@ -1,4 +1,109 @@
-/* td.mat-column-acciones {
-  display: flex;
-  width: 100px;
-} */
+.table-container {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.connectivity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.connectivity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.connectivity-online {
+  background-color: #e3f7e8;
+  color: #1e7d34;
+}
+.connectivity-online .connectivity-dot {
+  background-color: #2fb350;
+  box-shadow: 0 0 0 3px rgba(47, 179, 80, 0.2);
+}
+
+.connectivity-offline {
+  background-color: #fdeaea;
+  color: #c62828;
+}
+.connectivity-offline .connectivity-dot {
+  background-color: #e53935;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.2);
+}
+
+.connectivity-desconocido {
+  background-color: #f0f1f3;
+  color: #5f6368;
+}
+.connectivity-desconocido .connectivity-dot {
+  background-color: #9aa0a6;
+}
+
+.connectivity-no_monitoreado {
+  background-color: #f0f1f3;
+  color: #9aa0a6;
+}
+.connectivity-no_monitoreado .connectivity-dot {
+  background-color: #c4c7cc;
+}
+
+/* Media Query para dispositivos móviles: la tabla pasa a verse como tarjetas.
+   Angular Material renderiza mat-row/mat-cell con display:flex propio (fila),
+   así que hay que pisar esas clases puntuales con ::ng-deep, no las genéricas
+   table/tr/td (esas pierden la pelea de especificidad contra .mat-mdc-row). */
+@media (max-width: 767px) {
+  :host ::ng-deep .mat-mdc-table {
+    width: 100%;
+    border: none;
+  }
+
+  :host ::ng-deep .mat-mdc-header-row {
+    display: none;
+  }
+
+  :host ::ng-deep .mat-mdc-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    border: 1px solid rgb(194, 189, 189);
+    border-radius: 8px;
+    padding: 1em;
+    margin-bottom: 1em;
+  }
+
+  :host ::ng-deep .mat-mdc-cell {
+    font-size: 0.85em;
+    display: flex;
+    align-items: center;
+    border: none;
+    line-height: 1.8em;
+    padding: 0.25em 0;
+  }
+
+  :host ::ng-deep .mat-mdc-cell[data-title]::before {
+    content: attr(data-title);
+    font-weight: bold;
+    flex-basis: 40%;
+    flex-shrink: 0;
+  }
+
+  :host ::ng-deep .mat-mdc-cell.mat-column-acciones {
+    justify-content: flex-end;
+  }
+
+  :host ::ng-deep .mat-mdc-cell.mat-column-acciones::before {
+    content: none;
+  }
+}

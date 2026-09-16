@@ -23,8 +23,8 @@ import Swal from 'sweetalert2';
 })
 export class RouterListComponent {
 
-  availableColumns: string[] = ['id', 'ip', 'usuario', 'password', 'port', 'api_connection', 'status', 'acciones'];
-  displayedColumns: string[] = ['id', 'ip', 'usuario', 'status', 'acciones'];
+  availableColumns: string[] = ['id', 'ip', 'usuario', 'password', 'port', 'api_connection', 'connectivity', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'ip', 'connectivity', 'status', 'acciones'];
   public dataSource!: MatTableDataSource<CRouter[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -160,5 +160,38 @@ export class RouterListComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  connectivityLabel(status?: string): string {
+    switch (status) {
+      case 'online':
+        return 'En línea';
+      case 'offline':
+        return 'Sin conexión';
+      case 'no_monitoreado':
+        return 'Sin monitoreo';
+      default:
+        return 'Verificando...';
+    }
+  }
+
+  connectivityTitle(connectivity?: { status: string; checked_at: string | null }): string {
+    if (!connectivity || connectivity.status === 'no_monitoreado') {
+      return 'Este router no tiene túnel activo para monitorear su conectividad';
+    }
+    if (!connectivity.checked_at) {
+      return 'Todavía no hay un chequeo registrado';
+    }
+    return 'Último chequeo: ' + this.timeAgo(connectivity.checked_at);
+  }
+
+  private timeAgo(iso: string): string {
+    const diffMs = Date.now() - new Date(iso).getTime();
+    const minutes = Math.round(diffMs / 60000);
+    if (minutes < 1) return 'hace instantes';
+    if (minutes === 1) return 'hace 1 minuto';
+    if (minutes < 60) return `hace ${minutes} minutos`;
+    const hours = Math.round(minutes / 60);
+    return hours === 1 ? 'hace 1 hora' : `hace ${hours} horas`;
   }
 }

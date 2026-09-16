@@ -32,7 +32,7 @@
       <!-- id Video -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">ID</th>
-        <td class="center" mat-cell *matCellDef="let element">
+        <td class="center" data-title="ID" mat-cell *matCellDef="let element">
           {{ element.id }}
         </td>
       </ng-container>
@@ -40,7 +40,7 @@
       <!-- Documento Column -->
       <ng-container matColumnDef="ip">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">IP</th>
-        <td class="center" mat-cell *matCellDef="let element">
+        <td class="center" data-title="IP" mat-cell *matCellDef="let element">
           {{ element.ip }}
         </td>
       </ng-container>
@@ -48,31 +48,46 @@
       <!-- Direccion Column -->
       <ng-container matColumnDef="usuario">
         <th mat-header-cell *matHeaderCellDef>Usuario</th>
-        <td mat-cell *matCellDef="let element">{{ element.usuario }}</td>
+        <td data-title="Usuario" mat-cell *matCellDef="let element">{{ element.usuario }}</td>
       </ng-container>
 
       <!-- Direccion Column -->
       <ng-container matColumnDef="password">
         <th mat-header-cell *matHeaderCellDef>Password</th>
-        <td mat-cell *matCellDef="let element">{{ element.password }}</td>
+        <td data-title="Password" mat-cell *matCellDef="let element">{{ element.password }}</td>
       </ng-container>
 
       <!-- Latitude Column -->
       <ng-container matColumnDef="port">
         <th mat-header-cell *matHeaderCellDef>Port</th>
-        <td mat-cell *matCellDef="let element">{{ element.port }}</td>
+        <td data-title="Port" mat-cell *matCellDef="let element">{{ element.port }}</td>
       </ng-container>
 
       <!-- Longitude Column -->
       <ng-container matColumnDef="api_connection">
         <th mat-header-cell *matHeaderCellDef>API</th>
-        <td mat-cell *matCellDef="let element">{{ element.api_connection }}</td>
+        <td data-title="API" mat-cell *matCellDef="let element">{{ element.api_connection }}</td>
+      </ng-container>
+
+      <!-- Conectividad Column -->
+      <ng-container matColumnDef="connectivity">
+        <th mat-header-cell *matHeaderCellDef>Conectividad</th>
+        <td data-title="Conectividad" mat-cell *matCellDef="let element">
+          <span
+            class="connectivity-badge"
+            [ngClass]="'connectivity-' + (element.connectivity?.status || 'desconocido')"
+            [title]="connectivityTitle(element.connectivity)"
+          >
+            <span class="connectivity-dot"></span>
+            {{ connectivityLabel(element.connectivity?.status) }}
+          </span>
+        </td>
       </ng-container>
 
       <!-- Estado Column -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="">Estado</th>
-        <td mat-cell *matCellDef="let element">
+        <td data-title="Estado" mat-cell *matCellDef="let element">
           <span
             [ngClass]="{
               'status-active': element.status == 1,
@@ -93,6 +108,7 @@
         <td
           mat-cell
           *matCellDef="let row"
+          data-title="Acciones"
           class="menu-actions"
           style="text-align: center"
         >
