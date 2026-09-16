@@ -36,6 +36,70 @@
   color: #c62828;
 }
 
+.traffic-card {
+  padding: 1em !important;
+  margin-bottom: 1.5em;
+}
+
+.traffic-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.interface-select {
+  min-width: 260px;
+}
+
+.iface-type {
+  color: #888;
+  font-size: 0.85em;
+}
+
+.traffic-error {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  color: #c62828;
+  font-size: 0.85em;
+  margin-bottom: 0.5em;
+}
+
+.traffic-live-values {
+  display: flex;
+  gap: 2em;
+  margin-bottom: 1em;
+}
+
+.traffic-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+  font-size: 1em;
+  color: #555;
+}
+
+.traffic-value.rx { color: #1565c0; }
+.traffic-value.tx { color: #ef6c00; }
+
+.traffic-value mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.traffic-number {
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+.center-message.small {
+  padding: 1.5em 1em;
+}
+
 .center-message {
   display: flex;
   align-items: center;

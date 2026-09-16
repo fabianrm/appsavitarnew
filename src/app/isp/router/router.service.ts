@@ -71,4 +71,30 @@ export class RouterService {
     return this.clienteHttp.get<RouterMetricsResponse>(this.API + 'routers/' + id + '/metrics', { headers: this.headers });
   }
 
+  getRouterInterfaces(id: number): Observable<{ data: RouterInterface[] }> {
+    return this.clienteHttp.get<{ data: RouterInterface[] }>(this.API + 'routers/' + id + '/interfaces', { headers: this.headers });
+  }
+
+  getRouterTraffic(id: number, interfaceName: string): Observable<RouterTraffic> {
+    return this.clienteHttp.get<RouterTraffic>(this.API + 'routers/' + id + '/traffic', {
+      headers: this.headers,
+      params: { interface: interfaceName },
+    });
+  }
+
+}
+
+export interface RouterInterface {
+  name: string;
+  type: string;
+  running: boolean;
+}
+
+export interface RouterTraffic {
+  interface: string;
+  rx_bps: number;
+  tx_bps: number;
+  rx_pps: number;
+  tx_pps: number;
+  timestamp: string;
 }

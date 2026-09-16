@@ -64,6 +64,46 @@
       </mat-card>
     </div>
 
+    <mat-card class="traffic-card">
+      <div class="traffic-header">
+        <span class="chart-title">Tráfico en vivo</span>
+        <mat-form-field appearance="outline" class="interface-select">
+          <mat-label>Interfaz</mat-label>
+          <mat-select [(ngModel)]="selectedInterface" (selectionChange)="onInterfaceChange($event.value)" [disabled]="interfacesLoading">
+            <mat-option *ngFor="let i of interfaces" [value]="i.name">
+              {{ i.name }} <span class="iface-type">({{ i.type }}{{ i.running ? '' : ', apagada' }})</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="interfacesLoading" class="center-message small">Cargando interfaces...</div>
+      <div *ngIf="interfacesError" class="center-message small error">No se pudieron cargar las interfaces del router.</div>
+
+      <div *ngIf="!interfacesLoading && !selectedInterface" class="center-message small">
+        Elegí una interfaz para ver su tráfico en tiempo real. Se detiene solo al salir de esta pantalla.
+      </div>
+
+      <ng-container *ngIf="selectedInterface">
+        <div class="traffic-error" *ngIf="trafficError">
+          <mat-icon>error</mat-icon> No se pudo leer el tráfico, reintentando...
+        </div>
+
+        <div class="traffic-live-values">
+          <div class="traffic-value rx">
+            <mat-icon>arrow_downward</mat-icon>
+            <span class="traffic-number">{{ formatMbps(currentTraffic?.rx_bps) }}</span> Mbps
+          </div>
+          <div class="traffic-value tx">
+            <mat-icon>arrow_upward</mat-icon>
+            <span class="traffic-number">{{ formatMbps(currentTraffic?.tx_bps) }}</span> Mbps
+          </div>
+        </div>
+
+        <canvas #trafficChart></canvas>
+      </ng-container>
+    </mat-card>
+
     <div *ngIf="!data.history.length" class="center-message">
       Todavía no hay historial de métricas para este router.
     </div>
