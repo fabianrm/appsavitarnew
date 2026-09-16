@@ -11,6 +11,7 @@ import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { AssignTicketComponent } from '../assign-ticket/assign-ticket.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-ticket',
@@ -169,6 +170,35 @@ export class ListTicketComponent implements OnInit {
 
   registerEvent(id: number) {
     this.router.navigate(['/support/tickets/attend-ticket/' + id]); // Navega al componente "attend"
+  }
+
+  canDelete(row: Ticket): boolean {
+    return row.status === 'registrado' && !row.technician;
+  }
+
+  deleteTicket(id: number) {
+    Swal.fire({
+      title: '¿Esta seguro?',
+      text: 'No podrá recuperar este ticket después de eliminarlo!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#43a047',
+      cancelButtonColor: '#e91e63',
+      confirmButtonText: 'Si, eliminar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ticketService.deleteTicket(id).subscribe({
+          next: () => {
+            Swal.fire('Eliminado!', 'El ticket fue eliminado correctamente', 'success');
+          },
+          error: (error) => {
+            this.snackbarService.showError(
+              error?.error?.message || 'Ocurrio un error al eliminar el ticket',
+            );
+          },
+        });
+      }
+    });
   }
 
 

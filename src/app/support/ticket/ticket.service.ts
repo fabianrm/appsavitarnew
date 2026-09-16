@@ -122,4 +122,14 @@ export class TicketService {
         }),
       );
   }
+
+  deleteTicket(id: number): Observable<any> {
+    return this.clienteHttp
+      .delete(this.API + 'support/' + id, { headers: this.headers })
+      .pipe(
+        tap(() => {
+          this._refresh$.next();
+        }),
+      );
+  }
 }

@@ -247,6 +247,15 @@
                 <mat-icon matListItemIcon>post_add</mat-icon>
                 Registrar Evento
               </button>
+
+              <button
+                mat-menu-item
+                *ngIf="canDelete(row)"
+                (click)="deleteTicket(row.id)"
+              >
+                <mat-icon matListItemIcon>delete</mat-icon>
+                Eliminar
+              </button>
             </mat-menu>
           </td>
         </ng-container>
