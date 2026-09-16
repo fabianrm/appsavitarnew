@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
 import { EnterpriseService } from '../../isp/enterprise/enterprise.service';
 import { Enterprise } from '../../isp/enterprise/models';
 import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { PushNotificationService } from '../../shared/services/push-notification.service';
 
 @Component({
   selector: 'app-auth',
@@ -28,7 +29,8 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private enterpriseService: EnterpriseService,
     private snackbarService: SnackbarService,
-    private _snackBar: MatSnackBar,) { }
+    private _snackBar: MatSnackBar,
+    private pushNotificationService: PushNotificationService,) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -58,6 +60,7 @@ export class AuthComponent implements OnInit {
           localStorage.setItem('enterprise_id', response.enterprise.id.toString());
           localStorage.setItem('enterprise_name', response.enterprise.name.toString());
           this.setEnterprise(response.enterprise.id);
+          this.pushNotificationService.subscribeIfTechnician();
         })
       ).subscribe({
         next: (response) => {

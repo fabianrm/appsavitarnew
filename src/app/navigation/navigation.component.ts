@@ -160,6 +160,7 @@ export class NavigationComponent implements OnInit {
         localStorage.removeItem('enterprise_id');
         localStorage.removeItem('enterprise_name');
         localStorage.removeItem('theme');
+        localStorage.removeItem('push_subscribed');
         this.router.navigate(['/login']);
       },
       (error) => {
