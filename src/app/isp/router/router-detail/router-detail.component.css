@@ -71,6 +71,12 @@
 .traffic-live-values {
   display: flex;
   gap: 2em;
+  margin-bottom: 0.4em;
+}
+
+.traffic-hint {
+  font-size: 0.75em;
+  color: #888;
   margin-bottom: 1em;
 }
 

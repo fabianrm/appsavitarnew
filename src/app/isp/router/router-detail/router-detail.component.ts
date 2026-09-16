@@ -151,7 +151,7 @@ export class RouterDetailComponent implements OnInit, OnDestroy {
           labels: this.trafficLabels,
           datasets: [
             {
-              label: 'Descarga (Mbps)',
+              label: 'RX (Mbps)',
               data: this.trafficRx,
               borderColor: 'rgb(54, 162, 235)',
               backgroundColor: 'rgba(54, 162, 235, 0.15)',
@@ -160,7 +160,7 @@ export class RouterDetailComponent implements OnInit, OnDestroy {
               pointRadius: 0,
             },
             {
-              label: 'Subida (Mbps)',
+              label: 'TX (Mbps)',
               data: this.trafficTx,
               borderColor: 'rgb(255, 159, 64)',
               backgroundColor: 'rgba(255, 159, 64, 0.15)',

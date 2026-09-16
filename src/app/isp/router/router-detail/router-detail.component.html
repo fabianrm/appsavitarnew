@@ -91,13 +91,16 @@
 
         <div class="traffic-live-values">
           <div class="traffic-value rx">
-            <mat-icon>arrow_downward</mat-icon>
+            <mat-icon>arrow_downward</mat-icon> RX
             <span class="traffic-number">{{ formatMbps(currentTraffic?.rx_bps) }}</span> Mbps
           </div>
           <div class="traffic-value tx">
-            <mat-icon>arrow_upward</mat-icon>
+            <mat-icon>arrow_upward</mat-icon> TX
             <span class="traffic-number">{{ formatMbps(currentTraffic?.tx_bps) }}</span> Mbps
           </div>
+        </div>
+        <div class="traffic-hint">
+          RX = lo que recibe esta interfaz, TX = lo que envía. Si es una interfaz hacia clientes (OLT, VLAN de PPPoE), TX suele ser la "descarga" agregada de todos ellos, no al revés.
         </div>
 
         <canvas #trafficChart></canvas>
