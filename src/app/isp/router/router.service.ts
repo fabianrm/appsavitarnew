@@ -77,7 +77,7 @@ export class RouterService {
 
   getRouterTraffic(id: number, interfaceName: string): Observable<RouterTraffic> {
     return this.clienteHttp.get<RouterTraffic>(this.API + 'routers/' + id + '/traffic', {
-      headers: this.headers,
+      headers: this.headers.set('X-Skip-Spinner', '1'),
       params: { interface: interfaceName },
     });
   }
