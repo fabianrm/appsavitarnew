@@ -22,6 +22,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { TestComponent } from './test/test.component';
 import { InfiltradosComponent } from './infiltrados/infiltrados.component';
+import { RouterDetailComponent } from './router-detail/router-detail.component';
 
 
 
@@ -31,7 +32,8 @@ import { InfiltradosComponent } from './infiltrados/infiltrados.component';
     RouterCreateComponent,
     RouterEditComponent,
     TestComponent,
-    InfiltradosComponent
+    InfiltradosComponent,
+    RouterDetailComponent
   ],
   imports: [
     CommonModule,

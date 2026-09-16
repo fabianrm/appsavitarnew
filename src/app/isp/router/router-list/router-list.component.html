@@ -116,6 +116,11 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/dashboard/router/routers', row.id, 'monitor']">
+              <mat-icon matListItemIcon>monitor_heart</mat-icon>
+              Ver monitoreo
+            </button>
+
             <button mat-menu-item (click)="openEditDialog(row.id)">
               <mat-icon matListItemIcon>edit</mat-icon>
               Editar

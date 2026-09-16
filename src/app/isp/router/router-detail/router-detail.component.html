@@ -1,0 +1,74 @@
+<div class="contenedor">
+  <div class="header-row">
+    <button mat-icon-button [routerLink]="['/dashboard/router/routers']">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2>Router {{ data?.router?.ip || ('#' + routerId) }}</h2>
+    <button mat-icon-button (click)="load()" title="Actualizar">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="center-message">
+    <mat-icon class="spin">autorenew</mat-icon> Cargando...
+  </div>
+
+  <div *ngIf="!loading && error" class="center-message error">
+    No se pudo cargar la información del router.
+  </div>
+
+  <ng-container *ngIf="!loading && !error && data">
+    <div class="cards-grid">
+      <mat-card class="metric-card" [ngClass]="statusClass()">
+        <span class="metric-label"><mat-icon>bolt</mat-icon> Status</span>
+        <span class="metric-value">
+          <span class="status-dot"></span>{{ statusLabel() }}
+        </span>
+        <span class="metric-sub" *ngIf="data.connectivity.checked_at">
+          Última verificación: {{ data.connectivity.checked_at | date: 'short' }}
+        </span>
+      </mat-card>
+
+      <mat-card class="metric-card accent-blue">
+        <span class="metric-label"><mat-icon>schedule</mat-icon> Uptime</span>
+        <span class="metric-value">{{ formatUptime(data.latest?.uptime) }}</span>
+      </mat-card>
+
+      <mat-card class="metric-card accent-indigo">
+        <span class="metric-label"><mat-icon>memory</mat-icon> CPU</span>
+        <span class="metric-value">{{ cpuPercent() }}%</span>
+        <div class="progress-track"><div class="progress-fill" [style.width.%]="cpuPercent()"></div></div>
+      </mat-card>
+
+      <mat-card class="metric-card accent-green">
+        <span class="metric-label"><mat-icon>developer_board</mat-icon> Memoria</span>
+        <span class="metric-value">{{ memPercent() }}%</span>
+        <span class="metric-sub">{{ formatBytes(data.latest?.mem_used) }} / {{ formatBytes(data.latest?.mem_total) }}</span>
+        <div class="progress-track"><div class="progress-fill" [style.width.%]="memPercent()"></div></div>
+      </mat-card>
+
+      <mat-card class="metric-card accent-orange">
+        <span class="metric-label"><mat-icon>storage</mat-icon> Disco</span>
+        <span class="metric-value">{{ diskPercent() }}%</span>
+        <span class="metric-sub">{{ formatBytes(data.latest?.disk_used) }} / {{ formatBytes(data.latest?.disk_total) }}</span>
+        <div class="progress-track"><div class="progress-fill" [style.width.%]="diskPercent()"></div></div>
+      </mat-card>
+    </div>
+
+    <div *ngIf="!data.history.length" class="center-message">
+      Todavía no hay historial de métricas para este router.
+    </div>
+
+    <div class="charts-grid" *ngIf="data.history.length">
+      <mat-card class="chart-card">
+        <span class="chart-title">CPU Usage (últimos 7 días)</span>
+        <canvas #cpuChart></canvas>
+      </mat-card>
+
+      <mat-card class="chart-card">
+        <span class="chart-title">Memory Usage (últimos 7 días)</span>
+        <canvas #memChart></canvas>
+      </mat-card>
+    </div>
+  </ng-container>
+</div>
