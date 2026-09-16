@@ -21,3 +21,15 @@ export interface RouterMetricsResponse {
   latest: RouterMetricLatest | null;
   history: RouterMetricSample[];
 }
+
+export interface RouterLiveCheck {
+  connectivity: RouterConnectivity;
+  latest: {
+    cpu_load: number;
+    mem_used: number;
+    mem_total: number;
+    disk_used: number;
+    disk_total: number;
+    uptime: string | null;
+  } | null;
+}

@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { ReqRouter } from './Models/ResponseRouter';
 import { TestResponse } from './Models/TestResponse';
 import { SyncResponse } from './Models/SyncResponse';
-import { RouterMetricsResponse } from './Models/RouterMetricsResponse';
+import { RouterMetricsResponse, RouterLiveCheck } from './Models/RouterMetricsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +69,10 @@ export class RouterService {
 
   getRouterMetrics(id: number): Observable<RouterMetricsResponse> {
     return this.clienteHttp.get<RouterMetricsResponse>(this.API + 'routers/' + id + '/metrics', { headers: this.headers });
+  }
+
+  getRouterLiveCheck(id: number): Observable<RouterLiveCheck> {
+    return this.clienteHttp.get<RouterLiveCheck>(this.API + 'routers/' + id + '/live', { headers: this.headers });
   }
 
   getRouterInterfaces(id: number): Observable<{ data: RouterInterface[] }> {

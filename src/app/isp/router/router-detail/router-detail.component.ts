@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { RouterService, RouterInterface } from '../router.service';
 import { RouterMetricsResponse } from '../Models/RouterMetricsResponse';
-import { TestResponse } from '../Models/TestResponse';
 
 const TRAFFIC_POLL_MS = 2000;
 const TRAFFIC_RETRY_MS = 3000;
@@ -27,7 +26,7 @@ export class RouterDetailComponent implements OnInit, OnDestroy {
   error = false;
 
   liveChecking = false;
-  liveResult?: { conectado: boolean; checkedAt: Date };
+  liveJustChecked = false;
 
   interfaces: RouterInterface[] = [];
   interfacesLoading = false;
@@ -205,17 +204,34 @@ export class RouterDetailComponent implements OnInit, OnDestroy {
 
   liveCheck(): void {
     this.liveChecking = true;
-    this.liveResult = undefined;
-    this.routerService.getTestConnection(this.routerId).subscribe({
-      next: (res: TestResponse) => {
+    this.liveJustChecked = false;
+    this.routerService.getRouterLiveCheck(this.routerId).subscribe({
+      next: (res) => {
         this.liveChecking = false;
-        this.liveResult = { conectado: res.conectado, checkedAt: new Date() };
+        this.applyLiveCheck(res.connectivity.status === 'online', res.latest);
       },
       error: () => {
         this.liveChecking = false;
-        this.liveResult = { conectado: false, checkedAt: new Date() };
+        this.applyLiveCheck(false, null);
       },
     });
+  }
+
+  private applyLiveCheck(isUp: boolean, latest: { cpu_load: number; mem_used: number; mem_total: number; disk_used: number; disk_total: number; uptime: string | null } | null): void {
+    if (!this.data) return;
+
+    this.data.connectivity = { status: isUp ? 'online' : 'offline', checked_at: new Date().toISOString() };
+
+    if (latest) {
+      this.data.latest = {
+        ...(this.data.latest ?? { id: 0, router_id: this.routerId, recorded_at: '' }),
+        ...latest,
+        recorded_at: new Date().toISOString(),
+      };
+    }
+
+    this.liveJustChecked = true;
+    setTimeout(() => (this.liveJustChecked = false), 4000);
   }
 
   statusLabel(): string {

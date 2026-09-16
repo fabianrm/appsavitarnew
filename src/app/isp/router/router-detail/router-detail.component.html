@@ -13,9 +13,9 @@
     </button>
   </div>
 
-  <div class="live-result" *ngIf="liveResult" [ngClass]="liveResult.conectado ? 'live-ok' : 'live-fail'">
-    <mat-icon>{{ liveResult.conectado ? 'check_circle' : 'error' }}</mat-icon>
-    {{ liveResult.conectado ? 'Conectado ahora mismo' : 'Sin conexión ahora mismo' }} · {{ liveResult.checkedAt | date: 'HH:mm:ss' }}
+  <div class="live-result live-ok" *ngIf="liveJustChecked">
+    <mat-icon>check_circle</mat-icon>
+    Tarjetas actualizadas con datos en vivo
   </div>
 
   <div *ngIf="loading" class="center-message">
