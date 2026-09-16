@@ -4,9 +4,18 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <h2>Router {{ data?.router?.ip || ('#' + routerId) }}</h2>
+    <button mat-stroked-button (click)="liveCheck()" [disabled]="liveChecking" title="Consulta el estado real en este momento (tarda unos segundos)">
+      <mat-icon [class.spin]="liveChecking">{{ liveChecking ? 'autorenew' : 'bolt' }}</mat-icon>
+      Chequeo en vivo
+    </button>
     <button mat-icon-button (click)="load()" title="Actualizar">
       <mat-icon>refresh</mat-icon>
     </button>
+  </div>
+
+  <div class="live-result" *ngIf="liveResult" [ngClass]="liveResult.conectado ? 'live-ok' : 'live-fail'">
+    <mat-icon>{{ liveResult.conectado ? 'check_circle' : 'error' }}</mat-icon>
+    {{ liveResult.conectado ? 'Conectado ahora mismo' : 'Sin conexión ahora mismo' }} · {{ liveResult.checkedAt | date: 'HH:mm:ss' }}
   </div>
 
   <div *ngIf="loading" class="center-message">

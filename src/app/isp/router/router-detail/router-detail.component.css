@@ -14,6 +14,28 @@
   flex: 1;
 }
 
+.live-result {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  width: fit-content;
+  padding: 0.4em 0.9em;
+  border-radius: 999px;
+  font-size: 0.85em;
+  font-weight: 500;
+  margin-bottom: 1em;
+}
+
+.live-result.live-ok {
+  background-color: #e3f7e8;
+  color: #1e7d34;
+}
+
+.live-result.live-fail {
+  background-color: #fdeaea;
+  color: #c62828;
+}
+
 .center-message {
   display: flex;
   align-items: center;
@@ -152,5 +174,15 @@
 
   .cards-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .header-row {
+    flex-wrap: wrap;
+  }
+
+  .header-row h2 {
+    flex-basis: 100%;
+    order: -1;
+    font-size: 1.2em;
   }
 }

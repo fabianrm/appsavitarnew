@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { RouterService } from '../router.service';
 import { RouterMetricsResponse } from '../Models/RouterMetricsResponse';
+import { TestResponse } from '../Models/TestResponse';
 
 @Component({
   selector: 'app-router-detail',
@@ -19,6 +20,9 @@ export class RouterDetailComponent implements OnInit, OnDestroy {
   data?: RouterMetricsResponse;
   loading = true;
   error = false;
+
+  liveChecking = false;
+  liveResult?: { conectado: boolean; checkedAt: Date };
 
   private cpuChartInstance?: Chart;
   private memChartInstance?: Chart;
@@ -47,6 +51,21 @@ export class RouterDetailComponent implements OnInit, OnDestroy {
       error: () => {
         this.loading = false;
         this.error = true;
+      },
+    });
+  }
+
+  liveCheck(): void {
+    this.liveChecking = true;
+    this.liveResult = undefined;
+    this.routerService.getTestConnection(this.routerId).subscribe({
+      next: (res: TestResponse) => {
+        this.liveChecking = false;
+        this.liveResult = { conectado: res.conectado, checkedAt: new Date() };
+      },
+      error: () => {
+        this.liveChecking = false;
+        this.liveResult = { conectado: false, checkedAt: new Date() };
       },
     });
   }
