@@ -1,22 +1,124 @@
 <div class="contenedor">
-  <div class="row justify-content-end mb-2">
-    <div class="col-12 col-md-6">
-      <!-- Cuadro de búsqueda -->
-      <div class="w-100 w-md-50">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Buscar</mat-label>
-          <mat-icon matPrefix>search</mat-icon>
+  <button
+    mat-icon-button
+    class="toggle-filters-btn"
+    matTooltip="{{ isFilterVisible ? 'Ocultar filtros' : 'Filtros' }}"
+    (click)="toggleFilters()"
+  >
+    <mat-icon>{{ isFilterVisible ? "expand_less" : "search" }}</mat-icon>
+  </button>
+
+  <div class="filter-panel" [@slideInOut]="isFilterVisible">
+    <div class="filter-header">
+      <h3>Filtros</h3>
+      <button
+        mat-icon-button
+        matTooltip="Limpiar filtros"
+        (click)="clearFilters()"
+      >
+        <mat-icon>filter_list_off</mat-icon>
+      </button>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-4">
+        <mat-form-field appearance="outline" class="control-full-width">
+          <mat-label>Código</mat-label>
           <input
             matInput
-            (keyup)="applyFilter($event)"
-            placeholder="Fernando Nizama"
-            #input
+            placeholder="Ej. CT00836"
             autocomplete="off"
+            [(ngModel)]="code"
+            (ngModelChange)="onFilterFieldChange()"
           />
         </mat-form-field>
       </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <mat-form-field appearance="outline" class="control-full-width">
+          <mat-label>Cliente</mat-label>
+          <input
+            matInput
+            placeholder="Ej. Fernando Nizama"
+            autocomplete="off"
+            [(ngModel)]="customerName"
+            (ngModelChange)="onFilterFieldChange()"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <mat-form-field appearance="outline" class="control-full-width">
+          <mat-label>Fecha de instalación</mat-label>
+          <mat-date-range-input
+            [formGroup]="rangoFechas"
+            [rangePicker]="pickerRango"
+          >
+            <input matStartDate formControlName="start" placeholder="Desde" />
+            <input matEndDate formControlName="end" placeholder="Hasta" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerRango"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #pickerRango></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <mat-form-field appearance="outline" class="control-full-width">
+          <mat-label>Plan</mat-label>
+          <mat-select
+            [(ngModel)]="planId"
+            (selectionChange)="searchContracts()"
+          >
+            <mat-option [value]="null">Todos</mat-option>
+            @for (plan of plans; track plan.id) {
+            <mat-option [value]="plan.id">{{ plan.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <mat-form-field appearance="outline" class="control-full-width">
+          <mat-label>Ciudad</mat-label>
+          <mat-select
+            [(ngModel)]="cityId"
+            (selectionChange)="searchContracts()"
+          >
+            <mat-option [value]="null">Todas</mat-option>
+            @for (city of cities; track city.id) {
+            <mat-option [value]="city.id">{{ city.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <mat-form-field appearance="outline" class="control-full-width">
+          <mat-label>Promoción</mat-label>
+          <mat-select
+            [(ngModel)]="promotionId"
+            (selectionChange)="searchContracts()"
+          >
+            <mat-option [value]="null">Todas</mat-option>
+            @for (promotion of promotions; track promotion.id) {
+            <mat-option [value]="promotion.id">{{ promotion.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 filter-actions">
+        <button mat-flat-button color="primary" (click)="searchContracts()">
+          <mat-icon>filter_alt</mat-icon>
+          <span>Filtrar</span>
+        </button>
+      </div>
     </div>
   </div>
+
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- id Video -->
@@ -97,7 +199,7 @@
       <ng-container matColumnDef="promotion">
         <th mat-header-cell *matHeaderCellDef>Promoción</th>
         <td
-          data-title="promotion"
+          data-title="Promoción"
           mat-cell
           *matCellDef="let element"
           class="column-promotion text-center"
@@ -321,7 +423,8 @@
       ></tr>
     </table>
     <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
+      [length]="totalContracts"
+      [pageSizeOptions]="[5, 10, 20, 50]"
       pageSize="10"
       showFirstLastButtons
     >

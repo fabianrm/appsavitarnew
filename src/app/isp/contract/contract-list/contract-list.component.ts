@@ -1,9 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription, startWith } from 'rxjs';
+import {
+  Subscription,
+  Subject,
+  merge,
+  startWith,
+  debounceTime,
+} from 'rxjs';
+import { formatDate } from '@angular/common';
 import { ContractService } from '../contract.service';
 import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-plan.component';
 import { Service } from '../Models/ServiceResponse';
@@ -21,14 +30,27 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { RouterService } from '../../router/router.service';
 import { TestResponse } from '../../router/Models/TestResponse';
 import { ChangeIptvComponent } from '../change-iptv/change-iptv.component';
+import { PlanService } from '../../plan/plan.service';
+import { CityService } from '../../city/city.service';
+import { PromotionService } from '../../promotion/promotion.service';
+import { ReqPlan } from '../../plan/Models/ResponsePlan';
+import { City } from '../../city/Models/CityResponse';
+import { Promotion } from '../../promotion/models';
 
 @Component({
   selector: 'app-contract-list',
   templateUrl: './contract-list.component.html',
   styleUrl: './contract-list.component.scss',
   standalone: false,
+  animations: [
+    trigger('slideInOut', [
+      state('true', style({ height: '*', opacity: 1 })),
+      state('false', style({ height: '0px', opacity: 0 })),
+      transition('true <=> false', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
-export class ContractListComponent implements OnInit {
+export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
   availableColumns: string[] = [
     'id',
     'serviceCode',
@@ -59,64 +81,181 @@ export class ContractListComponent implements OnInit {
     'acciones',
   ];
 
-  public dataSource!: MatTableDataSource<Service>;
+  public dataSource = new MatTableDataSource<Service>();
+  totalContracts = 0;
+  isLoadingResults = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   @ViewChild(MatMenuTrigger) columnasMenuTrigger!: MatMenuTrigger;
 
-  subscription!: Subscription;
+  subscription = new Subscription();
 
   public respuesta!: Service[];
   public contrato!: Service[];
   statusMK: string = '---';
 
+  // Filtros
+  isFilterVisible = false;
+  code: string = '';
+  customerName: string = '';
+  planId: number | null = null;
+  cityId: number | null = null;
+  promotionId: number | null = null;
+  rangoFechas = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
+
+  plans: ReqPlan[] = [];
+  cities: City[] = [];
+  promotions: Promotion[] = [];
+
+  private filterChange$ = new Subject<void>();
+
   constructor(
     private contractService: ContractService,
     private suspensionService: SuspensionService,
     private routerService: RouterService,
+    private planService: PlanService,
+    private cityService: CityService,
+    private promotionService: PromotionService,
     public dialog: MatDialog,
     private router: Router,
     private snackbarService: SnackbarService,
   ) {}
 
+  // true una vez que el usuario modifica el rango de fechas por su cuenta
+  private dateRangeTouched = false;
+
   ngOnInit() {
-    // this.checkMK(row.routerId);
-    this.getContracts();
-    this.subscription = this.contractService.refresh$.subscribe(() => {
-      this.getContracts();
-    });
+    const today = new Date();
+    this.rangoFechas.setValue({ start: today, end: today }, { emitEvent: false });
+
+    this.getPlans();
+    this.getCities();
+    this.getPromotions();
+
+    this.subscription.add(
+      this.rangoFechas.valueChanges
+        .pipe(debounceTime(300))
+        .subscribe(() => {
+          this.dateRangeTouched = true;
+          this.searchContracts();
+        }),
+    );
+
+    this.subscription.add(
+      this.filterChange$
+        .pipe(debounceTime(400))
+        .subscribe(() => this.searchContracts()),
+    );
+
+    this.subscription.add(
+      this.contractService.refresh$.subscribe(() => {
+        this.getContracts();
+      }),
+    );
   }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+
+    this.subscription.add(
+      merge(this.sort.sortChange, this.paginator.page)
+        .pipe(startWith({}))
+        .subscribe(() => this.getContracts()),
+    );
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  getContracts() {
-    this.contractService.getservices().subscribe((respuesta) => {
-      // console.log(respuesta.data.services)
-      if (respuesta.data.length > 0) {
-        this.dataSource = new MatTableDataSource(respuesta.data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+  private buildFilters() {
+    const { start, end } = this.rangoFechas.value;
 
+    return {
+      dateFrom: start ? formatDate(start, 'yyyy-MM-dd', 'en-US') : undefined,
+      dateTo: end ? formatDate(end, 'yyyy-MM-dd', 'en-US') : undefined,
+      code: this.code?.trim() || undefined,
+      customer: this.customerName?.trim() || undefined,
+      planId: this.planId ?? undefined,
+      cityId: this.cityId ?? undefined,
+      promotionId: this.promotionId ?? undefined,
+      page: (this.paginator?.pageIndex ?? 0) + 1,
+      perPage: this.paginator?.pageSize ?? 10,
+    };
+  }
+
+  getContracts() {
+    this.isLoadingResults = true;
+    this.contractService.getservices(this.buildFilters()).subscribe({
+      next: (respuesta) => {
+        this.isLoadingResults = false;
+        this.totalContracts = respuesta.meta?.total ?? respuesta.data.length;
         this.respuesta = respuesta.data;
-      }
-      //  console.log(respuesta)
+        this.dataSource.data = respuesta.data;
+      },
+      error: () => {
+        this.isLoadingResults = false;
+      },
+    });
+  }
+
+  // Reinicia a la primera página y vuelve a consultar con los filtros actuales
+  searchContracts() {
+    // Si el usuario busca por otro campo sin haber tocado la fecha, quitamos
+    // el rango "hoy" que viene por defecto para no combinarlo silenciosamente.
+    if (!this.dateRangeTouched) {
+      this.rangoFechas.setValue({ start: null, end: null }, { emitEvent: false });
+    }
+
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.getContracts();
+  }
+
+  onFilterFieldChange() {
+    this.filterChange$.next();
+  }
+
+  toggleFilters() {
+    this.isFilterVisible = !this.isFilterVisible;
+  }
+
+  clearFilters() {
+    this.code = '';
+    this.customerName = '';
+    this.planId = null;
+    this.cityId = null;
+    this.promotionId = null;
+    this.rangoFechas.setValue({ start: null, end: null }, { emitEvent: false });
+    this.searchContracts();
+  }
+
+  getPlans() {
+    this.planService.getPlans().subscribe((respuesta) => {
+      this.plans = respuesta.data ?? [];
+    });
+  }
+
+  getCities() {
+    this.cityService.getCities().subscribe((respuesta) => {
+      this.cities = respuesta.data ?? [];
+    });
+  }
+
+  getPromotions() {
+    this.promotionService.getPromotions().subscribe((respuesta) => {
+      this.promotions = respuesta.data ?? [];
     });
   }
 
   actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
     this.displayedColumns = columnasSeleccionadas.map((opcion) => opcion.value);
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   goToLinkMap(latitude: string, longitude: string) {

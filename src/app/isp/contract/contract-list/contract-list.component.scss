@@ -2,12 +2,56 @@
   margin: 20px;
 }
 
+mat-form-field {
+  width: 100%;
+}
+
+.toggle-filters-btn {
+  display: flex;
+  margin-left: auto;
+  margin-bottom: 8px;
+}
+
+.filter-panel {
+  overflow: hidden;
+  margin-bottom: 8px;
+
+  .row {
+    row-gap: 16px;
+  }
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 500;
+  }
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+  margin-bottom: 16px;
+
+  ::ng-deep .mdc-button__label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
 /* Tabla responsive con stick */
 
 .table-container {
   height: 100%;
-  width: 100vw;
-  max-width: 100%;
+  width: 100%;
   overflow: auto;
 }
 
@@ -28,25 +72,21 @@ mat-paginator {
     border: none;
   }
 
-  :host {
-    ::ng-deep {
-      table thead {
-        display: none;
-      }
-    }
+  :host ::ng-deep table thead {
+    display: none;
   }
 
-  table tr {
+  :host ::ng-deep .mat-mdc-row {
     display: flex;
     flex-direction: column;
-    height: 240px;
+    height: auto;
     border: 1px solid rgb(194, 189, 189);
     border-radius: 5px;
     padding: 1em;
     margin-bottom: 1em;
   }
 
-  table tr td {
+  :host ::ng-deep .mat-mdc-cell {
     font-size: 0.8em;
     display: flex;
     align-items: center;
@@ -54,8 +94,8 @@ mat-paginator {
     line-height: 1.5em;
   }
 
-  table tr td.mat-column-acciones,
-  table tr td.mat-column-status {
+  :host ::ng-deep .mat-mdc-cell.mat-column-acciones,
+  :host ::ng-deep .mat-mdc-cell.mat-column-status {
     width: 100%;
     height: 3em;
   }
@@ -64,17 +104,18 @@ mat-paginator {
     font-size: 1.5rem;
   }
 
-  table td[data-title] {
+  :host ::ng-deep td[data-title] {
     display: flex;
   }
 
-  table td[data-title]::before {
+  :host ::ng-deep td[data-title]::before {
     content: attr(data-title);
     font-weight: bold;
+    font-size: 0.8rem;
     flex-basis: 30%;
   }
 
-  td:last-child {
+  :host ::ng-deep .mat-mdc-cell:last-child {
     display: flex;
     justify-content: flex-end;
   }

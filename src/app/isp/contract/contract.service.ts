@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable, tap, catchError, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -8,6 +8,18 @@ import {
   ServiceResponse,
   ServiceSingleResponse,
 } from './Models/ServiceResponse';
+
+export interface ServiceListFilters {
+  dateFrom?: string;
+  dateTo?: string;
+  code?: string;
+  customer?: string;
+  planId?: number;
+  cityId?: number;
+  promotionId?: number;
+  page?: number;
+  perPage?: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -28,9 +40,23 @@ export class ContractService {
     Authorization: `Bearer ${localStorage.getItem('token')}`,
   });
 
-  getservices(): Observable<ServiceResponse> {
+  getservices(filters: ServiceListFilters = {}): Observable<ServiceResponse> {
+    let params = new HttpParams();
+
+    if (filters.dateFrom) params = params.set('date_from', filters.dateFrom);
+    if (filters.dateTo) params = params.set('date_to', filters.dateTo);
+    if (filters.code) params = params.set('code', filters.code);
+    if (filters.customer) params = params.set('customer', filters.customer);
+    if (filters.planId) params = params.set('plan_id', filters.planId);
+    if (filters.cityId) params = params.set('city_id', filters.cityId);
+    if (filters.promotionId)
+      params = params.set('promotion_id', filters.promotionId);
+    if (filters.page) params = params.set('page', filters.page);
+    if (filters.perPage) params = params.set('per_page', filters.perPage);
+
     return this.clienteHttp.get<ServiceResponse>(this.API + 'services', {
       headers: this.headers,
+      params,
     });
   }
 

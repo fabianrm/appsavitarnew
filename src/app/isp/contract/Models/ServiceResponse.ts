@@ -1,5 +1,23 @@
 export interface ServiceResponse {
     data: Service[];
+    links?: ServiceLinks;
+    meta?: ServiceMeta;
+}
+
+export interface ServiceLinks {
+    first: string;
+    last: string;
+    prev: string | null;
+    next: string | null;
+}
+
+export interface ServiceMeta {
+    current_page: number;
+    from: number | null;
+    last_page: number;
+    per_page: number;
+    to: number | null;
+    total: number;
 }
 
 export interface ServiceSingleResponse {
