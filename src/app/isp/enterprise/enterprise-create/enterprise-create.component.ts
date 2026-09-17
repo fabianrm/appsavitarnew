@@ -78,7 +78,9 @@ export class EnterpriseCreateComponent {
             address: ['', Validators.required],
             phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
             logo: ['',],
-            status: [this.status]
+            status: [this.status],
+            telegramBotToken: [''],
+            telegramChatId: [''],
         });
     }
 

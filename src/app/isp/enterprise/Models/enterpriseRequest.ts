@@ -7,4 +7,6 @@ export interface EnterpriseRequest {
     phone: string;
     logo: string;
     status: boolean;
+    telegramBotToken?: string;
+    telegramChatId?: string;
 }

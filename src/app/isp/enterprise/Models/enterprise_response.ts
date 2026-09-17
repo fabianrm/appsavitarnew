@@ -7,6 +7,8 @@ export interface Enterprise {
     phone: null;
     logo: string;
     status: boolean;
+    telegramBotToken: string | null;
+    telegramChatId: string | null;
     createdAt: Date;
     updatedAt: Date;
 }

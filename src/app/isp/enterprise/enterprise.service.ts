@@ -34,6 +34,8 @@ export class EnterpriseService {
     formData.append('address', enterprise.address);
     formData.append('phone', enterprise.phone);
     formData.append('status', enterprise.status ? '1' : '0');
+    formData.append('telegramBotToken', enterprise.telegramBotToken ?? '');
+    formData.append('telegramChatId', enterprise.telegramChatId ?? '');
 
     // Adjuntar el archivo de imagen
     if (imageFile) {
@@ -64,6 +66,8 @@ export class EnterpriseService {
     formData.append('address', enterprise.address);
     formData.append('phone', enterprise.phone);
     formData.append('status', enterprise.status ? '1' : '0');
+    formData.append('telegramBotToken', enterprise.telegramBotToken ?? '');
+    formData.append('telegramChatId', enterprise.telegramChatId ?? '');
 
     if (imageFile) {
       formData.append('logo', imageFile);
