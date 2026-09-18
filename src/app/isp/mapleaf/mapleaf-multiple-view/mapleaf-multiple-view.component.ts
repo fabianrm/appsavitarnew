@@ -221,6 +221,12 @@ export class MapleafMultipleViewComponent implements OnInit, AfterViewInit, OnDe
 
     // Añadir nuevos marcadores
     dataPoints.forEach(dataPoint => {
+      const [lat, lng] = dataPoint.coordinates;
+      if (isNaN(lat) || isNaN(lng)) {
+        console.warn(`Caja "${dataPoint.name}" (id ${dataPoint.id}) tiene coordenadas inválidas, se omite del mapa.`);
+        return;
+      }
+
       // 💡 Usa un vínculo <a> con un CustomEvent para ejecutar la lógica de Angular
       const popupContent = `
       <b>${dataPoint.name}</b>

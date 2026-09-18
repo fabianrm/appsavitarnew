@@ -39,14 +39,23 @@ export class FactibillityInfoComponent implements OnInit {
 
   getCoords() {
     this.boxService.getBoxes().subscribe(response => {
-      this.dataPoints = response.data.map((item: any) => ({
-        id: item.id,
-        name: item.name,
-        availablePorts: item.availablePorts,
-        note: item.note,
-        status: item.status,
-        coordinates: [parseFloat(item.coordinates[0]), parseFloat(item.coordinates[1])]
-      }));
+      this.dataPoints = response.data
+        .map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          availablePorts: item.availablePorts,
+          note: item.note,
+          status: item.status,
+          coordinates: [parseFloat(item.coordinates[0]), parseFloat(item.coordinates[1])] as [number, number]
+        }))
+        .filter(dataPoint => {
+          const [lat, lng] = dataPoint.coordinates;
+          const isValid = !isNaN(lat) && !isNaN(lng);
+          if (!isValid) {
+            console.warn(`Caja "${dataPoint.name}" (id ${dataPoint.id}) no tiene coordenadas válidas y no se mostrará en el mapa.`);
+          }
+          return isValid;
+        });
 
       // Actualizamos los puntos de datos en el servicio cuando se obtienen
       this.coordinateService.changeDataPoints(this.dataPoints);
