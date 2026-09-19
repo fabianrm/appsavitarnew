@@ -1,0 +1,65 @@
+<div class="contenedor">
+  <h2>Red</h2>
+  <p class="help-text">
+    Conecta los routers Mikrotik de tu empresa a la red privada para poder monitorearlos y administrarlos.
+  </p>
+
+  <div *ngIf="loading" class="center-message">
+    <mat-icon class="spin">autorenew</mat-icon> Cargando...
+  </div>
+
+  <div *ngIf="!loading && error" class="center-message error">
+    No se pudieron cargar los routers.
+  </div>
+
+  <div *ngIf="!loading && !error && !routers.length" class="center-message">
+    Todavía no tienes routers registrados.
+  </div>
+
+  <mat-card class="router-card" *ngFor="let router of routers">
+    <div class="router-row" (click)="toggleRow(router)">
+      <span class="router-ip">{{ router.ip }}</span>
+      <span class="router-status" [ngClass]="statusClass(router)">
+        <span class="status-dot"></span>{{ statusLabel(router) }}
+      </span>
+      <span class="vpn-status" [class.vpn-active]="vpnConfigured(router)" [class.vpn-pending]="!vpnConfigured(router)">
+        <mat-icon>{{ vpnConfigured(router) ? 'check_circle' : 'warning' }}</mat-icon>
+        {{ vpnConfigured(router) ? 'VPN conectada' : 'Sin VPN configurada' }}
+      </span>
+      <a [routerLink]="['/dashboard/router/routers', router.id, 'monitor']" (click)="$event.stopPropagation()" class="monitor-link">
+        Ver monitoreo
+      </a>
+      <mat-icon class="expand-icon">{{ expandedRouterId === router.id ? 'expand_less' : 'expand_more' }}</mat-icon>
+    </div>
+
+    <div class="router-panel" *ngIf="expandedRouterId === router.id">
+      <ng-container *ngIf="vpnState[router.id] as state">
+        <div class="panel-actions">
+          <button mat-flat-button color="primary" *ngIf="!vpnConfigured(router)" (click)="provisionVpn(router)" [disabled]="state.loading">
+            <mat-icon [class.spin]="state.loading">{{ state.loading ? 'autorenew' : 'vpn_key' }}</mat-icon>
+            Configurar VPN
+          </button>
+          <button mat-stroked-button *ngIf="vpnConfigured(router)" (click)="showVpnScript(router)" [disabled]="state.loading">
+            <mat-icon [class.spin]="state.loading">{{ state.loading ? 'autorenew' : 'description' }}</mat-icon>
+            Ver script de nuevo
+          </button>
+        </div>
+
+        <div class="vpn-error" *ngIf="state.error">
+          <mat-icon>error</mat-icon> {{ state.error }}
+        </div>
+
+        <div class="vpn-script-panel" *ngIf="state.script">
+          <div class="vpn-script-hint">
+            Pega este script <strong>una sola vez</strong> en el Mikrotik (Winbox &gt; New Terminal):
+          </div>
+          <pre class="vpn-script">{{ state.script }}</pre>
+          <button mat-stroked-button (click)="copyVpnScript(router)">
+            <mat-icon>{{ state.copied ? 'check' : 'content_copy' }}</mat-icon>
+            {{ state.copied ? 'Copiado' : 'Copiar script' }}
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </mat-card>
+</div>

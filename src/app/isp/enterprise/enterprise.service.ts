@@ -120,6 +120,34 @@ export class EnterpriseService {
     });
   }
 
+  getMyEnterprise(): Observable<Enterprise> {
+    return this.clienteHttp.get<{ data: Enterprise }>(this.API + 'my-enterprise', { headers: this.headers })
+      .pipe(
+        map(response => response.data),
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
+  updateTelegramConfig(id: number, datos: { telegramBotToken: string; telegramChatId: string }): Observable<Enterprise> {
+    return this.clienteHttp.patch<{ data: Enterprise }>(this.API + 'enterprises/' + id, datos, { headers: this.headers })
+      .pipe(
+        map(response => response.data),
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
+  testTelegram(): Observable<{ success: boolean; message: string }> {
+    return this.clienteHttp.post<{ success: boolean; message: string }>(this.API + 'my-enterprise/test-telegram', {}, { headers: this.headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
 
 }
 

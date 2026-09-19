@@ -1,0 +1,58 @@
+<div class="contenedor">
+  <h2>Notificaciones</h2>
+
+  <div *ngIf="loading" class="center-message">
+    <mat-icon class="spin">autorenew</mat-icon> Cargando...
+  </div>
+
+  <mat-card class="form-card" *ngIf="!loading">
+    <mat-card-content>
+      <p class="help-text">
+        Notificaciones por Telegram (opcional): crea tu propio bot con
+        <a href="https://t.me/BotFather" target="_blank">&#64;BotFather</a>,
+        agrégalo a tu grupo y pega aquí el token y el ID del chat.
+      </p>
+
+      <form [formGroup]="form" class="grid formgrid">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Token del Bot de Telegram</mat-label>
+            <input
+              matInput
+              formControlName="telegramBotToken"
+              placeholder="Ej. 123456789:AAExxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+              autocomplete="off"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Chat ID del grupo</mat-label>
+            <input
+              matInput
+              formControlName="telegramChatId"
+              placeholder="Ej. -1001234567890"
+              autocomplete="off"
+            />
+          </mat-form-field>
+        </div>
+      </form>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" (click)="save()" [disabled]="saving">
+          <mat-icon [class.spin]="saving">{{ saving ? 'autorenew' : 'save' }}</mat-icon>
+          Guardar
+        </button>
+        <button mat-stroked-button (click)="sendTest()" [disabled]="!canTest || testing">
+          <mat-icon [class.spin]="testing">{{ testing ? 'autorenew' : 'send' }}</mat-icon>
+          Enviar mensaje de prueba
+        </button>
+      </div>
+
+      <div class="test-result" *ngIf="testResult" [class.ok]="testResult.success" [class.fail]="!testResult.success">
+        <mat-icon>{{ testResult.success ? 'check_circle' : 'error' }}</mat-icon>
+        {{ testResult.message }}
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

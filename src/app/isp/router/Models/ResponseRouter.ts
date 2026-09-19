@@ -12,6 +12,8 @@ export interface ReqRouter {
     api_connection: string;
     status: number;
     connectivity?: RouterConnectivity;
+    wg_public_key?: string | null;
+    wg_provisioned_at?: string | null;
 }
 
 export interface RouterConnectivity {

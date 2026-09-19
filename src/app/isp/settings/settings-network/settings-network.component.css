@@ -1,0 +1,141 @@
+.contenedor {
+  padding: 1em;
+}
+
+.contenedor h2 {
+  margin: 0 0 0.3em;
+}
+
+.help-text {
+  color: #666;
+  margin-bottom: 1.5em;
+}
+
+.router-card {
+  margin-bottom: 1em;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.router-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  padding: 1em 1.25em;
+  cursor: pointer;
+}
+
+.router-ip {
+  font-weight: 600;
+  min-width: 140px;
+}
+
+.router-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.85em;
+  color: #666;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9aa0a6;
+}
+
+.status-online .status-dot { background: #2fb350; }
+.status-offline .status-dot { background: #e53935; }
+
+.vpn-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.9em;
+  font-weight: 500;
+  flex: 1;
+}
+
+.vpn-status mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.vpn-status.vpn-active { color: #1e7d34; }
+.vpn-status.vpn-pending { color: #b26a00; }
+
+.monitor-link {
+  font-size: 0.85em;
+  color: #4285f4;
+  text-decoration: none;
+}
+
+.monitor-link:hover {
+  text-decoration: underline;
+}
+
+.expand-icon {
+  color: #999;
+}
+
+.router-panel {
+  padding: 0 1.25em 1.25em;
+  border-top: 1px solid #eee;
+}
+
+.panel-actions {
+  margin-top: 1em;
+}
+
+.vpn-error {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  color: #c62828;
+  font-size: 0.85em;
+  margin-top: 0.75em;
+}
+
+.vpn-script-panel {
+  margin-top: 1em;
+}
+
+.vpn-script-hint {
+  font-size: 0.85em;
+  color: #666;
+  margin-bottom: 0.5em;
+}
+
+.vpn-script {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  margin-bottom: 0.5em;
+}
+
+.center-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 3em 1em;
+  color: #666;
+}
+
+.center-message.error {
+  color: #c62828;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,61 @@
+.contenedor {
+  padding: 1em;
+}
+
+.contenedor h2 {
+  margin: 0 0 1em;
+}
+
+.form-card {
+  padding: 1em !important;
+  max-width: 720px;
+}
+
+.help-text {
+  color: #666;
+  margin-bottom: 1.5em;
+}
+
+.actions {
+  display: flex;
+  gap: 1em;
+  margin-top: 0.5em;
+}
+
+.test-result {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-top: 1em;
+  padding: 0.6em 1em;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
+.test-result.ok {
+  background-color: #e3f7e8;
+  color: #1e7d34;
+}
+
+.test-result.fail {
+  background-color: #fdeaea;
+  color: #c62828;
+}
+
+.center-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 3em 1em;
+  color: #666;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

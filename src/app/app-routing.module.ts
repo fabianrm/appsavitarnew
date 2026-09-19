@@ -122,6 +122,10 @@ const routes: Routes = [
       {
         path: 'login',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('./isp/settings/settings.module').then(m => m.SettingsModule)
       }
 
     ]
