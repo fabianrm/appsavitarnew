@@ -34,12 +34,12 @@ export class RouterCreateComponent {
   initForm() {
     this.formRouter = this.formulario.group({
 
-      ip: ['', Validators.required],
+      ip: [''],
       vlan: ['', Validators.required],
-      usuario: ['', Validators.required],
-      password: ['', Validators.required],
-      port: ['', Validators.required],
-      apiConnection: ['', Validators.required],
+      usuario: [''],
+      password: [''],
+      port: [''],
+      apiConnection: [''],
       status: [true],
     });
   }

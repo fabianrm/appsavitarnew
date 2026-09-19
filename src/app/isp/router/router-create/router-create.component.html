@@ -5,16 +5,10 @@
       <mat-card-content>
         <div class="vpn-hint-note">
           <mat-icon>info</mat-icon>
-          Si vas a conectar este router por VPN, IP, Usuario, Password, Port y API se reemplazan automáticamente al usar "Configurar VPN" en Configuración → Red — puedes dejar valores provisionales.
+          La conexión (IP, Usuario, Password, Port, API) se configura sola al usar "Configurar VPN" en Configuración → Red. Acá solo hace falta la VLAN.
         </div>
 
         <div class="d-flex">
-          <div class="col-sm-6">
-            <mat-form-field>
-              <mat-label>IP</mat-label>
-              <input matInput placeholder="IP" formControlName="ip" />
-            </mat-form-field>
-          </div>
           <div class="col-sm-6">
             <mat-form-field>
               <mat-label>VLAN</mat-label>
@@ -29,47 +23,6 @@
           </div>
         </div>
 
-        <div class="d-flex">
-          <div class="col-sm-6">
-            <mat-form-field>
-              <mat-label>Usuario</mat-label>
-              <input matInput placeholder="Usuario" formControlName="usuario" />
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-            <mat-form-field>
-              <mat-label>Password</mat-label>
-              <input
-                matInput
-                placeholder="Password"
-                formControlName="password"
-              />
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="d-flex">
-          <div class="col-sm-6">
-            <mat-form-field>
-              <mat-label>Port</mat-label>
-              <input
-                matInput
-                placeholder="Port"
-                formControlName="port"
-                type="number"
-              />
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-            <mat-form-field>
-              <mat-label>API</mat-label>
-              <input
-                matInput
-                placeholder="API"
-                formControlName="apiConnection"
-              />
-            </mat-form-field>
-          </div>
-        </div>
         <div class="d-flex">
           <div class="col-sm-4">
             <mat-slide-toggle [color]="color" [checked]="checked"
