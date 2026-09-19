@@ -16,7 +16,7 @@ export interface RouterMetricLatest extends RouterMetricSample {
 }
 
 export interface RouterMetricsResponse {
-  router: { id: number; ip: string };
+  router: { id: number; ip: string; wg_public_key: string | null; wg_provisioned_at: string | null };
   connectivity: RouterConnectivity;
   latest: RouterMetricLatest | null;
   history: RouterMetricSample[];

@@ -86,6 +86,21 @@ export class RouterService {
     });
   }
 
+  provisionVpn(id: number): Observable<VpnScriptResponse> {
+    return this.clienteHttp.post<VpnScriptResponse>(this.API + 'routers/' + id + '/vpn/provision', {}, { headers: this.headers });
+  }
+
+  getVpnScript(id: number): Observable<VpnScriptResponse> {
+    return this.clienteHttp.get<VpnScriptResponse>(this.API + 'routers/' + id + '/vpn/script', { headers: this.headers });
+  }
+
+}
+
+export interface VpnScriptResponse {
+  success: boolean;
+  ip?: string;
+  script?: string;
+  message?: string;
 }
 
 export interface RouterInterface {

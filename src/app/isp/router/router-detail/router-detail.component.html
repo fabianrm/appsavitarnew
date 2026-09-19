@@ -27,6 +27,47 @@
   </div>
 
   <ng-container *ngIf="!loading && !error && data">
+    <mat-card class="vpn-card">
+      <div class="vpn-header">
+        <span class="chart-title"><mat-icon>vpn_lock</mat-icon> VPN</span>
+
+        <ng-container *ngIf="vpnConfigured(); else notConfigured">
+          <span class="vpn-status vpn-active">
+            <mat-icon>check_circle</mat-icon> VPN activa — IP túnel {{ data.router.ip }}
+          </span>
+          <button mat-stroked-button (click)="showVpnScript()" [disabled]="vpnLoading">
+            <mat-icon [class.spin]="vpnLoading">{{ vpnLoading ? 'autorenew' : 'description' }}</mat-icon>
+            Ver script de nuevo
+          </button>
+        </ng-container>
+
+        <ng-template #notConfigured>
+          <span class="vpn-status vpn-pending">
+            <mat-icon>warning</mat-icon> Sin VPN configurada
+          </span>
+          <button mat-flat-button color="primary" (click)="provisionVpn()" [disabled]="vpnLoading">
+            <mat-icon [class.spin]="vpnLoading">{{ vpnLoading ? 'autorenew' : 'vpn_key' }}</mat-icon>
+            Configurar VPN
+          </button>
+        </ng-template>
+      </div>
+
+      <div class="vpn-error" *ngIf="vpnError">
+        <mat-icon>error</mat-icon> {{ vpnError }}
+      </div>
+
+      <div class="vpn-script-panel" *ngIf="vpnScript">
+        <div class="vpn-script-hint">
+          Pega este script <strong>una sola vez</strong> en el Mikrotik (Winbox &gt; New Terminal):
+        </div>
+        <pre class="vpn-script">{{ vpnScript }}</pre>
+        <button mat-stroked-button (click)="copyVpnScript()">
+          <mat-icon>{{ vpnCopied ? 'check' : 'content_copy' }}</mat-icon>
+          {{ vpnCopied ? 'Copiado' : 'Copiar script' }}
+        </button>
+      </div>
+    </mat-card>
+
     <div class="cards-grid">
       <mat-card class="metric-card" [ngClass]="statusClass()">
         <span class="metric-label"><mat-icon>bolt</mat-icon> Status</span>

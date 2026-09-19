@@ -28,6 +28,11 @@ export class RouterDetailComponent implements OnInit, OnDestroy {
   liveChecking = false;
   liveJustChecked = false;
 
+  vpnLoading = false;
+  vpnError: string | null = null;
+  vpnScript: string | null = null;
+  vpnCopied = false;
+
   interfaces: RouterInterface[] = [];
   interfacesLoading = false;
   interfacesError = false;
@@ -270,6 +275,56 @@ export class RouterDetailComponent implements OnInit, OnDestroy {
   formatBytes(bytes?: number): string {
     if (!bytes) return '0 GB';
     return (bytes / 1024 / 1024 / 1024).toFixed(1) + ' GB';
+  }
+
+  vpnConfigured(): boolean {
+    return !!this.data?.router?.wg_public_key;
+  }
+
+  provisionVpn(): void {
+    this.vpnLoading = true;
+    this.vpnError = null;
+    this.routerService.provisionVpn(this.routerId).subscribe({
+      next: (res) => {
+        this.vpnLoading = false;
+        if (res.success) {
+          this.vpnScript = res.script ?? null;
+          this.load();
+        } else {
+          this.vpnError = res.message ?? 'No se pudo configurar la VPN.';
+        }
+      },
+      error: (err) => {
+        this.vpnLoading = false;
+        this.vpnError = err?.error?.message ?? 'No se pudo configurar la VPN.';
+      },
+    });
+  }
+
+  showVpnScript(): void {
+    this.vpnLoading = true;
+    this.vpnError = null;
+    this.routerService.getVpnScript(this.routerId).subscribe({
+      next: (res) => {
+        this.vpnLoading = false;
+        this.vpnScript = res.success ? (res.script ?? null) : null;
+        if (!res.success) {
+          this.vpnError = res.message ?? 'No se pudo obtener el script.';
+        }
+      },
+      error: (err) => {
+        this.vpnLoading = false;
+        this.vpnError = err?.error?.message ?? 'No se pudo obtener el script.';
+      },
+    });
+  }
+
+  copyVpnScript(): void {
+    if (!this.vpnScript) return;
+    navigator.clipboard.writeText(this.vpnScript).then(() => {
+      this.vpnCopied = true;
+      setTimeout(() => (this.vpnCopied = false), 3000);
+    });
   }
 
   formatUptime(uptime?: string | null): string {
