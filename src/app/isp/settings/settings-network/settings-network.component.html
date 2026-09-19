@@ -51,7 +51,7 @@
 
         <div class="vpn-script-panel" *ngIf="state.script">
           <div class="vpn-script-hint">
-            Pega este script <strong>una sola vez</strong> en el Mikrotik (Winbox &gt; New Terminal):
+            Pega este script <strong>una sola vez</strong> en el Mikrotik (Winbox &gt; New Terminal). También crea el usuario que el sistema usará para administrar el router — no necesitas configurar nada más.
           </div>
           <pre class="vpn-script">{{ state.script }}</pre>
           <button mat-stroked-button (click)="copyVpnScript(router)">
