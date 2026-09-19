@@ -18,6 +18,7 @@ export class RouterEditComponent {
   color: ThemePalette = 'accent';
   checked = (this.getData.status == 1) ? true : false;
   disabled = false;
+  isVpnManaged = !!this.getData.wg_public_key;
 
 
   constructor(public formulario: FormBuilder,

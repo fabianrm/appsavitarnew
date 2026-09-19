@@ -7,11 +7,16 @@
   >
     <mat-card>
       <mat-card-content>
+        <div class="vpn-managed-note" *ngIf="isVpnManaged">
+          <mat-icon>lock</mat-icon>
+          IP, Usuario, Password, Port y API los gestiona la VPN automáticamente. Para cambiarlos, usa Configuración → Red.
+        </div>
+
         <div class="row">
           <div class="col-sm-6">
             <mat-form-field class="w-100">
               <mat-label>IP</mat-label>
-              <input matInput placeholder="IP" formControlName="ip" />
+              <input matInput placeholder="IP" formControlName="ip" [readonly]="isVpnManaged" />
             </mat-form-field>
           </div>
           <div class="col-sm-6">
@@ -26,7 +31,7 @@
           <div class="col-sm-6">
             <mat-form-field class="w-100">
               <mat-label>Usuario</mat-label>
-              <input matInput placeholder="Usuario" formControlName="usuario" />
+              <input matInput placeholder="Usuario" formControlName="usuario" [readonly]="isVpnManaged" />
             </mat-form-field>
           </div>
           <div class="col-sm-6">
@@ -36,6 +41,7 @@
                 matInput
                 placeholder="Password"
                 formControlName="password"
+                [readonly]="isVpnManaged"
               />
             </mat-form-field>
           </div>
@@ -44,7 +50,7 @@
           <div class="col-sm-6">
             <mat-form-field class="w-100">
               <mat-label>Port</mat-label>
-              <input matInput placeholder="Port" formControlName="port" />
+              <input matInput placeholder="Port" formControlName="port" [readonly]="isVpnManaged" />
             </mat-form-field>
           </div>
           <div class="col-sm-6">
@@ -54,6 +60,7 @@
                 matInput
                 placeholder="API"
                 formControlName="apiConnection"
+                [readonly]="isVpnManaged"
               />
             </mat-form-field>
           </div>

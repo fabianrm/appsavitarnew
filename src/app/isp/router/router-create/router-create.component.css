@@ -1,0 +1,17 @@
+.vpn-hint-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: #e3f2fd;
+  color: #1565c0;
+  padding: 0.6em 1em;
+  border-radius: 6px;
+  font-size: 0.85em;
+  margin-bottom: 1em;
+}
+
+.vpn-hint-note mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}

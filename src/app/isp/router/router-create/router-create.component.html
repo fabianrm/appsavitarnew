@@ -3,6 +3,11 @@
   <form ngNativeValidate [formGroup]="formRouter" (ngSubmit)="enviarDatos()">
     <mat-card>
       <mat-card-content>
+        <div class="vpn-hint-note">
+          <mat-icon>info</mat-icon>
+          Si vas a conectar este router por VPN, IP, Usuario, Password, Port y API se reemplazan automáticamente al usar "Configurar VPN" en Configuración → Red — puedes dejar valores provisionales.
+        </div>
+
         <div class="d-flex">
           <div class="col-sm-6">
             <mat-form-field>
