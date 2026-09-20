@@ -28,10 +28,20 @@ export class InvoiceService {
 
 
   //TODO:Agregar parametro de ciudad
-  getInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string, qCity?: string, page: number = 1, pageSize: number = 10): Observable<InvoiceResponse> {
+  getInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string, qCity?: string | number, page: number = 1, pageSize: number = 10, currentPeriod: boolean = false): Observable<InvoiceResponse> {
 
-    return this.clienteHttp.get<InvoiceResponse>(
-      `${this.API}invoices/search?status=${status}&start_date=${qDesde}&end_date=${qHasta}&customer_name=${qCustomer}&city_id=${qCity}&page=${page}&perPage=${pageSize}`, { headers: this.headers });
+    let params = new HttpParams()
+      .set('page', page)
+      .set('perPage', pageSize);
+
+    if (status) params = params.set('status', status);
+    if (qCustomer) params = params.set('customer_name', qCustomer);
+    if (qDesde) params = params.set('start_date', qDesde);
+    if (qHasta) params = params.set('end_date', qHasta);
+    if (qCity) params = params.set('city_id', qCity);
+    if (currentPeriod) params = params.set('current_period', '1');
+
+    return this.clienteHttp.get<InvoiceResponse>(`${this.API}invoices/search`, { headers: this.headers, params });
   }
 
 

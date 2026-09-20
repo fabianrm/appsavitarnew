@@ -7,37 +7,50 @@ mat-form-field {
   //margin: 10px;
 }
 
-.row-filter {
-  // margin: 10px;
+.toggle-filters-btn {
   display: flex;
+  margin-left: auto;
+}
+
+.filter-panel {
+  overflow: hidden;
+  margin-bottom: 8px;
+
+  .row {
+    row-gap: 16px;
+  }
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 500;
+  }
 }
 
 .filter-actions {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: nowrap;
+  justify-content: flex-end;
+  margin-top: 4px;
+  margin-bottom: 16px;
 
-  ::ng-deep .mdc-button {
-    min-width: 0;
-    padding: 0 10px;
-    height: 36px;
-    letter-spacing: normal;
-  }
-
-  ::ng-deep .mdc-button .mdc-button__label {
+  ::ng-deep .mdc-button__label {
     display: flex;
     align-items: center;
-    gap: 4px;
-    white-space: nowrap;
+    gap: 6px;
   }
+}
 
-  mat-icon {
-    font-size: 18px;
-    height: 18px;
-    width: 18px;
-  }
+.filter-hint {
+  font-size: 0.8em;
+  color: #888;
+  margin-bottom: 1em;
 }
 
 .status-paid {

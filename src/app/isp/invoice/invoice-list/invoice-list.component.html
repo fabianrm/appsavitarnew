@@ -1,90 +1,116 @@
 <div class="contenedor">
-  <div class="row row-filter">
-    <div class="col-12 col-md-2">
-      <mat-form-field>
-        <mat-label>Cliente</mat-label>
-        <input
-          matInput
-          placeholder="Ej. Fernando Nizama"
-          autocomplete="off"
-          [(ngModel)]="qCustomer"
-        />
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 col-md-3">
-      <mat-form-field class="control-full-width">
-        <mat-label>Desde - Hasta</mat-label>
-        <mat-date-range-input [formGroup]="rangoFechas" [rangePicker]="pickerRango">
-          <input matStartDate formControlName="start" placeholder="Desde" />
-          <input matEndDate formControlName="end" placeholder="Hasta" />
-        </mat-date-range-input>
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="pickerRango"
-        ></mat-datepicker-toggle>
-        <mat-date-range-picker #pickerRango></mat-date-range-picker>
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 col-md-2">
-      <mat-form-field class="control-full-width">
-        <mat-label>Estado</mat-label>
-        <mat-select [(value)]="status" multiple>
-          @for (status of statusList; track status) {
-          <mat-option [value]="status">{{ status | titlecase }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 col-md-2">
-      <mat-form-field class="control-full-width" appearance="fill">
-        <mat-label>Ciudad</mat-label>
-        <mat-select
-          [(ngModel)]="citySelected"
-          (selectionChange)="getCityId($event.value)"
+  <div class="row">
+    <div
+      class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-2"
+    >
+      <div class="w-100 w-md-auto d-flex gap-2">
+        <button
+          mat-flat-button
+          color="accent"
+          matTooltip="Exportar a Excel"
+          (click)="exportInvoices()"
         >
-          <mat-option value="">Seleccione</mat-option>
-          @for (city of cities; track city) {
-          <mat-option [value]="city.id">{{ city.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    </div>
+          <mat-icon>file_download</mat-icon>
+          Excel
+        </button>
 
-    <div class="col-auto mb-2 filter-actions">
-      <button
-        mat-flat-button
-        color="accent"
-        matTooltip="Filtrar"
-        (click)="searchInvoices()"
-      >
-        <mat-icon>filter_alt</mat-icon>
-        Filtrar
-      </button>
+        <button
+          mat-flat-button
+          color="accent"
+          matTooltip="Generar facturas"
+          (click)="generateInvoices()"
+        >
+          <mat-icon>receipt_long</mat-icon>
+          Gen.Fact
+        </button>
+      </div>
 
       <button
-        mat-flat-button
-        color="accent"
-        matTooltip="Exportar a Excel"
-        (click)="exportInvoices()"
+        mat-icon-button
+        class="toggle-filters-btn"
+        matTooltip="{{ isFilterVisible ? 'Ocultar filtros' : 'Filtros' }}"
+        (click)="toggleFilters()"
       >
-        <mat-icon>file_download</mat-icon>
-        Excel
-      </button>
-
-      <button
-        mat-flat-button
-        color="accent"
-        matTooltip="Generar facturas"
-        (click)="generateInvoices()"
-      >
-        <mat-icon>receipt_long</mat-icon>
-        Gen.Fact
+        <mat-icon>{{ isFilterVisible ? "expand_less" : "search" }}</mat-icon>
       </button>
     </div>
   </div>
+
+  <div class="filter-panel" [@slideInOut]="isFilterVisible">
+    <div class="filter-header">
+      <h3>Filtros</h3>
+      <button
+        mat-icon-button
+        matTooltip="Limpiar filtros"
+        (click)="clearFilters()"
+      >
+        <mat-icon>filter_list_off</mat-icon>
+      </button>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Cliente</mat-label>
+          <input
+            matInput
+            placeholder="Ej. Fernando Nizama"
+            autocomplete="off"
+            [(ngModel)]="qCustomer"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Ciudad</mat-label>
+          <mat-select [(ngModel)]="citySelected">
+            <mat-option [value]="null">Todas</mat-option>
+            @for (city of cities; track city.id) {
+            <mat-option [value]="city.id">{{ city.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Estado</mat-label>
+          <mat-select [(ngModel)]="status" multiple>
+            @for (s of statusList; track s) {
+            <mat-option [value]="s">{{ s | titlecase }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Desde - Hasta</mat-label>
+          <mat-date-range-input [formGroup]="rangoFechas" [rangePicker]="pickerRango">
+            <input matStartDate formControlName="start" placeholder="Desde" />
+            <input matEndDate formControlName="end" placeholder="Hasta" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerRango"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #pickerRango></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 filter-actions">
+        <button mat-flat-button color="primary" (click)="applyFilters()">
+          <mat-icon>filter_alt</mat-icon>
+          <span>Filtrar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <p class="filter-hint" *ngIf="!isLoadingResults">
+    Por defecto se muestran las facturas del período de facturación actual. Usa los filtros para buscar en todo el historial.
+  </p>
 
   <mat-menu #columnasMenu="matMenu">
     <div (click)="$event.stopPropagation()" class="columnas-menu-content">

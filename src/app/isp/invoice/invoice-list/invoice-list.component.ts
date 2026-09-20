@@ -1,11 +1,13 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormControl, FormGroup } from '@angular/forms';
+import { formatDate } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { InvoiceService } from '../invoice.service';
 import { Invoice } from '../Models/InvoiceResponse';
-import { merge, startWith, switchMap, map, catchError, of, Subscription } from 'rxjs';
+import { merge, startWith, Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { InvoicePaidComponent } from '../invoice-paid/invoice-paid.component';
 import { saveAs } from 'file-saver';
@@ -21,9 +23,16 @@ import { AuthService } from '../../../auth/auth.service';
   selector: 'app-invoice-list',
   templateUrl: './invoice-list.component.html',
   styleUrl: './invoice-list.component.scss',
-  standalone: false
+  standalone: false,
+  animations: [
+    trigger('slideInOut', [
+      state('true', style({ height: '*', opacity: 1 })),
+      state('false', style({ height: '0px', opacity: 0 })),
+      transition('true <=> false', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
-export class InvoiceListComponent implements OnInit {
+export class InvoiceListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   availableColumns: string[] = ['Id', 'Contrato', 'Cliente', 'Dirección', 'Plan', 'Período', 'Precio', 'Dscto', 'Monto', 'Inicio', 'Fin', 'Vencimiento', 'F. Pago', 'Nota', 'Recibo', 'Estado', 'createdBy', 'updatedBy', 'updatedAt', 'Acciones'];
   displayedColumns: string[] = ['Contrato', 'Cliente', 'Plan', 'Dirección', 'Período', 'Precio', 'Dscto', 'Monto', 'Vencimiento', 'F. Pago', 'Estado', 'Acciones'];
@@ -32,32 +41,32 @@ export class InvoiceListComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Invoice>();
   totalInvoices = 0;
-  perPage = 0;
   isLoadingResults = true;
-  subscription!: Subscription
+  isFilterVisible = false;
+  subscription = new Subscription();
 
-  status?: string = '';
-  qCustomer?: string = '';
+  // true mientras el usuario no haya aplicado filtros propios -- en ese caso
+  // se muestran solo las facturas del período de facturación actual (las
+  // 400 y tantas cuyo start_date..end_date incluye hoy) en vez de las
+  // 10,000+ facturas históricas.
+  private usingDefaultPeriod = true;
+
+  status: string[] = [];
+  qCustomer = '';
   rangoFechas = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
-  qCity?: string = '';
-
-  qf1?: string = '';
-  qf2?: string = '';
+  citySelected: number | null = null;
 
   cities: City[] = [];
-  citySelected?: string = '';
 
   public esAdmin: boolean = false;
-
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   @ViewChild(MatMenuTrigger) columnasMenuTrigger!: MatMenuTrigger;
-
 
   constructor(
     private invoiceService: InvoiceService,
@@ -67,16 +76,24 @@ export class InvoiceListComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
-
     this.checkUserRole();
     this.getCities();
 
-    this.dataSource.paginator = this.paginator;
+    this.subscription.add(
+      this.invoiceService.refresh$.subscribe(() => {
+        this.getInvoices();
+      }),
+    );
+  }
+
+  ngAfterViewInit() {
     this.dataSource.sort = this.sort;
 
-    this.subscription = this.invoiceService.refresh$.subscribe(() => {
-      this.getInvoices();
-    });
+    this.subscription.add(
+      merge(this.sort.sortChange, this.paginator.page)
+        .pipe(startWith({}))
+        .subscribe(() => this.getInvoices()),
+    );
   }
 
   ngOnDestroy() {
@@ -97,43 +114,65 @@ export class InvoiceListComponent implements OnInit {
     });
   }
 
+  private buildFilters() {
+    const { start, end } = this.rangoFechas.value;
 
-  getInvoices() {
-    this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2, this.citySelected,);
-    merge(this.paginator.page, this.sort.sortChange)
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.isLoadingResults = true;
-          return this.invoiceService.getInvoices(
-            this.status,
-            this.qCustomer,
-            this.qf1,
-            this.qf2,
-            this.citySelected,
-            this.paginator.pageIndex + 1,
-            this.paginator.pageSize
-          );
-        }),
-        map(data => {
-          this.isLoadingResults = false;
-          this.totalInvoices = data.meta.total;
-          return data.data;
-
-        }),
-        catchError(() => {
-          this.isLoadingResults = false;
-          return of([]);
-        })
-      )
-      .subscribe(data => (this.dataSource.data = data));
+    return {
+      status: this.status.length ? this.status.join(',') : undefined,
+      qCustomer: this.qCustomer?.trim() || undefined,
+      qDesde: start ? formatDate(start, 'yyyy-MM-dd', 'en-US') : undefined,
+      qHasta: end ? formatDate(end, 'yyyy-MM-dd', 'en-US') : undefined,
+      qCity: this.citySelected ?? undefined,
+      currentPeriod: this.usingDefaultPeriod && !start && !end,
+      page: (this.paginator?.pageIndex ?? 0) + 1,
+      perPage: this.paginator?.pageSize ?? 10,
+    };
   }
 
+  getInvoices() {
+    this.isLoadingResults = true;
+    const f = this.buildFilters();
 
-  // actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
-  //   this.displayedColumns = columnasSeleccionadas.map(opcion => opcion.value);
-  // }
+    this.invoiceService
+      .getInvoices(f.status, f.qCustomer, f.qDesde, f.qHasta, f.qCity, f.page, f.perPage, f.currentPeriod)
+      .subscribe({
+        next: (respuesta) => {
+          this.isLoadingResults = false;
+          this.totalInvoices = respuesta.meta?.total ?? 0;
+          this.dataSource.data = respuesta.data ?? [];
+        },
+        error: () => {
+          this.isLoadingResults = false;
+        },
+      });
+  }
 
+  toggleFilters() {
+    this.isFilterVisible = !this.isFilterVisible;
+  }
+
+  // Reinicia a la primera página y vuelve a consultar con los filtros actuales
+  applyFilters() {
+    this.usingDefaultPeriod = false;
+
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.getInvoices();
+  }
+
+  clearFilters() {
+    this.qCustomer = '';
+    this.status = [];
+    this.citySelected = null;
+    this.rangoFechas.setValue({ start: null, end: null }, { emitEvent: false });
+    this.usingDefaultPeriod = true;
+
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.getInvoices();
+  }
 
   actualizarColumnasVisibles(columnasSeleccionadas: any[]) {
     const columnasFijas = ['Estado', 'Acciones']; // Columnas que siempre estarán al final
@@ -145,78 +184,34 @@ export class InvoiceListComponent implements OnInit {
     this.displayedColumns = [...columnasSinFijas, ...columnasFijas];
   }
 
-
   //Generar Invoices
   generateInvoices() {
     this.invoiceService.generateInvoices().subscribe((respuesta) => {
       if (respuesta.totalInvoices > 0) {
         this.snackbarService.showSuccess(`Se han generado ${respuesta.totalInvoices} facturas`);
-        this.loadInvoices(this.status, this.qCustomer, this.qf1, this.qf2);
+        this.getInvoices();
       } else {
         this.snackbarService.showInfo(`No se encontraron facturas para generar`);
       }
     })
   }
 
-  //Cargar Invoices
-  loadInvoices(status?: string, qCustomer?: string, qDesde?: string, qHasta?: string, qCity?: string,) {
-    this.isLoadingResults = true;
-    this.invoiceService.getInvoices(status, qCustomer, qDesde, qHasta, qCity, this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(response => {
-
-      this.isLoadingResults = false;
-      this.totalInvoices = response.meta.total;
-      this.perPage = response.meta.per_page;
-      this.dataSource.data = response.data;
-    }, () => {
-      this.isLoadingResults = false;
-    });
-  }
-
-
-  searchInvoices() {
-
-    const desde = this.rangoFechas.value.start;
-    const hasta = this.rangoFechas.value.end;
-
-    this.qf1 = desde ? String(desde.toISOString().split('T')[0]) : '';
-    this.qf2 = hasta ? String(hasta.toISOString().split('T')[0]) : '';
-
-    console.log(this.status);
-
-    this.getInvoices()
-  }
-
-
   //Export
   exportInvoices() {
-
-    const desde = this.rangoFechas.value.start;
-    const hasta = this.rangoFechas.value.end;
-
-    this.qf1 = desde ? String(desde.toISOString().split('T')[0]) : '';
-    this.qf2 = hasta ? String(hasta.toISOString().split('T')[0]) : '';
-
-    // if (this.qCity === undefined || this.qCity == null) {
-    //   this.qCity = ''
-    // } else {
-    //   this.qCity = this.citySelected;
-    // }
+    const f = this.buildFilters();
 
     const filters = {
-      status: this.status, // example filter
-      start_date: this.qf1,
-      end_date: this.qf2,
-      customer_name: this.qCustomer,
-      city_id: this.citySelected
-
+      status: f.status,
+      start_date: f.qDesde,
+      end_date: f.qHasta,
+      customer_name: f.qCustomer,
+      city_id: f.qCity,
     };
-    // console.log(filters);
 
     this.invoiceService.exportInvoices(filters).subscribe((blob: Blob) => {
       saveAs(blob, 'invoices.xlsx');
     });
   }
-
 
   //Aciones
   paid(row: any) {
@@ -256,15 +251,6 @@ export class InvoiceListComponent implements OnInit {
 
   //Resetear factura
   resetInvoice(row: any) {
-    // if (confirm(`¿Estás seguro de resetear la factura ${row.receipt} del cliente ${row.customerName}?`)) {
-    //   this.invoiceService.resetInvoice(row.invoiceId).subscribe(() => {
-    //     this.snackbarService.showSuccess('Factura reseteada correctamente');
-    //     this.getInvoices();
-    //   }, (error) => {
-    //     this.snackbarService.showError('Error al resetear la factura: ' + error);
-    //   });
-    // }
-
     Swal.fire({
       title: "Resetear Factura",
       text: `¿Estás seguro de resetear la factura ${row.receipt} del cliente ${row.customerName}?`,
@@ -289,9 +275,6 @@ export class InvoiceListComponent implements OnInit {
               });
             },
             error: (err: Error) => {
-              // console.error('Error al guardar los datos:', err);
-              // this.showError();
-              //this.snackbarService.showError('Error al registrar el pago: ' + err);
               Swal.fire(
                 'Error!',
                 'Error al registrar el pago: ' + err,
@@ -308,27 +291,12 @@ export class InvoiceListComponent implements OnInit {
 
   }
 
-
   getCities() {
     this.cityService.getCities().subscribe((respuesta) => {
       if (respuesta.data.length > 0) {
         this.cities = respuesta.data
       }
     });
-  }
-
-  // getCityId(id: number) {
-  //   if (this.cities.length > 0) {
-  //     this.citySelected = this.cities.filter(city => city.id == id);
-  //   }
-  //   console.log(this.citySelected[0].id);
-  // }
-
-  //Obtener el id del Selected
-  getCityId($event: any) {
-    this.citySelected = $event;
-    // console.log(this.citySelected);
-
   }
 
   showError() {
@@ -338,6 +306,5 @@ export class InvoiceListComponent implements OnInit {
   showSuccess() {
     this.snackbarService.showSuccess('Cliente agregado correctamente');
   }
-
 
 }
