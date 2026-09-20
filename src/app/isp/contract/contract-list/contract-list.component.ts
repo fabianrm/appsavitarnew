@@ -393,7 +393,11 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
           cancelButtonText: 'Cancelar',
           confirmButtonText: 'Si, terminar',
           input: 'checkbox',
-          inputValue: this.testMK.conectado === true ? 1 : 0,
+          // Arranca siempre marcado (igual que Suspender), sin depender del
+          // test de conectividad en vivo -- si el test justo sale
+          // "Desconectado" por un timeout puntual, no debe dejar sin borrar
+          // el usuario del Mikrotik en silencio.
+          inputValue: 1,
           inputLabel: 'Borrar en Mikrotik - ' + this.statusMK,
         }).then((result) => {
           if (result.isConfirmed) {
