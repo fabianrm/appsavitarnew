@@ -73,7 +73,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     this.dataSource.data = this.allCustomers.filter((customer) => {
       if (name && !customer.customerName?.toLowerCase().includes(name)) return false;
       if (this.filterCityId && customer.cityId !== this.filterCityId) return false;
-      if (this.filterStatus !== null && customer.status !== this.filterStatus) return false;
+      if (this.filterStatus !== null && !!customer.status !== this.filterStatus) return false;
       return true;
     });
 
