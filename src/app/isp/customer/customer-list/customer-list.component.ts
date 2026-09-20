@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormControl, FormGroup } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { MatTableDataSource } from "@angular/material/table";
@@ -20,7 +21,14 @@ import Swal from 'sweetalert2';
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
   styleUrl: './customer-list.component.css',
-  standalone: false
+  standalone: false,
+  animations: [
+    trigger('slideInOut', [
+      state('true', style({ height: '*', opacity: 1 })),
+      state('false', style({ height: '0px', opacity: 0 })),
+      transition('true <=> false', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class CustomerListComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -38,6 +46,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit, OnDestroy {
   cities: City[] = [];
   totalCustomers = 0;
   isLoadingResults = false;
+  isFilterVisible = false;
 
   // true una vez que el usuario modifica el rango de fechas por su cuenta
   private dateRangeTouched = false;
@@ -131,6 +140,10 @@ export class CustomerListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.paginator.pageIndex = 0;
     }
     this.getCustomers();
+  }
+
+  toggleFilters() {
+    this.isFilterVisible = !this.isFilterVisible;
   }
 
   clearFilters() {

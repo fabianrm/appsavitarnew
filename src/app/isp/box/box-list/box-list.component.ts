@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { Box } from '../Models/BoxResponse';
 import { MatPaginator } from '@angular/material/paginator';
@@ -19,7 +20,14 @@ import { City } from '../../city/Models/CityResponse';
   selector: 'app-box-list',
   templateUrl: './box-list.component.html',
   styleUrl: './box-list.component.css',
-  standalone: false
+  standalone: false,
+  animations: [
+    trigger('slideInOut', [
+      state('true', style({ height: '*', opacity: 1 })),
+      state('false', style({ height: '0px', opacity: 0 })),
+      transition('true <=> false', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class BoxListComponent {
 
@@ -37,6 +45,7 @@ export class BoxListComponent {
   private allBoxes: Box[] = [];
   cities: City[] = [];
 
+  isFilterVisible = false;
   filterName = '';
   filterType: string | null = null;
   filterCityId: number | null = null;
@@ -109,6 +118,10 @@ export class BoxListComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  toggleFilters() {
+    this.isFilterVisible = !this.isFilterVisible;
   }
 
 

@@ -1,3 +1,43 @@
+.toggle-filters-btn {
+  display: flex;
+  margin-left: auto;
+}
+
+.filter-panel {
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.filter-panel .row {
+  row-gap: 16px;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.filter-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+.filter-hint {
+  font-size: 0.8em;
+  color: #888;
+  margin-bottom: 1em;
+}
+
 .status-good {
   display: flex;
   align-items: center;

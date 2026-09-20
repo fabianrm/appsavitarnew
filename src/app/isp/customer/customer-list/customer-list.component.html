@@ -14,61 +14,78 @@
         </button>
       </div>
 
+      <button
+        mat-icon-button
+        class="toggle-filters-btn"
+        matTooltip="{{ isFilterVisible ? 'Ocultar filtros' : 'Filtros' }}"
+        (click)="toggleFilters()"
+      >
+        <mat-icon>{{ isFilterVisible ? "expand_less" : "search" }}</mat-icon>
+      </button>
     </div>
   </div>
 
-  <div class="row filter-row">
-    <div class="col-12 col-md-6 col-lg-3">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Nombre</mat-label>
-        <input matInput [(ngModel)]="filterName" placeholder="Ej. Luis Fernando" autocomplete="off" />
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-3">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Ciudad</mat-label>
-        <mat-select [(ngModel)]="filterCityId">
-          <mat-option [value]="null">Todas</mat-option>
-          @for (city of cities; track city.id) {
-          <mat-option [value]="city.id">{{ city.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-3">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Estado</mat-label>
-        <mat-select [(ngModel)]="filterStatus">
-          <mat-option [value]="null">Todos</mat-option>
-          <mat-option [value]="true">Activo</mat-option>
-          <mat-option [value]="false">Suspendido</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 col-md-6 col-lg-3">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Fecha de registro</mat-label>
-        <mat-date-range-input [formGroup]="rangoFechas" [rangePicker]="pickerRangoClientes">
-          <input matStartDate formControlName="start" placeholder="Desde" />
-          <input matEndDate formControlName="end" placeholder="Hasta" />
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="pickerRangoClientes"></mat-datepicker-toggle>
-        <mat-date-range-picker #pickerRangoClientes></mat-date-range-picker>
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 filter-actions">
-      <button mat-button (click)="clearFilters()">
+  <div class="filter-panel" [@slideInOut]="isFilterVisible">
+    <div class="filter-header">
+      <h3>Filtros</h3>
+      <button
+        mat-icon-button
+        matTooltip="Limpiar filtros"
+        (click)="clearFilters()"
+      >
         <mat-icon>filter_list_off</mat-icon>
-        Limpiar
       </button>
-      <button mat-flat-button color="primary" (click)="applyFilters()">
-        <mat-icon>filter_alt</mat-icon>
-        Filtrar
-      </button>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nombre</mat-label>
+          <input matInput [(ngModel)]="filterName" placeholder="Ej. Luis Fernando" autocomplete="off" />
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Ciudad</mat-label>
+          <mat-select [(ngModel)]="filterCityId">
+            <mat-option [value]="null">Todas</mat-option>
+            @for (city of cities; track city.id) {
+            <mat-option [value]="city.id">{{ city.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Estado</mat-label>
+          <mat-select [(ngModel)]="filterStatus">
+            <mat-option [value]="null">Todos</mat-option>
+            <mat-option [value]="true">Activo</mat-option>
+            <mat-option [value]="false">Suspendido</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Fecha de registro</mat-label>
+          <mat-date-range-input [formGroup]="rangoFechas" [rangePicker]="pickerRangoClientes">
+            <input matStartDate formControlName="start" placeholder="Desde" />
+            <input matEndDate formControlName="end" placeholder="Hasta" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerRangoClientes"></mat-datepicker-toggle>
+          <mat-date-range-picker #pickerRangoClientes></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 filter-actions">
+        <button mat-flat-button color="primary" (click)="applyFilters()">
+          <mat-icon>filter_alt</mat-icon>
+          <span>Filtrar</span>
+        </button>
+      </div>
     </div>
   </div>
 

@@ -2,13 +2,36 @@
   margin: 20px;
 }
 
-.filter-row {
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+.toggle-filters-btn {
+  display: flex;
+  margin-left: auto;
+}
+
+.filter-panel {
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.filter-panel .row {
+  row-gap: 16px;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.filter-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 500;
 }
 
 .filter-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 0.5em;
+  margin-top: 4px;
+  margin-bottom: 16px;
 }
