@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { ShowServicesComponent } from '../show-services/show-services.component';
+import { CityService } from '../../city/city.service';
+import { City } from '../../city/Models/CityResponse';
 
 
 @Component({
@@ -22,7 +24,7 @@ import { ShowServicesComponent } from '../show-services/show-services.component'
 export class BoxListComponent {
 
   displayedColumns: string[] = ['id', 'name', 'type', 'city', 'address', 'reference', 'latitude', 'longitude', 'totalPorts', 'availablePorts', 'status', 'acciones'];
-  public dataSource!: MatTableDataSource<Box>;
+  public dataSource: MatTableDataSource<Box> = new MatTableDataSource<Box>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,15 +34,25 @@ export class BoxListComponent {
   public respuesta: ReqBox[] = [];
   servicesByBox: any[] = [];
 
+  private allBoxes: Box[] = [];
+  cities: City[] = [];
+
+  filterName = '';
+  filterType: string | null = null;
+  filterCityId: number | null = null;
+  filterMinAvailablePorts: number | null = null;
+
 
   constructor(private boxService: BoxService,
     public dialog: MatDialog,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private cityService: CityService
   ) { }
 
   ngOnInit() {
     this.getBoxes();
+    this.getCities();
     this.subscription = this.boxService.refresh$.subscribe(() => {
       this.getBoxes()
     });
@@ -52,12 +64,51 @@ export class BoxListComponent {
 
   getBoxes() {
     this.boxService.getBoxes().subscribe((respuesta) => {
-      if (respuesta.data.length > 0) {
-        this.dataSource = new MatTableDataSource(respuesta.data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
+      this.allBoxes = respuesta.data ?? [];
+      this.dataSource.data = this.allBoxes;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
+  }
+
+  getCities() {
+    this.cityService.getCities().subscribe((respuesta) => {
+      this.cities = respuesta.data ?? [];
+    });
+  }
+
+  applyFilters() {
+    const name = this.filterName.trim().toLowerCase();
+
+    this.dataSource.data = this.allBoxes.filter((box) => {
+      if (name && !box.name?.toLowerCase().includes(name)) return false;
+      if (this.filterType && box.type !== this.filterType) return false;
+      if (this.filterCityId && box.city_id !== this.filterCityId) return false;
+      if (
+        this.filterMinAvailablePorts !== null &&
+        this.filterMinAvailablePorts !== undefined &&
+        box.availablePorts < this.filterMinAvailablePorts
+      ) {
+        return false;
+      }
+      return true;
+    });
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  clearFilters() {
+    this.filterName = '';
+    this.filterType = null;
+    this.filterCityId = null;
+    this.filterMinAvailablePorts = null;
+    this.dataSource.data = this.allBoxes;
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 
@@ -73,15 +124,6 @@ export class BoxListComponent {
   goToLinkMap(latitude: string, longitude: string) {
     //'https://www.google.com/maps?q=-4.907545,-81.057223&hl=es-Pe&gl=pe&shorturl=1;'
     window.open(`https://www.google.com/maps?q=${latitude},${longitude}&hl=es-Pe&gl=pe&shorturl=1;`, "_blank");
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   deleteBox(row: any) {
