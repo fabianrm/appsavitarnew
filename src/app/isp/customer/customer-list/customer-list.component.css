@@ -10,6 +10,12 @@
   gap: 0.5em;
 }
 
+.filter-hint {
+  font-size: 0.8em;
+  color: #888;
+  margin-bottom: 1em;
+}
+
 /* Media Query para dispositivos móviles */
 @media (max-width: 767px) {
   mat-form-field {

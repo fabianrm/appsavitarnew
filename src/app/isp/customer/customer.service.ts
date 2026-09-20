@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, Subject, catchError, map, of, tap } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CustomerRequest } from './Models/CustomerRequest';
 
 import { CustomerResponseU } from './Models/CustomerResponseU';
 import { CustomerResponse } from './Models/CustomerResponse';
 import { Historical } from './Models/Historical';
+
+export interface CustomerListFilters {
+  dateFrom?: string;
+  dateTo?: string;
+  name?: string;
+  cityId?: number | null;
+  status?: boolean | null;
+  page?: number;
+  perPage?: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +36,28 @@ export class CustomerService {
     'Authorization': `Bearer ${localStorage.getItem('token')}`
   });
 
+  // Usado por el selector de clientes de Tickets (create-ticket/edit-ticket),
+  // que necesita la lista completa para su combo de búsqueda -- por eso pide
+  // un per_page alto en vez de usar la paginación por defecto.
   getCustomers(): Observable<CustomerResponse> {
-    return this.clienteHttp.get<CustomerResponse>(this.API + 'customers', { headers: this.headers })
+    const params = new HttpParams().set('per_page', 2000);
+    return this.clienteHttp.get<CustomerResponse>(this.API + 'customers', { headers: this.headers, params })
+  }
+
+  getCustomersList(filters: CustomerListFilters = {}): Observable<CustomerResponse> {
+    let params = new HttpParams();
+
+    if (filters.dateFrom) params = params.set('date_from', filters.dateFrom);
+    if (filters.dateTo) params = params.set('date_to', filters.dateTo);
+    if (filters.name) params = params.set('name', filters.name);
+    if (filters.cityId) params = params.set('city_id', filters.cityId);
+    if (filters.status !== null && filters.status !== undefined) {
+      params = params.set('status', filters.status ? '1' : '0');
+    }
+    if (filters.page) params = params.set('page', filters.page);
+    if (filters.perPage) params = params.set('per_page', filters.perPage);
+
+    return this.clienteHttp.get<CustomerResponse>(this.API + 'customers', { headers: this.headers, params });
   }
 
   getCustomersPipe(): Observable<any> {

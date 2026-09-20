@@ -13,6 +13,7 @@ import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerCreateComponent } from './customer-create/customer-create.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
@@ -59,5 +60,6 @@ import { CustomerHistoryComponent } from './customer-history/customer-history.co
         ReactiveFormsModule,
         FormsModule,
         MatTooltipModule,
+        MatDatepickerModule,
         MapleafModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class CustomerModule { }

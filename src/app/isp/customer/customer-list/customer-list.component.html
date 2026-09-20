@@ -48,7 +48,19 @@
       </mat-form-field>
     </div>
 
-    <div class="col-12 col-md-6 col-lg-3 filter-actions">
+    <div class="col-12 col-md-6 col-lg-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Fecha de registro</mat-label>
+        <mat-date-range-input [formGroup]="rangoFechas" [rangePicker]="pickerRangoClientes">
+          <input matStartDate formControlName="start" placeholder="Desde" />
+          <input matEndDate formControlName="end" placeholder="Hasta" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerRangoClientes"></mat-datepicker-toggle>
+        <mat-date-range-picker #pickerRangoClientes></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 filter-actions">
       <button mat-button (click)="clearFilters()">
         <mat-icon>filter_list_off</mat-icon>
         Limpiar
@@ -59,6 +71,10 @@
       </button>
     </div>
   </div>
+
+  <p class="filter-hint" *ngIf="!isLoadingResults">
+    Por defecto se muestran los clientes registrados en el último mes. Usa los filtros para buscar en toda la base.
+  </p>
 
   <!-- Tabla -->
 
@@ -207,6 +223,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <mat-paginator
+      [length]="totalCustomers"
       [pageSizeOptions]="[5, 10, 20]"
       pageSize="10"
       showFirstLastButtons
