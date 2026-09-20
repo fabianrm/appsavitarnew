@@ -29,7 +29,6 @@
             placeholder="Ej. CT00836"
             autocomplete="off"
             [(ngModel)]="code"
-            (ngModelChange)="onFilterFieldChange()"
           />
         </mat-form-field>
       </div>
@@ -42,7 +41,6 @@
             placeholder="Ej. Fernando Nizama"
             autocomplete="off"
             [(ngModel)]="customerName"
-            (ngModelChange)="onFilterFieldChange()"
           />
         </mat-form-field>
       </div>
@@ -68,10 +66,7 @@
       <div class="col-12 col-md-6 col-lg-4">
         <mat-form-field appearance="outline" class="control-full-width">
           <mat-label>Plan</mat-label>
-          <mat-select
-            [(ngModel)]="planId"
-            (selectionChange)="searchContracts()"
-          >
+          <mat-select [(ngModel)]="planId">
             <mat-option [value]="null">Todos</mat-option>
             @for (plan of plans; track plan.id) {
             <mat-option [value]="plan.id">{{ plan.name }}</mat-option>
@@ -83,10 +78,7 @@
       <div class="col-12 col-md-6 col-lg-4">
         <mat-form-field appearance="outline" class="control-full-width">
           <mat-label>Ciudad</mat-label>
-          <mat-select
-            [(ngModel)]="cityId"
-            (selectionChange)="searchContracts()"
-          >
+          <mat-select [(ngModel)]="cityId">
             <mat-option [value]="null">Todas</mat-option>
             @for (city of cities; track city.id) {
             <mat-option [value]="city.id">{{ city.name }}</mat-option>
@@ -98,10 +90,7 @@
       <div class="col-12 col-md-6 col-lg-4">
         <mat-form-field appearance="outline" class="control-full-width">
           <mat-label>Promoción</mat-label>
-          <mat-select
-            [(ngModel)]="promotionId"
-            (selectionChange)="searchContracts()"
-          >
+          <mat-select [(ngModel)]="promotionId">
             <mat-option [value]="null">Todas</mat-option>
             @for (promotion of promotions; track promotion.id) {
             <mat-option [value]="promotion.id">{{ promotion.name }}</mat-option>

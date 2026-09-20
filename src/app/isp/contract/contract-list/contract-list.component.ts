@@ -5,13 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  Subscription,
-  Subject,
-  merge,
-  startWith,
-  debounceTime,
-} from 'rxjs';
+import { Subscription, merge, startWith } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { ContractService } from '../contract.service';
 import { ContractEditPlanComponent } from '../contract-edit-plan/contract-edit-plan.component';
@@ -112,8 +106,6 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
   cities: City[] = [];
   promotions: Promotion[] = [];
 
-  private filterChange$ = new Subject<void>();
-
   constructor(
     private contractService: ContractService,
     private suspensionService: SuspensionService,
@@ -137,19 +129,13 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getCities();
     this.getPromotions();
 
+    // Solo registra que el usuario tocó el rango de fechas (para la lógica
+    // de searchContracts() de más abajo); la búsqueda ya no se dispara sola,
+    // se espera al click en "Filtrar".
     this.subscription.add(
-      this.rangoFechas.valueChanges
-        .pipe(debounceTime(300))
-        .subscribe(() => {
-          this.dateRangeTouched = true;
-          this.searchContracts();
-        }),
-    );
-
-    this.subscription.add(
-      this.filterChange$
-        .pipe(debounceTime(400))
-        .subscribe(() => this.searchContracts()),
+      this.rangoFechas.valueChanges.subscribe(() => {
+        this.dateRangeTouched = true;
+      }),
     );
 
     this.subscription.add(
@@ -216,10 +202,6 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.paginator.pageIndex = 0;
     }
     this.getContracts();
-  }
-
-  onFilterFieldChange() {
-    this.filterChange$.next();
   }
 
   toggleFilters() {
