@@ -11,6 +11,8 @@ import { ContractsListComponent } from '../contracts-list/contracts-list.compone
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { CustomerSuspendComponent } from '../customer-suspend/customer-suspend.component';
+import { CityService } from '../../city/city.service';
+import { City } from '../../city/Models/CityResponse';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-customer-list',
@@ -20,36 +22,36 @@ import Swal from 'sweetalert2';
 })
 export class CustomerListComponent implements OnInit, OnDestroy {
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   availableColumns: string[] = ['id', 'customerCode', 'customerName', 'city', 'address', 'reference', 'latitude', 'longitude', 'phoneNumber', 'status', 'acciones'];
 
   displayedColumns: string[] = ['customerCode', 'customerName', 'city', 'address', 'reference', 'phoneNumber', 'status', 'acciones'];
 
-  public dataSource!: MatTableDataSource<Customer>;
+  public dataSource: MatTableDataSource<Customer> = new MatTableDataSource<Customer>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   subscription!: Subscription
 
+  private allCustomers: Customer[] = [];
+  cities: City[] = [];
+
+  filterName = '';
+  filterCityId: number | null = null;
+  filterStatus: boolean | null = null;
+
   constructor(
     private customerService: CustomerService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private cityService: CityService
   ) { }
 
 
   ngOnInit() {
     this.getCustomers();
+    this.getCities();
     this.subscription = this.customerService.refresh$.subscribe(() => {
       this.getCustomers()
     });
@@ -57,6 +59,38 @@ export class CustomerListComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  getCities() {
+    this.cityService.getCities().subscribe((respuesta) => {
+      this.cities = respuesta.data ?? [];
+    });
+  }
+
+  applyFilters() {
+    const name = this.filterName.trim().toLowerCase();
+
+    this.dataSource.data = this.allCustomers.filter((customer) => {
+      if (name && !customer.customerName?.toLowerCase().includes(name)) return false;
+      if (this.filterCityId && customer.cityId !== this.filterCityId) return false;
+      if (this.filterStatus !== null && customer.status !== this.filterStatus) return false;
+      return true;
+    });
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  clearFilters() {
+    this.filterName = '';
+    this.filterCityId = null;
+    this.filterStatus = null;
+    this.dataSource.data = this.allCustomers;
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   newCustomer() {
@@ -79,13 +113,10 @@ export class CustomerListComponent implements OnInit, OnDestroy {
 
   getCustomers() {
     this.customerService.getCustomers().subscribe((respuesta) => {
-
-      if (respuesta.data.length > 0) {
-        this.dataSource = new MatTableDataSource(respuesta.data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
-      //  console.log(respuesta)
+      this.allCustomers = respuesta.data ?? [];
+      this.dataSource.data = this.allCustomers;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
