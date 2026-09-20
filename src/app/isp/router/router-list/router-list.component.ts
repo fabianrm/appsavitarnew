@@ -9,6 +9,7 @@ import { CRouter } from '../Models/CRouter';
 import { Box } from '../../box/Models/BoxResponse';
 import { RouterCreateComponent } from '../router-create/router-create.component';
 import { RouterEditComponent } from '../router-edit/router-edit.component';
+import { RouterDeleteConfirmComponent } from '../router-delete-confirm/router-delete-confirm.component';
 import { RouterService } from '../router.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { TestComponent } from '../test/test.component';
@@ -150,6 +151,20 @@ export class RouterListComponent {
       }
 
 
+    });
+  }
+
+  openDeleteDialog(id: number) {
+    this.routerService.getRouterByID(id).subscribe((respuesta) => {
+      if (!respuesta.data) return;
+
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '40%';
+      dialogConfig.data = respuesta.data;
+
+      this.dialog.open(RouterDeleteConfirmComponent, dialogConfig);
     });
   }
 

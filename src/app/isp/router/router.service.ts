@@ -45,6 +45,13 @@ export class RouterService {
       }));
   }
 
+  deleteRouter(id: number): Observable<{ message: string; script: string | null }> {
+    return this.clienteHttp.delete<{ message: string; script: string | null }>(this.API + 'routers/' + id, { headers: this.headers })
+      .pipe(tap(() => {
+        this._refresh$.next()
+      }));
+  }
+
   getRouterByID(id: number): Observable<any> {
     return this.clienteHttp.get(this.API + 'routers/' + id, { headers: this.headers })
       .pipe(tap(() => {

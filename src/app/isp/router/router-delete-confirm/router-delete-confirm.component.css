@@ -1,0 +1,75 @@
+.warning-box {
+  display: flex;
+  gap: 0.75em;
+  background-color: #fdeaea;
+  color: #8a1c1c;
+  padding: 1em;
+  border-radius: 6px;
+  margin-bottom: 1em;
+}
+
+.warning-box mat-icon {
+  flex-shrink: 0;
+}
+
+.warning-box p {
+  margin: 0 0 0.5em;
+}
+
+.warning-box ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.confirm-instruction {
+  margin-bottom: 0.5em;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.error-box {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  color: #c62828;
+  font-size: 0.85em;
+  margin-top: 0.5em;
+}
+
+.success-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: #e3f7e8;
+  color: #1e7d34;
+  padding: 0.75em 1em;
+  border-radius: 6px;
+  margin-bottom: 1em;
+}
+
+.script-hint {
+  font-size: 0.85em;
+  color: #666;
+  margin-bottom: 0.5em;
+}
+
+.script-box {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  margin-bottom: 0.5em;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

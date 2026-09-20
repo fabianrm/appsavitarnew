@@ -23,6 +23,7 @@ import { MatListModule } from '@angular/material/list';
 import { TestComponent } from './test/test.component';
 import { InfiltradosComponent } from './infiltrados/infiltrados.component';
 import { RouterDetailComponent } from './router-detail/router-detail.component';
+import { RouterDeleteConfirmComponent } from './router-delete-confirm/router-delete-confirm.component';
 
 
 
@@ -33,7 +34,8 @@ import { RouterDetailComponent } from './router-detail/router-detail.component';
     RouterEditComponent,
     TestComponent,
     InfiltradosComponent,
-    RouterDetailComponent
+    RouterDetailComponent,
+    RouterDeleteConfirmComponent
   ],
   imports: [
     CommonModule,

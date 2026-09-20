@@ -1,0 +1,55 @@
+<h2 mat-dialog-title class="title-card">Eliminar Router</h2>
+
+<mat-dialog-content>
+  <ng-container *ngIf="!script">
+    <div class="warning-box">
+      <mat-icon>warning</mat-icon>
+      <div>
+        <p>Esta acción <strong>no se puede deshacer</strong>. Al eliminar el router <strong>{{ router.ip }}</strong>:</p>
+        <ul>
+          <li *ngIf="hasVpn">Se revoca su acceso VPN desde el servidor — deja de poder conectarse.</li>
+          <li *ngIf="hasVpn">El Mikrotik físico queda con una interfaz WireGuard y un usuario de API sin uso, hasta que corras el script de limpieza que te vamos a dar.</li>
+          <li>Se elimina el registro del router en el sistema.</li>
+        </ul>
+        <p *ngIf="!hasVpn">Este router no tiene VPN configurada, así que no hay nada que limpiar en el servidor ni en el Mikrotik.</p>
+      </div>
+    </div>
+
+    <p class="confirm-instruction">
+      Para confirmar, escribe la IP del router (<strong>{{ router.ip }}</strong>):
+    </p>
+    <mat-form-field appearance="outline" class="w-100">
+      <input matInput [(ngModel)]="confirmText" [placeholder]="router.ip" autocomplete="off" />
+    </mat-form-field>
+
+    <div class="error-box" *ngIf="error">
+      <mat-icon>error</mat-icon> {{ error }}
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="script">
+    <div class="success-box">
+      <mat-icon>check_circle</mat-icon>
+      Router eliminado del sistema. Falta un paso: limpiar el equipo físico.
+    </div>
+    <div class="script-hint">
+      Pega este script <strong>una sola vez</strong> en el Mikrotik (Winbox &gt; New Terminal) para quitar la interfaz VPN y el usuario que ya no se usan:
+    </div>
+    <pre class="script-box">{{ script }}</pre>
+    <button mat-stroked-button (click)="copyScript()">
+      <mat-icon>{{ copied ? 'check' : 'content_copy' }}</mat-icon>
+      {{ copied ? 'Copiado' : 'Copiar script' }}
+    </button>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <ng-container *ngIf="!script">
+    <button mat-button (click)="close()" [disabled]="deleting">Cancelar</button>
+    <button mat-raised-button color="warn" [disabled]="!canConfirm" (click)="confirmDelete()">
+      <mat-icon [class.spin]="deleting">{{ deleting ? 'autorenew' : 'delete' }}</mat-icon>
+      Eliminar
+    </button>
+  </ng-container>
+  <button mat-raised-button color="primary" *ngIf="script" (click)="close()">Listo</button>
+</mat-dialog-actions>
