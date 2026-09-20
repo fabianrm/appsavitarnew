@@ -42,7 +42,8 @@ export class BoxConnectionsComponent
   markers: L.Marker[] = [];
   polylines: L.Polyline[] = [];
 
-  // Punto por defecto: Pueblo Nuevo (Piura), hasta que se ajuste a los marcadores
+  // Fallback si no hay nada en localStorage; loadInitCoords() lo sobreescribe
+  // con la ciudad de la empresa logueada.
   initCoords: [number, number] = [-4.9083929570907, -81.057300567627];
 
   // Drawing Mode
@@ -70,9 +71,23 @@ export class BoxConnectionsComponent
   ) {}
 
   ngOnInit(): void {
+    this.loadInitCoords();
     this.loadInitialData();
     this.setupDeleteRouteListener();
     this.setupEditRouteListener();
+  }
+
+  // Centra el mapa en la ciudad de la empresa logueada (guardada al iniciar
+  // sesión), en vez del punto fijo de Piura que quedaba para cualquier empresa.
+  private loadInitCoords(): void {
+    try {
+      const stored = localStorage.getItem('coords');
+      if (stored) {
+        this.initCoords = JSON.parse(stored);
+      }
+    } catch {
+      // Si falla el parseo, se mantiene el valor por defecto.
+    }
   }
 
   loadInitialData() {
