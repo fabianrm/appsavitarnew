@@ -123,7 +123,9 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     const today = new Date();
-    this.rangoFechas.setValue({ start: today, end: today }, { emitEvent: false });
+    const lastMonth = new Date();
+    lastMonth.setDate(lastMonth.getDate() - 30);
+    this.rangoFechas.setValue({ start: lastMonth, end: today }, { emitEvent: false });
 
     this.getPlans();
     this.getCities();
@@ -193,7 +195,7 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
   // Reinicia a la primera página y vuelve a consultar con los filtros actuales
   searchContracts() {
     // Si el usuario busca por otro campo sin haber tocado la fecha, quitamos
-    // el rango "hoy" que viene por defecto para no combinarlo silenciosamente.
+    // el rango "último mes" que viene por defecto para no combinarlo silenciosamente.
     if (!this.dateRangeTouched) {
       this.rangoFechas.setValue({ start: null, end: null }, { emitEvent: false });
     }

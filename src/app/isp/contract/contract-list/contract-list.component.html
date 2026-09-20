@@ -108,6 +108,10 @@
     </div>
   </div>
 
+  <p class="filter-hint" *ngIf="!isLoadingResults">
+    Por defecto se muestran los contratos instalados en el último mes. Usa los filtros para buscar en toda la base.
+  </p>
+
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- id Video -->
