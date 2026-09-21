@@ -9,6 +9,13 @@ export interface Enterprise {
     status: boolean;
     telegramBotToken: string | null;
     telegramChatId: string | null;
+    whatsappRemindersEnabled: boolean;
+    waInstance: string | null;
+    waApiKey: string | null;
+    waReminderDaysBefore: number;
+    waPaymentInfo: string | null;
+    waMessageTemplateDue: string | null;
+    waMessageTemplateOverdue: string | null;
     createdAt: Date;
     updatedAt: Date;
 }
