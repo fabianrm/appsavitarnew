@@ -7,7 +7,7 @@ import { AuthGuard } from '../../auth/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'notifications', pathMatch: 'full' },
-  { path: 'notifications', component: SettingsNotificationsComponent, data: { title: 'Notificaciones' }, canActivate: [AuthGuard] },
+  { path: 'notifications', component: SettingsNotificationsComponent, data: { title: 'Telegram' }, canActivate: [AuthGuard] },
   { path: 'whatsapp', component: SettingsWhatsappComponent, data: { title: 'WhatsApp' }, canActivate: [AuthGuard] },
   { path: 'network', component: SettingsNetworkComponent, data: { title: 'Red' }, canActivate: [AuthGuard] },
 ];
