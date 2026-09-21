@@ -6,6 +6,26 @@
   margin: 0 0 0.3em;
 }
 
+.settings-tabs {
+  display: flex;
+  gap: 1.5em;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid #e0e0e0;
+
+  a {
+    padding: 0.75em 0.2em;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+  }
+
+  a.active {
+    color: #1565c0;
+    border-bottom-color: #1565c0;
+  }
+}
+
 .help-text {
   color: #666;
   margin-bottom: 1.5em;

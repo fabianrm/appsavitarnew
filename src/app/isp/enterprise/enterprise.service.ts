@@ -149,5 +149,32 @@ export class EnterpriseService {
       );
   }
 
+  updateWhatsappConfig(id: number, datos: {
+    whatsappRemindersEnabled: boolean;
+    waInstance: string;
+    waApiKey: string;
+    waReminderDaysBefore: number;
+    waPaymentInfo: string;
+    waMessageTemplateDue: string;
+    waMessageTemplateOverdue: string;
+  }): Observable<Enterprise> {
+    return this.clienteHttp.patch<{ data: Enterprise }>(this.API + 'enterprises/' + id, datos, { headers: this.headers })
+      .pipe(
+        map(response => response.data),
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
+  testWhatsapp(phone: string): Observable<{ success: boolean; message: string }> {
+    return this.clienteHttp.post<{ success: boolean; message: string }>(this.API + 'my-enterprise/test-whatsapp', { phone }, { headers: this.headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
 }
 

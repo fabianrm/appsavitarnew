@@ -1,0 +1,104 @@
+<div class="contenedor">
+  <nav class="settings-tabs">
+    <a routerLink="/settings/notifications" routerLinkActive="active">Notificaciones</a>
+    <a routerLink="/settings/whatsapp" routerLinkActive="active">WhatsApp</a>
+    <a routerLink="/settings/network" routerLinkActive="active">Red</a>
+  </nav>
+
+  <h2>WhatsApp</h2>
+
+  <div *ngIf="loading" class="center-message">
+    <mat-icon class="spin">autorenew</mat-icon> Cargando...
+  </div>
+
+  <mat-card class="form-card" *ngIf="!loading">
+    <mat-card-content>
+      <p class="help-text">
+        Recordatorios automáticos de pago por WhatsApp (facturas por vencer y vencidas),
+        enviados vía Evolution API. Completa la instancia y el api_key de tu número,
+        y personaliza el texto que reciben tus clientes.
+      </p>
+
+      <form [formGroup]="form" class="grid formgrid">
+        <div class="col-12">
+          <mat-slide-toggle formControlName="whatsappRemindersEnabled">
+            Recordatorios de pago activos
+          </mat-slide-toggle>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Instancia de Evolution API</mat-label>
+            <input matInput formControlName="waInstance" placeholder="Ej. savitar-wa" autocomplete="off" />
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Api Key de Evolution API</mat-label>
+            <input matInput formControlName="waApiKey" [type]="hidePassword ? 'password' : 'text'" autocomplete="off" />
+            <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Días antes del vencimiento para recordar</mat-label>
+            <input matInput type="number" formControlName="waReminderDaysBefore" min="1" max="30" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-12">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Datos de pago (se incluyen al final del mensaje)</mat-label>
+            <textarea matInput formControlName="waPaymentInfo" rows="2" placeholder="Ej. Yape: 999 999 999 (Nombre)"></textarea>
+          </mat-form-field>
+        </div>
+
+        <p class="help-text variables-hint">
+          Variables disponibles en las plantillas: <code>{{ '{cliente}' }}</code>,
+          <code>{{ '{empresa}' }}</code>, <code>{{ '{monto}' }}</code>,
+          <code>{{ '{vencimiento}' }}</code>, <code>{{ '{pago}' }}</code>
+          (y <code>{{ '{corte}' }}</code> solo en el mensaje de vencidas).
+        </p>
+
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Mensaje — por vencer</mat-label>
+            <textarea matInput formControlName="waMessageTemplateDue" rows="6" placeholder="Se usa un mensaje por defecto si lo dejas vacío"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Mensaje — vencida</mat-label>
+            <textarea matInput formControlName="waMessageTemplateOverdue" rows="6" placeholder="Se usa un mensaje por defecto si lo dejas vacío"></textarea>
+          </mat-form-field>
+        </div>
+      </form>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" (click)="save()" [disabled]="saving">
+          <mat-icon [class.spin]="saving">{{ saving ? 'autorenew' : 'save' }}</mat-icon>
+          Guardar
+        </button>
+      </div>
+
+      <div class="test-block">
+        <mat-form-field appearance="outline" class="test-phone">
+          <mat-label>Número para probar</mat-label>
+          <input matInput [(ngModel)]="testPhone" [ngModelOptions]="{standalone: true}" placeholder="Ej. 51999999999" />
+        </mat-form-field>
+        <button mat-stroked-button (click)="sendTest()" [disabled]="!canTest || testing">
+          <mat-icon [class.spin]="testing">{{ testing ? 'autorenew' : 'send' }}</mat-icon>
+          Enviar mensaje de prueba
+        </button>
+      </div>
+
+      <div class="test-result" *ngIf="testResult" [class.ok]="testResult.success" [class.fail]="!testResult.success">
+        <mat-icon>{{ testResult.success ? 'check_circle' : 'error' }}</mat-icon>
+        {{ testResult.message }}
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

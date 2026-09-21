@@ -28,7 +28,7 @@
 
 .form-card {
   padding: 1em !important;
-  max-width: 720px;
+  max-width: 900px;
 }
 
 .help-text {
@@ -36,10 +36,34 @@
   margin-bottom: 1.5em;
 }
 
+.variables-hint {
+  margin: 0 0 1em;
+  font-size: 0.85em;
+
+  code {
+    background: #f1f1f1;
+    padding: 0 0.3em;
+    border-radius: 3px;
+  }
+}
+
 .actions {
   display: flex;
   gap: 1em;
   margin-top: 0.5em;
+}
+
+.test-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  margin-top: 1.5em;
+  padding-top: 1em;
+  border-top: 1px solid #eee;
+}
+
+.test-phone {
+  max-width: 260px;
 }
 
 .test-result {

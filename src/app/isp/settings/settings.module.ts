@@ -6,14 +6,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsNotificationsComponent } from './settings-notifications/settings-notifications.component';
+import { SettingsWhatsappComponent } from './settings-whatsapp/settings-whatsapp.component';
 import { SettingsNetworkComponent } from './settings-network/settings-network.component';
 
 @NgModule({
   declarations: [
     SettingsNotificationsComponent,
+    SettingsWhatsappComponent,
     SettingsNetworkComponent,
   ],
   imports: [
@@ -26,6 +29,7 @@ import { SettingsNetworkComponent } from './settings-network/settings-network.co
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSlideToggleModule,
     MatSnackBarModule,
   ]
 })

@@ -1,4 +1,10 @@
 <div class="contenedor">
+  <nav class="settings-tabs">
+    <a routerLink="/settings/notifications" routerLinkActive="active">Notificaciones</a>
+    <a routerLink="/settings/whatsapp" routerLinkActive="active">WhatsApp</a>
+    <a routerLink="/settings/network" routerLinkActive="active">Red</a>
+  </nav>
+
   <h2>Notificaciones</h2>
 
   <div *ngIf="loading" class="center-message">
