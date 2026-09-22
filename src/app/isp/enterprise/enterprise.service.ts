@@ -212,5 +212,14 @@ export class EnterpriseService {
       );
   }
 
+  unlinkWhatsappInstance(): Observable<{ success: boolean }> {
+    return this.clienteHttp.delete<{ success: boolean }>(this.API + 'my-enterprise/whatsapp/unlink', { headers: this.headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
 }
 

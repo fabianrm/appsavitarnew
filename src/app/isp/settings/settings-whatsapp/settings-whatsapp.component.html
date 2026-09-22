@@ -56,6 +56,10 @@
           <mat-icon [class.spin]="creatingInstance">{{ creatingInstance ? 'autorenew' : 'qr_code_2' }}</mat-icon>
           Regenerar código QR
         </button>
+        <button mat-stroked-button color="warn" (click)="unlink()" [disabled]="unlinking" matTooltip="Sueltas esta instancia (ej. una compartida con otra empresa) para poder conectar la tuya propia">
+          <mat-icon [class.spin]="unlinking">{{ unlinking ? 'autorenew' : 'link_off' }}</mat-icon>
+          Desvincular
+        </button>
       </div>
 
       <div class="test-result fail" *ngIf="qrError">

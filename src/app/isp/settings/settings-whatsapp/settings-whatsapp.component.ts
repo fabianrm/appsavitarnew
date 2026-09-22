@@ -31,6 +31,7 @@ export class SettingsWhatsappComponent implements OnInit, OnDestroy {
   connectionState: string | null = null;
   creatingInstance = false;
   cancelling = false;
+  unlinking = false;
   qrCode: string | null = null;
   qrError: string | null = null;
   private pollSub?: Subscription;
@@ -159,6 +160,38 @@ export class SettingsWhatsappComponent implements OnInit, OnDestroy {
         this.creatingInstance = false;
         this.qrError = err?.message ?? 'No se pudo generar un nuevo código QR.';
       },
+    });
+  }
+
+  unlink(): void {
+    Swal.fire({
+      title: '¿Desvincular esta instancia?',
+      html: 'Esta empresa dejará de poder enviar recordatorios de pago hasta que conectes una instancia nueva. ' +
+        '<b>Esto no desconecta el número de WhatsApp en sí</b> -- si lo comparte con otra empresa, ellos siguen funcionando igual.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e91e63',
+      cancelButtonColor: '#43a047',
+      confirmButtonText: 'Sí, desvincular',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+
+      this.unlinking = true;
+      this.enterpriseService.unlinkWhatsappInstance().subscribe({
+        next: () => {
+          this.unlinking = false;
+          this.connectionState = null;
+          this.qrCode = null;
+          this.qrError = null;
+          this.loadEnterprise();
+          this.snackBar.open('Instancia desvinculada', 'Cerrar', { duration: 3000 });
+        },
+        error: (err) => {
+          this.unlinking = false;
+          this.qrError = err?.message ?? 'No se pudo desvincular la instancia.';
+        },
+      });
     });
   }
 
