@@ -203,5 +203,14 @@ export class EnterpriseService {
       );
   }
 
+  cancelWhatsappInstance(): Observable<{ success: boolean }> {
+    return this.clienteHttp.delete<{ success: boolean }>(this.API + 'my-enterprise/whatsapp/cancel-instance', { headers: this.headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
 }
 

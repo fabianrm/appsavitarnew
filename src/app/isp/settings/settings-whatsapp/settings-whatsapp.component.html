@@ -34,6 +34,10 @@
         <div class="connection-status">
           <mat-icon class="spin">autorenew</mat-icon> Esperando conexión...
         </div>
+        <button mat-stroked-button color="warn" (click)="cancelInstance()" [disabled]="cancelling">
+          <mat-icon [class.spin]="cancelling">{{ cancelling ? 'autorenew' : 'close' }}</mat-icon>
+          Cancelar
+        </button>
       </div>
 
       <div *ngIf="hasInstance && !qrCode" class="connection-block">

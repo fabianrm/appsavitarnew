@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription, interval } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Subscription, interval, of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { EnterpriseService } from '../../enterprise/enterprise.service';
 
 const MAX_POLL_ATTEMPTS = 40; // ~2.5 min a 4s por intento
@@ -29,6 +29,7 @@ export class SettingsWhatsappComponent implements OnInit, OnDestroy {
   checkingConnection = false;
   connectionState: string | null = null;
   creatingInstance = false;
+  cancelling = false;
   qrCode: string | null = null;
   qrError: string | null = null;
   private pollSub?: Subscription;
@@ -143,7 +144,15 @@ export class SettingsWhatsappComponent implements OnInit, OnDestroy {
     this.pollAttempts = 0;
 
     this.pollSub = interval(4000)
-      .pipe(switchMap(() => this.enterpriseService.getWhatsappConnectionState()))
+      .pipe(
+        switchMap(() =>
+          this.enterpriseService.getWhatsappConnectionState().pipe(
+            // Un fallo puntual (red, timeout) no debe matar el polling --
+            // se trata como "aún no sabemos" y se sigue intentando.
+            catchError(() => of({ state: 'unknown' })),
+          ),
+        ),
+      )
       .subscribe((res) => {
         this.pollAttempts++;
         this.connectionState = res.state;
@@ -158,6 +167,25 @@ export class SettingsWhatsappComponent implements OnInit, OnDestroy {
           this.qrCode = null;
         }
       });
+  }
+
+  cancelInstance(): void {
+    this.cancelling = true;
+    this.pollSub?.unsubscribe();
+
+    this.enterpriseService.cancelWhatsappInstance().subscribe({
+      next: () => {
+        this.cancelling = false;
+        this.qrCode = null;
+        this.qrError = null;
+        this.connectionState = null;
+        this.loadEnterprise();
+      },
+      error: (err) => {
+        this.cancelling = false;
+        this.qrError = err?.message ?? 'No se pudo cancelar.';
+      },
+    });
   }
 
   save(): void {
