@@ -10,5 +10,6 @@ export interface CustomerRequest {
     phoneNumber: string;
     whatsapp: string;
     email: string;
+    waRemindersEnabled: boolean;
     status: boolean;
 }

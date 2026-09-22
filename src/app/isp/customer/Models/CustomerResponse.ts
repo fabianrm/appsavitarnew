@@ -25,6 +25,7 @@ export interface Customer {
     phoneNumber: string;
     whatsapp: string;
     email: string;
+    waRemindersEnabled: boolean;
     status: boolean;
     createdAt: Date;
     updatedAt: Date;

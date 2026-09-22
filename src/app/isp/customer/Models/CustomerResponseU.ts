@@ -18,6 +18,7 @@ export interface Customer {
     phoneNumber: string;
     whatsapp: string;
     email: string;
+    waRemindersEnabled: boolean;
     status: boolean;
     updated_at: Date;
     totalContracts: number;

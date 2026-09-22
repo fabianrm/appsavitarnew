@@ -107,6 +107,7 @@ export class CustomerCreateComponent implements OnInit, OnDestroy {
       phoneNumber: [''],
       whatsapp: ['', [Validators.required, Validators.pattern('^[5,1]{2}[0-9]{9}$')]],
       email: [''],
+      waRemindersEnabled: [true],
       status: [true],
     }
 

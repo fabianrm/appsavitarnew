@@ -91,6 +91,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
       phoneNumber: [''],
       whatsapp: ['', [Validators.required, Validators.pattern('^[5,1]{2}[0-9]{9}$')]],
       email: [''],
+      waRemindersEnabled: [true],
       status: [true],
     }
 
@@ -155,6 +156,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
           phoneNumber: this.dataCustomer.phoneNumber,
           whatsapp: this.dataCustomer.whatsapp,
           email: this.dataCustomer.email,
+          waRemindersEnabled: this.dataCustomer.waRemindersEnabled,
           status: this.dataCustomer.status,
         });
         this.setNewCoordinates(this.dataCustomer.latitude, this.dataCustomer.longitude);
