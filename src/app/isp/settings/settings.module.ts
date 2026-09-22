@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsNotificationsComponent } from './settings-notifications/settings-notifications.component';
 import { SettingsWhatsappComponent } from './settings-whatsapp/settings-whatsapp.component';
@@ -31,6 +32,7 @@ import { SettingsNetworkComponent } from './settings-network/settings-network.co
     MatInputModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    MatTooltipModule,
   ]
 })
 export class SettingsModule { }

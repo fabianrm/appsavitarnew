@@ -11,12 +11,61 @@
     <mat-icon class="spin">autorenew</mat-icon> Cargando...
   </div>
 
+  <mat-card class="form-card connection-card" *ngIf="!loading">
+    <mat-card-content>
+      <p class="help-text">
+        Conecta el WhatsApp que va a enviar los recordatorios de pago. Si es la primera vez,
+        crea una instancia nueva y escanea el código QR con el celular del número que vas a usar.
+      </p>
+
+      <div *ngIf="!hasInstance && !qrCode" class="connection-block">
+        <button mat-flat-button color="primary" (click)="createInstance()" [disabled]="creatingInstance">
+          <mat-icon [class.spin]="creatingInstance">{{ creatingInstance ? 'autorenew' : 'qr_code_2' }}</mat-icon>
+          Crear instancia y conectar mi WhatsApp
+        </button>
+      </div>
+
+      <div *ngIf="qrCode" class="qr-block">
+        <img [src]="qrCode" alt="Código QR de WhatsApp" class="qr-image" />
+        <p class="help-text">
+          Escanea este código desde WhatsApp → Dispositivos vinculados → Vincular un dispositivo.
+          Esta pantalla se actualiza sola en cuanto detecte la conexión.
+        </p>
+        <div class="connection-status">
+          <mat-icon class="spin">autorenew</mat-icon> Esperando conexión...
+        </div>
+      </div>
+
+      <div *ngIf="hasInstance && !qrCode" class="connection-block">
+        <div class="connection-status" [class.ok]="connectionState === 'open'" [class.fail]="connectionState && connectionState !== 'open'">
+          <mat-icon *ngIf="checkingConnection" class="spin">autorenew</mat-icon>
+          <mat-icon *ngIf="!checkingConnection && connectionState === 'open'">check_circle</mat-icon>
+          <mat-icon *ngIf="!checkingConnection && connectionState && connectionState !== 'open'">error</mat-icon>
+          <span *ngIf="checkingConnection">Verificando conexión...</span>
+          <span *ngIf="!checkingConnection && connectionState === 'open'">Conectado</span>
+          <span *ngIf="!checkingConnection && connectionState && connectionState !== 'open'">Desconectado ({{ connectionState }})</span>
+        </div>
+        <button mat-icon-button (click)="checkConnectionState()" [disabled]="checkingConnection" matTooltip="Verificar estado">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-stroked-button (click)="reconnect()" [disabled]="creatingInstance">
+          <mat-icon [class.spin]="creatingInstance">{{ creatingInstance ? 'autorenew' : 'qr_code_2' }}</mat-icon>
+          Regenerar código QR
+        </button>
+      </div>
+
+      <div class="test-result fail" *ngIf="qrError">
+        <mat-icon>error</mat-icon>
+        {{ qrError }}
+      </div>
+    </mat-card-content>
+  </mat-card>
+
   <mat-card class="form-card" *ngIf="!loading">
     <mat-card-content>
       <p class="help-text">
-        Recordatorios automáticos de pago por WhatsApp (facturas por vencer y vencidas),
-        enviados vía Evolution API. Completa la instancia y el api_key de tu número,
-        y personaliza el texto que reciben tus clientes.
+        Ya sea que hayas creado la instancia arriba o que uses una que ya existe (ej. un número
+        que ya comparten otras empresas), aquí controlas cómo y cuándo se envían los recordatorios.
       </p>
 
       <form [formGroup]="form" class="grid formgrid">

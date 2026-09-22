@@ -176,5 +176,32 @@ export class EnterpriseService {
       );
   }
 
+  createWhatsappInstance(): Observable<{ instance: string; qrcode: string | null }> {
+    return this.clienteHttp.post<{ instance: string; qrcode: string | null }>(this.API + 'my-enterprise/whatsapp/create-instance', {}, { headers: this.headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
+  reconnectWhatsapp(): Observable<{ qrcode: string | null }> {
+    return this.clienteHttp.post<{ qrcode: string | null }>(this.API + 'my-enterprise/whatsapp/reconnect', {}, { headers: this.headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
+  getWhatsappConnectionState(): Observable<{ state: string }> {
+    return this.clienteHttp.get<{ state: string }>(this.API + 'my-enterprise/whatsapp/connection-state', { headers: this.headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
 }
 
