@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription, interval, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 import { EnterpriseService } from '../../enterprise/enterprise.service';
 
 const MAX_POLL_ATTEMPTS = 40; // ~2.5 min a 4s por intento
@@ -124,6 +125,28 @@ export class SettingsWhatsappComponent implements OnInit, OnDestroy {
   }
 
   reconnect(): void {
+    if (this.connectionState === 'open') {
+      Swal.fire({
+        title: '¿Regenerar código QR?',
+        html: 'Esta instancia ya está <b>conectada</b> y enviando recordatorios reales. Pedir un código QR nuevo puede interrumpir la sesión activa si no lo escaneas a tiempo. Solo hazlo si de verdad necesitas reconectar desde otro celular.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e91e63',
+        cancelButtonColor: '#43a047',
+        confirmButtonText: 'Sí, regenerar QR',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.doReconnect();
+        }
+      });
+      return;
+    }
+
+    this.doReconnect();
+  }
+
+  private doReconnect(): void {
     this.creatingInstance = true;
     this.qrError = null;
     this.enterpriseService.reconnectWhatsapp().subscribe({
