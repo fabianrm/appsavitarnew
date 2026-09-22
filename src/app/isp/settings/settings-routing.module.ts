@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SettingsNotificationsComponent } from './settings-notifications/settings-notifications.component';
 import { SettingsWhatsappComponent } from './settings-whatsapp/settings-whatsapp.component';
+import { SettingsWhatsappFailuresComponent } from './settings-whatsapp-failures/settings-whatsapp-failures.component';
 import { SettingsNetworkComponent } from './settings-network/settings-network.component';
 import { AuthGuard } from '../../auth/auth.guard';
 
@@ -9,6 +10,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'notifications', pathMatch: 'full' },
   { path: 'notifications', component: SettingsNotificationsComponent, data: { title: 'Telegram' }, canActivate: [AuthGuard] },
   { path: 'whatsapp', component: SettingsWhatsappComponent, data: { title: 'WhatsApp' }, canActivate: [AuthGuard] },
+  { path: 'whatsapp-failures', component: SettingsWhatsappFailuresComponent, data: { title: 'Fallos de envío' }, canActivate: [AuthGuard] },
   { path: 'network', component: SettingsNetworkComponent, data: { title: 'Red' }, canActivate: [AuthGuard] },
 ];
 

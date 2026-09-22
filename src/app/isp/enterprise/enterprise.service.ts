@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, of, Subject, tap, throwError } from 'rxjs';
 import { Enterprise, EnterpriseRequest, EnterpriseResponse, RoleUserRequest } from './Models';
+import { WhatsappFailure, WhatsappFailureResponse } from '../settings/settings-whatsapp-failures/whatsapp-failure';
 
 
 @Injectable({
@@ -214,6 +215,28 @@ export class EnterpriseService {
 
   unlinkWhatsappInstance(): Observable<{ success: boolean }> {
     return this.clienteHttp.delete<{ success: boolean }>(this.API + 'my-enterprise/whatsapp/unlink', { headers: this.headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
+  getWhatsappFailures(filters: { status?: string; type?: string; page: number; perPage: number }): Observable<WhatsappFailureResponse> {
+    let params = new HttpParams().set('page', filters.page).set('per_page', filters.perPage);
+    if (filters.status) params = params.set('status', filters.status);
+    if (filters.type) params = params.set('type', filters.type);
+
+    return this.clienteHttp.get<WhatsappFailureResponse>(this.API + 'my-enterprise/whatsapp/failures', { headers: this.headers, params })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err.error);
+        }),
+      );
+  }
+
+  resolveWhatsappFailure(id: number): Observable<{ data: WhatsappFailure }> {
+    return this.clienteHttp.patch<{ data: WhatsappFailure }>(this.API + 'my-enterprise/whatsapp/failures/' + id + '/resolve', {}, { headers: this.headers })
       .pipe(
         catchError(err => {
           return throwError(() => err.error);

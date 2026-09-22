@@ -1,0 +1,120 @@
+.contenedor {
+  padding: 1em;
+}
+
+.contenedor h2 {
+  margin: 0;
+}
+
+.settings-tabs {
+  display: flex;
+  gap: 1.5em;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.settings-tabs a {
+  padding: 0.75em 0.2em;
+  color: #666;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+}
+
+.settings-tabs a.active {
+  color: #1565c0;
+  border-bottom-color: #1565c0;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.toggle-filters-btn {
+  margin-left: auto;
+}
+
+.help-text {
+  color: #666;
+  margin-bottom: 1.5em;
+}
+
+.filter-panel {
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.filter-panel .row {
+  row-gap: 16px;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.filter-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1em;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+.table-container {
+  overflow: auto;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.error-cell {
+  max-width: 320px;
+  white-space: normal;
+  color: #c62828;
+  font-size: 0.9em;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  background-color: #ffecb3;
+  color: #000;
+}
+
+.status-badge.resolved {
+  background-color: lightgreen;
+  color: #000;
+}
+
+.center-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 3em 1em;
+  color: #666;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
