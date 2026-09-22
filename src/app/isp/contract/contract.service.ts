@@ -14,9 +14,12 @@ export interface ServiceListFilters {
   dateTo?: string;
   code?: string;
   customer?: string;
+  userPppoe?: string;
   planId?: number;
   cityId?: number;
   promotionId?: number;
+  status?: string;
+  iptv?: boolean;
   page?: number;
   perPage?: number;
 }
@@ -47,10 +50,13 @@ export class ContractService {
     if (filters.dateTo) params = params.set('date_to', filters.dateTo);
     if (filters.code) params = params.set('code', filters.code);
     if (filters.customer) params = params.set('customer', filters.customer);
+    if (filters.userPppoe) params = params.set('user_pppoe', filters.userPppoe);
     if (filters.planId) params = params.set('plan_id', filters.planId);
     if (filters.cityId) params = params.set('city_id', filters.cityId);
     if (filters.promotionId)
       params = params.set('promotion_id', filters.promotionId);
+    if (filters.status) params = params.set('status', filters.status);
+    if (filters.iptv) params = params.set('iptv', '1');
     if (filters.page) params = params.set('page', filters.page);
     if (filters.perPage) params = params.set('per_page', filters.perPage);
 

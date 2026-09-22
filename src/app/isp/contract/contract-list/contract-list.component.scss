@@ -34,9 +34,23 @@ mat-form-field {
   }
 }
 
+.search-combo {
+  display: flex;
+  gap: 8px;
+
+  .search-combo-field {
+    flex: 0 0 140px;
+  }
+
+  .search-combo-value {
+    flex: 1;
+  }
+}
+
 .filter-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 4px;
   margin-bottom: 16px;
 

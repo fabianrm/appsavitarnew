@@ -92,11 +92,18 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Filtros
   isFilterVisible = false;
-  code: string = '';
-  customerName: string = '';
+
+  // "Buscar por" -- un solo campo de valor, con un selector de a qué
+  // columna aplica, en vez de 3 cajas de texto sueltas (Código/Cliente/
+  // Usuario PPPoE compiten poco entre sí: casi siempre se busca por una sola).
+  searchField: 'code' | 'customer' | 'userPppoe' = 'code';
+  searchValue: string = '';
+
   planId: number | null = null;
   cityId: number | null = null;
   promotionId: number | null = null;
+  statusFilter: string | null = null;
+  iptvOnly = false;
   rangoFechas = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
@@ -163,15 +170,19 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private buildFilters() {
     const { start, end } = this.rangoFechas.value;
+    const value = this.searchValue?.trim() || undefined;
 
     return {
       dateFrom: start ? formatDate(start, 'yyyy-MM-dd', 'en-US') : undefined,
       dateTo: end ? formatDate(end, 'yyyy-MM-dd', 'en-US') : undefined,
-      code: this.code?.trim() || undefined,
-      customer: this.customerName?.trim() || undefined,
+      code: this.searchField === 'code' ? value : undefined,
+      customer: this.searchField === 'customer' ? value : undefined,
+      userPppoe: this.searchField === 'userPppoe' ? value : undefined,
       planId: this.planId ?? undefined,
       cityId: this.cityId ?? undefined,
       promotionId: this.promotionId ?? undefined,
+      status: this.statusFilter ?? undefined,
+      iptv: this.iptvOnly ? true : undefined,
       page: (this.paginator?.pageIndex ?? 0) + 1,
       perPage: this.paginator?.pageSize ?? 10,
     };
@@ -211,13 +222,23 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   clearFilters() {
-    this.code = '';
-    this.customerName = '';
+    this.searchField = 'code';
+    this.searchValue = '';
     this.planId = null;
     this.cityId = null;
     this.promotionId = null;
+    this.statusFilter = null;
+    this.iptvOnly = false;
     this.rangoFechas.setValue({ start: null, end: null }, { emitEvent: false });
     this.searchContracts();
+  }
+
+  get searchValuePlaceholder(): string {
+    switch (this.searchField) {
+      case 'customer': return 'Ej. Fernando Nizama';
+      case 'userPppoe': return 'Ej. MARTINWA';
+      default: return 'Ej. CT00836';
+    }
   }
 
   getPlans() {
