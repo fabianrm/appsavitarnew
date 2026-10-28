@@ -575,29 +575,41 @@ export class ContractCreateNewComponent implements OnInit, OnDestroy {
       this.disableControls();
       this.contractService.getServiceByEquipment(equipmentId!).subscribe(respuesta => {
         if (respuesta.exists == false) {
-          this.contractService.addService(dataToSend).subscribe(respuesta => {
-            console.log('Respuesta addService:', respuesta);
-            this.showSuccess();
-            
-            // Extract serviceCode safely, checking multiple potential paths
-            const serviceCode = respuesta?.service?.serviceCode || respuesta?.data?.serviceCode || respuesta?.serviceCode || '';
-            console.log('Extracted serviceCode:', serviceCode);
+          this.contractService.addService(dataToSend).subscribe({
+            next: (respuesta) => {
+              console.log('Respuesta addService:', respuesta);
+              this.showSuccess();
 
-            Swal.fire({
-              title: 'Contrato guardado',
-              text: '¿Desea registrar la salida de los materiales?',
-              icon: 'question',
-              showCancelButton: true,
-              confirmButtonText: 'Sí, registrar',
-              cancelButtonText: 'No, ir a lista'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.openOutputDialog(serviceCode);
-              } else {
-                this.router.navigate(['/dashboard/contract/contracts']);
-              }
-            });
+              // Extract serviceCode safely, checking multiple potential paths
+              const serviceCode = respuesta?.service?.serviceCode || respuesta?.data?.serviceCode || respuesta?.serviceCode || '';
+              console.log('Extracted serviceCode:', serviceCode);
 
+              Swal.fire({
+                title: 'Contrato guardado',
+                text: '¿Desea registrar la salida de los materiales?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, registrar',
+                cancelButtonText: 'No, ir a lista'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.openOutputDialog(serviceCode);
+                } else {
+                  this.router.navigate(['/dashboard/contract/contracts']);
+                }
+              });
+            },
+            error: (err) => {
+              // El backend no guardó el contrato (ej. el usuario PPPoE ya existe
+              // en el Mikrotik): se vuelve a habilitar el formulario y se avisa.
+              this.enableControls();
+              const detalle = err?.status === 500 ? err?.error?.error : '';
+              Swal.fire({
+                title: 'No se pudo registrar el contrato',
+                text: [err?.error?.message ?? 'Ocurrió un error inesperado.', detalle].filter(Boolean).join(' '),
+                icon: 'error',
+              });
+            },
           });
         } else {
           this.showError();
